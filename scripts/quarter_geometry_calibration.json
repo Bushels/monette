@@ -1,0 +1,23 @@
+{
+  "default": {
+    "east_m": 0,
+    "north_m": 0,
+    "scale_x": 1,
+    "scale_y": 1,
+    "rotate_deg": 0
+  },
+  "properties": {
+    "admiral": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "calderbank": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "eddystone": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "hafford": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "kamsack": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "montana": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "outlook": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "ponteix": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "prince-albert": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "raymore": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "vanguard": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 },
+    "wymark": { "east_m": 0, "north_m": 0, "scale_x": 1, "scale_y": 1, "rotate_deg": 0 }
+  }
+}

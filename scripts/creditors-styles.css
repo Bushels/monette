@@ -1,0 +1,1033 @@
+/* ===========================================================================
+   CREDITORS - Story-driven walk through the FTI creditor listing.
+
+   Layout sections (top -> bottom):
+     1. Hero with single dominant number + 4 quick stats
+     2. The Stack -- 3 horizontal layered bars (priority order of payment)
+     3. Treemap -- every creditor as a clickable rectangle, colored by industry
+     4. Map -- Mapbox markers per city + hometown search + side panel
+     5. Industry breakdown -- horizontal bars
+     6. Full creditor table -- searchable + sortable + paginated
+     7. Methodology footnote
+   =========================================================================== */
+
+.creditors-shell {
+  min-height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ----- Shared section chrome ----- */
+.creditors-section {
+  padding: 36px 48px 32px;
+  border-bottom: 1px solid var(--ink);
+}
+.creditors-section + .creditors-section {
+  border-top: 0;
+}
+.creditors-section-head {
+  margin: 0 0 22px;
+  max-width: 920px;
+}
+.creditors-section-head h2 {
+  margin: 6px 0 10px;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.creditors-section-head p {
+  margin: 0;
+  max-width: 760px;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.creditors-section-head p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.creditors-eyebrow {
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ----- Section 1: Hero ----- */
+.creditors-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 32px;
+  align-items: end;
+  padding: 48px 48px 36px;
+  border-bottom: 2px solid var(--ink);
+  background:
+    linear-gradient(90deg, rgba(180, 134, 56, 0.18), transparent 50%),
+    var(--paper);
+}
+.creditors-hero h1 {
+  margin: 8px 0 0;
+  font-size: clamp(48px, 8vw, 96px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+}
+.creditors-hero p {
+  max-width: 780px;
+  margin: 16px 0 22px;
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.55;
+}
+.creditors-hero p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.creditors-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 14px;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+}
+.creditors-hero-stat {
+  min-width: 0;
+  padding: 16px 18px 18px;
+  background: var(--paper-2);
+}
+.creditors-hero-stat span {
+  display: block;
+  color: var(--mute);
+  font: 10px/1.2 "JetBrains Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.creditors-hero-stat strong {
+  display: block;
+  margin-top: 8px;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 32px;
+  line-height: 1;
+  font-weight: 400;
+}
+.creditors-hero-stat em {
+  display: block;
+  margin-top: 6px;
+  color: var(--mute);
+  font: 11px/1.35 "Geist", sans-serif;
+  font-style: normal;
+}
+.creditors-source-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-top: 2px solid var(--ink);
+  background: var(--paper-2);
+}
+.creditors-source-card > div {
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.creditors-source-card strong {
+  font-size: 16px;
+}
+.creditors-source-card span {
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.creditors-source-card a {
+  width: max-content;
+  margin-top: 4px;
+  color: var(--ink);
+  font: 600 12px/1 "Geist", sans-serif;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+/* ----- Section 2: The Stack ----- */
+.creditors-stack-layers {
+  display: grid;
+  gap: 22px;
+}
+.creditors-stack-layer {
+  display: grid;
+  gap: 10px;
+}
+.creditors-stack-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.creditors-stack-head strong {
+  display: block;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.creditors-stack-head span {
+  display: block;
+  margin-top: 2px;
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.creditors-stack-total {
+  text-align: right;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 22px;
+  line-height: 1;
+}
+.creditors-stack-total em {
+  display: block;
+  margin-top: 4px;
+  color: var(--mute);
+  font: 10px/1 "JetBrains Mono", monospace;
+  font-style: normal;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.creditors-stack-bar {
+  display: flex;
+  width: 100%;
+  min-height: 92px;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.creditors-stack-seg {
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 0;
+  border-right: 1px solid rgba(255, 253, 247, 0.45);
+  background: var(--ink);
+  color: #fffdf7;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  transition: filter 0.15s, transform 0.15s;
+}
+.creditors-stack-seg:last-child {
+  border-right: 0;
+}
+.creditors-stack-seg:hover,
+.creditors-stack-seg:focus-visible {
+  filter: brightness(1.1) saturate(1.05);
+  outline: none;
+  z-index: 2;
+}
+.creditors-stack-seg.is-active {
+  outline: 2px solid var(--paper);
+  outline-offset: -3px;
+  filter: brightness(1.15);
+}
+.creditors-stack-seg.is-tail {
+  background: var(--paper-3) !important;
+  color: var(--ink);
+  border-right: 0;
+}
+.creditors-stack-seg-label {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  align-content: start;
+  pointer-events: none;
+}
+.creditors-stack-seg-label strong {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font: 600 12px/1.25 "Geist", sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+.creditors-stack-seg-label em {
+  font: 10px/1.2 "JetBrains Mono", monospace;
+  font-style: normal;
+  text-transform: uppercase;
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+.creditors-stack-seg.is-tail .creditors-stack-seg-label strong,
+.creditors-stack-seg.is-tail .creditors-stack-seg-label em {
+  text-shadow: none;
+}
+
+/* ----- Section 3: Treemap ----- */
+.creditors-treemap-section .creditors-section-head {
+  display: grid;
+  gap: 10px;
+  max-width: 100%;
+}
+.creditors-treemap {
+  width: 100%;
+  margin-top: 4px;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.creditors-treemap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.creditors-tm-tile {
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+.creditors-tm-tile:hover {
+  filter: brightness(1.12) saturate(1.08);
+}
+.creditors-tm-label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #fffdf7;
+  font-family: "Geist", sans-serif;
+  pointer-events: none;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.creditors-tm-label strong {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+.creditors-tm-label em {
+  margin-top: 4px;
+  font: 10px/1.2 "JetBrains Mono", monospace;
+  font-style: normal;
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.creditors-tm-label.is-tight {
+  display: flex;
+  align-items: flex-start;
+}
+.creditors-tm-label.is-tight em {
+  margin-top: 0;
+  font-size: 9px;
+}
+.creditors-tm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+.creditors-tm-legend button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--rule-2);
+  background: var(--paper);
+  color: var(--ink);
+  font: 11px/1 "Geist", sans-serif;
+  cursor: pointer;
+}
+.creditors-tm-legend button:hover {
+  border-color: var(--ink);
+  background: var(--paper-2);
+}
+.creditors-tm-legend button.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.creditors-tm-legend button > span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+/* ----- Section 4: Map ----- */
+.creditors-map-section .creditors-section-head {
+  max-width: 100%;
+}
+.creditors-hometown {
+  position: relative;
+  margin-top: 14px;
+  max-width: 540px;
+}
+.creditors-hometown input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-2);
+  color: var(--ink);
+  font: 500 15px/1.2 "Geist", sans-serif;
+}
+.creditors-hometown input:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.creditors-hometown-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-height: 320px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+.creditors-hometown-results li {
+  border-bottom: 1px solid var(--rule);
+}
+.creditors-hometown-results li:last-child {
+  border-bottom: 0;
+}
+.creditors-hometown-results button {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.creditors-hometown-results button:hover {
+  background: var(--paper-2);
+}
+.creditors-hometown-results button strong {
+  font-size: 14px;
+}
+.creditors-hometown-results button em {
+  color: var(--mute);
+  font: 11px/1.3 "JetBrains Mono", monospace;
+  font-style: normal;
+}
+.creditors-map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 16px;
+  align-items: stretch;
+}
+.creditors-map-frame {
+  position: relative;
+  min-width: 0;
+  height: 540px;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  overflow: hidden;
+}
+.creditors-map-canvas {
+  width: 100%;
+  height: 100%;
+}
+.creditors-map-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--mute);
+  font: 12px/1.4 "Geist", sans-serif;
+  text-align: center;
+  padding: 24px;
+}
+.creditors-map-side {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--ink);
+  background: var(--paper-2);
+  overflow-y: auto;
+  max-height: 540px;
+}
+.creditors-map-side .creditors-eyebrow {
+  margin-bottom: 4px;
+}
+.creditors-city-list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: cityrank;
+}
+.creditors-city-list li {
+  counter-increment: cityrank;
+}
+.creditors-city-list button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+}
+.creditors-city-list button::before {
+  content: counter(cityrank, decimal-leading-zero);
+  position: absolute;
+  top: 8px;
+  right: -28px;
+  color: var(--mute);
+  font: 10px/1 "JetBrains Mono", monospace;
+}
+.creditors-city-list button:hover,
+.creditors-city-list button.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.creditors-city-list button strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.creditors-city-list button em {
+  display: block;
+  margin-top: 2px;
+  color: inherit;
+  opacity: 0.7;
+  font: 10px/1.2 "JetBrains Mono", monospace;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.creditors-city-amount {
+  text-align: right;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1.3;
+}
+.creditors-city-amount em {
+  display: block;
+  margin-top: 4px;
+  color: inherit;
+  opacity: 0.7;
+  font: 9px/1.1 "JetBrains Mono", monospace;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.creditors-map-popup {
+  font-family: "Geist", sans-serif;
+}
+.creditors-map-popup .mapboxgl-popup-content {
+  padding: 12px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.creditors-map-popup .mapboxgl-popup-tip {
+  display: none;
+}
+.creditors-map-popup .cmp-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.creditors-map-popup .cmp-row strong {
+  font-size: 14px;
+}
+.creditors-map-popup .cmp-row.mono {
+  font: 11px/1.2 "JetBrains Mono", monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.creditors-map-popup .cmp-row em {
+  color: var(--mute);
+  font-style: normal;
+  font-size: 11px;
+}
+
+/* ----- Section 5: Industries ----- */
+.creditors-industry-list {
+  display: grid;
+  gap: 6px;
+}
+.creditors-industry-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 2fr);
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.creditors-industry-row:hover,
+.creditors-industry-row.is-active {
+  border-color: var(--ink);
+  box-shadow: inset 4px 0 0 var(--ink);
+}
+.creditors-industry-label {
+  display: grid;
+  align-content: center;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+}
+.creditors-industry-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+.creditors-industry-label strong {
+  display: block;
+  grid-column: 2;
+  font-size: 14px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.creditors-industry-label em {
+  grid-column: 2;
+  display: block;
+  color: var(--mute);
+  font: 10px/1.2 "JetBrains Mono", monospace;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.creditors-industry-bars {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-width: 0;
+}
+.creditors-industry-bar {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-height: 22px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+.creditors-industry-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  background: var(--ink);
+  opacity: 0.85;
+}
+.creditors-industry-bar .mono {
+  position: relative;
+  z-index: 1;
+  color: var(--paper);
+  mix-blend-mode: difference;
+  font: 11px/1 "JetBrains Mono", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ----- Section 6: Full table ----- */
+.creditors-table-section {
+  background: var(--paper);
+}
+.creditors-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding: 14px 0 16px;
+  border-bottom: 1px solid var(--rule-2);
+}
+.creditors-search input,
+.creditors-controls select {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--rule-2);
+  background: var(--paper);
+  color: var(--ink);
+  font: 12px/1.2 "Geist", sans-serif;
+}
+.creditors-search {
+  flex: 1 1 320px;
+  min-width: 240px;
+}
+.creditors-controls select {
+  flex: 0 1 160px;
+}
+.creditors-controls select[aria-label="Filter industry"] {
+  flex-basis: 220px;
+}
+.creditors-controls select[aria-label="Sort creditor table"] {
+  flex-basis: 200px;
+}
+.creditors-controls .btn {
+  min-height: 38px;
+}
+.creditors-status {
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--rule);
+  color: var(--ink-2);
+  font: 11px/1.5 "JetBrains Mono", monospace;
+}
+.creditors-table-wrap {
+  max-width: 100%;
+  margin-top: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.creditors-table {
+  width: 100%;
+  min-width: 1180px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.creditors-table thead tr {
+  border-bottom: 2px solid var(--ink);
+}
+.creditors-table th,
+.creditors-table td {
+  padding: 11px 9px;
+  border-bottom: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+.creditors-table th {
+  color: var(--mute);
+  font: 500 10px/1.2 "JetBrains Mono", monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.creditors-table th button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  padding: 0;
+}
+.creditors-table th button span {
+  color: var(--ink);
+}
+.creditors-table tbody tr:hover {
+  background: var(--paper-2);
+}
+.creditors-table tbody tr.is-secured {
+  background: rgba(180, 134, 56, 0.08);
+}
+.creditors-table td strong {
+  display: block;
+  font-weight: 600;
+}
+.creditors-rank {
+  color: var(--mute);
+}
+.creditors-balance {
+  white-space: nowrap;
+  font-weight: 600;
+}
+.creditors-claim {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 4px 7px;
+  border: 1px solid currentColor;
+  font: 10px/1 "JetBrains Mono", monospace !important;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.creditors-claim-secured {
+  color: var(--gold-ink) !important;
+  background: rgba(180, 134, 56, 0.1);
+}
+.creditors-claim-unsecured {
+  color: var(--blue) !important;
+  background: rgba(63, 91, 108, 0.08);
+}
+.creditors-industry-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 6px;
+  border: 1px solid var(--rule-2);
+  border-left-width: 4px;
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.creditors-industry-pill > span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ----- Section 7: Methodology ----- */
+.creditors-methodology {
+  background: var(--paper-2);
+}
+.creditors-methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.creditors-methodology article {
+  padding: 16px 18px;
+  border-top: 2px solid var(--ink);
+  background: var(--paper);
+}
+.creditors-methodology article strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.creditors-methodology article p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.creditors-methodology article a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.creditors-note {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px dashed var(--rule-2);
+  color: var(--mute);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* ----- Segmented controls (treemap currency toggle) ----- */
+.creditors-segmented {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-top: 12px;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  width: max-content;
+  max-width: 100%;
+}
+.creditors-segmented button {
+  min-height: 36px;
+  padding: 8px 14px;
+  border: 0;
+  border-right: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: 600 12px/1.1 "Geist", sans-serif;
+}
+.creditors-segmented button:last-child {
+  border-right: 0;
+}
+.creditors-segmented button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 1100px) {
+  .creditors-map-layout {
+    grid-template-columns: 1fr;
+  }
+  .creditors-map-side {
+    max-height: 360px;
+  }
+  .creditors-industry-row {
+    grid-template-columns: minmax(180px, 0.9fr) minmax(0, 2fr);
+  }
+}
+
+@media (max-width: 980px) {
+  .creditors-hero {
+    grid-template-columns: 1fr;
+    padding: 32px 24px 28px;
+  }
+  .creditors-source-card {
+    max-width: 540px;
+  }
+  .creditors-section {
+    padding: 28px 24px 24px;
+  }
+  .creditors-hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .creditors-stack-bar {
+    min-height: 110px;
+  }
+  .creditors-stack-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .creditors-stack-total {
+    text-align: left;
+  }
+  .creditors-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .creditors-search {
+    grid-column: 1 / -1;
+  }
+  .creditors-methodology-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .creditors-hero {
+    padding: 24px 18px 22px;
+  }
+  .creditors-hero h1 {
+    font-size: 44px;
+  }
+  .creditors-hero p {
+    font-size: 14px;
+  }
+  .creditors-section {
+    padding: 24px 18px 22px;
+  }
+  .creditors-section-head h2 {
+    font-size: 26px;
+  }
+  .creditors-hero-stats {
+    grid-template-columns: 1fr;
+  }
+  .creditors-hero-stat {
+    padding: 14px;
+  }
+  .creditors-stack-seg {
+    padding: 8px 9px;
+  }
+  .creditors-stack-seg-label strong {
+    font-size: 11px;
+  }
+  .creditors-map-frame {
+    height: 420px;
+  }
+  .creditors-map-side {
+    max-height: 320px;
+  }
+  .creditors-controls {
+    grid-template-columns: 1fr;
+  }
+  .creditors-controls .btn {
+    width: 100%;
+  }
+  .creditors-industry-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .creditors-industry-bars {
+    gap: 4px;
+  }
+  .creditors-table-wrap {
+    overflow-x: visible;
+  }
+  .creditors-table {
+    min-width: 0;
+  }
+  .creditors-table thead {
+    display: none;
+  }
+  .creditors-table,
+  .creditors-table tbody,
+  .creditors-table tr,
+  .creditors-table td {
+    display: block;
+    width: 100%;
+  }
+  .creditors-table tr {
+    padding: 12px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 0;
+    background: var(--paper-2);
+    margin-bottom: 12px;
+  }
+  .creditors-table th,
+  .creditors-table td {
+    border-bottom: 0;
+    padding: 6px 0;
+  }
+  .creditors-table td {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .creditors-table td::before {
+    content: attr(data-label);
+    color: var(--mute);
+    font: 10px/1.2 "JetBrains Mono", monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .creditors-table td[data-label="Creditor"] {
+    display: block;
+    padding-top: 0;
+    font-size: 15px;
+  }
+  .creditors-table td[data-label="Creditor"]::before {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .creditors-table td strong {
+    overflow-wrap: anywhere;
+  }
+  .creditors-balance {
+    font-size: 14px;
+  }
+  .creditors-methodology-grid {
+    gap: 12px;
+  }
+  .creditors-methodology article {
+    padding: 14px 14px;
+  }
+}

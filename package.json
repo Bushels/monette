@@ -1,0 +1,11 @@
+{
+  "name": "monette-ledger",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-jsx.mjs",
+    "refresh:montana": "node scripts/update_montana_from_cadastral.mjs && python scripts/build_quarters_data_js.py"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.11"
+  }
+}

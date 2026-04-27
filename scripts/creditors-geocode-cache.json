@@ -1,0 +1,1322 @@
+{
+  "100 mile house|bc|canada": {
+    "city": "100 Mile House",
+    "country": "Canada",
+    "lat": 51.64186,
+    "lng": -121.29747,
+    "matched": "100 Mile House, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "airdrie|ab|canada": {
+    "city": "Airdrie",
+    "country": "Canada",
+    "lat": 51.28668,
+    "lng": -114.01019,
+    "matched": "Airdrie, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "albertville|sk|canada": {
+    "city": "Albertville",
+    "country": "Canada",
+    "lat": 53.39456,
+    "lng": -105.54336,
+    "matched": "Albertville, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "alpharetta|ga|usa": {
+    "city": "Alpharetta",
+    "country": "USA",
+    "lat": 34.0708,
+    "lng": -84.27456,
+    "matched": "Alpharetta, Georgia, United States",
+    "provinceState": "GA"
+  },
+  "antigo|wi|usa": {
+    "city": "Antigo",
+    "country": "USA",
+    "lat": 45.14054,
+    "lng": -89.15428,
+    "matched": "Antigo, Wisconsin, United States",
+    "provinceState": "WI"
+  },
+  "ashcroft|bc|canada": {
+    "city": "Ashcroft",
+    "country": "Canada",
+    "lat": 50.72295,
+    "lng": -121.27988,
+    "matched": "Ashcroft, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "atlanta|ga|usa": {
+    "city": "Atlanta",
+    "country": "USA",
+    "lat": 33.7508,
+    "lng": -84.38985,
+    "matched": "Atlanta, Georgia, United States",
+    "provinceState": "GA"
+  },
+  "avondale|az|usa": {
+    "city": "Avondale",
+    "country": "USA",
+    "lat": 33.43534,
+    "lng": -112.34968,
+    "matched": "Avondale, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "avonlea|sk|canada": {
+    "city": "Avonlea",
+    "country": "Canada",
+    "lat": 50.01409,
+    "lng": -105.05933,
+    "matched": "Avonlea, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "bakersfield|ca|usa": {
+    "city": "Bakersfield",
+    "country": "USA",
+    "lat": 35.37494,
+    "lng": -118.65477,
+    "matched": "Bakersfield, California, United States",
+    "provinceState": "CA"
+  },
+  "battleford|sk|canada": {
+    "city": "Battleford",
+    "country": "Canada",
+    "lat": 52.73626,
+    "lng": -108.30521,
+    "matched": "Battleford, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "bayonne|various|france": {
+    "city": "Bayonne",
+    "country": "France",
+    "lat": 43.48978,
+    "lng": -1.4742,
+    "matched": "Bayonne, Pyr\u00e9n\u00e9es-Atlantiques, France",
+    "provinceState": "Various"
+  },
+  "bethune|sk|canada": {
+    "city": "Bethune",
+    "country": "Canada",
+    "lat": 50.71245,
+    "lng": -105.20536,
+    "matched": "Bethune, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "big lake ranch|bc|canada": {
+    "city": "Big Lake Ranch",
+    "country": "Canada",
+    "lat": 52.42234,
+    "lng": -121.85864,
+    "matched": "Big Lake Ranch, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "billings|mt|usa": {
+    "city": "Billings",
+    "country": "USA",
+    "lat": 45.78353,
+    "lng": -108.50538,
+    "matched": "Billings, Montana, United States",
+    "provinceState": "MT"
+  },
+  "blumenhof|sk|canada": {
+    "city": "Blumenhof",
+    "country": "Canada",
+    "lat": 50.02459,
+    "lng": -107.70245,
+    "matched": "Blumenhof, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "boone|ia|usa": {
+    "city": "Boone",
+    "country": "USA",
+    "lat": 42.06273,
+    "lng": -93.88001,
+    "matched": "Boone, Iowa, United States",
+    "provinceState": "IA"
+  },
+  "boston|ma|usa": {
+    "city": "Boston",
+    "country": "USA",
+    "lat": 42.35888,
+    "lng": -71.0568,
+    "matched": "Boston, Massachusetts, United States",
+    "provinceState": "MA"
+  },
+  "bozeman|mt|usa": {
+    "city": "Bozeman",
+    "country": "USA",
+    "lat": 45.6793,
+    "lng": -111.03573,
+    "matched": "Bozeman, Montana, United States",
+    "provinceState": "MT"
+  },
+  "brampton|on|canada": {
+    "city": "Brampton",
+    "country": "Canada",
+    "lat": 43.68589,
+    "lng": -79.75994,
+    "matched": "Brampton, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "broadway winnipeg|mb|canada": {
+    "city": "Broadway Winnipeg",
+    "country": "Canada",
+    "lat": 49.89558,
+    "lng": -97.1386,
+    "matched": "Winnipeg, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "brooks|ab|canada": {
+    "city": "Brooks",
+    "country": "Canada",
+    "lat": 50.57209,
+    "lng": -111.89255,
+    "matched": "Brooks, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "buckeye|az|usa": {
+    "city": "Buckeye",
+    "country": "USA",
+    "lat": 33.37049,
+    "lng": -112.58358,
+    "matched": "Buckeye, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "cache creek|bc|canada": {
+    "city": "Cache Creek",
+    "country": "Canada",
+    "lat": 50.80883,
+    "lng": -121.32538,
+    "matched": "Cache Creek, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "calgary|ab|canada": {
+    "city": "Calgary",
+    "country": "Canada",
+    "lat": 51.0457,
+    "lng": -114.06795,
+    "matched": "Calgary, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "canal garden strathmore|ab|canada": {
+    "city": "Canal Garden Strathmore",
+    "country": "Canada",
+    "lat": 51.0431,
+    "lng": -113.39601,
+    "matched": "Strathmore, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "centennial|co|usa": {
+    "city": "Centennial",
+    "country": "USA",
+    "lat": 39.58035,
+    "lng": -104.87363,
+    "matched": "Centennial, Colorado, United States",
+    "provinceState": "CO"
+  },
+  "chicago|il|usa": {
+    "city": "Chicago",
+    "country": "USA",
+    "lat": 41.88195,
+    "lng": -87.63236,
+    "matched": "Chicago, Illinois, United States",
+    "provinceState": "IL"
+  },
+  "chilliwack|bc|canada": {
+    "city": "Chilliwack",
+    "country": "Canada",
+    "lat": 49.17095,
+    "lng": -121.95257,
+    "matched": "Chilliwack, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "cincinnati oh|various|usa": {
+    "city": "Cincinnati OH",
+    "country": "USA",
+    "lat": 39.10244,
+    "lng": -84.5133,
+    "matched": "Cincinnati, Ohio, United States",
+    "provinceState": "Various"
+  },
+  "cincinnati|oh|usa": {
+    "city": "Cincinnati",
+    "country": "USA",
+    "lat": 39.10244,
+    "lng": -84.5133,
+    "matched": "Cincinnati, Ohio, United States",
+    "provinceState": "OH"
+  },
+  "clinton|bc|canada": {
+    "city": "Clinton",
+    "country": "Canada",
+    "lat": 51.0924,
+    "lng": -121.58591,
+    "matched": "Clinton, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "conquest|sk|canada": {
+    "city": "Conquest",
+    "country": "Canada",
+    "lat": 51.5309,
+    "lng": -107.24162,
+    "matched": "Conquest, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "coolidge|az|usa": {
+    "city": "Coolidge",
+    "country": "USA",
+    "lat": 32.97767,
+    "lng": -111.5179,
+    "matched": "Coolidge, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "coquitlam|bc|canada": {
+    "city": "Coquitlam",
+    "country": "Canada",
+    "lat": 49.27962,
+    "lng": -122.79413,
+    "matched": "Coquitlam, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "corman park|sk|canada": {
+    "city": "Corman Park",
+    "country": "Canada",
+    "lat": 52.0856,
+    "lng": -106.57677,
+    "matched": "Corman Park, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "craik|sk|canada": {
+    "city": "Craik",
+    "country": "Canada",
+    "lat": 51.04747,
+    "lng": -105.82057,
+    "matched": "Craik, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "craven|sk|canada": {
+    "city": "Craven",
+    "country": "Canada",
+    "lat": 50.70679,
+    "lng": -104.81006,
+    "matched": "Craven, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "crossfield|ab|canada": {
+    "city": "Crossfield",
+    "country": "Canada",
+    "lat": 51.4283,
+    "lng": -114.02772,
+    "matched": "Crossfield, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "dallas|tx|usa": {
+    "city": "Dallas",
+    "country": "USA",
+    "lat": 32.78134,
+    "lng": -96.79976,
+    "matched": "Dallas, Texas, United States",
+    "provinceState": "TX"
+  },
+  "dauphin|mb|canada": {
+    "city": "Dauphin",
+    "country": "Canada",
+    "lat": 51.14965,
+    "lng": -100.04991,
+    "matched": "Dauphin, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "delta|bc|canada": {
+    "city": "Delta",
+    "country": "Canada",
+    "lat": 49.08517,
+    "lng": -123.05662,
+    "matched": "Delta, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "denver|co|usa": {
+    "city": "Denver",
+    "country": "USA",
+    "lat": 39.74168,
+    "lng": -104.98611,
+    "matched": "Denver, Colorado, United States",
+    "provinceState": "CO"
+  },
+  "didsbury|ab|canada": {
+    "city": "Didsbury",
+    "country": "Canada",
+    "lat": 51.66001,
+    "lng": -114.13746,
+    "matched": "Didsbury, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "east moose jaw|sk|canada": {
+    "city": "East Moose Jaw",
+    "country": "Canada",
+    "lat": 50.40059,
+    "lng": -105.54282,
+    "matched": "Moose Jaw, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "east swift current|sk|canada": {
+    "city": "East Swift Current",
+    "country": "Canada",
+    "lat": 43.8022,
+    "lng": -65.1231,
+    "matched": "Canada Hill, Lockeport, Nova Scotia, Canada",
+    "provinceState": "SK"
+  },
+  "edmonton|ab|canada": {
+    "city": "Edmonton",
+    "country": "Canada",
+    "lat": 53.54314,
+    "lng": -113.49374,
+    "matched": "Edmonton, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "elkhorn|mb|canada": {
+    "city": "Elkhorn",
+    "country": "Canada",
+    "lat": 49.97537,
+    "lng": -101.24084,
+    "matched": "Elkhorn, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "emerald park|sk|canada": {
+    "city": "Emerald Park",
+    "country": "Canada",
+    "lat": 50.44018,
+    "lng": -104.38901,
+    "matched": "Emerald Park, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "estevan|sk|canada": {
+    "city": "Estevan",
+    "country": "Canada",
+    "lat": 49.14245,
+    "lng": -102.99151,
+    "matched": "Estevan, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "gravelbourg|sk|canada": {
+    "city": "Gravelbourg",
+    "country": "Canada",
+    "lat": 49.87566,
+    "lng": -106.55732,
+    "matched": "Gravelbourg, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "hafford|sk|canada": {
+    "city": "Hafford",
+    "country": "Canada",
+    "lat": 52.72738,
+    "lng": -107.35314,
+    "matched": "Hafford, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "hardin|mt|usa": {
+    "city": "Hardin",
+    "country": "USA",
+    "lat": 45.73139,
+    "lng": -107.60594,
+    "matched": "Hardin, Montana, United States",
+    "provinceState": "MT"
+  },
+  "havre|mt|usa": {
+    "city": "Havre",
+    "country": "USA",
+    "lat": 48.55348,
+    "lng": -109.67661,
+    "matched": "Havre, Montana, United States",
+    "provinceState": "MT"
+  },
+  "heber heber|ca|usa": {
+    "city": "Heber Heber",
+    "country": "USA",
+    "lat": 32.73067,
+    "lng": -115.53006,
+    "matched": "Heber, California, United States",
+    "provinceState": "CA"
+  },
+  "holland landing|on|canada": {
+    "city": "Holland Landing",
+    "country": "Canada",
+    "lat": 44.10142,
+    "lng": -79.49155,
+    "matched": "Holland Landing, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "huron|sd|usa": {
+    "city": "Huron",
+    "country": "USA",
+    "lat": 44.36324,
+    "lng": -98.21416,
+    "matched": "Huron, South Dakota, United States",
+    "provinceState": "SD"
+  },
+  "irmo|sc|usa": {
+    "city": "Irmo",
+    "country": "USA",
+    "lat": 34.08651,
+    "lng": -81.18216,
+    "matched": "Irmo, South Carolina, United States",
+    "provinceState": "SC"
+  },
+  "kamloops|bc|canada": {
+    "city": "Kamloops",
+    "country": "Canada",
+    "lat": 50.67669,
+    "lng": -120.3344,
+    "matched": "Kamloops, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "kamsack|sk|canada": {
+    "city": "Kamsack",
+    "country": "Canada",
+    "lat": 51.56483,
+    "lng": -101.90075,
+    "matched": "Kamsack, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "kelowna|bc|canada": {
+    "city": "Kelowna",
+    "country": "Canada",
+    "lat": 49.88632,
+    "lng": -119.4935,
+    "matched": "Kelowna, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "kindersley|sk|canada": {
+    "city": "Kindersley",
+    "country": "Canada",
+    "lat": 51.46741,
+    "lng": -109.15456,
+    "matched": "Kindersley, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "krestova|bc|canada": {
+    "city": "Krestova",
+    "country": "Canada",
+    "lat": 49.44422,
+    "lng": -117.58375,
+    "matched": "Krestova, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "lajord|sk|canada": {
+    "city": "Lajord",
+    "country": "Canada",
+    "lat": 50.24076,
+    "lng": -104.15485,
+    "matched": "Lajord, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "langdon|ab|canada": {
+    "city": "Langdon",
+    "country": "Canada",
+    "lat": 50.97353,
+    "lng": -113.67949,
+    "matched": "Langdon, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "las cruces nm|various|usa": {
+    "city": "Las Cruces NM",
+    "country": "USA",
+    "lat": 32.77271,
+    "lng": -106.54665,
+    "matched": "Las Cruces, New Mexico, United States",
+    "provinceState": "Various"
+  },
+  "las cruces|nm|usa": {
+    "city": "Las Cruces",
+    "country": "USA",
+    "lat": 32.77271,
+    "lng": -106.54665,
+    "matched": "Las Cruces, New Mexico, United States",
+    "provinceState": "NM"
+  },
+  "laurel|mt|usa": {
+    "city": "Laurel",
+    "country": "USA",
+    "lat": 45.66923,
+    "lng": -108.77146,
+    "matched": "Laurel, Montana, United States",
+    "provinceState": "MT"
+  },
+  "leamington|on|canada": {
+    "city": "Leamington",
+    "country": "Canada",
+    "lat": 42.0531,
+    "lng": -82.59981,
+    "matched": "Leamington, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "lethbridge|ab|canada": {
+    "city": "Lethbridge",
+    "country": "Canada",
+    "lat": 49.69443,
+    "lng": -112.83699,
+    "matched": "Lethbridge, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "lillooet|bc|canada": {
+    "city": "Lillooet",
+    "country": "Canada",
+    "lat": 50.69257,
+    "lng": -121.93552,
+    "matched": "Lillooet, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "london|on|canada": {
+    "city": "London",
+    "country": "Canada",
+    "lat": 42.98498,
+    "lng": -81.25031,
+    "matched": "London, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "los angeles|ca|usa": {
+    "city": "Los Angeles",
+    "country": "USA",
+    "lat": 34.04805,
+    "lng": -118.25419,
+    "matched": "Los Angeles, California, United States",
+    "provinceState": "CA"
+  },
+  "lutz|fl|usa": {
+    "city": "Lutz",
+    "country": "USA",
+    "lat": 28.13958,
+    "lng": -82.46273,
+    "matched": "Lutz, Florida, United States",
+    "provinceState": "FL"
+  },
+  "martensville|sk|canada": {
+    "city": "Martensville",
+    "country": "Canada",
+    "lat": 52.28995,
+    "lng": -106.67024,
+    "matched": "Martensville, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "mccall landing ne calgary|ab|canada": {
+    "city": "McCall Landing NE Calgary",
+    "country": "Canada",
+    "lat": 51.1138,
+    "lng": -113.98399,
+    "matched": "Northeast Calgary, Calgary, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "medicine hat|ab|canada": {
+    "city": "Medicine Hat",
+    "country": "Canada",
+    "lat": 50.03974,
+    "lng": -110.67564,
+    "matched": "Medicine Hat, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "melville|sk|canada": {
+    "city": "Melville",
+    "country": "Canada",
+    "lat": 50.92847,
+    "lng": -102.80582,
+    "matched": "Melville, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "mesa|az|usa": {
+    "city": "Mesa",
+    "country": "USA",
+    "lat": 33.4152,
+    "lng": -111.83148,
+    "matched": "Mesa, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "milton|on|canada": {
+    "city": "Milton",
+    "country": "Canada",
+    "lat": 43.51347,
+    "lng": -79.88279,
+    "matched": "Milton, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "mississauga|on|canada": {
+    "city": "Mississauga",
+    "country": "Canada",
+    "lat": 43.58905,
+    "lng": -79.64278,
+    "matched": "Mississauga, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "moccasin|mt|usa": {
+    "city": "Moccasin",
+    "country": "USA",
+    "lat": 47.05436,
+    "lng": -109.9106,
+    "matched": "Moccasin, Montana, United States",
+    "provinceState": "MT"
+  },
+  "moncton|nb|canada": {
+    "city": "Moncton",
+    "country": "Canada",
+    "lat": 46.09846,
+    "lng": -64.80004,
+    "matched": "Moncton, New Brunswick, Canada",
+    "provinceState": "NB"
+  },
+  "montreal|qc|canada": {
+    "city": "Montreal",
+    "country": "Canada",
+    "lat": 45.50283,
+    "lng": -73.5728,
+    "matched": "Montr\u00e9al, Quebec, Canada",
+    "provinceState": "QC"
+  },
+  "moose jaw|sk|canada": {
+    "city": "Moose Jaw",
+    "country": "Canada",
+    "lat": 50.40059,
+    "lng": -105.54282,
+    "matched": "Moose Jaw, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "morris|mb|canada": {
+    "city": "Morris",
+    "country": "Canada",
+    "lat": 49.35469,
+    "lng": -97.36465,
+    "matched": "Morris, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "neepawa|mb|canada": {
+    "city": "Neepawa",
+    "country": "Canada",
+    "lat": 50.22849,
+    "lng": -99.46645,
+    "matched": "Neepawa, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "new york|ny|usa": {
+    "city": "New York",
+    "country": "USA",
+    "lat": 40.71275,
+    "lng": -74.00599,
+    "matched": "New York, New York, United States",
+    "provinceState": "NY"
+  },
+  "newark|nj|usa": {
+    "city": "Newark",
+    "country": "USA",
+    "lat": 40.73318,
+    "lng": -74.1735,
+    "matched": "Newark, New Jersey, United States",
+    "provinceState": "NJ"
+  },
+  "nisku|ab|canada": {
+    "city": "Nisku",
+    "country": "Canada",
+    "lat": 53.33326,
+    "lng": -113.53132,
+    "matched": "Nisku, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "north battleford|sk|canada": {
+    "city": "North Battleford",
+    "country": "Canada",
+    "lat": 52.77337,
+    "lng": -108.29906,
+    "matched": "North Battleford, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "north portal|sk|canada": {
+    "city": "North Portal",
+    "country": "Canada",
+    "lat": 49.00084,
+    "lng": -102.54777,
+    "matched": "North Portal, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "omaha|ne|usa": {
+    "city": "Omaha",
+    "country": "USA",
+    "lat": 41.25657,
+    "lng": -95.94096,
+    "matched": "Omaha, Nebraska, United States",
+    "provinceState": "NE"
+  },
+  "orillia|on|canada": {
+    "city": "Orillia",
+    "country": "Canada",
+    "lat": 44.60797,
+    "lng": -79.41676,
+    "matched": "Orillia, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "ottawa|on|canada": {
+    "city": "Ottawa",
+    "country": "Canada",
+    "lat": 45.4202,
+    "lng": -75.69779,
+    "matched": "Ottawa, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "outlook|sk|canada": {
+    "city": "Outlook",
+    "country": "Canada",
+    "lat": 51.48808,
+    "lng": -107.0555,
+    "matched": "Outlook, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "phoenix|az|usa": {
+    "city": "Phoenix",
+    "country": "USA",
+    "lat": 33.44823,
+    "lng": -112.0751,
+    "matched": "Phoenix, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "pickering|on|canada": {
+    "city": "Pickering",
+    "country": "Canada",
+    "lat": 43.83763,
+    "lng": -79.08469,
+    "matched": "Pickering, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "pointe-aux-outardes|qc|canada": {
+    "city": "Pointe-aux-Outardes",
+    "country": "Canada",
+    "lat": 49.04282,
+    "lng": -68.41801,
+    "matched": "Pointe-aux-Outardes, Quebec, Canada",
+    "provinceState": "QC"
+  },
+  "ponoka|ab|canada": {
+    "city": "Ponoka",
+    "country": "Canada",
+    "lat": 52.67613,
+    "lng": -113.57607,
+    "matched": "Ponoka, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "port coquitlam|bc|canada": {
+    "city": "Port Coquitlam",
+    "country": "Canada",
+    "lat": 49.26283,
+    "lng": -122.78114,
+    "matched": "Port Coquitlam, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "postal station a toronto|on|canada": {
+    "city": "Postal Station A Toronto",
+    "country": "Canada",
+    "lat": 43.64794,
+    "lng": -79.38355,
+    "matched": "Toronto, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "prince albert|sk|canada": {
+    "city": "Prince Albert",
+    "country": "Canada",
+    "lat": 53.20307,
+    "lng": -105.75427,
+    "matched": "Prince Albert, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "pritchard|bc|canada": {
+    "city": "Pritchard",
+    "country": "Canada",
+    "lat": 50.68603,
+    "lng": -119.83315,
+    "matched": "Pritchard, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "regina|sk|canada": {
+    "city": "Regina",
+    "country": "Canada",
+    "lat": 50.44891,
+    "lng": -104.6108,
+    "matched": "Regina, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "richmond|bc|canada": {
+    "city": "Richmond",
+    "country": "Canada",
+    "lat": 49.16278,
+    "lng": -123.13666,
+    "matched": "Richmond, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "riviere-du-loup|qc|canada": {
+    "city": "Riviere-du-Loup",
+    "country": "Canada",
+    "lat": 47.82995,
+    "lng": -69.53393,
+    "matched": "Rivi\u00e8re-du-Loup, Quebec, Canada",
+    "provinceState": "QC"
+  },
+  "rocky view county|ab|canada": {
+    "city": "Rocky View County",
+    "country": "Canada",
+    "lat": 51.06139,
+    "lng": -113.89127,
+    "matched": "Rocky View County, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "rocky view|ab|canada": {
+    "city": "Rocky View",
+    "country": "Canada",
+    "lat": 51.19028,
+    "lng": -113.93583,
+    "matched": "Rocky View, Rocky View County, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "rpo creekside airdrie|ab|canada": {
+    "city": "RPO Creekside Airdrie",
+    "country": "Canada",
+    "lat": 51.28668,
+    "lng": -114.01019,
+    "matched": "Airdrie, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "rr2 didsbury|ab|canada": {
+    "city": "RR2 Didsbury",
+    "country": "Canada",
+    "lat": 51.66001,
+    "lng": -114.13746,
+    "matched": "Didsbury, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "rue hickmore saint-laurent|qc|canada": {
+    "city": "Rue Hickmore Saint-Laurent",
+    "country": "Canada",
+    "lat": 45.51284,
+    "lng": -73.68046,
+    "matched": "Saint-Laurent, Quebec, Canada",
+    "provinceState": "QC"
+  },
+  "rush lake|sk|canada": {
+    "city": "Rush Lake",
+    "country": "Canada",
+    "lat": 50.40464,
+    "lng": -107.40253,
+    "matched": "Rush Lake, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "saanich|bc|canada": {
+    "city": "Saanich",
+    "country": "Canada",
+    "lat": 48.45939,
+    "lng": -123.3777,
+    "matched": "Saanich, Victoria, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "salinas|ca|usa": {
+    "city": "Salinas",
+    "country": "USA",
+    "lat": 36.67547,
+    "lng": -121.65644,
+    "matched": "Salinas, California, United States",
+    "provinceState": "CA"
+  },
+  "san antonio|tx|usa": {
+    "city": "San Antonio",
+    "country": "USA",
+    "lat": 29.42453,
+    "lng": -98.49148,
+    "matched": "San Antonio, Texas, United States",
+    "provinceState": "TX"
+  },
+  "san francisco|ca|usa": {
+    "city": "San Francisco",
+    "country": "USA",
+    "lat": 37.77924,
+    "lng": -122.41936,
+    "matched": "San Francisco, California, United States",
+    "provinceState": "CA"
+  },
+  "santa cruz|ca|usa": {
+    "city": "Santa Cruz",
+    "country": "USA",
+    "lat": 36.97331,
+    "lng": -122.02717,
+    "matched": "Santa Cruz, California, United States",
+    "provinceState": "CA"
+  },
+  "santa fe springs|ca|usa": {
+    "city": "Santa Fe Springs",
+    "country": "USA",
+    "lat": 33.94705,
+    "lng": -118.0697,
+    "matched": "Santa Fe Springs, California, United States",
+    "provinceState": "CA"
+  },
+  "santa maria|ca|usa": {
+    "city": "Santa Maria",
+    "country": "USA",
+    "lat": 34.95307,
+    "lng": -120.43597,
+    "matched": "Santa Maria, California, United States",
+    "provinceState": "CA"
+  },
+  "saskatoon|sk|canada": {
+    "city": "Saskatoon",
+    "country": "Canada",
+    "lat": 52.12841,
+    "lng": -106.66217,
+    "matched": "Saskatoon, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "scottsdale|az|usa": {
+    "city": "Scottsdale",
+    "country": "USA",
+    "lat": 33.49682,
+    "lng": -111.92618,
+    "matched": "Scottsdale, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "semans|sk|canada": {
+    "city": "Semans",
+    "country": "Canada",
+    "lat": 51.40689,
+    "lng": -104.72946,
+    "matched": "Semans, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "service rad swift current|sk|canada": {
+    "city": "Service Rad Swift Current",
+    "country": "Canada",
+    "lat": 50.28502,
+    "lng": -107.80006,
+    "matched": "Swift Current, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "shaunavon|sk|canada": {
+    "city": "Shaunavon",
+    "country": "Canada",
+    "lat": 49.64735,
+    "lng": -108.40855,
+    "matched": "Shaunavon, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "sherwood park|ab|canada": {
+    "city": "Sherwood Park",
+    "country": "Canada",
+    "lat": 53.52792,
+    "lng": -113.29552,
+    "matched": "Sherwood Park, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "simmie|sk|canada": {
+    "city": "Simmie",
+    "country": "Canada",
+    "lat": 49.9452,
+    "lng": -108.10356,
+    "matched": "Simmie, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "soledad|ca|usa": {
+    "city": "Soledad",
+    "country": "USA",
+    "lat": 36.42559,
+    "lng": -121.3272,
+    "matched": "Soledad, California, United States",
+    "provinceState": "CA"
+  },
+  "spreckels|ca|usa": {
+    "city": "Spreckels",
+    "country": "USA",
+    "lat": 36.62241,
+    "lng": -121.64723,
+    "matched": "Spreckels, California, United States",
+    "provinceState": "CA"
+  },
+  "stanton|ca|usa": {
+    "city": "Stanton",
+    "country": "USA",
+    "lat": 33.77384,
+    "lng": -117.99269,
+    "matched": "Stanton, California, United States",
+    "provinceState": "CA"
+  },
+  "stewart valley|sk|canada": {
+    "city": "Stewart Valley",
+    "country": "Canada",
+    "lat": 50.59613,
+    "lng": -107.80518,
+    "matched": "Stewart Valley, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "stratford|pe|canada": {
+    "city": "Stratford",
+    "country": "Canada",
+    "lat": 46.21681,
+    "lng": -63.08811,
+    "matched": "Stratford, Prince Edward Island, Canada",
+    "provinceState": "PE"
+  },
+  "sundre|ab|canada": {
+    "city": "Sundre",
+    "country": "Canada",
+    "lat": 51.79704,
+    "lng": -114.64178,
+    "matched": "Sundre, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "surprise|az|usa": {
+    "city": "Surprise",
+    "country": "USA",
+    "lat": 33.62904,
+    "lng": -112.36719,
+    "matched": "Surprise, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "surrey|bc|canada": {
+    "city": "Surrey",
+    "country": "Canada",
+    "lat": 49.19165,
+    "lng": -122.85067,
+    "matched": "Surrey, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "swan river|mb|canada": {
+    "city": "Swan River",
+    "country": "Canada",
+    "lat": 52.10532,
+    "lng": -101.26911,
+    "matched": "Swan River, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "swift current|sk|canada": {
+    "city": "Swift Current",
+    "country": "Canada",
+    "lat": 50.28502,
+    "lng": -107.80006,
+    "matched": "Swift Current, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "taber|ab|canada": {
+    "city": "Taber",
+    "country": "Canada",
+    "lat": 49.79223,
+    "lng": -112.14306,
+    "matched": "Taber, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "tampa|fl|usa": {
+    "city": "Tampa",
+    "country": "USA",
+    "lat": 27.94797,
+    "lng": -82.4571,
+    "matched": "Tampa, Florida, United States",
+    "provinceState": "FL"
+  },
+  "terminal vancouver|bc|canada": {
+    "city": "Terminal Vancouver",
+    "country": "Canada",
+    "lat": 49.26098,
+    "lng": -123.11498,
+    "matched": "Vancouver, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "the pas|mb|canada": {
+    "city": "The Pas",
+    "country": "Canada",
+    "lat": 53.82141,
+    "lng": -101.23952,
+    "matched": "The Pas, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "thornton|on|canada": {
+    "city": "Thornton",
+    "country": "Canada",
+    "lat": 44.27554,
+    "lng": -79.7194,
+    "matched": "Thornton, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "thorold|on|canada": {
+    "city": "Thorold",
+    "country": "Canada",
+    "lat": 43.125,
+    "lng": -79.19902,
+    "matched": "Thorold, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "tonopah|az|usa": {
+    "city": "Tonopah",
+    "country": "USA",
+    "lat": 33.4937,
+    "lng": -112.93695,
+    "matched": "Tonopah, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "toronto|on|canada": {
+    "city": "Toronto",
+    "country": "Canada",
+    "lat": 43.64794,
+    "lng": -79.38355,
+    "matched": "Toronto, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "vancouver|bc|canada": {
+    "city": "Vancouver",
+    "country": "Canada",
+    "lat": 49.26098,
+    "lng": -123.11498,
+    "matched": "Vancouver, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "veregin|sk|canada": {
+    "city": "Veregin",
+    "country": "Canada",
+    "lat": 51.58178,
+    "lng": -102.07681,
+    "matched": "Veregin, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "vernon|bc|canada": {
+    "city": "Vernon",
+    "country": "Canada",
+    "lat": 50.26378,
+    "lng": -119.27376,
+    "matched": "Vernon, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "victoria|bc|canada": {
+    "city": "Victoria",
+    "country": "Canada",
+    "lat": 48.42659,
+    "lng": -123.36747,
+    "matched": "Victoria, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "vittoria|on|canada": {
+    "city": "Vittoria",
+    "country": "Canada",
+    "lat": 42.76237,
+    "lng": -80.32299,
+    "matched": "Vittoria, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "waddell|az|usa": {
+    "city": "Waddell",
+    "country": "USA",
+    "lat": 33.5648,
+    "lng": -112.44435,
+    "matched": "Waddell, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "waldeck|sk|canada": {
+    "city": "Waldeck",
+    "country": "Canada",
+    "lat": 50.3598,
+    "lng": -107.5922,
+    "matched": "Waldeck, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "warner|ab|canada": {
+    "city": "Warner",
+    "country": "Canada",
+    "lat": 49.28307,
+    "lng": -112.20744,
+    "matched": "Warner, Alberta, Canada",
+    "provinceState": "AB"
+  },
+  "warren|mb|canada": {
+    "city": "Warren",
+    "country": "Canada",
+    "lat": 50.13119,
+    "lng": -97.54593,
+    "matched": "Warren, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "washington phoenix|az|usa": {
+    "city": "Washington Phoenix",
+    "country": "USA",
+    "lat": 33.44823,
+    "lng": -112.0751,
+    "matched": "Phoenix, Arizona, United States",
+    "provinceState": "AZ"
+  },
+  "watford city|nd|usa": {
+    "city": "Watford City",
+    "country": "USA",
+    "lat": 47.88243,
+    "lng": -103.00049,
+    "matched": "Watford City, North Dakota, United States",
+    "provinceState": "ND"
+  },
+  "west prince albert|sk|canada": {
+    "city": "West Prince Albert",
+    "country": "Canada",
+    "lat": 53.20307,
+    "lng": -105.75427,
+    "matched": "Prince Albert, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "williams lake|bc|canada": {
+    "city": "Williams Lake",
+    "country": "Canada",
+    "lat": 52.12891,
+    "lng": -122.14239,
+    "matched": "Williams Lake, British Columbia, Canada",
+    "provinceState": "BC"
+  },
+  "winnipeg|mb|canada": {
+    "city": "Winnipeg",
+    "country": "Canada",
+    "lat": 49.89558,
+    "lng": -97.1386,
+    "matched": "Winnipeg, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "woodbridge|on|canada": {
+    "city": "Woodbridge",
+    "country": "Canada",
+    "lat": 43.828,
+    "lng": -79.58466,
+    "matched": "Woodbridge, Vaughan, Ontario, Canada",
+    "provinceState": "ON"
+  },
+  "woodland|ca|usa": {
+    "city": "Woodland",
+    "country": "USA",
+    "lat": 38.67744,
+    "lng": -121.7719,
+    "matched": "Woodland, California, United States",
+    "provinceState": "CA"
+  },
+  "york winnipeg|mb|canada": {
+    "city": "York Winnipeg",
+    "country": "Canada",
+    "lat": 49.89558,
+    "lng": -97.1386,
+    "matched": "Winnipeg, Manitoba, Canada",
+    "provinceState": "MB"
+  },
+  "yorkton|sk|canada": {
+    "city": "Yorkton",
+    "country": "Canada",
+    "lat": 51.21201,
+    "lng": -102.45993,
+    "matched": "Yorkton, Saskatchewan, Canada",
+    "provinceState": "SK"
+  },
+  "york|pe|canada": {
+    "city": "York",
+    "country": "Canada",
+    "lat": 46.31602,
+    "lng": -63.09721,
+    "matched": "York, Prince Edward Island, Canada",
+    "provinceState": "PE"
+  },
+  "yuma|az|usa": {
+    "city": "Yuma",
+    "country": "USA",
+    "lat": 32.69232,
+    "lng": -114.62896,
+    "matched": "Yuma, Arizona, United States",
+    "provinceState": "AZ"
+  }
+}

@@ -1,0 +1,50 @@
+# Secrets / env
+.env
+.env.*
+!.env.example
+
+# Generated runtime config (template lives at config.template.js).
+# Build script renders config.template.js -> config.js + public/config.js
+# with MAPBOX_TOKEN substituted from env. Never commit the rendered file.
+/config.js
+
+# Vercel / Supabase / tool state
+.vercel
+.firecrawl/
+.playwright-cli/
+.claude/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build output
+build/
+output/
+test-results/
+dist/
+public/
+supabase/.temp/
+
+# Logs
+*.log
+
+# Private content not published via this repo
+# Deploys go directly via `vercel --prod` from local C:; these stay off GitHub.
+docs/
+dossiers/
+_refs/
+*.pdf
+
+# Stray console-snippet files (Playwright eval residue)
+JSON.stringify*
+document.querySelector*
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo

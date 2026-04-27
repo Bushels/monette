@@ -1,0 +1,8 @@
+docs
+_refs
+.claude
+server-*.log
+desktop*.png
+mobile*.png
+_*.png
+_*.jpg

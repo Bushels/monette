@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Where Deon Vissar fits in Monette's United States company structure</title>
+  <desc id="desc">A court-filing based organization graphic showing DMO Holdings, DMO Holdings USA, the four U.S. subsidiaries, 1012595 DE Inc., Deon Vissar's non-voting preference shares, and the Monette USA and 1012 DE joint venture.</desc>
+  <defs>
+    <marker id="arrow-dark" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#1a1815"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#3f5b6c"/>
+    </marker>
+    <marker id="arrow-rust" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#9a3a2a"/>
+    </marker>
+    <filter id="paper-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#1a1815" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      .bg { fill: #f5f1ea; }
+      .panel { fill: #fbf8f1; stroke: #d9d2c3; stroke-width: 2; }
+      .box { fill: #fffdf8; stroke: #1a1815; stroke-width: 2.4; }
+      .box-muted { fill: #f2ecdf; stroke: #c6bfae; stroke-width: 2; }
+      .box-blue { fill: #eef4f5; stroke: #3f5b6c; stroke-width: 3; }
+      .box-gold { fill: #fff7e3; stroke: #b48638; stroke-width: 3; }
+      .box-rust { fill: #fff3ef; stroke: #9a3a2a; stroke-width: 3; }
+      .ink { fill: #1a1815; }
+      .muted { fill: #6e6558; }
+      .blue { fill: #3f5b6c; }
+      .rust { fill: #9a3a2a; }
+      .green { fill: #4e6a30; }
+      .gold { fill: #7a5a1e; }
+      .label { font: 700 14px/1.2 "Geist", "Inter", Arial, sans-serif; letter-spacing: 1.4px; text-transform: uppercase; }
+      .title { font: 800 52px/1.05 "Geist", "Inter", Arial, sans-serif; }
+      .subtitle { font: 500 22px/1.35 "Geist", "Inter", Arial, sans-serif; }
+      .h2 { font: 800 24px/1.15 "Geist", "Inter", Arial, sans-serif; }
+      .entity { font: 800 25px/1.1 "Geist", "Inter", Arial, sans-serif; }
+      .small-entity { font: 800 21px/1.1 "Geist", "Inter", Arial, sans-serif; }
+      .meta { font: 500 16px/1.25 "Geist", "Inter", Arial, sans-serif; }
+      .note { font: 500 18px/1.3 "Geist", "Inter", Arial, sans-serif; }
+      .tiny { font: 500 13px/1.3 "Geist", "Inter", Arial, sans-serif; }
+      .mono { font: 700 13px/1.25 "JetBrains Mono", "SFMono-Regular", Consolas, monospace; letter-spacing: 0.7px; text-transform: uppercase; }
+      .line { fill: none; stroke: #1a1815; stroke-width: 3; marker-end: url(#arrow-dark); }
+      .line-plain { fill: none; stroke: #1a1815; stroke-width: 2.4; }
+      .line-blue { fill: none; stroke: #3f5b6c; stroke-width: 3; marker-end: url(#arrow-blue); }
+      .line-rust { fill: none; stroke: #9a3a2a; stroke-width: 3; marker-end: url(#arrow-rust); }
+      .dash { stroke-dasharray: 8 8; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1800" height="1200"/>
+  <rect x="0" y="0" width="1800" height="18" fill="#1a1815"/>
+  <rect x="0" y="1182" width="1800" height="18" fill="#1a1815"/>
+
+  <text class="mono muted" x="80" y="62">MONETTE COURT-FILED STRUCTURE</text>
+  <text class="title ink" x="80" y="125">Where Deon Vissar fits</text>
+  <text class="subtitle muted" x="80" y="165">
+    <tspan x="80" dy="0">According to the affidavit, DMO Holdings controls the U.S. entities.</tspan>
+    <tspan x="80" dy="30">Vissar appears at 1012595 DE Inc. as a non-voting preference shareholder.</tspan>
+  </text>
+  <rect x="1372" y="62" width="348" height="82" rx="0" fill="#ece6db" stroke="#c6bfae" stroke-width="1.8"/>
+  <text class="mono muted" x="1398" y="93">SOURCE ANCHOR</text>
+  <text class="meta ink" x="1398" y="121">Darrel Monette affidavit</text>
+  <text class="tiny muted" x="1398" y="141">paras. 35-38, Exhibit C structure</text>
+
+  <rect class="panel" x="60" y="215" width="980" height="525" filter="url(#paper-shadow)"/>
+  <text class="label gold" x="100" y="260">1. ownership tree</text>
+  <text class="h2 ink" x="100" y="292">The normal U.S. subsidiary stack runs through DMO USA.</text>
+
+  <rect class="box-gold" x="115" y="330" width="310" height="105"/>
+  <text class="entity ink" x="140" y="365">DMO Holdings Ltd.</text>
+  <text class="meta muted" x="140" y="393">Saskatchewan company</text>
+  <text class="tiny muted" x="140" y="415">incorporated Sept. 18, 2018</text>
+
+  <path class="line" d="M 270 436 V 505"/>
+  <rect x="200" y="456" width="140" height="34" fill="#fbf8f1"/>
+  <text class="tiny ink" x="215" y="479">100% owned</text>
+
+  <rect class="box" x="115" y="505" width="310" height="105"/>
+  <text class="small-entity ink" x="140" y="540">DMO Holdings USA, Inc.</text>
+  <text class="meta muted" x="140" y="568">"DMO USA" - Arizona</text>
+  <text class="tiny muted" x="140" y="590">incorporated Jan. 31, 2020</text>
+
+  <path class="line-plain" d="M 425 557 H 482 V 382 H 515"/>
+  <path class="line-plain" d="M 482 492 H 515"/>
+  <path class="line-plain" d="M 482 602 H 515"/>
+  <path class="line-plain" d="M 482 702 H 515"/>
+  <path class="line" d="M 482 382 H 515"/>
+  <path class="line" d="M 482 492 H 515"/>
+  <path class="line-blue" d="M 482 602 H 515"/>
+  <path class="line" d="M 482 702 H 515"/>
+  <rect x="438" y="524" width="290" height="34" fill="#fbf8f1"/>
+  <text class="tiny ink" x="452" y="547">DMO USA holds 100% of four subsidiaries</text>
+
+  <rect class="box" x="515" y="342" width="475" height="80"/>
+  <text class="small-entity ink" x="540" y="374">Monette Seeds USA, LLC</text>
+  <text class="meta muted" x="540" y="400">"Seeds USA" - Arizona - Jan. 31, 2020</text>
+
+  <rect class="box" x="515" y="452" width="475" height="80"/>
+  <text class="small-entity ink" x="540" y="484">Monette Farms Arizona, LLC</text>
+  <text class="meta muted" x="540" y="510">"MF Arizona" - Arizona - Feb. 11, 2020</text>
+
+  <rect class="box-blue" x="515" y="562" width="475" height="80"/>
+  <text class="small-entity ink" x="540" y="594">Monette Farms USA, Inc.</text>
+  <text class="meta muted" x="540" y="620">"Monette USA" - Montana - Sept. 10, 2018</text>
+
+  <rect class="box" x="515" y="662" width="475" height="80"/>
+  <text class="small-entity ink" x="540" y="694">Monette Produce, LLC</text>
+  <text class="meta muted" x="540" y="720">"Produce USA" - Arizona - Mar. 1, 2024</text>
+
+  <rect class="panel" x="1080" y="215" width="660" height="525" filter="url(#paper-shadow)"/>
+  <text class="label rust" x="1120" y="260">2. Deon Vissar relationship</text>
+  <text class="h2 ink" x="1120" y="292">Vissar is tied to 1012 DE, not the whole U.S. tree.</text>
+
+  <rect class="box-gold" x="1120" y="338" width="245" height="96"/>
+  <text class="small-entity ink" x="1142" y="371">DMO Holdings Ltd.</text>
+  <text class="meta muted" x="1142" y="397">Class A common share</text>
+  <text class="tiny gold" x="1142" y="417">sole voting shareholder</text>
+
+  <rect class="box-rust" x="1120" y="505" width="245" height="96"/>
+  <text class="small-entity ink" x="1142" y="538">Deon Vissar</text>
+  <text class="meta muted" x="1142" y="564">99 Class B preference</text>
+  <text class="tiny rust" x="1142" y="584">non-voting shares</text>
+
+  <rect class="box-blue" x="1450" y="405" width="250" height="130"/>
+  <text class="entity ink" x="1475" y="444">1012595 DE Inc.</text>
+  <text class="meta muted" x="1475" y="472">"1012 DE" - Delaware</text>
+  <text class="tiny muted" x="1475" y="494">incorporated Mar. 10, 2025</text>
+  <text class="tiny blue" x="1475" y="516">Montana operating core</text>
+
+  <path class="line" d="M 1365 386 C 1400 386, 1410 448, 1450 448"/>
+  <rect x="1372" y="345" width="245" height="42" fill="#fbf8f1"/>
+  <text class="tiny ink" x="1385" y="363">majority + voting control</text>
+  <text class="tiny muted" x="1385" y="381">one Class A Common Share</text>
+
+  <path class="line-rust" d="M 1365 553 C 1400 553, 1410 491, 1450 491"/>
+  <rect x="1372" y="555" width="250" height="42" fill="#fbf8f1"/>
+  <text class="tiny ink" x="1385" y="573">second shareholder</text>
+  <text class="tiny muted" x="1385" y="591">non-voting preference shares</text>
+
+  <rect x="1120" y="642" width="580" height="64" fill="#ece6db" stroke="#c6bfae" stroke-width="1.8"/>
+  <text class="note ink" x="1145" y="670">Plain read:</text>
+  <text class="meta muted" x="1250" y="670">The filing puts control and funding at DMO Holdings.</text>
+  <text class="meta muted" x="1145" y="694">Vissar is disclosed as non-voting at 1012 DE only.</text>
+
+  <rect class="panel" x="60" y="775" width="1680" height="335" filter="url(#paper-shadow)"/>
+  <text class="label blue" x="100" y="820">3. Montana JV operating loop</text>
+  <text class="h2 ink" x="100" y="852">1012 DE and Monette USA are the core Montana pair.</text>
+
+  <rect class="box-blue" x="170" y="915" width="380" height="122"/>
+  <text class="entity ink" x="200" y="955">Monette USA</text>
+  <text class="meta muted" x="200" y="983">owns and leases U.S. real property</text>
+  <text class="tiny blue" x="200" y="1008">acts as farm manager under service agreement</text>
+
+  <rect class="box-muted" x="710" y="910" width="380" height="135"/>
+  <text class="entity ink" x="805" y="953">JV agreement</text>
+  <text class="meta muted" x="750" y="984">both partners contribute leased land</text>
+  <text class="tiny muted" x="748" y="1010">structure shown in Exhibit C of the affidavit</text>
+
+  <rect class="box-blue" x="1250" y="915" width="380" height="122"/>
+  <text class="entity ink" x="1280" y="955">1012 DE</text>
+  <text class="meta muted" x="1280" y="983">leases land from Monette USA</text>
+  <text class="tiny blue" x="1280" y="1008">pays operating costs, crop inputs, service fee</text>
+
+  <path class="line-blue" d="M 550 928 C 680 842, 1110 842, 1250 928"/>
+  <rect x="740" y="865" width="320" height="34" fill="#fbf8f1"/>
+  <text class="tiny blue" x="760" y="888">land leased across to 1012 DE</text>
+
+  <path class="line-rust" d="M 1250 1030 C 1110 1090, 680 1090, 550 1030"/>
+  <rect x="710" y="1057" width="405" height="34" fill="#fbf8f1"/>
+  <text class="tiny rust" x="730" y="1080">service fee back to Monette USA farm manager</text>
+
+  <path class="line" d="M 550 976 H 710"/>
+  <path class="line" d="M 1250 976 H 1090"/>
+
+  <rect x="1260" y="805" width="365" height="58" fill="#fff7e3" stroke="#b48638" stroke-width="2"/>
+  <text class="tiny ink" x="1280" y="828">Funding path:</text>
+  <text class="tiny muted" x="1375" y="828">DMO Holdings sends</text>
+  <text class="tiny muted" x="1280" y="848">intercompany transfers to 1012 DE.</text>
+  <path class="line dash" d="M 1442 863 V 915"/>
+
+  <text class="tiny muted" x="80" y="1152">
+    Source: Darrel Monette affidavit, paras. 35-38. Note: the filing spells the individual name as "Deon Vissar".
+  </text>
+</svg>
