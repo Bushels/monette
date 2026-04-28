@@ -77,6 +77,10 @@ Build a satellite-imagery pipeline that emits a **per-parcel `seeded: true | fal
 
 **2026 backfill caveat:** for any territory where we're already past the ideal baseline window (especially MT), the pipeline picks the best scene available from archived imagery in the relevant window with documented QC flags; results carry a `baseline_quality: backfill` marker for transparency.
 
+**2026 MB insufficient_baseline state (observed 2026-04-28):** The Eddystone bbox is in the Manitoba Interlake heavy-snow zone. ERA5-Land's `snow_cover` for the area stays at ~68.7% through Apr 15 (the latest ERA5 publication date as of writing), and even the warmest scene (Apr 15 +4°C) doesn't meet the snow<5% gate. **All 10 candidate S1 scenes failed QC. Per spec §4.2 escape hatch, MB parcels for the 2026 season carry `applicability: insufficient_baseline` and produce `seeded: null` with the "no current baseline" UI state.** The territory will be re-run in May 2026 once ERA5 publishes through the spring thaw window — at that point we expect snow_cover to drop and qualifying scenes to appear.
+
+This is detected eagerly by `scripts/gee_pipeline/t0_baseline.py` via `InsufficientBaselineError` rather than producing a broken asset.
+
 ---
 
 ## 3. Architecture — extends existing `imagery-data.js` contract

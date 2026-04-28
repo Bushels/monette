@@ -46,6 +46,25 @@ from gee_pipeline.auth import initialize, auth_source, MONETTE_PROJECT
 
 ASSET_PARENT = f"projects/{MONETTE_PROJECT}/assets/monette/sar_baseline_2026"
 
+
+class InsufficientBaselineError(RuntimeError):
+    """No SAR scene passed the snow/freeze/precip QC gate for the given
+    territory in its baseline window.
+
+    Per spec §4.2, the calling pipeline should flag every parcel in this
+    territory with `applicability: insufficient_baseline` for the season
+    until conditions change and the export can be retried.
+    """
+
+    def __init__(self, territory: str, n_total_scenes: int):
+        self.territory = territory
+        self.n_total_scenes = n_total_scenes
+        super().__init__(
+            f"No qualifying scenes for territory '{territory}' "
+            f"(0 of {n_total_scenes} S1 scenes passed snow<5pct + temp>0C + precip<=5mm). "
+            f"Mark all {territory} parcels as applicability=insufficient_baseline."
+        )
+
 # Per-territory baseline windows, per spec §2.
 # Format: (start_iso, end_iso, bbox)
 BASELINE_WINDOWS: Dict[str, tuple] = {
@@ -151,6 +170,16 @@ def build_baseline_image(territory: str) -> ee.Image:
     s1_with_pass = s1_qc.map(qualifies)
     qualifying = s1_with_pass.filter(ee.Filter.eq("qc_pass", 1))
 
+    # Eager validation: if NO scenes pass the QC gate, the median composite
+    # would be a 0-band image and the export fails with a cryptic "Image
+    # has no bands" error. Surface this earlier, with a clear reason, so
+    # callers can flag the territory as `applicability: insufficient_baseline`
+    # per spec §4.2 instead of producing a broken asset.
+    n_qualifying = qualifying.size().getInfo()
+    if n_qualifying == 0:
+        n_total = s1_with_pass.size().getInfo()
+        raise InsufficientBaselineError(territory, n_total)
+
     # Refined Lee speckle filter, then median composite
     cleaned = qualifying.map(_refined_lee)
     composite = cleaned.select(["VV", "VH"]).median()
@@ -177,14 +206,24 @@ def export_baseline(territory: str) -> ee.batch.Task:
 
 
 def export_all(territories: list[str] | None = None) -> Dict[str, str]:
-    """Run T0 baseline export for the named territories (default: all 4)."""
+    """Run T0 baseline export for the named territories (default: all 4).
+
+    Returns a dict mapping territory -> task ID (on success) or
+    "INSUFFICIENT_BASELINE: <details>" (when the QC gate filtered out
+    every scene). The caller can grep results for either kind to drive
+    downstream behavior.
+    """
     targets = territories if territories else ["sk", "mb", "mt", "co"]
     results = {}
     for territory in targets:
         print(f"Exporting T0 baseline for {territory}...")
-        task = export_baseline(territory)
-        results[territory] = task.id
-        print(f"  task: {task.id}")
+        try:
+            task = export_baseline(territory)
+            results[territory] = task.id
+            print(f"  task: {task.id}")
+        except InsufficientBaselineError as e:
+            results[territory] = f"INSUFFICIENT_BASELINE: {e}"
+            print(f"  SKIPPED -- {e}")
     return results
 
 
