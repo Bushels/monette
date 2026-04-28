@@ -98,10 +98,23 @@ def _refined_lee(image: ee.Image) -> ee.Image:
 
 
 def build_baseline_image(territory: str) -> ee.Image:
-    """Build the median-composited T0 baseline image for one territory."""
+    """Build the median-composited T0 baseline image for one territory.
+
+    v1 note: orbit pinning was dropped after empirical observation that
+    SK's territory bbox spans ~4 degrees of latitude (Vanguard ~49N,
+    Hafford ~53N), which is wide enough that different Sentinel-1 ground
+    tracks cover different SK properties. The territory-level orbit
+    picker chose orbit 129 for SK, but Hafford is only covered by orbits
+    27 and 100 -- so SK T0 pixels at Hafford location were all-null.
+
+    Tradeoff: dropping the orbit pin means T0 is a multi-orbit median
+    and T1 may sample a different incidence-angle regime. Expected bias
+    in ΔVH is ~10-20% from incidence-angle mixing. v1.5 should add per-
+    property orbit selection + per-property baselines if Phase 3
+    calibration shows territory-specific systematic bias.
+    """
     start, end, bbox = BASELINE_WINDOWS[territory]
     aoi = ee.Geometry.Rectangle(list(bbox))
-    orbit = _load_orbits()[territory]
 
     s1 = (
         ee.ImageCollection("COPERNICUS/S1_GRD_FLOAT")
@@ -109,7 +122,7 @@ def build_baseline_image(territory: str) -> ee.Image:
         .filterDate(start, end)
         .filter(ee.Filter.eq("instrumentMode", "IW"))
         .filter(ee.Filter.eq("orbitProperties_pass", "DESCENDING"))
-        .filter(ee.Filter.eq("relativeOrbitNumber_start", orbit))
+        # NOTE: orbit pinning intentionally dropped for v1 (see docstring)
     )
 
     # Defensive pre-filter: ERA5-Land DAILY_AGGR has a ~5–7 day lag, so
@@ -129,11 +142,15 @@ def build_baseline_image(territory: str) -> ee.Image:
     s1 = s1.map(_has_era5).filter(ee.Filter.eq("has_era5", 1))
 
     # Per-scene QC: snow-free, unfrozen, dry-24h.
-    # All QC bands sourced from ERA5-Land DAILY_AGGR — guaranteed global
-    # coverage, no per-scene gaps. (Earlier rev used Sentinel-2 SCL for
-    # snow detection but that produced "Image has no bands" failures over
-    # small bboxes like Eddystone/Genoa where S2 ±1-day windows can be
-    # empty during cloudy Feb–Mar; ERA5 has no such gaps.)
+    #
+    # Snow detection is hybrid:
+    #   - Primary: Sentinel-2 SCL at 20m (snow class = 11). Accurate at
+    #     parcel scale; catches small bare patches that ERA5's 9km grid
+    #     would average over. Lookup window widened to +/- 3 days so small
+    #     bboxes (Eddystone, Genoa) are less likely to hit zero S2 scenes.
+    #   - Fallback: ERA5-Land snow_cover when S2 returns no scenes for the
+    #     window (still possible over small AOIs in winter).
+    # Temp + precip always from ERA5 (small grid is fine for those).
     def add_qc_bands(scene: ee.Image) -> ee.Image:
         date = ee.Date(scene.date())
         era5 = (
@@ -142,13 +159,29 @@ def build_baseline_image(territory: str) -> ee.Image:
             .first()
         )
         temp_2m = era5.select("temperature_2m")                          # K
-        precip = era5.select("total_precipitation_sum").multiply(1000.0) # m → mm
-        snow_pct = era5.select("snow_cover")                              # 0–100 %
+        precip = era5.select("total_precipitation_sum").multiply(1000.0) # m -> mm
+
+        # Wide S2 window (+/- 3 days) so small bboxes still get coverage.
+        s2 = (
+            ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
+            .filterBounds(aoi)
+            .filterDate(date.advance(-3, "day"), date.advance(3, "day"))
+            .map(lambda im: im.select("SCL"))
+        )
+        # Hybrid snow metric: S2 SCL binary mask (0/1) when S2 has scenes,
+        # else ERA5 snow_cover scaled to 0..1 fraction. Both reduce to a
+        # 0..1 mean at AOI scale, so the same threshold (< 0.05) applies.
+        s2_has_data = s2.size().gt(0)
+        snow_metric = ee.Image(ee.Algorithms.If(
+            s2_has_data,
+            s2.median().eq(11),                                # 0 or 1 per S2 pixel
+            era5.select("snow_cover").divide(100.0),           # 0..1 ERA5 fraction
+        )).rename("snow_pct")
 
         return (
             scene.addBands(temp_2m.rename("temp_2m_K"))
             .addBands(precip.rename("precip_24h_mm"))
-            .addBands(snow_pct.rename("snow_pct"))
+            .addBands(snow_metric)
         )
 
     s1_qc = s1.map(add_qc_bands)
@@ -161,9 +194,9 @@ def build_baseline_image(territory: str) -> ee.Image:
             scale=1000,
             maxPixels=1e8,
         )
-        snow_ok = ee.Number(stats.get("snow_pct")).lt(5.0)        # < 5% snow cover
-        warm_ok = ee.Number(stats.get("temp_2m_K")).gt(273.15)    # > 0°C
-        dry_ok = ee.Number(stats.get("precip_24h_mm")).lte(5.0)   # ≤ 5 mm 24 h
+        snow_ok = ee.Number(stats.get("snow_pct")).lt(0.05)       # < 5% snow (S2 binary mean OR ERA5 fraction)
+        warm_ok = ee.Number(stats.get("temp_2m_K")).gt(273.15)    # > 0 C
+        dry_ok = ee.Number(stats.get("precip_24h_mm")).lte(5.0)   # <= 5 mm 24 h
         passes = snow_ok.And(warm_ok).And(dry_ok)
         return scene.set("qc_pass", passes)
 

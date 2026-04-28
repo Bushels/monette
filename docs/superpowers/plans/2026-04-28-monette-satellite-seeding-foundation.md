@@ -1208,6 +1208,33 @@ git commit -m "feat(gee): add tri-state seeded decision rule with unit tests"
 
 ### Task 1f: T0 baseline asset creation per territory
 
+> **Implementation divergence — read before re-running this task.**
+> The shipped `scripts/gee_pipeline/t0_baseline.py` diverged from the
+> code below in three places caught at execution time. If you're
+> replaying this task, check `git log -- scripts/gee_pipeline/t0_baseline.py`
+> instead of trusting the snippet below verbatim:
+>
+> 1. **Orbit pinning was DROPPED.** SK's territory bbox spans ~4° of
+>    latitude (Vanguard ~49°N, Hafford ~53°N), wider than a single S1
+>    orbit's swath — so `relativeOrbitNumber_start == orbit` filtered
+>    out every scene that flew over Hafford. Both T0 build and pipeline
+>    T1 query now use all DESCENDING IW scenes. Documented v1 tradeoff:
+>    expected ~10–20% ΔVH bias from incidence-angle mixing; v1.5 plan
+>    is per-property orbit pinning.
+> 2. **Snow QC is hybrid S2 SCL + ERA5 fallback**, not pure ERA5.
+>    Original plan used Sentinel-2 SCL only and failed for small bboxes
+>    where S2 windows could be empty (CO/MB rounds 1). Switching to
+>    ERA5 broke SK + MT (their previously-passing scenes had ERA5
+>    snow_cover ~68% even when S2 SCL said 0% snow at 20m). Hybrid uses
+>    S2 SCL when scenes exist (±3 day window) and ERA5 snow_cover
+>    fraction otherwise.
+> 3. **Eager InsufficientBaselineError detection** added so MB's
+>    all-frozen-window failure produces a clean structured result
+>    instead of a cryptic "Image has no bands" GEE error.
+>
+> Net 2026-season state: SK ✓, MT ✓, CO ✓, MB INSUFFICIENT_BASELINE
+> (Eddystone snow doesn't clear in ERA5 within Apr 15 publication lag).
+
 **Files:**
 - Create: `scripts/gee_pipeline/t0_baseline.py`
 
@@ -1442,6 +1469,30 @@ git commit -m "feat(gee): add per-territory T0 SAR baseline asset creation"
 ## Phase 2 — Pipeline scaffold (single test parcel)
 
 ### Task 2a: Build the single-parcel pipeline orchestrator
+
+> **Implementation divergence — read before re-running this task.**
+> Two corrections caught when actually running pipeline.py against
+> `parcels_v1`:
+>
+> 1. **Test parcel `loc` was wrong.** The plan's literal `NW-10-11-10-W3`
+>    doesn't exist in Hafford — the township number `11` isn't anywhere
+>    in Hafford's footprint (Hafford parcels live in townships 43-46).
+>    All references in this section have been corrected to
+>    `NW-10-45-13-W3` (159.8 ac, real parcel verified in
+>    `parcels_v1`).
+> 2. **Relative imports broke direct invocation.** The plan's
+>    `from .applicability import ...` lines fail when running
+>    `python scripts/gee_pipeline/pipeline.py` directly (`ImportError:
+>    attempted relative import with no known parent package`). The
+>    shipped pipeline.py uses absolute imports (`from gee_pipeline.X
+>    import ...`) plus a sys.path bootstrap that walks up to the
+>    `scripts/` dir — same pattern as `t0_baseline.py` and
+>    `relative_orbit.py`. The `__main__` block also uses
+>    `auth.initialize()` instead of `ee.Initialize(project=...)` for
+>    consistency with the ADC auth chain.
+>
+> Also: orbit pinning at T1 was dropped in pipeline.py for the same
+> reason as in t0_baseline.py — see the Task 1f divergence note above.
 
 **Files:**
 - Create: `scripts/gee_pipeline/pipeline.py`
@@ -1735,7 +1786,7 @@ if __name__ == "__main__":
     ee.Initialize(project=GEE_PROJECT)
     record = run_single_parcel(
         property_id="hafford",
-        loc="NW-10-11-10-W3",
+        loc="NW-10-45-13-W3",
         run_date="2026-04-28",
     )
     print(json.dumps(record, indent=2))
@@ -1913,7 +1964,7 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 3: Run for the single test parcel (Hafford NW-10-11-10-W3)**
+- [ ] **Step 3: Run for the single test parcel (Hafford NW-10-45-13-W3)**
 
 ```bash
 python scripts/build_imagery_data_js.py --property-id hafford --limit 1 --run-date 2026-04-28
@@ -1942,7 +1993,7 @@ Expected output:
 source: gee-pipeline
 ready: true
 parcels: 1
-  hafford:NW-10-11-10-W3: status=ok, seeded=<true|false|None>, conf=<int 0-100>
+  hafford:NW-10-45-13-W3: status=ok, seeded=<true|false|None>, conf=<int 0-100>
 ```
 
 - [ ] **Step 5: Verify the existing vigor consumer still loads (smoke test)**
