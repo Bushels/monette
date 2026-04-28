@@ -3,6 +3,13 @@
 .env.*
 !.env.example
 
+# GEE service-account JSON keys (can be downloaded into repo accidentally
+# from a Cloud Console "Add Key" prompt). Real keys live at
+# ~/.config/earthengine/monette-sa-key.json — outside the repo entirely.
+*-sa-key.json
+service-account-key.json
+*-credentials.json
+
 # Generated runtime config (template lives at config.template.js).
 # Build script renders config.template.js -> config.js + public/config.js
 # with MAPBOX_TOKEN substituted from env. Never commit the rendered file.
@@ -13,6 +20,7 @@
 .firecrawl/
 .playwright-cli/
 .claude/
+.superpowers/
 
 # Node
 node_modules/
