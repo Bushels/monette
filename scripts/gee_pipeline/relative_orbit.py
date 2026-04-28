@@ -11,12 +11,29 @@ This script inspects the S1_GRD_FLOAT collection inside each territory's
 bounding box over a recent 6-month window, counts scene availability per
 relative orbit, and writes the chosen orbit number per territory to
 config so the rest of the pipeline can reference it.
+
+Auth comes from gee_pipeline.auth.initialize() — service account if
+configured, else Application Default Credentials, else earthengine
+user OAuth. See gee_pipeline/auth.py for setup.
 """
 from __future__ import annotations
+import sys
 from collections import Counter
+from pathlib import Path
 from typing import Dict
 
 import ee
+
+# Bootstrap: ensure scripts/ is on sys.path so we can import the gee_pipeline
+# package siblings (auth.py).
+_HERE = Path(__file__).resolve()
+for _parent in _HERE.parents:
+    if _parent.name == "scripts":
+        if str(_parent) not in sys.path:
+            sys.path.insert(0, str(_parent))
+        break
+
+from gee_pipeline.auth import initialize, auth_source
 
 # Approximate AOI bounding boxes per territory (lng_min, lat_min, lng_max, lat_max).
 # Tight enough to discriminate orbits, loose enough to cover all parcels.
@@ -60,7 +77,8 @@ def pick_all() -> Dict[str, int]:
 
 
 if __name__ == "__main__":
-    ee.Initialize(project="monette-494717")
+    initialize()
+    print(f"GEE auth source: {auth_source()}")
     result = pick_all()
     import json
     print(json.dumps(result, indent=2))
