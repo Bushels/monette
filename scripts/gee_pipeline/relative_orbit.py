@@ -60,7 +60,7 @@ def pick_all() -> Dict[str, int]:
 
 
 if __name__ == "__main__":
-    ee.Initialize(project="gen-lang-client-0259467098")
+    ee.Initialize(project="monette-494717")
     result = pick_all()
     import json
     print(json.dumps(result, indent=2))

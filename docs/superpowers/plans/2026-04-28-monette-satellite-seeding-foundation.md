@@ -6,7 +6,7 @@
 
 **Architecture:** Per [docs/superpowers/specs/2026-04-28-monette-satellite-seeding-design.md](docs/superpowers/specs/2026-04-28-monette-satellite-seeding-design.md). Three principal artifacts produced by this plan: (1) a GEE FeatureCollection asset of all 1,260 parcels, (2) per-territory T0 SAR baseline assets at `monette/sar_baseline_2026/{sk,mb,mt,co}`, (3) extended `scripts/build_imagery_data_js.py` producing tri-state seeded calls (`true | false | null`) with visible confidence percentage per parcel. Tool split: Codex owns SAR/GEE math (`gpt-5.5/xhigh`); Gemini produces phenology calibration (`3.1-pro-preview`, 1M context); Claude orchestrates and integrates non-GEE Python.
 
-**Tech Stack:** Python 3.11+ with `earthengine-api`, `geopandas`, `numpy`, `pytest`. Google Earth Engine compute (project `gen-lang-client-0259467098`). Sentinel-1 `COPERNICUS/S1_GRD_FLOAT` (linear power), Sentinel-2 `COPERNICUS/S2_SR_HARMONIZED`, `AAFC/ACI`, `USDA/NASS/CDL`, `ECMWF/ERA5_LAND/DAILY_AGGR`. Existing Python venv at `C:\Users\kyle\Agriculture\Maps\.venv`. Repo: `github.com/Bushels/monette` (working copy at `C:\Users\kyle\Agriculture\Monette`).
+**Tech Stack:** Python 3.11+ with `earthengine-api`, `geopandas`, `numpy`, `pytest`. Google Earth Engine compute (project `monette-494717`). Sentinel-1 `COPERNICUS/S1_GRD_FLOAT` (linear power), Sentinel-2 `COPERNICUS/S2_SR_HARMONIZED`, `AAFC/ACI`, `USDA/NASS/CDL`, `ECMWF/ERA5_LAND/DAILY_AGGR`. Existing Python venv at `C:\Users\kyle\Agriculture\Maps\.venv`. Repo: `github.com/Bushels/monette` (working copy at `C:\Users\kyle\Agriculture\Monette`).
 
 **Out-of-scope for this plan (separate follow-up plans):**
 - Phase 4 — UI integration (mode toggle, drawer satellite-row, Farm Progress counter, `buildPreparedMapData()` extension)
@@ -60,9 +60,9 @@
 
 **Files:** none — this is an account-state check, not code.
 
-- [ ] **Step 1: Visit Google Cloud Console for project `gen-lang-client-0259467098`**
+- [ ] **Step 1: Visit Google Cloud Console for project `monette-494717`**
 
-URL: https://console.cloud.google.com/earth-engine/project?project=gen-lang-client-0259467098
+URL: https://console.cloud.google.com/earth-engine/project?project=monette-494717
 
 - [ ] **Step 2: Confirm noncommercial eligibility**
 
@@ -99,12 +99,12 @@ source "C:/Users/kyle/Agriculture/Maps/.venv/Scripts/activate"
 earthengine authenticate
 ```
 
-Expected: opens browser; sign in with the Google account associated with project `gen-lang-client-0259467098`; paste the auth code back into the terminal. Credentials write to `C:\Users\kyle\.config\earthengine\credentials`.
+Expected: opens browser; sign in with the Google account associated with project `monette-494717`; paste the auth code back into the terminal. Credentials write to `C:\Users\kyle\.config\earthengine\credentials`.
 
 - [ ] **Step 3: Verify auth works**
 
 ```bash
-earthengine ls projects/gen-lang-client-0259467098/assets
+earthengine ls projects/monette-494717/assets
 ```
 
 Expected: returns a list (possibly empty if no assets yet) without auth errors.
@@ -112,7 +112,7 @@ Expected: returns a list (possibly empty if no assets yet) without auth errors.
 - [ ] **Step 4: Verify Python `earthengine-api` import**
 
 ```bash
-python -c "import ee; ee.Initialize(project='gen-lang-client-0259467098'); print('GEE OK,', ee.Number(42).getInfo())"
+python -c "import ee; ee.Initialize(project='monette-494717'); print('GEE OK,', ee.Number(42).getInfo())"
 ```
 
 Expected output:
@@ -147,7 +147,7 @@ from pathlib import Path
 
 import ee
 
-GEE_PROJECT = "gen-lang-client-0259467098"
+GEE_PROJECT = "monette-494717"
 ASSET_ID = f"projects/{GEE_PROJECT}/assets/monette/parcels_v1"
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -194,7 +194,7 @@ python scripts/upload_parcels_asset.py
 
 Expected output:
 ```
-Uploading 1260 features as projects/gen-lang-client-0259467098/assets/monette/parcels_v1...
+Uploading 1260 features as projects/monette-494717/assets/monette/parcels_v1...
 Started task <TASK_ID>. Monitor with: earthengine task info <TASK_ID>
 ```
 
@@ -209,7 +209,7 @@ Expected: status transitions `READY` → `RUNNING` → `COMPLETED` (typically 1�
 - [ ] **Step 4: Verify asset is queryable**
 
 ```bash
-python -c "import ee; ee.Initialize(project='gen-lang-client-0259467098'); fc = ee.FeatureCollection('projects/gen-lang-client-0259467098/assets/monette/parcels_v1'); print('parcels:', fc.size().getInfo())"
+python -c "import ee; ee.Initialize(project='monette-494717'); fc = ee.FeatureCollection('projects/monette-494717/assets/monette/parcels_v1'); print('parcels:', fc.size().getInfo())"
 ```
 
 Expected output:
@@ -235,7 +235,7 @@ git commit -m "feat(gee): add one-time upload of quarters.geojson as GEE Feature
 ```bash
 python -c "
 import ee
-ee.Initialize(project='gen-lang-client-0259467098')
+ee.Initialize(project='monette-494717')
 cdl = ee.ImageCollection('USDA/NASS/CDL')
 years = cdl.aggregate_array('system:index').getInfo()
 print('CDL years available:', sorted(set(y[:4] for y in years)))
@@ -387,7 +387,7 @@ def pick_all() -> Dict[str, int]:
 
 
 if __name__ == "__main__":
-    ee.Initialize(project="gen-lang-client-0259467098")
+    ee.Initialize(project="monette-494717")
     result = pick_all()
     import json
     print(json.dumps(result, indent=2))
@@ -1244,7 +1244,7 @@ from typing import Dict
 
 import ee
 
-GEE_PROJECT = "gen-lang-client-0259467098"
+GEE_PROJECT = "monette-494717"
 ASSET_PARENT = f"projects/{GEE_PROJECT}/assets/monette/sar_baseline_2026"
 
 # Per-territory baseline windows, per spec §2.
@@ -1417,15 +1417,15 @@ Wait until all 4 tasks show `COMPLETED` status. Each takes ~5–15 min.
 - [ ] **Step 4: Verify all 4 assets exist**
 
 ```bash
-earthengine ls projects/gen-lang-client-0259467098/assets/monette/sar_baseline_2026
+earthengine ls projects/monette-494717/assets/monette/sar_baseline_2026
 ```
 
 Expected output:
 ```
-projects/gen-lang-client-0259467098/assets/monette/sar_baseline_2026/sk
-projects/gen-lang-client-0259467098/assets/monette/sar_baseline_2026/mb
-projects/gen-lang-client-0259467098/assets/monette/sar_baseline_2026/mt
-projects/gen-lang-client-0259467098/assets/monette/sar_baseline_2026/co
+projects/monette-494717/assets/monette/sar_baseline_2026/sk
+projects/monette-494717/assets/monette/sar_baseline_2026/mb
+projects/monette-494717/assets/monette/sar_baseline_2026/mt
+projects/monette-494717/assets/monette/sar_baseline_2026/co
 ```
 
 If any task fails (insufficient qualifying scenes), document the failure in `docs/superpowers/specs/2026-04-28-monette-satellite-seeding-design.md` and either widen the QC tolerance or escalate to backfill mode (see spec §4.2 "2026 backfill caveat").
@@ -1468,7 +1468,7 @@ from .applicability import applicability_for_crop, Applicability
 from .confidence import compute_confidence
 from .decision_rule import decide_seeded
 
-GEE_PROJECT = "gen-lang-client-0259467098"
+GEE_PROJECT = "monette-494717"
 PARCEL_ASSET = f"projects/{GEE_PROJECT}/assets/monette/parcels_v1"
 T0_PARENT = f"projects/{GEE_PROJECT}/assets/monette/sar_baseline_2026"
 
@@ -1810,7 +1810,7 @@ GEOJSON = ROOT / "quarters.geojson"
 OUT = ROOT / "imagery-data.js"
 PUBLIC_OUT = ROOT / "public" / "imagery-data.js"
 
-GEE_PROJECT = "gen-lang-client-0259467098"
+GEE_PROJECT = "monette-494717"
 
 
 def iso_now() -> str:

@@ -72,7 +72,7 @@ Build a satellite-imagery pipeline that emits a **per-parcel `seeded: true | fal
      - MT: Mar 1 – Mar 25
      - AZ: not applicable (no seeding-event detection)
      - CO: Mar 1 – Mar 25 for spring crops; n/a for winter wheat
-- T0 stored as a versioned GEE Asset under `projects/gen-lang-client-0259467098/assets/monette/sar_baseline_<year>/<territory>`.
+- T0 stored as a versioned GEE Asset under `projects/monette-494717/assets/monette/sar_baseline_<year>/<territory>`.
 - If no scene meets all three conditions in the window, the territory's parcels are flagged `seeded: null, applicability: insufficient_baseline` for that season — explicit "we couldn't establish a clean reference."
 
 **2026 backfill caveat:** for any territory where we're already past the ideal baseline window (especially MT), the pipeline picks the best scene available from archived imagery in the relevant window with documented QC flags; results carry a `baseline_quality: backfill` marker for transparency.
@@ -103,7 +103,7 @@ The Monette atlas already defines a parcel-imagery contract:
 │  + quarter_geometry_calibration.json                                       │
 │      → quarters.geojson (1,260 features, 14 properties)                   │
 │      → uploaded to GEE as FeatureCollection Asset                          │
-│        (projects/gen-lang-client-0259467098/assets/monette/parcels_v1)    │
+│        (projects/monette-494717/assets/monette/parcels_v1)    │
 └───────────────────────────────────────────────────────────────────────────┘
                                     │
                                     ▼
@@ -477,8 +477,8 @@ Per-property cell: two stacked progress bars — green (vote-confirmed acres), l
 
 | Phase | Owner | Work | Gate |
 |---|---|---|---|
-| **0a. GEE noncommercial verification** | Kyle + Claude | Check `gen-lang-client-0259467098` eligibility under Google's noncommercial terms; if not, escalate to paid tier or migrate platform | Verification status in writing |
-| **0b. Auth refresh + venv check** | Kyle + Claude | `earthengine authenticate`; confirm `C:\Users\kyle\Agriculture\Maps\.venv` works | `earthengine ls projects/gen-lang-client-0259467098/assets` succeeds |
+| **0a. GEE noncommercial verification** | Kyle + Claude | Check `monette-494717` eligibility under Google's noncommercial terms; if not, escalate to paid tier or migrate platform | Verification status in writing |
+| **0b. Auth refresh + venv check** | Kyle + Claude | `earthengine authenticate`; confirm `C:\Users\kyle\Agriculture\Maps\.venv` works | `earthengine ls projects/monette-494717/assets` succeeds |
 | **0c. Polygon asset upload** | Codex | Upload `quarters.geojson` as GEE FeatureCollection at `monette/parcels_v1` | Asset visible in GEE; ID matches |
 | **0d. CDL 2025 availability check** | Codex | Verify `USDA/NASS/CDL` collection in GEE includes 2025 release; if not, log `cdl_source_year: 2024` per parcel and document fallback | Catalog metadata captured; fallback documented |
 | **0e. AZ/CO applicability override file** | Kyle | Populate `calibration/az_co_applicability_overrides.json` for known cotton/alfalfa/winter-wheat mismatches against CDL crop class | File exists with at least one override OR documented "no overrides needed" |
