@@ -182,7 +182,7 @@ GEE pipeline preprocessing per parcel:
 ### 4.2 SAR baseline (T0) — adaptive
 
 - **Source:** `COPERNICUS/S1_GRD_FLOAT` (linear power, no terrain correction quirks).
-- **Mode:** IW, **descending pass only AND pinned to a single relative orbit per territory** (eliminates incidence-angle drift between T0 and T1; relative orbit numbers determined empirically per territory in Phase 0).
+- **Mode:** IW, **descending pass only**. (Spec originally also pinned a single relative orbit per territory to eliminate incidence-angle drift, but **v1 dropped orbit pinning** after empirical observation that SK's bbox spans ~4° latitude — wider than a single S1 ground-track swath. Hafford ended up uncovered by SK's territory-majority orbit. v1 accepts ~10–20% ΔVH bias from incidence-angle mixing as a known limitation; v1.5 plan is per-property orbit pinning. See `docs/superpowers/plans/2026-04-28-monette-satellite-seeding-foundation.md` Task 1f divergence note.)
 - **Polarizations:** VV + VH.
 - **Per-scene QC gate** — a scene qualifies for T0 if all of:
   - Snow-free (S2 `SCL` < 5% snow OR NSIDC `snow_extent = 0`)
