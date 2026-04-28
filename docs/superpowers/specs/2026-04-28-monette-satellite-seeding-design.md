@@ -541,6 +541,8 @@ The rev-3 Codex audit returned `yes-with-revisions, 82% confidence` for v1 inter
 
 2. **2025 CDL availability** — Phase 0d will resolve. If GEE catalog lags, fallback to 2024 CDL is acceptable but worth flagging in `seeding.cdl_source_year` per parcel.
 
+   **Phase 0d finding (2026-04-27):** Resolved. The `USDA/NASS/CDL` ImageCollection in GEE currently exposes years 1997 through 2025 inclusive (29 annual rasters, sorted: 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025). The 2026 satellite seeding pipeline will use **2025 CDL as the source of truth** for crop-class applicability — `seeding.cdl_source_year: 2025` per parcel for all 2026-season calls. The 2024-fallback path (`cdl_source_year: 2024`) is therefore unused at v1 launch but remains wired in code as a defensive default in case a future re-run targets a year before the catalog has caught up.
+
 3. **Per-territory phenology calibration timing** — first 4 weeks of operation will use literature thresholds; vote-label-driven calibration (Phase 8) lags by 6 weeks. Disagreement icons in the drawer surface mismatches in the meantime.
 
 4. **AZ override coverage** — `az_co_applicability_overrides.json` is built by hand from current Maricopa lease info. If lease cropping changes mid-season, overrides go stale. Cadence for override review: monthly during Apr–Aug.
