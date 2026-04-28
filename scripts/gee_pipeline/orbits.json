@@ -1,0 +1,10 @@
+{
+  "as_of": "2026-04-28",
+  "orbits": {
+    "sk": 129,
+    "mb": 158,
+    "mt": 129,
+    "co": 85
+  },
+  "source": "scripts/gee_pipeline/relative_orbit.py"
+}
