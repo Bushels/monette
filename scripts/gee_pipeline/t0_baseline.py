@@ -93,47 +93,58 @@ def build_baseline_image(territory: str) -> ee.Image:
         .filter(ee.Filter.eq("relativeOrbitNumber_start", orbit))
     )
 
+    # Defensive pre-filter: ERA5-Land DAILY_AGGR has a ~5–7 day lag, so
+    # the latest S1 scenes in our baseline window may not yet have an
+    # ERA5 record. Drop those scenes before they cause `add_qc_bands` to
+    # produce a 0-band image (which fails at `.rename()` and propagates
+    # to the export's median compositor as "Image has no bands").
+    def _has_era5(scene: ee.Image) -> ee.Image:
+        date = ee.Date(scene.date())
+        era5_size = (
+            ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
+            .filterDate(date, date.advance(1, "day"))
+            .size()
+        )
+        return scene.set("has_era5", era5_size.gt(0))
+
+    s1 = s1.map(_has_era5).filter(ee.Filter.eq("has_era5", 1))
+
     # Per-scene QC: snow-free, unfrozen, dry-24h.
+    # All QC bands sourced from ERA5-Land DAILY_AGGR — guaranteed global
+    # coverage, no per-scene gaps. (Earlier rev used Sentinel-2 SCL for
+    # snow detection but that produced "Image has no bands" failures over
+    # small bboxes like Eddystone/Genoa where S2 ±1-day windows can be
+    # empty during cloudy Feb–Mar; ERA5 has no such gaps.)
     def add_qc_bands(scene: ee.Image) -> ee.Image:
         date = ee.Date(scene.date())
-        # ERA5-Land daily mean 2m air temperature
         era5 = (
             ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
             .filterDate(date, date.advance(1, "day"))
             .first()
         )
-        temp_2m = era5.select("temperature_2m")
-        # ERA5 total_precipitation in metres → convert to mm × 1000, sum 24 h
-        precip = era5.select("total_precipitation_sum").multiply(1000.0)
-        # S2 SCL snow class for the scene date AOI
-        s2 = (
-            ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
-            .filterBounds(aoi)
-            .filterDate(date.advance(-1, "day"), date.advance(1, "day"))
-            .map(lambda im: im.select("SCL"))
-            .median()
-        )
-        snow_mask = s2.eq(11)  # SCL class 11 = snow
+        temp_2m = era5.select("temperature_2m")                          # K
+        precip = era5.select("total_precipitation_sum").multiply(1000.0) # m → mm
+        snow_pct = era5.select("snow_cover")                              # 0–100 %
 
         return (
             scene.addBands(temp_2m.rename("temp_2m_K"))
             .addBands(precip.rename("precip_24h_mm"))
-            .addBands(snow_mask.rename("snow_mask"))
+            .addBands(snow_pct.rename("snow_pct"))
         )
 
     s1_qc = s1.map(add_qc_bands)
 
     # Filter scenes whose AOI-mean QC values qualify
     def qualifies(scene: ee.Image) -> ee.Image:
-        stats = scene.select(["temp_2m_K", "precip_24h_mm", "snow_mask"]).reduceRegion(
+        stats = scene.select(["temp_2m_K", "precip_24h_mm", "snow_pct"]).reduceRegion(
             reducer=ee.Reducer.mean(),
             geometry=aoi,
             scale=1000,
             maxPixels=1e8,
         )
-        snow_ok = ee.Number(stats.get("snow_mask")).lt(0.05)  # < 5% snow
-        warm_ok = ee.Number(stats.get("temp_2m_K")).gt(273.15)
-        dry_ok = ee.Number(stats.get("precip_24h_mm")).lte(5.0)
+        snow_ok = ee.Number(stats.get("snow_pct")).lt(5.0)        # < 5% snow cover
+        warm_ok = ee.Number(stats.get("temp_2m_K")).gt(273.15)    # > 0°C
+        dry_ok = ee.Number(stats.get("precip_24h_mm")).lte(5.0)   # ≤ 5 mm 24 h
         passes = snow_ok.And(warm_ok).And(dry_ok)
         return scene.set("qc_pass", passes)
 
@@ -165,10 +176,11 @@ def export_baseline(territory: str) -> ee.batch.Task:
     return task
 
 
-def export_all() -> Dict[str, str]:
-    """Run T0 baseline export for SK, MB, MT, CO."""
+def export_all(territories: list[str] | None = None) -> Dict[str, str]:
+    """Run T0 baseline export for the named territories (default: all 4)."""
+    targets = territories if territories else ["sk", "mb", "mt", "co"]
     results = {}
-    for territory in ["sk", "mb", "mt", "co"]:
+    for territory in targets:
         print(f"Exporting T0 baseline for {territory}...")
         task = export_baseline(territory)
         results[territory] = task.id
@@ -179,4 +191,8 @@ def export_all() -> Dict[str, str]:
 if __name__ == "__main__":
     initialize()
     print(f"GEE auth source: {auth_source()}")
-    print(json.dumps(export_all(), indent=2))
+    # Allow re-running specific territories:
+    #   python scripts/gee_pipeline/t0_baseline.py            -> all 4
+    #   python scripts/gee_pipeline/t0_baseline.py mb co      -> just mb + co
+    territories = sys.argv[1:] if len(sys.argv) > 1 else None
+    print(json.dumps(export_all(territories), indent=2))
