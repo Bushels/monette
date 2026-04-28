@@ -560,9 +560,10 @@ def test_dry_24h_true_under_5mm():
     assert is_dry_24h(precip_mm=4.9) is True
 
 
-def test_dry_24h_false_at_5mm():
-    # Strictly > 5mm fails per spec §4.2
-    assert is_dry_24h(precip_mm=5.0) is False
+def test_dry_24h_true_at_5mm():
+    # Spec §4.2: "no precipitation > 5 mm". 5.0 mm is NOT > 5.0, so it passes
+    # the gate. Strictly inclusive at the boundary.
+    assert is_dry_24h(precip_mm=5.0) is True
 
 
 def test_dry_24h_false_over_5mm():
@@ -652,7 +653,7 @@ def qualifies_for_baseline(
 pytest tests/gee_pipeline/test_qc.py -v
 ```
 
-Expected: all 12 tests PASS.
+Expected: all 13 tests PASS.
 
 - [ ] **Step 5: Commit**
 
@@ -1194,7 +1195,7 @@ Expected: all 11 tests PASS.
 pytest tests/gee_pipeline/ -v
 ```
 
-Expected: 41 tests pass (12 qc + 9 applicability + 9 confidence + 11 decision_rule).
+Expected: 42 tests pass (13 qc + 9 applicability + 9 confidence + 11 decision_rule).
 
 - [ ] **Step 6: Commit**
 
