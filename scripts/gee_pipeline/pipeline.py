@@ -257,15 +257,61 @@ def run_single_parcel(
     t0 = ee.Image(asset_id)
     t1_window_start = ee.Date(run_date).advance(-14, "day")
     t1_window_end = ee.Date(run_date)
-    t1 = (
+
+    # Build the T1 collection ONCE so we can both median-composite it AND
+    # enumerate its scene dates for the precip lookup (Bucket B commit 2).
+    t1_coll = (
         ee.ImageCollection("COPERNICUS/S1_GRD_FLOAT")
         .filterBounds(eroded)
         .filterDate(t1_window_start, t1_window_end)
         .filter(ee.Filter.eq("instrumentMode", "IW"))
         .filter(ee.Filter.eq("orbitProperties_pass", "DESCENDING"))
-        .median()
-        .clip(eroded)
     )
+    t1 = t1_coll.median().clip(eroded)
+
+    # Capture the contributing scene dates for precip lookup and last_obs_date.
+    # Codex review b5ajsddp7 Q2: precip is max across S1 acquisition dates that
+    # contributed to the T1 median — not a fictional median date, not the
+    # calendar window end. A T1 median has no single scene date; picking one
+    # is false precision (same lesson as the Bucket A snow QC fix).
+    scene_dates_ms = t1_coll.aggregate_array("system:time_start").getInfo() or []
+
+    # last_obs_date: most recent S1 contributing scene date (or run_date if none).
+    if scene_dates_ms:
+        last_obs_iso = (
+            ee.Date(max(scene_dates_ms)).format("YYYY-MM-dd").getInfo()
+        )
+    else:
+        last_obs_iso = run_date
+
+    # Wet-soil precip: max 24h precip across all S1 acquisition dates.
+    # ERA5-Land DAILY_AGGR total_precipitation_sum is in metres; multiply by 1000
+    # to get mm. Clamp tiny negative ERA5 artifacts to 0. Skip scenes where
+    # ERA5 has no record (happens for the most recent dates within ERA5's ~9 day
+    # lag) — don't treat as a 0-precip vote, don't crash.
+    max_precip_mm = 0.0
+    for ts_ms in scene_dates_ms:
+        scene_date = ee.Date(ts_ms)
+        era5_window_start = scene_date.advance(-1, "day")
+        era5_window_end = scene_date
+        era5 = (
+            ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
+            .filterDate(era5_window_start, era5_window_end)
+            .first()
+        )
+        if era5 is None:
+            continue  # ERA5 lag — skip this scene's precip rather than crash
+        p = era5.select("total_precipitation_sum").multiply(1000.0).reduceRegion(
+            reducer=ee.Reducer.mean(),
+            geometry=eroded,
+            scale=1000,       # ERA5-Land native ~9 km; 1 km reducer scale is fine
+            maxPixels=1e8,
+        ).getNumber("total_precipitation_sum").getInfo()
+        if p is None:
+            continue
+        p_mm = max(0.0, p)    # clamp tiny negative ERA5 artifacts to 0
+        if p_mm > max_precip_mm:
+            max_precip_mm = p_mm
 
     # Ratio-of-means: reduce T1 and T0 to AOI means separately (with cropland
     # mask applied), then ratio, then log.  This avoids the instability of
@@ -379,6 +425,8 @@ def run_single_parcel(
         n_pixels=n_pixels_value,
         run_date=run_date,
         dvv_db=mean_dvv_db_value,
+        precip_mm_24h=max_precip_mm,
+        last_obs_date=last_obs_iso,
     )
 
 
