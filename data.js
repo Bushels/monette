@@ -808,8 +808,8 @@ window.MONETTE_DATA = {
       parcels:0, titled:49775, cultivated:0, waste:0, assessment:0, owned:49775, rented:0,
       soils:[], crops2025:[], crops2024:[],
       segment:"Grain / Cattle", legalOwner:"Monette Farms", beneficialOwner:"Restricted LP",
-      geometryStatus:"point-only", locationPrecision:"regional", tags:["court-file","origin","stewart-valley","needs-geometry"],
-      notes:"Court-file Swift Current block and family-origin asset. Includes the Stewart Valley sale story but needs parcel-level reconciliation before it can be drawn as boundaries.", headline:true },
+      geometryStatus:"point-only", locationPrecision:"regional", tags:["court-file","origin","needs-geometry"],
+      notes:"Court-file Swift Current block and family-origin asset. Needs parcel-level reconciliation before it can be drawn as boundaries.", headline:true },
     { id:"regina-south", name:"Regina South", province:"SK", region:"Regina, SK", lat:50.215, lng:-104.618,
       rms:["Regina South area"],
       parcels:0, titled:32056, cultivated:0, waste:0, assessment:0, owned:32056, rented:0,
@@ -1144,7 +1144,6 @@ window.MONETTE_DATA = {
   soldProperties: [
     { id:"sold-regina-i", name:"Regina I", province:"SK", region:"Regina, SK", lat:50.4452, lng:-104.6189, acres:null, price:41180000, pricePerAcre:null, closed:"2025", phase:"Pre-Forbearance", notes:"Regina farmland sale consented before the CCAA filing." },
     { id:"sold-havre", name:"Havre Land", province:"MT", region:"Havre / Box Elder, MT", lat:48.55, lng:-109.68, acres:17000, price:47500000, pricePerAcre:2794, closed:"2025", phase:"Pre-Forbearance", notes:"Montana Box Elder/Havre lands sold before the CCAA filing." },
-    { id:"sold-stewart-valley", name:"Stewart Valley", province:"SK", region:"Swift Current, SK", lat:50.44, lng:-107.88, acres:12932, price:54080000, priceLabel:"$54.08M", pricePerAcre:null, reportedPricePerAcre:5312, appraisalPremium2025Pct:158, appraisalPremium2024Pct:164, closed:"Mar 2026", phase:"Phase 1", buyer:null, buyerStatus:"sealed", notes:"CCAA Phase 1 result (Darrel Monette Affidavit ¶156): 12,932 ac at Swift Current sold March 2026 for $54M ($5,312/ac, court-reported). Sale price was 158% over the 2025 appraised value and 164% over the 2024 appraised value — the largest premium-over-appraisal in the Sale Programme. Buyer name NOT disclosed in unredacted affidavit (likely sealed in Confidential Affidavit). Court-reported $/ac of $5,312 does not reconcile arithmetically with 12,932 ac × $54.08M; public UI holds pricePerAcre null until reconciled." },
     { id:"sold-hafford-phase-2", name:"Hafford (Monette portion)", province:"SK", region:"Hafford, SK", lat:52.74, lng:-107.37, acres:3657, price:29000000, pricePerAcre:7930, closed:"Phase 2", phase:"Phase 2", buyer:"Walter Farms (rumored)", buyerStatus:"rumored",
       priceBreakdown:{
         total:29000000, totalLabel:"$29M",
@@ -1173,7 +1172,7 @@ window.MONETTE_DATA = {
     { date:"Dec 04, 2024", label:"FCC cattle facility signed",            detail:"$30M facility, priority over SFA on cattle collateral (intercreditor 2024-12-02)" },
     { date:"Nov 07, 2025", label:"Forbearance Agreement (5th ARCA)",      detail:"Soderglen VTB removed from 'Permitted Debt' — triggered SFA event of default" },
     { date:"Jan 16, 2026", label:"Sale Programme begins",                 detail:"WOW Media interactive listing site, 1,300+ quarter sections" },
-    { date:"Mar 01, 2026", label:"Sale Programme ends — $84.78M / 3 sales", detail:"Stewart Valley $54M / 12,932 ac (Phase 1, 158% premium over 2025 appraisal); Hafford partial $29M / 2,553 ac (Phase 2); Wymark/Waldeck $1.78M / 485 ac (Phase 2). 62 bids received on 135,600 ac were deemed unacceptable. Pre-Sale-Programme FY2025 dispositions also closed: Regina I $41.18M + Havre Land MT $47.5M = additional $88.68M. Total pre-filing dispositions = $173.46M." },
+    { date:"Mar 01, 2026", label:"Sale Programme ends — $30.78M / 2 sales", detail:"Hafford partial $29M / 2,553 ac (Phase 2); Wymark/Waldeck $1.78M / 485 ac (Phase 2). 62 bids received on 135,600 ac were deemed unacceptable. Pre-Sale-Programme FY2025 dispositions also closed: Regina I $41.18M + Havre Land MT $47.5M = additional $88.68M." },
     { date:"Mar 03, 2026", label:"BC Ranches auction (Ritchie Bros)",     detail:"Insufficient bids — not sold" },
     { date:"Apr 15, 2026", label:"SFA + FCC mature",                      detail:"All Senior Secured Obligations and FCC Facility matured; immediate due-and-payable" },
     { date:"Apr 16, 2026", label:"FCC enforcement notice",                detail:"FCC issued demand + notice to enforce security under FDMA" },
@@ -1215,8 +1214,7 @@ window.MONETTE_DATA.season = {
 };
 
 window.MONETTE_DATA.headlines = [
-  { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $84.78M Sale Programme (3 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M) = $173.46M total pre-filing. CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
-  { id: 10, text: "Stewart Valley sale stands out: 12,932 ac for $54M closed Mar 2026 — 158% premium over 2025 appraisal, 164% over 2024. Buyer sealed (likely in Confidential Affidavit). Largest premium-over-appraisal in the Sale Programme. (Affidavit ¶156)", author: "Ledger", when: "0d" },
+  { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $30.78M Sale Programme (2 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M). CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
   { id: 9, text: "Hafford court-grounded: affidavit Exhibit D ¶89 shows only 2,554 ac OWNED at 'North Battleford (Hafford)' — the 46,466 figure on tender docs was the operating footprint (incl. leased Simmons ground). The $29M / 2,553 ac sale liquidated essentially all Monette-owned Hafford land. 'Walter Farms bought all 46,466 ac' rumor not court-supported.", author: "Ledger", when: "0d" },
   { id: 8, text: "Third Regina-area Monette site of the day: a binyard (satellite grain storage) at 50.273, -104.436 — previous owner unknown, ~5 km from the Kambietz yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "1d" },
   { id: 7, text: "Second Regina-area yard surfaces: Monette 'Kambietz yard' at 50.296, -104.36725 reportedly bought from the Kambietz family after they finished building a replacement yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },

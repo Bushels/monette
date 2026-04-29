@@ -135,7 +135,6 @@ const editorialNavButtonStyle = {
 const EditorialView = ({ onSwitchView, onOpenHeadlineForm }) => {
   const [sel, setSel] = useState(null);
   const props = D.properties;
-  const leadSale = (D.soldProperties || []).find((sale) => sale.id === "sold-stewart-valley");
   const leadProperty = props.find((p) => p.id === "swift-current") || props.find((p) => p.id === "vanguard");
   const headline = leadProperty;
   const secondary = props.filter((p) => p.headline && p.id !== leadProperty?.id);
@@ -240,68 +239,19 @@ const EditorialView = ({ onSwitchView, onOpenHeadlineForm }) => {
         </div>
       </div>
 
-      {/* Reader-support card placed ABOVE the Stewart Valley lead-sale. */}
+      {/* Reader-support card. The Stewart Valley lead-sale block that used
+          to follow this card was removed in the homepage redesign (the
+          Stewart Valley sold marker was retired from public surfaces — see
+          the Commit 2 message and the 2026-04-29 retrospective). The
+          editorial route itself silently redirects to #map, so this view
+          is unreachable in production; the support card is preserved here
+          only so the file remains consistent if it's ever re-mounted. */}
       <div className="editorial-support-wrap editorial-support-wrap-mid">
         <SupportCard
           headline="Built by hand, one quarter-section at a time."
           sub="Title-record digging, court-file extraction, and the parcel atlas all take real time. If this work is useful to you, chip in, it is appreciated."
           signoff="~bushels"
         />
-      </div>
-
-      <div style={{ padding: "40px 48px", borderBottom: "1px solid var(--ink)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
-        <div>
-          <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>
-            Lead · {headline.region}
-          </div>
-          <div className="serif" style={{ fontSize: 52, lineHeight: 1, marginTop: 10, letterSpacing: "-0.02em" }}>
-            Stewart Valley set a <span style={{ color: "#9a3a2a" }}>real sale marker</span>.
-          </div>
-          <div style={{ marginTop: 20, fontSize: 14, lineHeight: 1.6, color: "var(--ink-2)" }}>
-            Court materials say the Swift Current-area Stewart Valley Farm sold in March 2026 for {leadSale ? (leadSale.priceLabel || fmtM(leadSale.price)) : "$54.08M"} across {leadSale ? fmt(leadSale.acres) : "12,932"} acres. The filing materials also describe the result as 158% over the 2025 appraisal. That is a hard transaction, not a rumour, and it is the right anchor for the community map.
-          </div>
-          <div className="sale-lead-actions">
-            <button onClick={() => leadProperty && setSel(leadProperty)} className="btn btn-dark">Open Swift Current file -></button>
-            <button onClick={() => onSwitchView && leadProperty && onSwitchView("map", leadProperty.id)} className="btn">View on status map</button>
-          </div>
-          <div className="sale-lead-card">
-            <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 8 }}>
-              Community rollup · {rollups[headline.id].total} quarter rows
-            </div>
-            <div className="sale-fact-grid">
-              <div className="sale-fact-card">
-                <span>Price</span>
-                <strong>{leadSale ? (leadSale.priceLabel || fmtM(leadSale.price)) : "$54.08M"}</strong>
-              </div>
-              <div className="sale-fact-card">
-                <span>Acres</span>
-                <strong>{leadSale ? fmt(leadSale.acres) : "12,932"}</strong>
-              </div>
-              <div className="sale-fact-card">
-                <span>Closed</span>
-                <strong>{leadSale ? leadSale.closed : "Mar 2026"}</strong>
-              </div>
-              <div className="sale-fact-card">
-                <span>Vs 2025 appraisal</span>
-                <strong>+158%</strong>
-              </div>
-            </div>
-            <div className="sale-source-note mono">
-              Price per acre is held off the public card until the court-record acreage and price-per-acre math is reconciled.
-            </div>
-          </div>
-        </div>
-        <div>
-          <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 14 }}>
-            Map · {headline.rms[0]}
-          </div>
-          <EditorialLeadMap
-            prop={leadSale || leadProperty}
-            onOpen={() => leadProperty && setSel(leadProperty)}
-            eyebrow="Known sale - SK - Swift Current"
-            ctaLabel="open Swift Current file ->"
-          />
-        </div>
       </div>
 
       <div style={{ padding: "36px 48px", borderBottom: "1px solid var(--ink)" }}>

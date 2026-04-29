@@ -17,7 +17,7 @@ default path.
 - `build/` - generated browser-safe JS files used by local static serving. Rebuilt by `npm run build`.
 - `public/` - generated Vercel deploy artifact. Rebuilt by `npm run build`.
 - `config.js` - runtime config (Mapbox public token, map styles, home view, Agnonymous discussion URL).
-- `data.js` - 22 property records, portfolio court-file totals, point-only geometry flags, and sold-asset markers.
+- `data.js` - 24 property records, portfolio court-file totals, point-only geometry flags, operator relationships, and sold-asset markers.
 - `creditors-data.js` - generated searchable creditor rows from the FTI creditor listing posted April 24, 2026, with country, province/state, industry, and PDF-total reconciliation fields.
 - `imagery-data.js` - generated parcel-imagery payload kept for drawer/plumbing work; not exposed as a public atlas mode right now.
 - `quarters-data.js` - generated real parcel geometry loaded from `quarters.geojson`.
@@ -50,7 +50,8 @@ Current-state changes must be taken away from, or reclassified within, the Acre 
 
 Post-baseline state changes live separately:
 
-- `soldProperties` - known sold assets such as Stewart Valley, Hafford partial, and Wymark/Waldeck.
+- `soldProperties` - known sold assets such as Hafford partial and Wymark/Waldeck.
+- `operatorRelationships` - partner-owned or co-managed assets such as CypressView/D&R. These are relationship/provenance markers only and are excluded from Monette owned/rented/farmed acreage totals until title, lease, or court evidence proves the acreage treatment.
 - Quarter votes - current ownership/listing/season observations.
 - Property notes/change logs - community or court-file updates that explain why the current map state differs from the January baseline.
 
@@ -101,11 +102,9 @@ Point-only assets such as Regina South do not have quarter rows yet, so the draw
 
 The atlas has both a floating map legend and a right-panel legend. Use it to distinguish mapped land blocks, point-only court-file assets, historical sold markers, and the selected-property gold ring.
 
-## Homepage lead story
+## Homepage shell
 
-The homepage news block is anchored to the Stewart Valley sale, not the earlier Vanguard rumour lead. Court materials describe the Swift Current-area Stewart Valley Farm sale as closing in March 2026 for roughly `$54.08M` across `12,932` acres and about `158%` over the 2025 appraisal.
-
-Do not display a public price-per-acre claim for Stewart Valley until reconciled. The extracted court materials also state `$5,312/ac`, but that figure does not reconcile arithmetically with `$54.08M` and `12,932` acres.
+The homepage is the satellite-driven Atlas at `/#map`. The previous editorial lead-story format (and the Stewart Valley sold marker that anchored it) was retired in the 2026-04-29 redesign — bare `/#map` shows the hero stats band above the atlas; `/#map/{property}` deep-links suppress the hero so shared property links land directly on the map. `/#editorial` and `/#dossiers` silently redirect to `/#map`; individual `#dossier/<slug>` reader URLs are preserved.
 
 ## Coverage model
 
@@ -113,9 +112,10 @@ The app now separates four things that should not be blended:
 
 - January 2026 baseline Property Summary: `392,940` farmed acres, `213,889` owned acres, `183,712` rented acres, and `$1.059B` total land/building value from `docs/Land/Acre Sheet.jpg`.
 - Court-file portfolio totals: `400,000+` farmed footprint, about `274,000` owned acres, about `218,000` leased acres, and `274,744` owned acres in the extracted real-property roster.
-- Public property records: `22` records in `data.js`, including the nine court-file assets that were missing from the first mapped ledger.
+- Public property records: `24` records in `data.js`, including court-file assets that were missing from the first mapped ledger.
 - Community geometry/voting rows: `1,259` current quarter rows, of which `1,235` are generated real-geometry rows and `24` are The Pas synthetic fallback rows.
 - Point-only assets: Airdrie, Swift Current, Regina South, Outlook Seeds Plant, BC Ranches, Goat's Peak Vineyard, Aguila, Genoa, and Tonopah are visible on the map as location markers only until parcel boundaries are sourced.
+- Operator relationships: CypressView/D&R partner-managed or jointly managed assets are visible as gold `OP` markers. They explain Monette's management network and current creditor exposure, but they do not change portfolio acreage totals.
 
 Register row acres are source-specific and may overlap sale-file blocks. Do not treat their sum as the audited court-file owned acreage total.
 
