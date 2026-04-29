@@ -78,8 +78,15 @@ const staticAssets = [
 // They're copied verbatim from /dossiers into /public/dossiers.
 const dossiersDir = path.join(root, "dossiers");
 
-await mkdir(outDir, { recursive: true });
+// Clean both build dirs before rebuilding so deleted source files (e.g.,
+// view-editorial.jsx removed in 4263315) can't leave stale compiled
+// artifacts behind. Previously only public/ was cleaned; build/ accumulated
+// stale .js files indefinitely. Deploy was always correct because Vercel
+// only ships public/, but local debugging could mislead anyone reading
+// build/ directly. Codex post-cleanup-review flag, fixed 2026-04-29.
+await rm(outDir, { recursive: true, force: true });
 await rm(deployRootDir, { recursive: true, force: true });
+await mkdir(outDir, { recursive: true });
 await mkdir(deployBuildDir, { recursive: true });
 await mkdir(deployDossierDir, { recursive: true });
 
