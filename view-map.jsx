@@ -74,11 +74,25 @@ function vigorColorFor(ndvi) {
 //   out-of-season / perennial → gray-blue
 //   insufficient_baseline  → medium gray
 //   anything else          → dark gray
-function seedingFillColor(applicability, seeded) {
+// Codex bwgf1888o post-review fix: previous implementation was flat-color per
+// state regardless of confidence. The spec calls for a confidence-modulated
+// ramp so a 100% seeded parcel reads bolder than a 60% seeded parcel. We
+// linear-interpolate between a "pale" and "bold" color per state, keyed on
+// seeding_confidence (0..100 → 0..1, floored at 0.25 so even very-low
+// confidence calls remain visible rather than near-transparent).
+function _lerpRgb(low, high, t) {
+  const r = Math.round(low[0] + (high[0] - low[0]) * t);
+  const g = Math.round(low[1] + (high[1] - low[1]) * t);
+  const b = Math.round(low[2] + (high[2] - low[2]) * t);
+  return `rgb(${r},${g},${b})`;
+}
+
+function seedingFillColor(applicability, seeded, confidence) {
   if (applicability === "active") {
-    if (seeded === true)  return "#3a8c2a"; // confirmed seeded
-    if (seeded === false) return "#c0392b"; // confirmed not-seeded
-    return "#c8a84b";                        // indeterminate
+    const t = Math.max(0.25, Math.min(1, (confidence || 0) / 100));
+    if (seeded === true)  return _lerpRgb([200, 220, 195], [58, 140, 42], t);   // pale-green → bold-green
+    if (seeded === false) return _lerpRgb([220, 195, 190], [192, 57, 43], t);   // pale-red   → bold-red
+    return _lerpRgb([225, 215, 190], [200, 168, 75], t);                         // pale-amber → bold-amber
   }
   if (applicability === "out-of-season" || applicability === "perennial") return "#5a7a8a";
   if (applicability === "insufficient_baseline") return "#7a7a7a";
@@ -627,7 +641,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         seeding_seeded: imagery ? (imagery.seeding_seeded != null ? imagery.seeding_seeded : null) : null,
         seeding_confidence: imagery ? (imagery.seeding_confidence || 0) : 0,
         seeding_fill_color: imagery
-          ? seedingFillColor(imagery.seeding_applicability, imagery.seeding_seeded)
+          ? seedingFillColor(imagery.seeding_applicability, imagery.seeding_seeded, imagery.seeding_confidence)
           : "#4a4a4a",
         polygon_quality: imagery ? (imagery.polygon_quality || null) : null,
         rumored_sold: rumoredSold ? 1 : 0,
@@ -2371,10 +2385,6 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
               <div className="atlas-legend-row">
                 <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
                 <span>Tan quarter outlines are returned to landlord.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-season">S</span>
-                <span>S / SP / H mark seeded, sprayed, and harvested votes.</span>
               </div>
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-point" />

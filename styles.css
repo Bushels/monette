@@ -3436,6 +3436,19 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   color: var(--mute);
 }
 
+/* Codex bwgf1888o post-review fix: 177 active records have prior_crop="unknown"
+   from unmapped CDL/ACI classes. UI must surface this so users don't infer a
+   specific crop. Visually distinct from .qd-satellite-crop (uses warning tint
+   from the same palette as .qd-lowqc-badge). */
+.qd-satellite-crop-unmapped {
+  font-size: 9px;
+  padding: 1px 5px;
+  border: 1px dashed var(--mute);
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .qd-lowqc-badge {
   font-size: 9px;
   padding: 1px 5px;

@@ -577,7 +577,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               Court-file asset, not parcel-mapped yet.
             </div>
             <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)" }}>
-              This record is backed by the court-file roster, but we do not yet have defensible quarter rows or parcel polygons. Sold / listed / seeded voting appears after parcel rows exist. Until then, open a public evidence thread on Agnonymous so others can comment under it.
+              This record is backed by the court-file roster, but we do not yet have defensible quarter rows or parcel polygons. Until parcel mapping catches up, open a public evidence thread on Agnonymous so others can comment under it.
             </div>
             <div className="pd-point-only-explain">
               <div>

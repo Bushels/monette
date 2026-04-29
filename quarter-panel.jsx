@@ -95,7 +95,12 @@ function QuarterDetail({ propId, q, i, onClose }) {
   const applicability = imgRow ? imgRow.seeding_applicability : null;
   const seeded = imgRow ? imgRow.seeding_seeded : null;
   const confidence = imgRow ? (imgRow.seeding_confidence || 0) : 0;
-  const lastObsDate = seedingBlock ? (seedingBlock.last_obs_date || null) : (imgRow ? imgRow.image_to || null : null);
+  // last_obs_date is meaningful only when there's an actual SAR observation
+  // (dvh_db non-null). Non-SAR branches (insufficient_baseline, perennial,
+  // out-of-season) default last_obs_date to run_date which would falsely imply
+  // a SAR observation occurred. Guardrail per Codex review beyzs2ym9 Q5.
+  const hasSarObservation = !!(seedingBlock && seedingBlock.dvh_db != null);
+  const lastObsDate = hasSarObservation ? (seedingBlock.last_obs_date || null) : null;
   const polygonQuality = imgRow ? (imgRow.polygon_quality || null) : null;
   const croplandCoverage = imgRow ? (imgRow.cropland_coverage || null) : null;
   const priorCrop = imgRow ? (imgRow.prior_crop || null) : null;
@@ -137,6 +142,13 @@ function QuarterDetail({ propId, q, i, onClose }) {
           )}
           {priorCrop && priorCrop !== "unknown" && (
             <span className="qd-satellite-crop mono">prior: {priorCrop.replace(/_/g, " ")}</span>
+          )}
+          {priorCrop === "unknown" && (
+            // Codex review beyzs2ym9 Q5 guardrail: 177 active records have
+            // unmapped CDL/ACI classes. UI must NOT imply crop-specific
+            // certainty — surface a "crop type unmapped" badge so users see
+            // the seeded/not-seeded call without inferring a specific crop.
+            <span className="qd-satellite-crop-unmapped mono">crop type unmapped</span>
           )}
         </div>
         <div className="qd-satellite-status">
