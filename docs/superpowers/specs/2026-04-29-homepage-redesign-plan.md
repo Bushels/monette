@@ -107,15 +107,63 @@ Update if public-facing:
 
 ### Q5 — Live feed subject line
 
-**Critical re-framing from Codex:** the current code is **NOT an Agnonymous feed**. It reads `public.tips.body` where `kind='headline'` (Monette-internal moderated headlines submitted via `SubmitHeadlineModal`). Calling it "Agnonymous live feed" without integrating Agnonymous would be **dishonest UX**.
+**Critical re-framing from Codex:** the current `HeadlineTicker` reads `public.tips.body` where `kind='headline'` (Monette-internal moderated headlines submitted via `SubmitHeadlineModal`). Codex flagged that calling that surface an "Agnonymous live feed" without integrating Agnonymous would be **dishonest UX**.
 
-**Recommendation:** Option A with Option C fallback:
-- Query `LIMIT 5` (was 20)
-- Display **first non-empty line of `body`** (split on `\n`, take first non-empty)
-- Truncate to ~80 chars with ellipsis if needed
-- Do NOT add a `subject` column yet — that's a schema migration with auth implications
+**User clarification (post-Codex):** "We can likely use the Agnonymous Supabase that we already have access to in order to grab the most recent posts." → real Agnonymous integration is the desired path.
 
-**Copy correction:** the feed label should say "Recent updates" or "Latest dispatches" — NOT "Agnonymous live feed" — unless we actually integrate the Agnonymous API. If the user wants real Agnonymous post subjects, that's a separate integration in a separate session.
+**Updated Session 3 plan — direct Agnonymous DB read:**
+
+The Agnonymous Supabase project isn't yet in this codebase. Prerequisites the new session must establish:
+
+1. **Project ID / URL** for the Agnonymous Supabase project (e.g. `https://<id>.supabase.co`).
+2. **Anon key** with read access to whatever table holds posts. Both Monette's anon key and Agnonymous's anon key are designed to ship publicly — RLS does the gating, same pattern as Monette.
+3. **Schema discovery** — what's the table called (`posts`? `threads`? `entries`?), and does it have an explicit `subject` column or do we extract from a `body` field?
+
+**How to discover, in order of preference:**
+
+a. **MCP route:** the Supabase MCP connector at `b5a4a7b9-c6ac-499f-8de3-efb29e0384b3` is currently scoped to the Vercel-managed "Kyle's projects" org (sees only Monette + MPS — per memory `supabase_mcp_org_scoping.md`). Disconnect + reconnect to flip to the Agnonymous org, then `list_projects` + `list_tables` + `execute_sql` to see schema.
+
+b. **Direct from user:** Kyle owns Agnonymous; ask him for the project ID and a sample `SELECT * FROM <posts> LIMIT 1` to see the columns.
+
+c. **Read agnonymous.buperac.com source:** if the Agnonymous frontend ships its anon key + URL in browser config (likely, mirroring the Monette pattern), inspect a page's bundled JS for `SUPABASE_URL` / `SUPABASE_ANON_KEY` constants. Sub-domain on the same buperac.com property — should be straightforward.
+
+**Implementation pattern (preferred — parallel Supabase clients):**
+
+```js
+// config.template.js — add the Agnonymous keys alongside Monette's
+window.AGNONYMOUS_SUPABASE_URL      = "https://<agnonymous-project>.supabase.co";
+window.AGNONYMOUS_SUPABASE_ANON_KEY = "...";  // public anon key, RLS gated
+
+// supabase-client.js (or new agnonymous-client.js)
+const supaAgnonymous = window.supabase.createClient(
+  window.AGNONYMOUS_SUPABASE_URL,
+  window.AGNONYMOUS_SUPABASE_ANON_KEY,
+  { auth: { persistSession: false } }
+);
+
+async function hydrateAgnonymousFeed() {
+  const { data, error } = await supaAgnonymous
+    .from("<posts_table>")
+    .select("id, subject_or_body_field, created_at")
+    .eq("published", true)        // or whatever publish gate Agnonymous uses
+    .order("created_at", { ascending: false })
+    .limit(5);
+  // ...
+}
+```
+
+**Schema-driven branch (decide once you've seen the actual table):**
+
+| Agnonymous schema | Action |
+|---|---|
+| Has an explicit `subject` column | Use it directly. Truncate to ~80 chars only if needed. |
+| Body only | First non-empty line of `body`, truncate to ~80 chars (Codex's Option A). |
+| Needs `published` filter | Apply it (don't show drafts/unmoderated). |
+| Needs RLS-bypassing service-role key for read | **STOP** — anon key with permissive RLS is the correct pattern; service-role keys must NEVER ship to the browser. Re-scope: ask Kyle to add a public-read policy on the relevant column subset, or build a Vercel-function proxy. |
+
+**Fallback if Agnonymous integration blocks:** keep the `public.tips` (Monette) feed but with corrected copy ("Recent updates" not "Agnonymous live feed") + LIMIT 5 + first-line extraction. Ship that as a holding pattern; come back for real Agnonymous in a follow-up.
+
+**Copy:** once integrated, the feed label CAN say "Latest from agnonymous" or "Latest tips" — accurate to the actual source.
 
 ### Q6 — Donate button
 
@@ -138,11 +186,15 @@ Update if public-facing:
 | 1 | `feat: make seeding atlas the home surface` | Routing default change · `#editorial → #map` redirect · top-nav cleanup (kill Ledger tab) · hero stats hoisted above map · explicit map height (clamp + svh) · `map.resize()` on visibility · mode toggle reduced to Seeding / Land Status with new key names · Donate button in nav · `#map/{property}` collapses hero |
 | 2 | `chore: remove Stewart Valley sold marker from public atlas` | `sold-stewart-valley` data record · `leadSale` + Stewart lead block in editorial · timeline/headline/UI copy · README references if needed |
 
-**Session 3 — live feed reframe (SMALL):** ONE commit:
+**Session 3 — Agnonymous live feed integration (MEDIUM, was SMALL):**
 
-| # | Commit | Scope |
-|---|---|---|
-| 1 | `feat(headlines): tighten live feed to last 5 with subject-line extraction` | `hydrateHeadlines` LIMIT 5 · `normalizeHeadline` first-line-of-body extraction with 80-char truncate · feed-label copy corrected to NOT claim Agnonymous unless we integrate it |
+User's clarification (post-Codex) escalates Session 3 from "tighten the existing tip feed" to "integrate the actual Agnonymous Supabase." Updated shape:
+
+- **Phase 1: schema discovery** (no code) — get Agnonymous project ID, anon key, posts table shape via MCP-connector flip OR direct ask OR agnonymous.buperac.com bundled JS inspection. Decision point: proceed if schema is straightforward + RLS allows anon read; STOP and document if schema/auth surfaces complexity.
+- **Phase 2: integration** (one commit) — `feat(headlines): live feed reads Agnonymous Supabase directly`. Add `AGNONYMOUS_SUPABASE_*` to `config.template.js`; new `supaAgnonymous` client in `supabase-client.js`; new `hydrateAgnonymousFeed` LIMIT 5; adapt `HeadlineTicker` to the Agnonymous post shape; corrected copy ("Latest from agnonymous" or similar).
+- **Phase 3: smoke** — Chrome MCP verify the feed renders 5 real Agnonymous posts; no CORS / RLS errors.
+
+Fallback if Phase 1 blocks: revert to Codex's original Option A on the Monette tips feed (LIMIT 5 + first-line extraction + honest "Recent updates" label) as a holding pattern. Document the Agnonymous-integration findings for a follow-up session.
 
 **Validation per session:** `npm run build`, desktop root, mobile 390×844, `#map`, `#map/hafford`, and no-Supabase fallback (when `window.supabase` is missing).
 
@@ -346,60 +398,120 @@ Live feed reframe is Session 3.
 
 ```
 Resume the Monette satellite atlas. Session 2 (homepage redesign) is
-complete. Next: reframe the live feed to show only the latest 5
-moderated tip subject lines.
+complete. Next: replace the existing tip-driven HeadlineTicker with a
+real Agnonymous live feed showing the most recent 5 posts from
+agnonymous.buperac.com directly.
+
+User direction (2026-04-29): "We can likely use the Agnonymous
+Supabase that we already have access to in order to grab the most
+recent posts."
 
 REQUIRED READING:
-  docs/superpowers/specs/2026-04-29-homepage-redesign-plan.md
+  docs/superpowers/specs/2026-04-29-homepage-redesign-plan.md (Q5
+    section has the schema-discovery + integration pattern)
   ~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md
+  ~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/supabase_mcp_org_scoping.md
+  ~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/contact_channel.md
 
-Codex Q5 (from bvqyinxv4):
+PHASE 1 — Schema discovery (BEFORE any code):
 
-CRITICAL FRAMING:
-  The current 'live feed' is NOT an Agnonymous feed. It reads
-  public.tips.body where kind='headline' — Monette-internal moderated
-  headlines submitted via SubmitHeadlineModal. Calling it an
-  'Agnonymous live feed' without integrating Agnonymous would be
-  dishonest UX. If the user wants REAL Agnonymous post subjects,
-  that's a separate integration session — flag and stop.
+The Agnonymous Supabase project ID isn't yet in this codebase.
+Establish, in this order:
 
-Codex recommendation (Option A + C fallback):
-  - hydrateHeadlines query: LIMIT 20 → LIMIT 5
-  - normalizeHeadline: extract first non-empty line of body (split
-    on '\n', filter empty), truncate to ~80 chars with ellipsis if
-    needed
-  - Do NOT add a 'subject' column to public.tips yet — that's a
-    schema migration with auth implications, separate session.
-  - Feed label copy: 'Recent updates' / 'Latest dispatches' / similar
-    — NOT 'Agnonymous live feed'.
+  a. Try the MCP connector route. The connector
+     b5a4a7b9-c6ac-499f-8de3-efb29e0384b3 is currently scoped to the
+     Vercel-managed 'Kyle's projects' org (Monette + MPS only).
+     Disconnect + reconnect to flip to the Agnonymous org. Then:
+       mcp__b5a4a7b9...__list_projects → find the Agnonymous project ID
+       mcp__b5a4a7b9...__list_tables (schemas=['public']) → find the
+         posts table name
+       mcp__b5a4a7b9...__execute_sql 'SELECT * FROM <posts> ORDER BY
+         created_at DESC LIMIT 1' → see column shape
+     If reconnect-flipping is awkward, fall to (b) or (c).
+
+  b. Ask the user directly: 'What's the Agnonymous Supabase project ID
+     and the name of the posts table?' Kyle owns Agnonymous so he can
+     paste a SELECT result.
+
+  c. Inspect agnonymous.buperac.com's bundled JS for SUPABASE_URL /
+     SUPABASE_ANON_KEY constants. Same buperac.com property; the anon
+     key ships in the browser already. Use Chrome MCP or curl + grep.
+
+DECISION POINT after Phase 1:
+
+  - If you have URL + anon key + a 'subject' column in the schema:
+    proceed with direct Supabase read (Option A).
+  - If anon-key read needs RLS adjustment to be permissive: STOP and
+    ask Kyle to add a public-read policy. Don't ship the service-role
+    key to the browser.
+  - If Agnonymous schema is more complex than 'posts' (threads with
+    nested comments, requires auth, etc.): scope grows. Stop, write
+    up findings, and confirm with Kyle before proceeding.
+
+  Fallback if integration blocks: tighten the existing public.tips
+  feed with LIMIT 5 + first-line-of-body extraction + corrected copy
+  ('Recent updates' not 'Agnonymous live feed') and ship that as the
+  holding pattern. Codex Q5 in the brief details this.
+
+PHASE 2 — Implementation (after Phase 1 unblocks):
 
 Files expected to change:
-  - supabase-client.js (hydrateHeadlines + normalizeHeadline) +
-    public/supabase-client.js mirror
-  - Possibly quarter-panel.jsx HeadlineTicker rendering tweak (only
-    if the rendering needs to handle the new subject-line shape)
-  - Possibly view-editorial.jsx or wherever the feed appears in the
-    new homepage shell — copy correction only
 
-Smoke verify:
-  - At localhost:8000, the live feed renders ≤ 5 items
-  - Each item shows the first line of body, truncated if > 80 chars
-  - Feed label does not claim 'Agnonymous'
-  - No console errors
+  config.template.js + config.js
+    + window.AGNONYMOUS_SUPABASE_URL = '...'
+    + window.AGNONYMOUS_SUPABASE_ANON_KEY = '...'
+    Note: config.js is gitignored (rendered by build); env vars in
+    .env.local + Vercel env. The user may need to set them.
+
+  supabase-client.js (+ public/supabase-client.js mirror)
+    + new supaAgnonymous client
+    + hydrateAgnonymousFeed() that queries the Agnonymous posts table
+      LIMIT 5, ordered by created_at DESC, with whatever published/
+      visibility filter the schema requires
+    + replace or augment the existing hydrateHeadlines path so the
+      ticker reads from Agnonymous instead of (or in addition to)
+      public.tips
+    Keep monetteSubmitTip + tips path intact — that's the
+    SubmitHeadlineModal write path.
+
+  components.jsx HeadlineTicker / useHeadlines (or quarter-panel.jsx
+  HeadlineTicker — wherever the ticker lives post-Session-2)
+    Adapt to the Agnonymous post shape (subject + permalink? title
+    + body excerpt?). Copy can now accurately say 'Latest from
+    agnonymous' or 'Latest tips'.
+
+PHASE 3 — Smoke verify in browser:
+
+  - At localhost:8000, the live feed renders ≤ 5 items from
+    Agnonymous (not from Monette public.tips)
+  - Each item shows a meaningful subject/title (not bare body
+    truncation)
+  - Permalinks (if applicable) point at the correct Agnonymous post
+    URL
+  - Feed label is honest about source
+  - No console errors (CORS, 401, RLS denial, etc.)
+  - npm run build clean
+  - pytest 42/42 (unchanged)
 
 Workflow:
-  1. Implementer subagent (1 commit):
-     feat(headlines): tighten live feed to last 5 with subject-line
-     extraction
-  2. Codex review of the diff
-  3. Browser smoke via Chrome MCP
-  4. Update retrospective
+  1. Phase 1 schema discovery (main session)
+  2. If unblocked: dispatch implementer subagent for the integration
+     commit
+     feat(headlines): live feed reads Agnonymous Supabase directly
+  3. Codex review of the diff (background)
+  4. Browser smoke via Chrome MCP
+  5. Update retrospective at
+     docs/superpowers/specs/2026-04-29-agnonymous-live-feed-retrospective.md
 
-pytest 42/42 must still pass.
+Surgical staging — stage only the files you intentionally edited.
+Workdir may still have leftover modified/untracked files from earlier
+sessions.
 
-Surgical staging — workdir may still have leftover modified/untracked
-files. Stage only supabase-client.js + public/supabase-client.js (+
-any JSX file you touched).
+If Phase 1 reveals the integration is bigger than one session
+(e.g. schema is unexpected, RLS needs work, requires API rather than
+direct Supabase), STOP after Phase 1 + write findings to
+docs/superpowers/specs/<date>-agnonymous-integration-discovery.md
+and propose a follow-up plan. Don't paper over the schema gap.
 ```
 
 ---
