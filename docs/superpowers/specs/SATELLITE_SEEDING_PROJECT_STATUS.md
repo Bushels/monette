@@ -1,8 +1,14 @@
 # Satellite Seeding Project — Living Status
 
-**Last updated:** 2026-04-28 evening
-**Last session retrospective:** `docs/superpowers/specs/2026-04-28-session-retrospective.md`
-**Last Codex review:** background id `b53izop76`, surfaced in the retrospective above
+**Last updated:** 2026-04-28 late-evening (Bucket A complete)
+**Latest session retrospectives:**
+- `docs/superpowers/specs/2026-04-28-session-retrospective.md` (Phase 0–5 v1 ship + initial Codex findings)
+- `docs/superpowers/specs/2026-04-28-bucket-a-cleanup-retrospective.md` (3-round Codex review loop, all findings landed)
+
+**Codex review history:**
+- `b53izop76` — initial post-shipping review (3 buckets surfaced)
+- `b08awunq3` — Bucket A round-1 review (3 new BLOCKERs)
+- `bd5gaxmye` — Bucket A round-2 review (1 new BLOCKER + perf hints)
 
 This is the canonical entrypoint for understanding where the satellite seeding project stands. Updated after every milestone session per the workflow established in `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md`.
 
@@ -10,7 +16,7 @@ This is the canonical entrypoint for understanding where the satellite seeding p
 
 ## One-paragraph summary
 
-A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. Architecturally complete and verified at full-territory scale (Phases 0–5 done, 24 commits as of 2026-04-28). **Codex post-shipping review surfaced 1 critical and 5 high-severity defects that must be fixed before any public surface displays the data** — see "Known issues" below.
+A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. **Bucket A is now complete**: 8 fix commits across 3 review rounds (a29ab80..4a7cfe6) plus a fresh imagery-data.js (d7bf05e) regenerated against rebuilt T0 baselines. The Prince Albert ΔVH anomaly that triggered the cleanup (was +9.32 dB across 19/19 parcels at 100% confidence) is resolved (mean +2.32 dB now, with realistic confidence spread). Bucket B (`dvv_db`/`optical`/`baseline_quality` schema completeness) and Bucket C (server-side `reduceRegions`) remain.
 
 ---
 
@@ -49,40 +55,92 @@ A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded
 
 ---
 
-## Current data distribution (Phase 5 round 4, 2026-04-28)
+## Current data distribution (post-Bucket-A, 2026-04-28 late-evening)
 
 | Territory | Total | Active | Insuf | Out-season | Perennial |
 |---|---:|---:|---:|---:|---:|
 | SK (10 properties) | 850 | 420 (49%) | 354 (42%) | 76 (9%) | 0 |
 | MB Eddystone | 165 | 0 | 163 | 2 | 0 |
-| MT Big Horn | 220 | 115 (52%) | 8 | 69 | 28 |
+| MT Big Horn | 220 | 113 (51%) | 10 | 69 | 28 |
 | AZ Aguila | 23 | 0 | 23 | 0 | 0 |
 | CO Genoa | 2 | 0 | 0 | 0 | 2 |
-| **TOTAL** | **1,260** | **535** | **550** | **145** | **30** |
+| **TOTAL** | **1,260** | **533** | **552** | **145** | **30** |
 
-Active parcels' ΔVH ranges per property are in the retrospective. **The Prince-Albert ΔVH cluster (mean +9.32 dB across 19/19 parcels, 100% confidence) is a code defect (see Bucket A below), not a real signal.**
+Distribution shifts vs the pre-Bucket-A snapshot:
+- 2 MT parcels flipped active → insufficient_baseline. Tighter CDL+common-mask reduced their valid pixel support below threshold. Expected.
+- All other applicability counts unchanged.
+
+### Active ΔVH (dB) summary post-Bucket-A
+
+| Territory | n active | mean | median | min | max |
+|---|---:|---:|---:|---:|---:|
+| SK (all) | 420 | -0.625 | -0.372 | -3.483 | +4.567 |
+| **PA only** (subset of SK) | **19** | **+2.318** | **+2.758** | **-1.012** | **+4.567** |
+| MT | 113 | +2.714 | +2.665 | -0.762 | +6.495 |
+
+**The PA anomaly is resolved.** Pre-Bucket-A: PA mean was +9.317 dB, max +13.094 dB, all 19 parcels at 100% confidence. Post-Bucket-A: mean +2.318 dB, max +4.567 dB, confidence spread across the histogram. The mean-of-ratios artifact + snow-QC bug + CDL mask error compounded to produce the inflated cluster; all three are fixed.
+
+### Confidence histogram (active parcels)
+
+| Bucket | Pre-Bucket-A | Post-Bucket-A |
+|---|---:|---:|
+| 100% | 246 | 176 |
+| 90–99% | 23 | 20 |
+| 75–89% | 46 | 33 |
+| 50–74% | 69 | 36 |
+| <50% | 151 | 268 |
+
+The shift toward `<50%` is the intended effect: cleaner SAR math + realistic cropland_coverage means fewer parcels accidentally cleared the high-confidence thresholds.
+
+### cropland_coverage post-Bucket-A
+
+| Territory | mean | median | min | max | notes |
+|---|---:|---:|---:|---:|---|
+| SK | 0.921 | 0.949 | 0.000 | 1.000 | Was 0.575–0.666 cluster (projection-mismatch artifact); now real |
+| MB | 0.656 | 0.784 | 0.000 | 1.000 | All insufficient_baseline regardless |
+| MT | 0.656 | 0.760 | 0.000 | 1.000 | CDL filter now excludes forest/water/developed/pasture |
+| AZ | 0.528 | 0.552 | 0.000 | 1.000 | All insufficient_baseline regardless |
+| CO | 0.000 | 0.000 | 0.000 | 0.000 | Both Genoa parcels are perennial alfalfa; cc=0 anomaly to investigate (non-blocking) |
+
+`polygon_quality=low` (cc < 0.50): 12 → 130. The OLD count was hidden by the artifactual 0.6+ cropland_coverage cluster; the new count is honest.
 
 ---
 
-## Known issues — must address before public surface
+## Known issues — fix bucket status
 
-Categorized into 3 fix buckets. **Phase 4 UI work should NOT proceed until Bucket A + B land** so the data on the map is honest.
+Phase 4 UI work was gated on Bucket A. Bucket A is now complete; Bucket B + C remain.
 
-### 🔴 Bucket A — Math correctness (~1–2 hr code + 30–60 min GEE recompute)
+### ✅ Bucket A — COMPLETE (3-round Codex review loop, 8 commits)
 
-Both items affect the trustworthiness of every "active" call in the dataset.
+All math correctness defects shipped. Data refreshed.
 
-1. **PA anomaly: SAR metric is unstable** (`pipeline.py` lines 228–256).
-   - `pipeline.py` computes `mean(T1/T0)` per pixel then logs at the end. A few near-zero T0 pixels dominate the mean and inflate ΔVH wildly.
-   - Live Codex diagnostic: payload says `+10.894 dB` on PA NW-32-51-23-W2; ratio-of-means says `+4.567 dB`. Three-fold discrepancy.
-   - **Fix:** switch to ratio-of-means: `mean_dvh_db = 10*log10(mean(T1_VH) / mean(T0_VH))`. Or median-pixel-dB. Add guard on lower-percentile T0 denominators.
-   - **After fix:** rerun full Phase 5 (~25 min) to regenerate `imagery-data.js`.
+**Round 1 fixes** (3994f35..ac8d6db):
+1. ✅ ΔVH: `mean(T1/T0)` per-pixel-then-log → ratio-of-means (`a29ab80`).
+2. ✅ T0 snow QC: `s2.median().eq(11)` → `s2.map(lambda im: im.eq(11)).mean()` (`0f797dc`).
+3. ✅ ERA5 snow_cover scaling: dropped `.divide(100.0)` (`0f797dc`).
+4. ✅ Symmetric T1/T0 zero/null guard + dead None checks dropped (`ac8d6db`).
 
-2. **T0 snow QC math is wrong** (`t0_baseline.py` lines ~177–178).
-   - `s2.median().eq(11)` takes median of class LABELS — meaningless. Should be `s2.map(lambda im: im.eq(11)).mean()`.
-   - We divide ERA5 `snow_cover` by 100 — but GEE catalog says it's already 0–1.
-   - **Fix:** correct both. SK + MT + CO baselines may have silently included snowy/freeze-transition scenes; need to recompute.
-   - **After fix:** delete + rerun T0 for SK + MT + CO (~30–45 min serialized).
+**Round 2 fixes** (de7f62d..f76352b) — Codex round-1 surfaced 3 new BLOCKERs:
+5. ✅ `cropland_coverage` = `mean()` of 0/1 mask (`de7f62d`); was projection-mismatch artifact via `count()/count()` over geographic-vs-Albers projections.
+6. ✅ Common valid-pixel support across T1/T0/cropland before reduce (`b95b72a`); avoids per-band mask divergence biasing the ratio.
+7. ✅ Phase 5 fails closed (`SystemExit(2)`) on any `status:"error"` record (`f76352b`); previously partial-failure runs were indistinguishable from clean ones.
+
+**Round 3 fixes** (dd8d66f, 4a7cfe6) — Codex round-2 surfaced 1 new BLOCKER + perf hints:
+8. ✅ CDL cropland filter (`dd8d66f`): replaced `cropland != 0` (which counted forest/water/developed/pasture as cropland) with `(1–60) ∪ (66–80) ∪ (195–254)` per USDA NASS legend. Defined as `CDL_CROPLAND_CLASSES_RANGES` module constant.
+9. ✅ VV bands added to `common_mask` (defense in depth) (`4a7cfe6`).
+10. ✅ 12 `.getInfo()` round-trips collapsed to 1 `stats.getInfo()` dict pull (`4a7cfe6`); active-parcel wall-clock saving ~30–40%.
+
+**T0 baseline rebuild** (37 min wall-clock total):
+- `sk` task `DW6QGG5KRH3NZH6PMNNX7U7F` SUCCEEDED at 04:40 UTC
+- `mt` task `LCZTMBAWWGU7MEFBWYEEHFHI` SUCCEEDED at 04:20 UTC
+- `co` task `YFMOOG7MRAQMY4LHV5XYW2ZD` SUCCEEDED at 04:28 UTC
+
+**Phase 5 rerun** (`d7bf05e`): 1,260/1,260 parcels, 0 errors, fail-closed contract held.
+
+**Verification:**
+- pytest 42/42 (no test changes — these are pure-EE pipeline fixes)
+- PA NW-32-51-23-W2 smoke test: dvh_db `+10.894` (pre-fix) → `+4.567` (post round-1) → `+4.567` (post round-3, unchanged) — exactly the Codex-cited ratio-of-means value.
+- Distribution diff inline above shows the PA anomaly resolution + confidence-spread restoration.
 
 ### 🟠 Bucket B — Schema completeness (~1–2 hr work + 25 min GEE rerun)
 
@@ -104,9 +162,10 @@ Unblocks scheduled weekly runs. Not required for v1 internal use but required be
 
 ### 🟢 Smaller items
 
-- `prior_crop="unknown"` defaults to `applicability="active"` — 386 records affected. Default to `unmapped` instead.
+- `prior_crop="unknown"` defaults to `applicability="active"` — fewer records affected post-Bucket-A but still present. Default to `unmapped` instead.
 - `calibration/az_co_applicability_overrides.json` doesn't exist despite spec §0e gate.
 - `CDL_CLASS_TO_NAME` and `ACI_CLASS_TO_NAME` maps are subset; expand based on Phase 5 actual classes encountered.
+- Genoa CO `cropland_coverage = 0` for both perennial parcels post-Bucket-A. Modal class resolves to alfalfa (perennial path engaged) so this is non-blocking, but the `cc=0` while `prior_crop=alfalfa` is a contradiction worth diagnosing — likely a pixel-alignment edge case at the small CO bbox.
 
 ---
 
@@ -123,52 +182,11 @@ Unblocks scheduled weekly runs. Not required for v1 internal use but required be
 
 Paste-able. Each is self-contained — load it into a fresh Claude session and the work proceeds.
 
-### Prompt 1 — Bucket A (run this first)
+### Prompt 1 — Bucket A — ✅ COMPLETE 2026-04-28 late-evening
 
-```
-Resume the Monette satellite seeding project. Current state at
-docs/superpowers/specs/SATELLITE_SEEDING_PROJECT_STATUS.md.
+Shipped across 3 Codex review rounds (`b53izop76` → `b08awunq3` → `bd5gaxmye`). 8 code commits + 1 data commit (`a29ab80..d7bf05e`). See "Known issues — Bucket A — COMPLETE" section above for the full ledger and the post-rerun distribution diff.
 
-Goal: land Bucket A fixes (math correctness) and re-deliver a clean
-imagery-data.js. This unblocks the Phase 4 UI work that's queued behind it.
-
-Two fixes:
-
-1. SAR metric instability (Critical, surfaced by Codex review b53izop76).
-   pipeline.py currently computes `mean(T1/T0)` per pixel then logs.
-   Few near-zero T0 pixels dominate; PA's +10.894 dB payload is really
-   only +4.567 dB by ratio-of-means. Switch to ratio-of-means:
-       mean_dvh_db = 10 * log10(mean(T1_VH) / mean(T0_VH))
-   Same for dvv_db. Add a guard: if mean_T0 is null/zero, return
-   insufficient_baseline.
-
-2. T0 snow QC math wrong (High, t0_baseline.py:~177-178).
-   `s2.median().eq(11)` is wrong — it takes the median of class labels.
-   Should be `s2.map(lambda im: im.eq(11)).mean()` (mean of binary mask).
-   Also drop the `.divide(100.0)` from ERA5 snow_cover — GEE catalog
-   says it's already 0..1.
-
-After fixes:
-  - Run pytest gee_pipeline/ → confirm 42 still pass
-  - Run pipeline.py on PA NW-32-51-23-W2 → verify dvh_db is now ~+4.5
-    (not +10.9)
-  - Delete existing sar_baseline_2026/{sk,mt,co} via ee.data.deleteAsset
-  - Re-run t0_baseline.py sk mt co (~30-45 min serialized)
-  - Re-run build_imagery_data_js.py with full --parcels-list (~25 min)
-  - Verify distribution: PA active parcels should have lower mean dvh
-    and confidence not all 100%; other properties unchanged
-  - Commit each step with substantive messages
-
-Workflow: subagent-driven for the discrete TDD/run tasks; main session
-orchestrates and polls. Always verify a Phase X by running the produce
-→ distribution review → fix → re-run loop. Codex review before
-declaring Bucket A done — same pattern as 2026-04-28's b53izop76.
-
-Stop after Bucket A is committed. Bucket B + Phase 4 are separate
-prompts.
-```
-
-### Prompt 2 — Bucket B (run after Bucket A lands)
+### Prompt 2 — Bucket B (run this first now that Bucket A is complete)
 
 ```
 Resume the Monette satellite seeding project. Bucket A complete at
@@ -275,9 +293,19 @@ Don't re-invent — match the spec.
 
 ---
 
-## Commit log this project (24 commits as of 2026-04-28)
+## Commit log this project (33 commits as of 2026-04-28 late-evening)
 
 ```
+d7bf05e data(gee): regenerate imagery-data.js after Bucket A math fixes
+4a7cfe6 perf(pipeline): VV in common_mask + single stats.getInfo() round-trip
+dd8d66f fix(pipeline): replace CDL neq(0) with proper agricultural-class mask
+f76352b fix(gee): Phase 5 fails closed when any parcel errored
+b95b72a fix(gee): force T1/T0/cropland onto common valid-pixel support before reducing
+de7f62d fix(gee): cropland_coverage uses mean of 0/1 mask, not count-of-counts (Bucket A round 2)
+ac8d6db fix(gee): symmetric T1/T0 zero-guard + drop dead None checks (Bucket A polish)
+0f797dc fix(gee): correct T0 snow QC math (S2 SCL aggregation + ERA5 scaling)
+a29ab80 fix(gee): switch ΔVH computation to ratio-of-means
+3994f35 docs: add canonical satellite seeding project status + next-session prompts
 294a127 docs(retro): append Codex post-shipping review findings
 75f5847 docs(retro): 2026-04-28 session retrospective + standing workflow practices
 007a6ba fix(gee): pipeline robustness fixes + Phase 5 full-territory imagery-data.js
