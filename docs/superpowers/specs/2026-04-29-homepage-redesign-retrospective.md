@@ -154,9 +154,24 @@ Codex specifically confirmed:
 - $30.78M math: $29M Hafford + $1.78M Wymark = correct (Q6 confirm)
 - `HomeHero` window-exported and reachable from view-map.jsx without import (Q7 PASS)
 
+## Cleanup pass (late afternoon — same session, follow-on)
+
+After the redesign + Codex review-fix commits landed, an end-of-session audit caught additional hygiene gaps. 4 cleanup commits:
+
+| Commit | Purpose |
+|---|---|
+| `84c83e9 chore(repo): track view-debt-stack.jsx + view-group-structure.jsx` | Both files had been untracked since Apr 27. Production worked via `vercel --prod` from local C:, but fresh GitHub clones were broken. Now tracked. |
+| `8069b7c chore(gitignore): ignore Python __pycache__ + transient gee_pipeline scratch` | 5 `__pycache__/` dirs + 4 underscore-prefixed gee_pipeline diagnostic scripts now ignored. Workdir noise dropped from 28 to 15 items. |
+| `0f05ce2 feat(scripts): refresh:us-az-co + AZ/CO geojson regeneration` | Operator-relationship session work — `package.json` `refresh:us-az-co` npm script + `scripts/update_us_holdings_az_co.py` + regenerated `quarters-data.js` + `quarters.geojson`. |
+| `4263315 chore(cleanup): delete unreachable view-editorial.jsx` | Closes Open Follow-up #2 below. ~600 lines of post-redesign dead code removed. Smoke verified `typeof window.EditorialView === "undefined"`, all routes still working. |
+
+**New memory file:** [`repo_workdir_hygiene.md`](../../../../.claude/projects/G--My-Drive-Agriculture-Monette/memory/repo_workdir_hygiene.md) — captures the public/private split, end-of-session audit checklist, cache-bust pattern, and the underscore-prefix convention for transient scripts.
+
+**Updated memory file:** [`drawer_lsd_jump.md`](../../../../.claude/projects/G--My-Drive-Agriculture-Monette/memory/drawer_lsd_jump.md) got a top-of-file deprecation banner clarifying that the four-effect ref-ordering pattern is still production-correct, but the vote-UI specifics are obsolete post-satellite-pivot.
+
 ## Open follow-ups
 
 1. **Session 3** — Live feed reframe. Plan section "Session 3 kickoff" is paste-ready in the redesign plan.
-2. **EditorialView dead-code audit** — `view-editorial.jsx` is unreachable (silent-redirected) but still ~600 lines of unused JSX. A future cleanup commit could delete the file + its window export + the script tag in index.html. Out of scope for this session.
+2. ~~**EditorialView dead-code audit**~~ — **CLOSED** in cleanup commit `4263315`.
 3. **Atlas-toolbar visibility on bare `#map`** — Currently shown above the atlas grid; could be suppressed when hero is present if user prefers the cleaner hero→atlas transition.
-4. **Vercel deployment** — All changes live on `main` locally. User can `vercel --prod` from C: when ready (per memory `project_local_copy.md`).
+4. **Vercel deployment** — All changes live on `main` locally. User can `vercel --prod` from C: when ready (per memory `project_local_copy.md`). **NOTE:** Github push will surface the previously-untracked Debt + Structure views to the public repo for the first time — fresh clones will now build correctly.
