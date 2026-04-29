@@ -171,11 +171,21 @@ def build_baseline_image(territory: str) -> ee.Image:
         # Hybrid snow metric: S2 SCL binary mask (0/1) when S2 has scenes,
         # else ERA5 snow_cover scaled to 0..1 fraction. Both reduce to a
         # 0..1 mean at AOI scale, so the same threshold (< 0.05) applies.
+        #
+        # Fix (Codex review b53izop76):
+        #   1. s2.median().eq(11) took the median of nominal SCL class labels,
+        #      which is meaningless (median of {6,9,11,...} is arbitrary).
+        #      Replaced with s2.map(lambda im: im.eq(11)).mean() — mean of
+        #      per-scene binary masks = fraction of scenes where each pixel
+        #      was classified as snow.
+        #   2. ERA5-Land snow_cover is already a 0..1 fraction per the GEE
+        #      catalog; the .divide(100.0) was suppressing the snow signal
+        #      by 100x. Removed.
         s2_has_data = s2.size().gt(0)
         snow_metric = ee.Image(ee.Algorithms.If(
             s2_has_data,
-            s2.median().eq(11),                                # 0 or 1 per S2 pixel
-            era5.select("snow_cover").divide(100.0),           # 0..1 ERA5 fraction
+            s2.map(lambda im: im.eq(11)).mean(),               # mean of binary masks = fraction snowy
+            era5.select("snow_cover"),                          # already 0..1 fraction
         )).rename("snow_pct")
 
         return (
