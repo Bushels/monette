@@ -362,16 +362,13 @@ def run_single_parcel(
     import math
     mean_dvh_db_value = 10 * math.log10(mean_t1_vh_val / mean_t0_vh_val)
 
-    # Compute ΔVV via the same ratio-of-means approach. Not yet surfaced in
-    # the _build_record schema (Bucket B will plumb it through); computed here
-    # to validate the math path is symmetric.
-    # TODO(Bucket B): pass _mean_dvv_db_value into _build_record + drop the
-    # underscore prefix and the F841 noqa.
+    # Compute ΔVV via the same ratio-of-means approach.
+    # Bucket B: drop the underscore prefix + noqa; pass into _build_record.
     if (mean_t1_vv_val is not None and mean_t0_vv_val is not None
             and mean_t1_vv_val > 0 and mean_t0_vv_val > 0):
-        _mean_dvv_db_value = 10 * math.log10(mean_t1_vv_val / mean_t0_vv_val)
+        mean_dvv_db_value = 10 * math.log10(mean_t1_vv_val / mean_t0_vv_val)
     else:
-        _mean_dvv_db_value = None  # noqa: F841 — computed but not yet passed through
+        mean_dvv_db_value = None
 
     return _build_record(
         territory=territory,
@@ -381,6 +378,7 @@ def run_single_parcel(
         mean_dvh_db=mean_dvh_db_value,
         n_pixels=n_pixels_value,
         run_date=run_date,
+        dvv_db=mean_dvv_db_value,
     )
 
 
@@ -393,32 +391,50 @@ def _build_record(
     mean_dvh_db: Optional[float],
     n_pixels: int,
     run_date: str,
+    dvv_db: Optional[float] = None,           # Bucket B commit 1
+    precip_mm_24h: float = 0.0,               # Bucket B commit 2 will populate
+    optical_block: Optional[dict] = None,     # Bucket B commit 3 will populate
+    ndvi_mean: Optional[float] = None,        # Bucket B commit 3 will populate
+    last_obs_date: Optional[str] = None,      # defaults to run_date if None
 ) -> dict:
     """Compose the per-parcel imagery-data.js record."""
     polygon_quality = "high" if cropland_coverage >= 0.50 else "low"
 
+    # last_obs_date defaults to run_date; commit 2 will surface the actual
+    # latest S1 contributing scene date for active SAR parcels.
+    effective_last_obs = last_obs_date if last_obs_date is not None else run_date
+
     if mean_dvh_db is None:
         confidence = 0
         seeded = None
+        # baseline_quality is None for non-SAR branches (insufficient_baseline,
+        # perennial, out-of-season). We use mean_dvh_db as the SAR/non-SAR
+        # discriminator: only active SAR branches produce a non-None mean_dvh_db.
+        baseline_quality = None
     else:
-        # Precip and dvv for v1 not threaded into this scaffold; use 0
         confidence = compute_confidence(
             mean_dvh_db=mean_dvh_db,
             n_pixels=n_pixels,
             cropland_coverage=cropland_coverage,
-            precip_mm_24h=0.0,
+            precip_mm_24h=precip_mm_24h,
         )
         seeded = decide_seeded(
             applicability=applicability,
             mean_dvh_db=mean_dvh_db,
             confidence=confidence,
         )
+        # v1 shortcut: all active SAR baselines in this run were built from
+        # the 2026 spring baseline window — they are "fresh". The "backfill"
+        # value is reserved for v1.5 when a sidecar baseline_state.json with
+        # real provenance (built-date vs requested-window comparison) is
+        # introduced. See Codex review b5ajsddp7.
+        baseline_quality = "fresh"
 
     return {
         "status": "ok",
         "image_from": run_date,
         "image_to": run_date,
-        "ndvi_mean": None,  # filled in Phase 4
+        "ndvi_mean": round(ndvi_mean, 3) if ndvi_mean is not None else None,
         "polygon_quality": polygon_quality,
         "cropland_coverage": round(cropland_coverage, 3),
         "prior_crop": prior_crop,
@@ -430,11 +446,11 @@ def _build_record(
             "applicability": applicability,
             "confidence": confidence,
             "dvh_db": round(mean_dvh_db, 3) if mean_dvh_db is not None else None,
-            "dvv_db": None,  # added in a future task
+            "dvv_db": round(dvv_db, 3) if dvv_db is not None else None,
             "n_pixels": n_pixels,
-            "last_obs_date": run_date,
-            "baseline_quality": "fresh",
-            "optical": None,  # added in a future task
+            "last_obs_date": effective_last_obs,
+            "baseline_quality": baseline_quality,
+            "optical": optical_block,
         },
     }
 

@@ -63,6 +63,7 @@ def build_payload(parcel_keys: list[str], run_date: str) -> dict:
     """Run the GEE pipeline for each parcel in parcel_keys."""
     from gee_pipeline.auth import initialize
     from gee_pipeline.pipeline import run_single_parcel
+    from gee_pipeline.t0_baseline import BASELINE_WINDOWS
 
     initialize()
     coverage = load_parcel_index()
@@ -106,12 +107,22 @@ def build_payload(parcel_keys: list[str], run_date: str) -> dict:
             print(f"  ... and {len(error_keys) - 3} more.", file=sys.stderr)
         raise SystemExit(2)
 
+    # Build baseline_window field per spec §5: {sk: [start, end], mb: [...], ...}
+    # Source from BASELINE_WINDOWS (keyed by territory, value (start_iso, end_iso, bbox)).
+    # AZ has no SAR baseline so it is absent from BASELINE_WINDOWS — that's correct.
+    # bbox is the third element; omit it from the output.
+    baseline_window = {
+        territory: [start, end]
+        for territory, (start, end, _bbox) in BASELINE_WINDOWS.items()
+    }
+
     return {
         "generated_at": iso_now(),
         "source": "gee-pipeline",
         "ready": True,
         "window_days": 14,
         "thresholds_version": "v1.0-prior",
+        "baseline_window": baseline_window,
         "coverage": {
             "mapped_parcels": coverage["total_features"],
             "mapped_properties": len(coverage["by_property"]),
