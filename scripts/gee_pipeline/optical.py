@@ -21,12 +21,20 @@ from typing import Optional, Tuple
 
 import ee
 
-WINDOW_DAYS = 3                  # ±3 days from run_date
-CLOUD_FILTER = 30                # % granule-level pre-filter
+LOOKBACK_DAYS = 10               # search window ends at run_date, looks back N days
+                                 # (Codex review bl5l9zfxa Q1: avoid future lookahead in
+                                 # public "as-of" output; ±3 symmetric was the spec but
+                                 # gave too few candidates in late-April prairies)
 SCL_KEEP_CLASSES = [4, 5]        # vegetation (4), bare soils / not_vegetated (5)
 MIN_VALID_PIXELS = 50            # parcel must have at least this many valid pixels
 NDVI_GATE = 0.25                 # parcel-mean NDVI gate for emitting NDTI / BSI
 SCALE_M = 20                     # reduce at 20m — B11/B12/SCL native resolution
+
+# Codex review bl5l9zfxa Q1: dropped CLOUDY_PIXEL_PERCENTAGE < 30 granule-level
+# prefilter. SCL is per-pixel cloud classification at 20m, so SCL_KEEP_CLASSES +
+# MIN_VALID_PIXELS is the parcel-scale truth. The granule-level prefilter culled
+# many scenes that had clean parcel-level coverage even when the granule overall
+# was cloudy.
 
 
 def _scl_mask(image: ee.Image) -> ee.Image:
@@ -56,8 +64,8 @@ def compute_optical_features(
     eroded : ee.Geometry
         The eroded parcel geometry (80m buffer already applied upstream).
     run_date : str
-        ISO date string (YYYY-MM-dd) used as the centre of the ±WINDOW_DAYS
-        search window.
+        ISO date string (YYYY-MM-dd) used as the END of a lookback-only
+        search window of LOOKBACK_DAYS days. (run_date - LOOKBACK, run_date].
     cropland_mask : ee.Image
         Binary 0/1 cropland mask pre-computed for this territory (same mask
         used by the SAR pipeline so we operate on the same pixel population).
@@ -76,28 +84,36 @@ def compute_optical_features(
         legacy top-level ndvi_mean field (existing vigor layer) without an
         extra reduce.
     """
-    start = ee.Date(run_date).advance(-WINDOW_DAYS, "day")
-    end = ee.Date(run_date).advance(WINDOW_DAYS, "day")
+    # Lookback-only window: (run_date - LOOKBACK_DAYS, run_date]. This avoids
+    # "the dashboard at 2026-04-28 used data from 2026-05-01" lookahead, which
+    # is wrong for any public "as-of" interpretation of the output.
+    end = ee.Date(run_date).advance(1, "day")  # inclusive of run_date
+    start = ee.Date(run_date).advance(-LOOKBACK_DAYS, "day")
 
     coll = (
         ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
         .filterBounds(eroded)
         .filterDate(start, end)
-        .filter(ee.Filter.lt("CLOUDY_PIXEL_PERCENTAGE", CLOUD_FILTER))
     )
 
     # Annotate each scene with the count of valid cropland pixels after the
     # SCL + cropland mask. We use this count to filter below MIN_VALID_PIXELS
     # and to rank scenes (more valid pixels = better coverage).
+    #
+    # Codex review bl5l9zfxa: ee.Image.And() preserves the first operand's
+    # band name, and scl_mask carries band "SCL" (from .select("SCL").eq(...)).
+    # Without an explicit .rename("valid"), the reducer dict keys are {"SCL":
+    # <count>}, and .getNumber("constant") returned null on every scene —
+    # silently filtering ALL scenes out before the qualifying step.
     def annotate(img: ee.Image) -> ee.Image:
         scl_mask = _scl_mask(img)
-        valid = scl_mask.And(cropland_mask)
+        valid = scl_mask.And(cropland_mask).rename("valid")
         cnt = valid.reduceRegion(
             reducer=ee.Reducer.sum(),
             geometry=eroded,
             scale=SCALE_M,
             maxPixels=1e7,
-        ).getNumber("constant")
+        ).getNumber("valid")
         return img.set("valid_count", cnt)
 
     annotated = coll.map(annotate)
