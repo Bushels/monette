@@ -31,6 +31,7 @@ for _parent in _HERE.parents:
 from gee_pipeline.applicability import applicability_for_crop, Applicability
 from gee_pipeline.confidence import compute_confidence
 from gee_pipeline.decision_rule import decide_seeded
+from gee_pipeline.optical import compute_optical_features
 from gee_pipeline.auth import initialize, auth_source
 
 GEE_PROJECT = "monette-494717"
@@ -219,15 +220,30 @@ def run_single_parcel(
         crop_class=crop_name, territory=territory, run_date=run_date
     )
 
+    # 5a. Optical features — computed for ALL parcels surviving erosion +
+    # cropland mask (per Codex Q5: optical is calibration data for v1.5,
+    # not a v1 decision input, so we collect it broadly regardless of
+    # applicability). The results are passed into _build_record below for
+    # both active and non-active branches. Parcels that eroded to nothing
+    # (early-exit above) skip this block entirely.
+    cropland_coverage_val = float(cc_value.getInfo() or 0)
+    optical_block, ndvi_mean_val = compute_optical_features(
+        eroded=eroded,
+        run_date=run_date,
+        cropland_mask=cropland_mask,
+    )
+
     if applicability != "active":
         return _build_record(
             territory=territory,
-            cropland_coverage=float(cc_value.getInfo() or 0),
+            cropland_coverage=cropland_coverage_val,
             prior_crop=crop_name,
             applicability=applicability,
             mean_dvh_db=None,
             n_pixels=0,
             run_date=run_date,
+            optical_block=optical_block,
+            ndvi_mean=ndvi_mean_val,
         )
 
     # 6. Read T0 baseline + compute T1, then ΔVH
@@ -247,12 +263,14 @@ def run_single_parcel(
     except ee.EEException:
         return _build_record(
             territory=territory,
-            cropland_coverage=float(cc_value.getInfo() or 0),
+            cropland_coverage=cropland_coverage_val,
             prior_crop=crop_name,
             applicability="insufficient_baseline",
             mean_dvh_db=None,
             n_pixels=0,
             run_date=run_date,
+            optical_block=optical_block,
+            ndvi_mean=ndvi_mean_val,
         )
     t0 = ee.Image(asset_id)
     t1_window_start = ee.Date(run_date).advance(-14, "day")
@@ -294,13 +312,16 @@ def run_single_parcel(
         scene_date = ee.Date(ts_ms)
         era5_window_start = scene_date.advance(-1, "day")
         era5_window_end = scene_date
-        era5 = (
+        # ee.ImageCollection.first() returns a null Image object (not Python
+        # None) when the collection is empty; calling .select() on it crashes.
+        # Check collection size first to handle ERA5's ~9 day lag safely.
+        era5_coll = (
             ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
             .filterDate(era5_window_start, era5_window_end)
-            .first()
         )
-        if era5 is None:
+        if era5_coll.size().getInfo() == 0:
             continue  # ERA5 lag — skip this scene's precip rather than crash
+        era5 = era5_coll.first()
         p = era5.select("total_precipitation_sum").multiply(1000.0).reduceRegion(
             reducer=ee.Reducer.mean(),
             geometry=eroded,
@@ -383,12 +404,14 @@ def run_single_parcel(
     if not (vh_count_val == vh_t0_count_val == vv_count_val == vv_t0_count_val):
         return _build_record(
             territory=territory,
-            cropland_coverage=float(cc_value.getInfo() or 0),
+            cropland_coverage=cropland_coverage_val,
             prior_crop=crop_name,
             applicability="insufficient_baseline",
             mean_dvh_db=None,
             n_pixels=0,
             run_date=run_date,
+            optical_block=optical_block,
+            ndvi_mean=ndvi_mean_val,
         )
 
     # Symmetric ratio guard: if either mean is null OR <= 0, the ratio + log
@@ -397,12 +420,14 @@ def run_single_parcel(
             or mean_t1_vh_val <= 0 or mean_t0_vh_val <= 0):
         return _build_record(
             territory=territory,
-            cropland_coverage=float(cc_value.getInfo() or 0),
+            cropland_coverage=cropland_coverage_val,
             prior_crop=crop_name,
             applicability="insufficient_baseline",
             mean_dvh_db=None,
             n_pixels=0,
             run_date=run_date,
+            optical_block=optical_block,
+            ndvi_mean=ndvi_mean_val,
         )
 
     import math
@@ -418,7 +443,7 @@ def run_single_parcel(
 
     return _build_record(
         territory=territory,
-        cropland_coverage=float(cc_value.getInfo() or 0),
+        cropland_coverage=cropland_coverage_val,
         prior_crop=crop_name,
         applicability=applicability,
         mean_dvh_db=mean_dvh_db_value,
@@ -427,6 +452,8 @@ def run_single_parcel(
         dvv_db=mean_dvv_db_value,
         precip_mm_24h=max_precip_mm,
         last_obs_date=last_obs_iso,
+        optical_block=optical_block,
+        ndvi_mean=ndvi_mean_val,
     )
 
 
