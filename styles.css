@@ -3352,7 +3352,139 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   margin-top: 6px;
 }
 
-/* Editorial-view support-card wrapper. The "-mid" variant sits between the
+/* ─── Atlas mode pill toggle ──────────────────────────────────────────────── */
+/* Sits inside .atlas-map-frame, bottom-left, above the home button.         */
+.atlas-mode-pills {
+  position: absolute;
+  bottom: 70px;
+  left: 12px;
+  display: flex;
+  gap: 4px;
+  z-index: 4;
+  pointer-events: all;
+}
+
+.atlas-mode-pill {
+  padding: 5px 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  background: rgba(19, 17, 14, 0.82);
+  color: rgba(247, 243, 234, 0.72);
+  border: 1px solid rgba(247, 243, 234, 0.22);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.atlas-mode-pill:hover {
+  background: rgba(26, 24, 21, 0.92);
+  color: rgba(247, 243, 234, 0.92);
+  border-color: rgba(247, 243, 234, 0.44);
+}
+
+.atlas-mode-pill.is-active {
+  background: rgba(58, 140, 42, 0.22);
+  color: #a8e090;
+  border-color: rgba(58, 140, 42, 0.55);
+}
+
+/* Low-QC swatch for the seeding-mode legend */
+.atlas-swatch-lowqc {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px dashed #e0c060;
+  background: rgba(224, 192, 96, 0.12);
+  flex-shrink: 0;
+}
+
+/* ─── Quarter-detail satellite row ──────────────────────────────────────── */
+.qd-satellite-row {
+  background: rgba(236, 230, 219, 0.55);
+  border: 1px solid var(--rule-2);
+  border-radius: 2px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+}
+
+.qd-satellite-row.is-low-qc {
+  border-color: #c8a84b;
+  background: rgba(200, 168, 75, 0.08);
+}
+
+.qd-satellite-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.qd-satellite-label {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.qd-satellite-crop {
+  font-size: 9px;
+  color: var(--mute);
+}
+
+.qd-lowqc-badge {
+  font-size: 9px;
+  padding: 1px 5px;
+  border: 1px solid #c8a84b;
+  color: #8a6520;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: rgba(200, 168, 75, 0.12);
+}
+
+.qd-satellite-status {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.qd-satellite-obs {
+  font-size: 10px;
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+/* Optical indices collapsible */
+.qd-optical-details {
+  margin-top: 8px;
+  border-top: 1px dashed var(--rule-2);
+  padding-top: 6px;
+}
+
+.qd-optical-summary {
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--mute);
+  letter-spacing: 0.06em;
+  list-style: none;
+  outline: none;
+}
+
+.qd-optical-summary::-webkit-details-marker { display: none; }
+
+.qd-optical-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 16px;
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--ink-2);
+}
+
+/* ─── Editorial-view support-card wrapper. The "-mid" variant sits between the
    featured property cards and the asset table — symmetric padding so it
    reads as its own section. */
 .editorial-support-wrap {

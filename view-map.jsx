@@ -37,6 +37,57 @@ const SELECTED_PARCEL_FILL_LAYER = "monette-selected-parcel-fill";
 const SELECTED_PARCEL_OUTLINE_LAYER = "monette-selected-parcel-outline";
 const SELECTED_PARCEL_SEASON_LAYER = "monette-selected-parcel-season-labels";
 
+// ─── Atlas display modes ───────────────────────────────────────────────────
+// Three modes: "tenure" (ownership colors), "vigor" (NDVI green ramp),
+// "seeding" (SAR change-detection result per parcel).
+// Default = "seeding" during the active seeding window (Apr 1–Jun 30);
+// falls back to "tenure" outside that window.
+const ATLAS_MODE_KEY = "monette.atlas.mode";
+
+const ATLAS_MODES = [
+  { key: "tenure",  label: "Tenure",  description: "Ownership status fill — green owned, blue rented, red sold." },
+  { key: "vigor",   label: "Vigor",   description: "NDVI vegetation vigor from the most recent optical scene." },
+  { key: "seeding", label: "Seeding", description: "SAR change-detection seeding status (2026 season, active Apr–Jun)." },
+];
+
+function defaultAtlasMode() {
+  const saved = (function() { try { return localStorage.getItem(ATLAS_MODE_KEY); } catch (e) { return null; } })();
+  if (saved && ATLAS_MODES.some((m) => m.key === saved)) return saved;
+  const now = new Date();
+  const mo = now.getMonth() + 1; // 1-indexed
+  return (mo >= 4 && mo <= 6) ? "seeding" : "tenure";
+}
+
+// 4-stop NDVI ramp: bare/dormant → sparse vegetation → moderate → dense
+function vigorColorFor(ndvi) {
+  if (ndvi == null || !Number.isFinite(ndvi)) return "#6a6a6a";
+  if (ndvi < 0.15) return "#b05c2a"; // bare / very dormant
+  if (ndvi < 0.25) return "#c8a84b"; // sparse / early green-up
+  if (ndvi < 0.40) return "#7ab648"; // moderate vegetation
+  return "#3a8c2a";                  // dense crop canopy
+}
+
+// Seeding fill color by applicability + seeded status:
+//   active + seeded=true  → green confirmation
+//   active + seeded=false → red not-yet
+//   active + seeded=null  → amber indeterminate
+//   out-of-season / perennial → gray-blue
+//   insufficient_baseline  → medium gray
+//   anything else          → dark gray
+function seedingFillColor(applicability, seeded) {
+  if (applicability === "active") {
+    if (seeded === true)  return "#3a8c2a"; // confirmed seeded
+    if (seeded === false) return "#c0392b"; // confirmed not-seeded
+    return "#c8a84b";                        // indeterminate
+  }
+  if (applicability === "out-of-season" || applicability === "perennial") return "#5a7a8a";
+  if (applicability === "insufficient_baseline") return "#7a7a7a";
+  return "#4a4a4a";
+}
+
+const PARCEL_SEEDING_FILL_LAYER = "monette-parcel-seeding-fill";
+const PARCEL_SEEDING_OUTLINE_LAYER = "monette-parcel-seeding-outline-lowqc";
+
 function imageryKey(propId, loc) {
   return `${propId}:${loc}`;
 }
@@ -571,6 +622,14 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         imagery_status: imagery ? imagery.status : null,
         imagery_from: imagery ? imagery.image_from || null : null,
         imagery_to: imagery ? imagery.image_to || null : null,
+        // Seeding mode fields — from the seeding sub-block when applicability is active
+        seeding_applicability: imagery ? (imagery.seeding_applicability || null) : null,
+        seeding_seeded: imagery ? (imagery.seeding_seeded != null ? imagery.seeding_seeded : null) : null,
+        seeding_confidence: imagery ? (imagery.seeding_confidence || 0) : 0,
+        seeding_fill_color: imagery
+          ? seedingFillColor(imagery.seeding_applicability, imagery.seeding_seeded)
+          : "#4a4a4a",
+        polygon_quality: imagery ? (imagery.polygon_quality || null) : null,
         rumored_sold: rumoredSold ? 1 : 0,
         rumored_sold_buyer: rumoredSold ? rumoredSold.buyer : null,
         rumored_sold_source: rumoredSold ? rumoredSold.source : null,
@@ -816,12 +875,14 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const [mapData, setMapData] = useState(null);
   const [mapError, setMapError] = useState(null);
   const [ownershipFocus, setOwnershipFocus] = useState("all");
+  const [atlasMode, setAtlasMode] = useState(defaultAtlasMode);
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const mapDataRef = useRef(null);
   const selectionRef = useRef(sel);
   const ownershipFocusRef = useRef(ownershipFocus);
+  const atlasModeRef = useRef(atlasMode);
   const soldPopupRef = useRef(null);
   const operatorRelationshipPopupRef = useRef(null);
   const rumoredQuarterPopupRef = useRef(null);
@@ -857,6 +918,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   useEffect(() => {
     ownershipFocusRef.current = ownershipFocus;
   }, [ownershipFocus]);
+  useEffect(() => {
+    atlasModeRef.current = atlasMode;
+    try { localStorage.setItem(ATLAS_MODE_KEY, atlasMode); } catch (e) {}
+  }, [atlasMode]);
   const currentStyle = window.MAPBOX_STYLE_STATUS;
   const routeToSelection = (propId, qloc) => {
     if (!onSwitchView) return;
@@ -1047,6 +1112,37 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         parcelSeasonOpacity
       );
     }
+
+    // Atlas mode: toggle which fill layer is visible
+    const mode = atlasModeRef.current || "tenure";
+    const isSeedingMode = mode === "seeding";
+    const isVigorMode = mode === "vigor";
+
+    if (map.getLayer(PARCEL_SEEDING_FILL_LAYER)) {
+      map.setLayoutProperty(PARCEL_SEEDING_FILL_LAYER, "visibility", isSeedingMode ? "visible" : "none");
+    }
+    if (map.getLayer(PARCEL_SEEDING_OUTLINE_LAYER)) {
+      map.setLayoutProperty(PARCEL_SEEDING_OUTLINE_LAYER, "visibility", isSeedingMode ? "visible" : "none");
+    }
+    // In vigor mode, override the ownership fill color with the NDVI ramp
+    if (map.getLayer(SELECTED_PARCEL_FILL_LAYER)) {
+      map.setPaintProperty(
+        SELECTED_PARCEL_FILL_LAYER,
+        "fill-color",
+        isVigorMode
+          ? ["coalesce", ["get", "vigor_color"], "#6a6a6a"]
+          : ["get", "map_fill_color"]
+      );
+    }
+    if (map.getLayer(SELECTED_PARCEL_OUTLINE_LAYER)) {
+      map.setPaintProperty(
+        SELECTED_PARCEL_OUTLINE_LAYER,
+        "line-color",
+        isVigorMode
+          ? ["coalesce", ["get", "vigor_color"], "#6a6a6a"]
+          : ["get", "map_fill_color"]
+      );
+    }
   };
 
   const safeSyncMapPresentation = (map) => {
@@ -1136,6 +1232,49 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         paint: {
           "fill-color": ["get", "map_fill_color"],
           "fill-opacity": 0.58,
+        },
+      });
+    }
+
+    // Seeding mode fill — uses seeding_fill_color property set per-parcel in
+    // buildPreparedMapData. Visibility toggled by syncMapPresentation when mode
+    // switches between tenure / vigor / seeding. Default hidden; shown when
+    // atlasMode === "seeding".
+    if (!map.getLayer(PARCEL_SEEDING_FILL_LAYER)) {
+      map.addLayer({
+        id: PARCEL_SEEDING_FILL_LAYER,
+        type: "fill",
+        source: PARCEL_SOURCE,
+        filter: ALL_PARCELS_FILTER,
+        layout: { visibility: "none" },
+        paint: {
+          "fill-color": ["get", "seeding_fill_color"],
+          "fill-opacity": 0.72,
+        },
+      });
+    }
+
+    // Low-QC dashed outline for seeding mode — highlights parcels where
+    // polygon_quality is "low" so the user knows the seeding result is less
+    // reliable. Uses a line-dasharray to visually distinguish from normal
+    // parcel borders.
+    if (!map.getLayer(PARCEL_SEEDING_OUTLINE_LAYER)) {
+      map.addLayer({
+        id: PARCEL_SEEDING_OUTLINE_LAYER,
+        type: "line",
+        source: PARCEL_SOURCE,
+        filter: ["==", ["get", "polygon_quality"], "low"],
+        layout: { visibility: "none" },
+        paint: {
+          "line-color": "#e0c060",
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            7, 1.2,
+            9, 1.8,
+            11, 2.2,
+          ],
+          "line-dasharray": [3, 2],
+          "line-opacity": 0.75,
         },
       });
     }
@@ -1414,6 +1553,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     moveMapLayerBefore(map, PROPERTY_GLOW_LAYER, SELECTED_PARCEL_FILL_LAYER);
     moveMapLayerBefore(map, PROPERTY_OUTLINE_LAYER, SELECTED_PARCEL_FILL_LAYER);
     moveMapLayerBefore(map, PROPERTY_SELECTED_LAYER, SELECTED_PARCEL_FILL_LAYER);
+    moveMapLayerToTop(map, PARCEL_SEEDING_FILL_LAYER);
+    moveMapLayerToTop(map, PARCEL_SEEDING_OUTLINE_LAYER);
     moveMapLayerToTop(map, SELECTED_PARCEL_OUTLINE_LAYER);
     moveMapLayerToTop(map, SELECTED_PARCEL_SEASON_LAYER);
     moveMapLayerToTop(map, SOLD_ASSET_LAYER);
@@ -1767,7 +1908,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   useEffect(() => {
     const map = mapRef.current;
     if (map) safeSyncMapPresentation(map);
-  }, [mapData, sel, ownershipFocus]);
+  }, [mapData, sel, ownershipFocus, atlasMode]);
 
   useEffect(() => {
     if (!sel) {
@@ -1811,7 +1952,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     };
   }, [onSwitchView, propertyById]);
 
-  const activeMode = STATUS_MODE;
+  const activeMode = ATLAS_MODES.find((m) => m.key === atlasMode) || ATLAS_MODES[0];
   const hoverOrSel = hoverProperty || sel;
   const coverageByProperty = mapData && mapData.coverageByProperty ? mapData.coverageByProperty : {};
   const activeCoverage = hoverOrSel ? coverageByProperty[hoverOrSel.id] : null;
@@ -1950,36 +2091,106 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 : "Loading parcel geometry"}
             </div>
 
+            <div className="atlas-mode-pills mono" aria-label="Atlas display mode">
+              {ATLAS_MODES.map((m) => (
+                <button
+                  key={m.key}
+                  type="button"
+                  title={m.description}
+                  className={`atlas-mode-pill${atlasMode === m.key ? " is-active" : ""}`}
+                  onClick={() => setAtlasMode(m.key)}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+
             <div className={`atlas-map-legend-card${hoverOrSel ? " atlas-map-legend-card-offset" : ""}`} aria-label="Map legend">
-              <div className="mono atlas-map-legend-title">Map legend</div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-owned" />
-                <span>Green hue - Monette-owned land</span>
+              <div className="mono atlas-map-legend-title">
+                {atlasMode === "seeding" ? "Seeding mode legend" : atlasMode === "vigor" ? "Vigor mode legend" : "Map legend"}
               </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-rented" />
-                <span>Blue hue - Monette-rented land</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-sale-fill" />
-                <span>Red hue - sold or sale-leaseback land</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-point" />
-                <span>Point-only court-file asset - discuss evidence first</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-operator">OP</span>
-                <span>Gold OP marker - partner-owned / co-managed relationship</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-sold" />
-                <span>Red sold marker - completed sale, not active inventory</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-selected" />
-                <span>Gold ring - selected record</span>
-              </div>
+              {atlasMode === "seeding" ? (
+                <>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#3a8c2a" }} />
+                    <span>Confirmed seeded (SAR change-detection)</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#c0392b" }} />
+                    <span>Not yet seeded as of last obs date</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#c8a84b" }} />
+                    <span>Indeterminate — active window, no signal</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#5a7a8a" }} />
+                    <span>Out of season or perennial crop</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#7a7a7a" }} />
+                    <span>Insufficient baseline — SAR result pending</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#e0c060", border: "1px dashed #e0c060" }} />
+                    <span>Dashed outline — low polygon quality flag</span>
+                  </div>
+                </>
+              ) : atlasMode === "vigor" ? (
+                <>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#3a8c2a" }} />
+                    <span>NDVI &gt; 0.40 — dense canopy</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#7ab648" }} />
+                    <span>NDVI 0.25–0.40 — moderate vegetation</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#c8a84b" }} />
+                    <span>NDVI 0.15–0.25 — sparse / early green-up</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#b05c2a" }} />
+                    <span>NDVI &lt; 0.15 — bare or dormant</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch" style={{ background: "#6a6a6a" }} />
+                    <span>No optical scene available</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-owned" />
+                    <span>Green hue - Monette-owned land</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-rented" />
+                    <span>Blue hue - Monette-rented land</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-sale-fill" />
+                    <span>Red hue - sold or sale-leaseback land</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-point" />
+                    <span>Point-only court-file asset - discuss evidence first</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-operator">OP</span>
+                    <span>Gold OP marker - partner-owned / co-managed relationship</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-sold" />
+                    <span>Red sold marker - completed sale, not active inventory</span>
+                  </div>
+                  <div className="atlas-map-legend-row">
+                    <span className="atlas-map-legend-swatch atlas-map-legend-selected" />
+                    <span>Gold ring - selected record</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {hoverOrSel && (
@@ -2314,22 +2525,43 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Legend</div>
             <div className="atlas-legend-list">
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["owned-monette"].color }} />
-                <span>Still Monette-owned</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["rented-monette"].color }} />
-                <span>Still Monette-rented</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
-                <span>Sold</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
-                <span>Returned to landlord</span>
-              </div>
+              {atlasMode === "seeding" ? (
+                <>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#3a8c2a" }} /><span>Confirmed seeded</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#c0392b" }} /><span>Not yet seeded</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#c8a84b" }} /><span>Indeterminate</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#5a7a8a" }} /><span>Out of season / perennial</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#7a7a7a" }} /><span>Insufficient baseline</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch atlas-swatch-lowqc" /><span>Dashed = low polygon quality</span></div>
+                </>
+              ) : atlasMode === "vigor" ? (
+                <>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#3a8c2a" }} /><span>NDVI &gt;0.40 dense canopy</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#7ab648" }} /><span>NDVI 0.25–0.40 moderate</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#c8a84b" }} /><span>NDVI 0.15–0.25 sparse</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#b05c2a" }} /><span>NDVI &lt;0.15 bare / dormant</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#6a6a6a" }} /><span>No optical scene available</span></div>
+                </>
+              ) : (
+                <>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["owned-monette"].color }} />
+                    <span>Still Monette-owned</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["rented-monette"].color }} />
+                    <span>Still Monette-rented</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
+                    <span>Sold</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
+                    <span>Returned to landlord</span>
+                  </div>
+                </>
+              )}
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-point" />
                 <span>Point-only asset: no geometry yet</span>
