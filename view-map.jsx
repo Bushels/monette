@@ -20,6 +20,7 @@ const PROPERTY_SOURCE = "monette-properties";
 const PROPERTY_LABEL_SOURCE = "monette-property-labels";
 const PROPERTY_POINT_SOURCE = "monette-property-points";
 const SOLD_ASSET_SOURCE = "monette-sold-assets";
+const OPERATOR_RELATIONSHIP_SOURCE = "monette-operator-relationships";
 const PARCEL_SOURCE = "monette-parcels";
 
 const PROPERTY_FILL_LAYER = "monette-property-fill";
@@ -29,6 +30,8 @@ const PROPERTY_SELECTED_LAYER = "monette-property-selected";
 const PROPERTY_POINT_LAYER = "monette-property-point";
 const SOLD_ASSET_LAYER = "monette-sold-asset-point";
 const SOLD_ASSET_LABEL_LAYER = "monette-sold-asset-labels";
+const OPERATOR_RELATIONSHIP_LAYER = "monette-operator-relationship-point";
+const OPERATOR_RELATIONSHIP_LABEL_LAYER = "monette-operator-relationship-labels";
 const PROPERTY_LABEL_LAYER = "monette-property-labels";
 const SELECTED_PARCEL_FILL_LAYER = "monette-selected-parcel-fill";
 const SELECTED_PARCEL_OUTLINE_LAYER = "monette-selected-parcel-outline";
@@ -383,6 +386,33 @@ function soldAssetPopupHtml(props) {
   `;
 }
 
+function operatorRelationshipPopupHtml(props) {
+  const isWatchlist = props.confidence === "watchlist";
+  const rows = [
+    ["Owner / landholder", props.owner],
+    ["Monette role", props.monette_role],
+    ["Acreage treatment", props.acreage_label],
+    ["Linked record", props.linked_property_name],
+    ["Current exposure", props.current_exposure_label],
+  ].filter((row) => row[1]);
+
+  return `
+    <div class="atlas-sale-popup atlas-operator-popup">
+      <div class="atlas-sale-popup-kicker">${isWatchlist ? "Operator relationship watchlist" : "Operator relationship layer"}</div>
+      <div class="atlas-sale-popup-title">${escapePopupHtml(props.name || "Partner relationship")}</div>
+      ${rows.map(([label, value]) => `
+        <div class="atlas-sale-popup-row">
+          <span>${escapePopupHtml(label)}</span>
+          <strong>${escapePopupHtml(value)}</strong>
+        </div>
+      `).join("")}
+      ${props.evidence ? `<div class="atlas-sale-popup-section"><div class="atlas-sale-popup-section-title">Evidence</div><p class="atlas-sale-popup-fineprint">${escapePopupHtml(props.evidence)}</p></div>` : ""}
+      ${props.public_note ? `<div class="atlas-sale-popup-section"><div class="atlas-sale-popup-section-title">${isWatchlist ? "Boundary" : "Acreage rule"}</div><p class="atlas-sale-popup-fineprint">${escapePopupHtml(props.public_note)}</p></div>` : ""}
+      ${props.source_label ? `<div class="atlas-sale-popup-section"><p class="atlas-sale-popup-fineprint">Source: ${escapePopupHtml(props.source_label)}</p></div>` : ""}
+    </div>
+  `;
+}
+
 function moveMapLayerToTop(map, layerId) {
   if (!map || !map.getLayer(layerId)) return;
   try {
@@ -596,6 +626,10 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
   const coverageByProperty = {};
 
   D.properties.forEach((property) => {
+    // Skip aggregator-only parents (e.g. Montana parent rollup) — children
+    // are rendered individually so the parent would just create a duplicate
+    // pin at the centroid of its children.
+    if (property.aggregator) return;
     const group = byProperty[property.id];
     if (!group || !group.polygons.length) {
       const rows = (Q && Q[property.id]) || [];
@@ -715,16 +749,45 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       },
     }));
 
+  const operatorRelationshipFeatures = (D.operatorRelationships || [])
+    .filter((rel) => Number.isFinite(rel.lng) && Number.isFinite(rel.lat))
+    .map((rel) => ({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [rel.lng, rel.lat] },
+      properties: {
+        id: rel.id,
+        name: rel.name,
+        province: rel.province || "",
+        region: rel.region || "",
+        relationship_type: rel.relationshipType || "operator-relationship",
+        relationship_type_label: rel.relationshipType === "overlap-watchlist" ? "Watchlist" : "Partner-managed",
+        confidence: rel.confidence || "public-confirmed",
+        marker_label: rel.confidence === "watchlist" ? "?" : "OP",
+        owner: rel.owner || "",
+        monette_role: rel.monetteRole || "",
+        acreage_label: rel.acreageLabel || "Acreage not reconciled",
+        linked_property_id: rel.linkedPropertyId || "",
+        linked_property_name: rel.linkedPropertyName || "",
+        source_label: rel.sourceLabel || "",
+        source_url: rel.sourceUrl || "",
+        current_exposure_label: rel.currentExposureLabel || "",
+        evidence: rel.evidence || "",
+        public_note: rel.publicNote || "",
+      },
+    }));
+
   return {
     propertyGeojson: { type: "FeatureCollection", features: propertyFeatures },
     propertyPointGeojson: { type: "FeatureCollection", features: pointFeatures },
     propertyLabelGeojson: { type: "FeatureCollection", features: labelFeatures },
     parcelGeojson: { type: "FeatureCollection", features: parcels },
     soldGeojson: { type: "FeatureCollection", features: soldFeatures },
+    operatorRelationshipGeojson: { type: "FeatureCollection", features: operatorRelationshipFeatures },
     coverageByProperty,
     mappedPropertyCount: propertyFeatures.length,
     pointPropertyCount: pointFeatures.length,
     soldAssetCount: soldFeatures.length,
+    operatorRelationshipCount: operatorRelationshipFeatures.length,
     mappedParcelCount: parcels.length,
   };
 }
@@ -778,6 +841,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const selectionRef = useRef(sel);
   const ownershipFocusRef = useRef(ownershipFocus);
   const soldPopupRef = useRef(null);
+  const operatorRelationshipPopupRef = useRef(null);
   const rumoredQuarterPopupRef = useRef(null);
   const feedlotProposalPopupRef = useRef(null);
   const pendingFocusRef = useRef(null);
@@ -849,6 +913,18 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       center: [property.lng, property.lat],
       zoom: 8.4,
       duration: duration || 1200,
+      essential: true,
+    });
+  };
+
+  const focusOperatorRelationship = (relationship) => {
+    if (!relationship || !Number.isFinite(relationship.lng) || !Number.isFinite(relationship.lat)) return;
+    const map = mapRef.current;
+    if (!map) return;
+    map.flyTo({
+      center: [relationship.lng, relationship.lat],
+      zoom: Math.max(map.getZoom(), 8),
+      duration: 850,
       essential: true,
     });
   };
@@ -1029,6 +1105,16 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       map.getSource(SOLD_ASSET_SOURCE).setData(prepared.soldGeojson);
     }
 
+    if (!map.getSource(OPERATOR_RELATIONSHIP_SOURCE)) {
+      map.addSource(OPERATOR_RELATIONSHIP_SOURCE, {
+        type: "geojson",
+        data: prepared.operatorRelationshipGeojson,
+        promoteId: "id",
+      });
+    } else {
+      map.getSource(OPERATOR_RELATIONSHIP_SOURCE).setData(prepared.operatorRelationshipGeojson);
+    }
+
     if (!map.getSource(PARCEL_SOURCE)) {
       map.addSource(PARCEL_SOURCE, {
         type: "geojson",
@@ -1164,6 +1250,34 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       });
     }
 
+    if (!map.getLayer(OPERATOR_RELATIONSHIP_LAYER)) {
+      map.addLayer({
+        id: OPERATOR_RELATIONSHIP_LAYER,
+        type: "circle",
+        source: OPERATOR_RELATIONSHIP_SOURCE,
+        paint: {
+          "circle-color": [
+            "case",
+            ["==", ["get", "confidence"], "watchlist"], "rgba(180,134,56,0.16)",
+            "rgba(241,210,132,0.20)",
+          ],
+          "circle-opacity": 0.96,
+          "circle-radius": [
+            "interpolate", ["linear"], ["zoom"],
+            3, 5,
+            6, 8,
+            9, 11,
+          ],
+          "circle-stroke-color": [
+            "case",
+            ["==", ["get", "confidence"], "watchlist"], "#b48638",
+            "#f1d284",
+          ],
+          "circle-stroke-width": 2.2,
+        },
+      });
+    }
+
     if (!map.getLayer(PROPERTY_GLOW_LAYER)) {
       map.addLayer({
         id: PROPERTY_GLOW_LAYER,
@@ -1249,6 +1363,35 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       });
     }
 
+    if (!map.getLayer(OPERATOR_RELATIONSHIP_LABEL_LAYER)) {
+      map.addLayer({
+        id: OPERATOR_RELATIONSHIP_LABEL_LAYER,
+        type: "symbol",
+        source: OPERATOR_RELATIONSHIP_SOURCE,
+        minzoom: 4.8,
+        layout: {
+          "text-field": [
+            "format",
+            ["get", "marker_label"], { "font-scale": 0.78 },
+            " ",
+            ["get", "name"], { "font-scale": 0.88 },
+            "\n",
+            ["get", "relationship_type_label"], { "font-scale": 0.62 },
+          ],
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Regular"],
+          "text-size": 10.5,
+          "text-variable-anchor": ["top", "bottom", "left", "right"],
+          "text-radial-offset": 1.05,
+          "text-padding": 4,
+        },
+        paint: {
+          "text-color": "#f7f3ea",
+          "text-halo-color": "#1b1916",
+          "text-halo-width": 1.4,
+        },
+      });
+    }
+
     if (!map.getLayer(PROPERTY_LABEL_LAYER)) {
       map.addLayer({
         id: PROPERTY_LABEL_LAYER,
@@ -1293,6 +1436,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     moveMapLayerToTop(map, SELECTED_PARCEL_SEASON_LAYER);
     moveMapLayerToTop(map, SOLD_ASSET_LAYER);
     moveMapLayerToTop(map, SOLD_ASSET_LABEL_LAYER);
+    moveMapLayerToTop(map, OPERATOR_RELATIONSHIP_LAYER);
+    moveMapLayerToTop(map, OPERATOR_RELATIONSHIP_LABEL_LAYER);
 
     if (!map.__monetteAtlasHandlersInstalled) {
       map.__monetteAtlasHandlersInstalled = true;
@@ -1412,6 +1557,40 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         focusProperty(property.id, 1000);
       });
 
+      map.on("mousemove", OPERATOR_RELATIONSHIP_LAYER, (e) => {
+        const feature = e.features && e.features[0];
+        if (!feature) return;
+        map.getCanvas().style.cursor = "help";
+        if (!operatorRelationshipPopupRef.current) {
+          operatorRelationshipPopupRef.current = new window.mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: "atlas-sale-map-popup",
+            offset: 14,
+          });
+        }
+        operatorRelationshipPopupRef.current
+          .setLngLat(feature.geometry.coordinates)
+          .setHTML(operatorRelationshipPopupHtml(feature.properties || {}))
+          .addTo(map);
+      });
+
+      map.on("mouseleave", OPERATOR_RELATIONSHIP_LAYER, () => {
+        map.getCanvas().style.cursor = "";
+        if (operatorRelationshipPopupRef.current) operatorRelationshipPopupRef.current.remove();
+      });
+
+      map.on("click", OPERATOR_RELATIONSHIP_LAYER, (e) => {
+        const feature = e.features && e.features[0];
+        if (!feature || !feature.geometry || !feature.geometry.coordinates) return;
+        map.flyTo({
+          center: feature.geometry.coordinates,
+          zoom: Math.max(map.getZoom(), 8),
+          duration: 850,
+          essential: true,
+        });
+      });
+
       map.on("mousemove", SOLD_ASSET_LAYER, (e) => {
         const feature = e.features && e.features[0];
         if (!feature) return;
@@ -1456,6 +1635,22 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         zoom: window.MAPBOX_HOME.zoom,
         attributionControl: true,
         projection: "mercator",
+        // Free navigation — explicitly opt every gesture in. No maxBounds, no
+        // zoom clamping. Defaults already allow these but stating them
+        // explicitly insulates us from any future style/options that might
+        // disable them, and signals intent for code review.
+        interactive: true,
+        dragPan: true,
+        dragRotate: true,
+        scrollZoom: true,
+        boxZoom: true,
+        doubleClickZoom: true,
+        touchZoomRotate: true,
+        touchPitch: true,
+        keyboard: true,
+        pitchWithRotate: true,
+        cooperativeGestures: false,
+        renderWorldCopies: true,
       });
     } catch (error) {
       console.warn("atlas map unavailable:", error);
@@ -1463,7 +1658,38 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       return;
     }
 
-    map.addControl(new window.mapboxgl.NavigationControl({ visualizePitch: false }), "bottom-right");
+    map.addControl(new window.mapboxgl.NavigationControl({ visualizePitch: true, showCompass: true, showZoom: true }), "bottom-right");
+
+    // Reset-to-home button — a user who pans across continents (or pitches/
+    // rotates the map) needs a one-click way back to the portfolio overview.
+    // Built with safe DOM methods (no innerHTML) for XSS hygiene.
+    const homeBtn = document.createElement("button");
+    homeBtn.type = "button";
+    homeBtn.className = "atlas-home-button";
+    homeBtn.title = "Reset map to portfolio overview";
+    homeBtn.setAttribute("aria-label", "Reset map to portfolio overview");
+    const homeIcon = document.createElement("span");
+    homeIcon.setAttribute("aria-hidden", "true");
+    homeIcon.textContent = "⌂";
+    homeBtn.appendChild(homeIcon);
+    homeBtn.addEventListener("click", () => {
+      map.flyTo({
+        center: window.MAPBOX_HOME.center,
+        zoom: window.MAPBOX_HOME.zoom,
+        bearing: 0,
+        pitch: 0,
+        duration: 1100,
+      });
+    });
+    map.addControl({
+      onAdd: () => {
+        const wrap = document.createElement("div");
+        wrap.className = "mapboxgl-ctrl mapboxgl-ctrl-group atlas-home-ctrl";
+        wrap.appendChild(homeBtn);
+        return wrap;
+      },
+      onRemove: () => { homeBtn.remove(); },
+    }, "bottom-right");
     mapRef.current = map;
     map.__monetteStyleUri = currentStyle;
     window.MONETTE_MAP = map;
@@ -1489,6 +1715,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       if (soldPopupRef.current) {
         soldPopupRef.current.remove();
         soldPopupRef.current = null;
+      }
+      if (operatorRelationshipPopupRef.current) {
+        operatorRelationshipPopupRef.current.remove();
+        operatorRelationshipPopupRef.current = null;
       }
       if (rumoredQuarterPopupRef.current) {
         rumoredQuarterPopupRef.current.remove();
@@ -1607,6 +1837,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const hasSelectedGeometry = !!(selectedCoverage && selectedCoverage.hasRealGeometry);
   const portfolioMappedCount = mapData ? mapData.mappedPropertyCount : 0;
   const portfolioParcelCount = mapData ? mapData.mappedParcelCount : 0;
+  const operatorRelationships = D.operatorRelationships || [];
+  const operatorRelationshipCount = mapData
+    ? mapData.operatorRelationshipCount
+    : operatorRelationships.length;
   const portfolioRollup = useMemo(() => aggregateRollups(rollups), [rollups]);
   const activeRollup = hoverOrSel ? rollups[hoverOrSel.id] : portfolioRollup;
   const activeLeadLabel = hoverOrSel ? propertyDisplayLabel(hoverOrSel, activeRollup) : dominantOwnershipLabel(activeRollup);
@@ -1730,7 +1964,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
 
             <div className="atlas-map-badge mono">
               {mapData
-                ? `${D.properties.length} records · ${portfolioMappedCount} mapped · ${mapData.pointPropertyCount} point-only · ${fmt(portfolioParcelCount)} rows`
+                ? `${D.properties.length} records · ${portfolioMappedCount} mapped · ${mapData.pointPropertyCount} point-only · ${operatorRelationshipCount} operator links · ${fmt(portfolioParcelCount)} rows`
                 : "Loading parcel geometry"}
             </div>
 
@@ -1755,6 +1989,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
               <div className="atlas-map-legend-row">
                 <span className="atlas-map-legend-swatch atlas-map-legend-point" />
                 <span>Point-only court-file asset - discuss evidence first</span>
+              </div>
+              <div className="atlas-map-legend-row">
+                <span className="atlas-map-legend-swatch atlas-map-legend-operator">OP</span>
+                <span>Gold OP marker - partner-owned / co-managed relationship</span>
               </div>
               <div className="atlas-map-legend-row">
                 <span className="atlas-map-legend-swatch atlas-map-legend-sold" />
@@ -1954,6 +2192,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 <span>Open circles are court-file assets that need parcel evidence first.</span>
               </div>
               <div className="atlas-legend-row">
+                <span className="atlas-swatch atlas-swatch-operator">OP</span>
+                <span>Gold OP markers are partner-owned or co-managed operator relationships.</span>
+              </div>
+              <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-sold-dot" />
                 <span>Red dots are known historical sales, not active inventory.</span>
               </div>
@@ -2034,6 +2276,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   <span>{mapData ? mapData.pointPropertyCount : "..."}</span>
                   <span>Sold markers</span>
                   <span>{mapData ? mapData.soldAssetCount : "..."}</span>
+                  <span>Operator links</span>
+                  <span>{mapData ? operatorRelationshipCount : "..."}</span>
                   <span>Mapped shapes</span>
                   <span>{mapData ? fmt(portfolioParcelCount) : "..."}</span>
                   <span>For sale</span>
@@ -2067,6 +2311,29 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           </div>
 
           <div className="atlas-panel-block">
+            <div className="mono atlas-panel-kicker">Operator relationships</div>
+            <div className="atlas-side-note" style={{ marginTop: 6 }}>
+              Partner-owned or co-managed assets. These explain Monette operating reach but stay out of owned/rented acreage totals.
+            </div>
+            <div className="atlas-operator-list">
+              {operatorRelationships.map((relationship) => (
+                <button
+                  key={relationship.id}
+                  type="button"
+                  className={`atlas-operator-row${relationship.confidence === "watchlist" ? " is-watchlist" : ""}`}
+                  onClick={() => focusOperatorRelationship(relationship)}
+                >
+                  <span className="mono atlas-operator-marker">{relationship.confidence === "watchlist" ? "?" : "OP"}</span>
+                  <span>
+                    <strong>{relationship.name}</strong>
+                    <em>{relationship.relationshipType === "overlap-watchlist" ? "Watchlist - overlap not proved" : "Partner-owned / Monette-managed"}</em>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Legend</div>
             <div className="atlas-legend-list">
               <div className="atlas-legend-row">
@@ -2094,6 +2361,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 <span>Point-only asset: no quarter votes yet</span>
               </div>
               <div className="atlas-legend-row">
+                <span className="atlas-swatch atlas-swatch-operator">OP</span>
+                <span>Operator relationship: partner land, not Monette acres</span>
+              </div>
+              <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-sold-dot" />
                 <span>Red dot: known historical sale</span>
               </div>
@@ -2107,7 +2378,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Trust note</div>
             <div className="atlas-side-note">
-              Quarter colors and S/SP/H marks apply wherever mapped geometry exists. Point-only assets still need evidence before quarter voting can be shown.
+              Quarter colors and S/SP/H marks apply wherever mapped geometry exists. Point-only assets still need evidence before quarter voting can be shown. Operator relationships are provenance markers only and do not change acreage totals.
             </div>
           </div>
         </div>
