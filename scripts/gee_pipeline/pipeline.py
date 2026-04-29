@@ -225,23 +225,41 @@ def run_single_parcel(
         .clip(eroded)
     )
 
-    # Linear ratio per pixel, masked to cropland
-    dvh_linear = t1.select("VH").divide(t0.select("VH")).updateMask(masked)
-    dvv_linear = t1.select("VV").divide(t0.select("VV")).updateMask(masked)
+    # Ratio-of-means: reduce T1 and T0 to AOI means separately (with cropland
+    # mask applied), then ratio, then log.  This avoids the instability of
+    # mean(T1/T0) when some T0 pixels are near-zero — those pixels would
+    # produce enormous per-pixel ratios that dominate the mean and inflate ΔVH.
+    # See Codex review b53izop76 for the live diagnostic (+10.9 dB vs +4.6 dB
+    # on PA NW-32-51-23-W2).
+    t1_vh_masked = t1.select("VH").updateMask(masked)
+    t0_vh_masked = t0.select("VH").updateMask(masked)
+    t1_vv_masked = t1.select("VV").updateMask(masked)
+    t0_vv_masked = t0.select("VV").updateMask(masked)
 
-    stats = dvh_linear.addBands(dvv_linear.rename("dvv_linear")).reduceRegion(
-        reducer=ee.Reducer.mean().combine(
-            ee.Reducer.count(), sharedInputs=True
-        ),
-        geometry=eroded,
-        scale=20,
-        maxPixels=1e7,
-        tileScale=4,
+    stats = (
+        t1_vh_masked
+        .addBands(t0_vh_masked.rename("VH_t0"))
+        .addBands(t1_vv_masked.rename("VV_t1"))
+        .addBands(t0_vv_masked.rename("VV_t0"))
+        .reduceRegion(
+            reducer=ee.Reducer.mean().combine(
+                ee.Reducer.count(), sharedInputs=True
+            ),
+            geometry=eroded,
+            scale=20,
+            maxPixels=1e7,
+            tileScale=4,
+        )
     )
 
-    mean_dvh_linear = stats.getNumber("VH_mean")
+    mean_t1_vh = stats.getNumber("VH_mean")
+    mean_t0_vh = stats.getNumber("VH_t0_mean")
     n_pixels = stats.getNumber("VH_count")
-    if mean_dvh_linear is None or mean_dvh_linear.getInfo() is None:
+
+    # Zero-T0 guard: if T0 mean is null or <= 0, the ratio is undefined.
+    mean_t1_vh_val = mean_t1_vh.getInfo() if mean_t1_vh is not None else None
+    mean_t0_vh_val = mean_t0_vh.getInfo() if mean_t0_vh is not None else None
+    if mean_t1_vh_val is None or mean_t0_vh_val is None or mean_t0_vh_val <= 0:
         return _build_record(
             territory=territory,
             cropland_coverage=float(cc_value.getInfo() or 0),
@@ -253,8 +271,18 @@ def run_single_parcel(
         )
 
     import math
-    mean_dvh_db_value = 10 * math.log10(mean_dvh_linear.getInfo())
+    mean_dvh_db_value = 10 * math.log10(mean_t1_vh_val / mean_t0_vh_val)
     n_pixels_value = int(n_pixels.getInfo() or 0)
+
+    # Compute ΔVV via the same ratio-of-means approach.  Not yet surfaced in
+    # the _build_record schema (Bucket B will plumb it through); computed here
+    # to validate the math path is symmetric.
+    mean_t1_vv_val = stats.getNumber("VV_t1_mean").getInfo()
+    mean_t0_vv_val = stats.getNumber("VV_t0_mean").getInfo()
+    if mean_t1_vv_val is not None and mean_t0_vv_val is not None and mean_t0_vv_val > 0:
+        _mean_dvv_db_value = 10 * math.log10(mean_t1_vv_val / mean_t0_vv_val)
+    else:
+        _mean_dvv_db_value = None  # noqa: F841 — computed but not yet passed through
 
     return _build_record(
         territory=territory,
