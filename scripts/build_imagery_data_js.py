@@ -85,6 +85,27 @@ def build_payload(parcel_keys: list[str], run_date: str) -> dict:
             }
         parcels_out[key] = record
 
+    # Fix (Codex b08awunq3): fail closed when any parcel errored.
+    # Previously the script exited 0 with ready:True even if some parcels had
+    # status:"error", making a partial-failure run indistinguishable from a
+    # clean one. Now we count error records, print diagnostics, and raise
+    # SystemExit(2) — leaving the prior output file intact rather than
+    # overwriting it with a half-broken payload.
+    error_keys = [k for k, v in parcels_out.items() if v.get("status") == "error"]
+    if error_keys:
+        print(
+            f"\nPHASE 5 FAILED: {len(error_keys)} parcel(s) errored.",
+            file=sys.stderr,
+        )
+        for key in error_keys[:3]:
+            print(
+                f"  {key}: {parcels_out[key].get('error', '(no message)')}",
+                file=sys.stderr,
+            )
+        if len(error_keys) > 3:
+            print(f"  ... and {len(error_keys) - 3} more.", file=sys.stderr)
+        raise SystemExit(2)
+
     return {
         "generated_at": iso_now(),
         "source": "gee-pipeline",
