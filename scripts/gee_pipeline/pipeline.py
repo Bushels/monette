@@ -256,10 +256,14 @@ def run_single_parcel(
     mean_t0_vh = stats.getNumber("VH_t0_mean")
     n_pixels = stats.getNumber("VH_count")
 
-    # Zero-T0 guard: if T0 mean is null or <= 0, the ratio is undefined.
-    mean_t1_vh_val = mean_t1_vh.getInfo() if mean_t1_vh is not None else None
-    mean_t0_vh_val = mean_t0_vh.getInfo() if mean_t0_vh is not None else None
-    if mean_t1_vh_val is None or mean_t0_vh_val is None or mean_t0_vh_val <= 0:
+    # Symmetric ratio guard: if either mean is null OR <= 0, the ratio + log
+    # is undefined. ee.Dictionary.getNumber() always returns a (lazy) ee.Number,
+    # never Python None, so don't re-check mean_t*_vh; only the resolved values
+    # can be None (from a server-side null).
+    mean_t1_vh_val = mean_t1_vh.getInfo()
+    mean_t0_vh_val = mean_t0_vh.getInfo()
+    if (mean_t1_vh_val is None or mean_t0_vh_val is None
+            or mean_t1_vh_val <= 0 or mean_t0_vh_val <= 0):
         return _build_record(
             territory=territory,
             cropland_coverage=float(cc_value.getInfo() or 0),
@@ -274,12 +278,15 @@ def run_single_parcel(
     mean_dvh_db_value = 10 * math.log10(mean_t1_vh_val / mean_t0_vh_val)
     n_pixels_value = int(n_pixels.getInfo() or 0)
 
-    # Compute ΔVV via the same ratio-of-means approach.  Not yet surfaced in
+    # Compute ΔVV via the same ratio-of-means approach. Not yet surfaced in
     # the _build_record schema (Bucket B will plumb it through); computed here
     # to validate the math path is symmetric.
+    # TODO(Bucket B): pass _mean_dvv_db_value into _build_record + drop the
+    # underscore prefix and the F841 noqa.
     mean_t1_vv_val = stats.getNumber("VV_t1_mean").getInfo()
     mean_t0_vv_val = stats.getNumber("VV_t0_mean").getInfo()
-    if mean_t1_vv_val is not None and mean_t0_vv_val is not None and mean_t0_vv_val > 0:
+    if (mean_t1_vv_val is not None and mean_t0_vv_val is not None
+            and mean_t1_vv_val > 0 and mean_t0_vv_val > 0):
         _mean_dvv_db_value = 10 * math.log10(mean_t1_vv_val / mean_t0_vv_val)
     else:
         _mean_dvv_db_value = None  # noqa: F841 — computed but not yet passed through
