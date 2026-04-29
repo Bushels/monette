@@ -144,3 +144,56 @@ External to the repo, lives at `~/.claude/projects/G--My-Drive-Agriculture-Monet
 - **`MEMORY.md`** index — gained the gee_setup_gotchas pointer.
 
 Future Claude sessions on this codebase inherit these automatically.
+
+---
+
+## Codex post-shipping review — `b53izop76`, 2026-04-28 evening
+
+`codex exec --enable web_search --gpt-5.5/xhigh` adversarial review of the v1 producer files. Codex went beyond static review: it ran a **live GEE diagnostic against the produced `imagery-data.js`** to investigate the Prince-Albert anomaly. **Verdict: yes-with-revisions for v1.0 internal use, NOT public-ready.**
+
+### Critical (1)
+
+1. **PA anomaly is metric instability, not real signal.** Pipeline computes `mean(T1/T0)` per-pixel then logs at the end (`pipeline.py:228-256`). Live diagnostic on PA NW-32-51-23-W2: payload `ΔVH = +10.894 dB`, but `10*log10(mean(T1_VH)/mean(T0_VH))` is only `+4.567 dB`. Another PA parcel: payload `+13.094 dB`, ratio-of-means `+3.771 dB`. **A few near-zero T0 pixels dominate `mean(T1/T0)`** and inflate the per-parcel ΔVH dramatically. This is THE source of the "all 19 PA parcels seeded=true with 100% confidence."
+   - **Fix:** switch to ratio-of-means (`10*log10(mean_t1/mean_t0)`) or median pixel dB. Add a guard on the lower percentile of T0 denominators. Quarantine PA's records until rerun.
+
+### High (5)
+
+2. **T0 snow QC math is wrong** (`t0_baseline.py:177–178`):
+   - `s2.median().eq(11)` takes the median of categorical class LABELS — meaningless. Should be `s2.map(lambda im: im.eq(11)).mean()` (mean of binary snow mask).
+   - We divide ERA5 `snow_cover` by 100, but the GEE catalog says ERA5-Land `snow_cover` is already 0-1.
+   - Net effect: **snow QC is silently letting snowy/freeze-transition scenes leak into T0 baselines.** This means SK + MT + CO baselines may not be the snow-free composites we believe.
+
+3. **GEE not production-grade under load.** `build_imagery_data_js.py` loops client-side per parcel; `pipeline.py` does repeated `getInfo()`/`reduceRegion()` per parcel. Worked once for 1,260 but won't scale to scheduled weekly runs without latency/quota failures.
+   - **Fix:** server-side `FeatureCollection.map(...)` + `reduceRegions(...)` per territory; export a result-table asset; build JS from the table.
+
+4. **Spec §5 output not fully compliant.** Top-level `baseline_window` field missing; `dvv_db` always null (`pipeline.py:316`); `optical: null` always (`:320`). 535 active records have `dvv_db: null` and `optical: null`. v1.5 calibration has no optical feature base because we never computed them.
+
+5. **`baseline_quality: "fresh"` is hardcoded for every record** (`_build_record` line 319). Says "fresh" even when applicability is `insufficient_baseline`, `perennial`, or `out-of-season` — categories where no baseline was actually used. Audit/UI gets misleading provenance info.
+
+6. **Wet-soil penalty never fires.** `compute_confidence` is called with `precip_mm_24h=0.0` hardcoded (`pipeline.py:292`). The spec §4.7 -15 penalty for "precip > 5mm in 24h before T1" is dead code.
+
+### Medium (2)
+
+7. **`unknown` crop class defaults to `active` applicability.** 386 records currently have `prior_crop: "unknown"` AND `applicability: active`. Those records can still produce confident seeded calls despite us not knowing what crop is there. Plus the `az_co_applicability_overrides.json` file required by spec §0e doesn't exist.
+   - **Fix:** unknown → `unmapped` until the class is explicitly supported in the `*_CLASS_TO_NAME` maps. Or write the overrides file.
+
+8. **S1 collection filtering incomplete.** GEE's Sentinel-1 catalog mixes resolutions, polarizations, modes — homogeneous filtering required. Current code filters mode + pass but not polarizations or resolution.
+   - **Fix:** add `ee.Filter.listContains('transmitterReceiverPolarisation', 'VV')` + `'VH'`, `.select(["VV","VH"])`, and edge masking.
+
+### Low (1)
+
+9. **ERA5 lag assumption is stale.** Current GEE catalog has ERA5 through 2026-04-19 (~9 days lag, not the 5-7 days `t0_baseline.py:128` assumed). Existing baseline windows end Apr 15 (SK/MB) and Mar 15 (MT/CO), so today's SK/MT/CO baselines are within the available range — fine. But future runs near current date could silently shrink and misclassify as insufficient_baseline.
+
+### What this means for next session
+
+The high-severity items mostly fall into 3 buckets that should be addressed before Phase 4 UI surfaces anything to the public:
+
+**Bucket A — Math correctness (PA fix + snow QC):** items 1 + 2. Pipeline.py computes a fundamentally wrong SAR metric that produces apparent-strong-signal where there's noise; t0_baseline.py's snow QC has been silently letting bad scenes through. Must fix before publishing seeding counts. Estimated work: 30-60 min code + 30-90 min recompute T0 baselines.
+
+**Bucket B — Schema compliance (output completeness + provenance honesty):** items 4 + 5 + 6. Add `baseline_window`, compute `dvv_db`, emit non-null `optical: { ndti, bsi, ndvi, source_scene }`, thread `baseline_quality` and precip QC through the pipeline. ~1-2 hr work.
+
+**Bucket C — Production readiness (GEE batching + filter completeness):** items 3 + 8. Server-side `reduceRegions` per territory shard + table asset export. ~3-4 hr work, blocks scheduled weekly runs.
+
+Items 7 and 9 are smaller polish.
+
+**Suggested ordering for next session:** Bucket A first (correctness > everything else). Then Bucket B (schema is the contract for Phase 4 UI). Bucket C for v1.5 / scheduled runs. Phase 4 UI work AFTER Bucket A+B so the data wired into the map is honest.
