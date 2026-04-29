@@ -51,7 +51,6 @@ const entries = [
   "components.jsx",
   "quarter-panel.jsx",
   "property-drawer.jsx",
-  "view-editorial.jsx",
   "view-list.jsx",
   "view-creditors.jsx",
   "view-group-structure.jsx",
