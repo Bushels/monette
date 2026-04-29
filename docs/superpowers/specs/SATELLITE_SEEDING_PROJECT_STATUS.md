@@ -12,7 +12,7 @@
 - `bd5gaxmye` — Bucket A round-2 review (1 new BLOCKER + perf hints)
 - `b5ajsddp7` — Bucket B architecture pressure-test (NEW workflow: Codex-as-architect feeding into the implementer)
 - `bl5l9zfxa` — Bucket B round-1 review (1 BLOCKER: optical band-name bug; window + cloud filter refinements)
-- `beyzs2ym9` — Bucket B final review (TBD)
+- `beyzs2ym9` — Bucket B final review (GREENLIGHT; Phase 4 unblocked; v1.5 risks captured under "Pending non-fix work")
 
 This is the canonical entrypoint for understanding where the satellite seeding project stands. Updated after every milestone session per the workflow established in `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md`.
 
@@ -112,7 +112,7 @@ The shift toward `<50%` is the intended effect: cleaner SAR math + realistic cro
 
 ## Known issues — fix bucket status
 
-Phase 4 UI work was gated on Bucket A. Bucket A is now complete; Bucket B + C remain.
+Buckets A + B are now complete (Codex final review `beyzs2ym9` GREENLIGHT). Bucket C (production readiness) and Phase 4 UI integration remain.
 
 ### ✅ Bucket A — COMPLETE (3-round Codex review loop, 8 commits)
 
@@ -180,16 +180,6 @@ All 5 schema-completeness items shipped. Data refreshed.
 - Smoke test passed: PA NW-32-51-23-W2 dvh_db=4.567 / dvv_db=3.584 / baseline_quality=fresh / last_obs_date=2026-04-26 / optical=null (PA likely lingering snow); Hafford optical fully populated (NDVI=0.141 → NDTI=0.103, BSI=0.161, scene 2026-04-21); Montana optical NDVI=0.403 → NDTI/BSI correctly nulled by gate.
 - Confidence histogram unchanged from post-Bucket-A (precip didn't fire; SAR math untouched in Bucket B).
 
-### 🟠 [historical, kept for reference] Bucket B original list — Schema completeness (~1–2 hr work + 25 min GEE rerun)
-
-Required by spec §5; currently emit-as-null. Phase 4 UI needs these to render the optical-features panel and the audit data.
-
-3. **Top-level `baseline_window`** field missing from output. Add to `build_imagery_data_js.py` build_payload.
-4. **`dvv_db` always null** (`pipeline.py:316`). Compute alongside `dvh_db` using same ratio-of-means approach.
-5. **`optical` always null** (`pipeline.py:320`). Compute NDTI + BSI + NDVI per parcel, attach `optical: { ndti, bsi, ndvi, source_scene }` per spec §4.6.
-6. **`baseline_quality: "fresh"` hardcoded** (`pipeline.py:319`). Should be `null` for non-SAR branches (insufficient_baseline, perennial, out-of-season) and `"fresh"|"backfill"` for actual SAR branches based on T0 asset metadata.
-7. **Wet-soil precip penalty never fires** (`pipeline.py:292` hardcodes `precip_mm_24h=0.0`). Compute per-T1-scene precip from ERA5 daily and pass into `compute_confidence`.
-
 ### 🟡 Bucket C — Production readiness (v1.5; ~3–4 hr)
 
 Unblocks scheduled weekly runs. Not required for v1 internal use but required before reliable production.
@@ -209,11 +199,16 @@ Unblocks scheduled weekly runs. Not required for v1 internal use but required be
 
 ## Pending non-fix work
 
-- **Phase 4 UI** — mode toggle + drawer satellite-row + Farm Progress counter. NOW UNBLOCKED — Buckets A+B complete; the producer schema is honest and complete enough to drive UI.
+- **Phase 4 UI** — mode toggle + drawer satellite-row + Farm Progress counter. NOW UNBLOCKED — Buckets A+B complete; the producer schema is honest and complete enough to drive UI. Codex `beyzs2ym9` flagged two UI guardrails for Phase 4:
+  - **`prior_crop="unknown"` parcels (384 active records, 177 with seeded/not-seeded calls)** must NOT imply crop-specific certainty. The default applicability path for unmapped CDL/ACI classes is "active" (see `applicability.py`), so these records get tri-state seeding decisions but the prior_crop label is `"unknown"`. Phase 4 should display "Crop type unmapped" badge or treat them with extra confidence-band caution.
+  - **`last_obs_date` defaults to `run_date` for non-SAR records.** Phase 4 must IGNORE `last_obs_date` when `dvh_db` is null OR `baseline_quality` is null. Otherwise the drawer would show a "last observed 2026-04-28" claim for parcels that had no actual SAR observation.
 - **Bucket C — production readiness** (~3–4 hr): server-side `reduceRegions` per territory shard + Export to table asset (current per-parcel `getInfo()` loop won't scale to scheduled runs); S1 collection filter completeness (VV/VH listContains, resolution, edge masking — Codex flagged as worth doing now since `dvv_db` is live); ERA5 lag dynamic detection + `precip_data_partial` flag for parcels where contributing scenes hit the lag.
 - **Mid-May calendar item** — rerun SK T0 once ERA5 publishes through May ~21 (catches northern SK spring thaw → unblocks Hafford active calls).
 - **Phase 7** — vote-label loop (Supabase exporter + drawer disagreement UI).
-- **Phase 8** — per-territory threshold calibration once ~50–100 vote labels accrue. Codex flagged precip-penalty calibration (24h-before-acquisition is conservative; rain 2-3 days prior still corrupts SAR via residual soil moisture) and per-territory optical calibration (NDTI/BSI percentile cutoffs differ by region) as Phase 8 candidates.
+- **Phase 8** — per-territory threshold calibration once ~50–100 vote labels accrue. Codex `beyzs2ym9` flagged three Phase-8 candidates:
+  - **Precip window 24h → 48–72h.** Rain 2-3 days prior still affects SAR backscatter via residual soil moisture; the current 24h-before-acquisition window is conservative.
+  - **Optical-null calibration by territory + parcel size.** Optical:null is concentrated: Kamsack 76, Montana 23, Eddystone 22, PA 20, Aguila 12. Plus tiny parcels can't reach `MIN_VALID_PIXELS=50` at 20 m scale after 80 m erosion (small AZ parcels and small Montana aliquots). v1.5 should switch to area-normalized threshold or expose `MIN_VALID_PIXELS` as a per-territory tunable.
+  - **Per-territory NDTI/BSI percentile cutoffs.** v1 emits raw values; v1.5 calibrates against vote labels.
 
 ---
 
