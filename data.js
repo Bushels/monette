@@ -27,12 +27,12 @@ window.MONETTE_DATA = {
       note: "Use this as the starting inventory for farmed, owned, rented, building replacement value, comp high $/ac, and total land/building value. Per-property PDF/XLSX files in docs/Land are sale-package/update overlays, not the initial portfolio baseline.",
     },
     baselineRecordMarker: "properties[].propertySummary",
-    adjustmentRule: "Post-January sales, returned land, and reviewed vote/status changes are adjustments against the Acre Sheet baseline. Do not add sold acres as new inventory; subtract or reclassify them from the relevant baseline farmed/owned/rented amounts when producing current-state rollups.",
+    adjustmentRule: "Post-January sales, returned land, and reviewed status changes are adjustments against the Acre Sheet baseline. Do not add sold acres as new inventory; subtract or reclassify them from the relevant baseline farmed/owned/rented amounts when producing current-state rollups.",
     overlays: [
       "docs/Land/*.pdf and docs/Land/*.xlsx: tender/sale-package details, quarter geometry, ISC title rows, and sale-offer scope",
       "soldProperties: known historical transactions and post-baseline sale results",
       "operatorRelationships: partner-owned or co-managed land shown as relationship evidence only; excluded from Monette owned/rented acreage totals",
-      "public votes: post-baseline community ownership/listing/season observations by quarter",
+      "imagery-data.js: satellite seeding observations per quarter (SAR + cropland mask, 2026 growing season)",
     ],
   },
 

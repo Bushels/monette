@@ -192,9 +192,6 @@ function aggregateRollups(rollups) {
     acc.unknown += rollup.unknown || 0;
     acc.forSale += rollup.forSale || 0;
     acc.forRent += rollup.forRent || 0;
-    acc.seeded += rollup.seeded || 0;
-    acc.sprayed += rollup.sprayed || 0;
-    acc.harvested += rollup.harvested || 0;
     return acc;
   }, {
     total: 0,
@@ -205,20 +202,9 @@ function aggregateRollups(rollups) {
     unknown: 0,
     forSale: 0,
     forRent: 0,
-    seeded: 0,
-    sprayed: 0,
-    harvested: 0,
   });
 }
 
-function seasonMapLabel(st) {
-  const votes = st && st.seasonVotes ? st.seasonVotes : {};
-  const parts = [];
-  if ((votes.seeded || 0) > 0 || st.seeded) parts.push("S");
-  if ((votes.sprayed || 0) > 0 || (Array.isArray(st.sprays) && st.sprays.length)) parts.push("SP");
-  if ((votes.harvested || 0) > 0 || st.harvested) parts.push("H");
-  return parts.join(" ");
-}
 
 function escapePopupHtml(value) {
   return String(value == null ? "" : value)
@@ -439,13 +425,10 @@ function buildQuarterStateIndex() {
       index[imageryKey(propId, q.loc)] = {
         ownership: st.ownership,
         listing: st.listing,
-        seeded: (st.seasonVotes && (st.seasonVotes.seeded || 0) > 0) || !!st.seeded,
-        harvested: (st.seasonVotes && (st.seasonVotes.harvested || 0) > 0) || !!st.harvested,
-        sprayCount: Math.max(
-          st.seasonVotes ? (st.seasonVotes.sprayed || 0) : 0,
-          Array.isArray(st.sprays) ? st.sprays.length : 0
-        ),
-        seasonLabel: seasonMapLabel(st),
+        seeded: false,
+        harvested: false,
+        sprayCount: 0,
+        seasonLabel: "",
         statusColor: (OWN[st.ownership] || OWN.unknown).color,
         mapColor: mapOwnershipColor(st.ownership),
       };
@@ -833,7 +816,6 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const [mapData, setMapData] = useState(null);
   const [mapError, setMapError] = useState(null);
   const [ownershipFocus, setOwnershipFocus] = useState("all");
-  const talliesVersion = useTalliesVersion();
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -852,7 +834,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       out[property.id] = rollupProperty(property.id).rollup;
     });
     return out;
-  }, [talliesVersion]);
+  }, []);
 
   const propertyById = useMemo(() => {
     const out = {};
@@ -862,7 +844,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     return out;
   }, []);
 
-  const quarterStateIndex = useMemo(() => buildQuarterStateIndex(), [talliesVersion]);
+  const quarterStateIndex = useMemo(() => buildQuarterStateIndex(), []);
 
   const quarterGeojson = useMemo(
     () => quarterGeojsonFromRealData(window.MONETTE_QUARTERS_REAL),
@@ -1868,7 +1850,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         <div className="scroll atlas-rail atlas-side" style={{ maxHeight: 780, overflowY: "auto" }}>
           <div className="atlas-side-heading">Property status board</div>
           <div className="atlas-side-note">
-            Click a land block or property name to reveal mapped quarters, status colors, and season vote marks.
+            Click a land block or property name to reveal mapped quarters, satellite seeding status, and ownership context.
           </div>
 
           {D.properties.map((property) => {
@@ -1981,10 +1963,6 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
               <div className="atlas-map-legend-row">
                 <span className="atlas-map-legend-swatch atlas-map-legend-sale-fill" />
                 <span>Red hue - sold or sale-leaseback land</span>
-              </div>
-              <div className="atlas-map-legend-row">
-                <span className="atlas-map-legend-swatch atlas-map-legend-season">S</span>
-                <span>S = seeded, SP = sprayed, H = harvested from season votes</span>
               </div>
               <div className="atlas-map-legend-row">
                 <span className="atlas-map-legend-swatch atlas-map-legend-point" />
@@ -2353,12 +2331,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 <span>Returned to landlord</span>
               </div>
               <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-season">S</span>
-                <span>S / SP / H = seeded / sprayed / harvested</span>
-              </div>
-              <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-point" />
-                <span>Point-only asset: no quarter votes yet</span>
+                <span>Point-only asset: no geometry yet</span>
               </div>
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-operator">OP</span>
@@ -2378,7 +2352,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Trust note</div>
             <div className="atlas-side-note">
-              Quarter colors and S/SP/H marks apply wherever mapped geometry exists. Point-only assets still need evidence before quarter voting can be shown. Operator relationships are provenance markers only and do not change acreage totals.
+              Quarter colors apply wherever mapped geometry exists. Satellite seeding status (Seeding mode) is derived from SAR change-detection and cropland masking — not community votes. Operator relationships are provenance markers only and do not change acreage totals.
             </div>
           </div>
         </div>

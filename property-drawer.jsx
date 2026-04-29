@@ -1,12 +1,10 @@
 // PropertyDrawer — the full file for one property.
 // Renders:
 //   - masthead with titled acres, parcel count, assessed value
-//   - community rollup (proportional bar + 6 counters)
-//   - the quarter list (each row is a QuarterRow → QuarterDetail vote UI)
+//   - ownership rollup (proportional bar + counters from XLSX/editorial data)
+//   - the quarter list (each row is a QuarterRow → QuarterDetail satellite view)
 //
-// The "Zoom Mapbox →" button is where the swap-in lives: when a real
-// Mapbox token is wired in, this button should fly the atlas to the
-// property's bbox.
+// The "Zoom Mapbox →" button flies the atlas to the property's bbox.
 
 // Default page size for the drawer's "Load more" pagination. Kept at module
 // scope so it doesn't allocate a fresh binding every render.
@@ -213,6 +211,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     ? `${sourceTruth.ownerQuery}; pulled ${sourceTruth.pulledAt || "date unknown"}`
     : (propertySummary && propertySummary.source) || "docs/Land/Acre Sheet.jpg";
   const unmappedAc = propertySummary && propertySummary.unmappedAc ? propertySummary.unmappedAc : 0;
+  const operatorRelationships = (D.operatorRelationships || [])
+    .filter((relationship) => relationship.linkedPropertyId === prop.id);
   return (
     <div onClick={onClose} className="drawer-scrim" style={{ position: "fixed", inset: 0, background: "rgba(19,17,14,0.55)", zIndex: 50, display: "flex", justifyContent: "flex-end" }}>
       <div ref={scrollContainerRef} onClick={(e) => e.stopPropagation()} className="scroll property-drawer" style={{
@@ -236,10 +236,10 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
         <div className="pd-rollup" style={{ padding: "16px 28px", background: "var(--paper-2)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8, gap: 8, flexWrap: "wrap" }}>
             <span style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>
-              {rollup.total ? `Community rollup · ${rollup.total} quarters shown` : "Community file · parcel rows needed"}
+              {rollup.total ? `Status rollup · ${rollup.total} quarters shown` : "Property file · parcel rows needed"}
             </span>
             <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: "var(--mute)" }}>
-              {rollup.total ? "Click any quarter to vote" : "Submit location evidence or field observations"}
+              {rollup.total ? "Click any quarter for satellite detail" : "Submit location evidence or field observations"}
             </span>
           </div>
           {currentLandStatus && (
@@ -273,11 +273,11 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
           )}
           {currentLandStatus && (
             <div className="mono" style={{ margin: "10px 0 6px", fontSize: 9, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--mute)" }}>
-              Mapped row vote rollup
+              Mapped row status rollup
             </div>
           )}
           <RollupBar rollup={rollup} />
-          <div className="pd-rollup-grid" style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 12, fontSize: 11, fontFamily: '"JetBrains Mono", monospace' }}>
+          <div className="pd-rollup-grid" style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, fontSize: 11, fontFamily: '"JetBrains Mono", monospace' }}>
             {(() => {
               // For properties where the sold-and-rented-back transaction
               // dominates (currently Hafford), swap the "Owned" tile for a
@@ -291,8 +291,6 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                 ["Rented",   rollup.rented,  OWN["rented-monette"].color],
                 ["Sold",     rollup.sold,    OWN.sold.color],
                 ["For sale", rollup.forSale, LIST["listed-for-sale"].color],
-                ["Seeded",   rollup.seeded,  "#4e6a30"],
-                ["Sprayed",  rollup.sprayed, "#b48638"],
               ];
             })().map(([l, v, c]) => (
               <div key={l}>
@@ -363,7 +361,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             fontSize: 11, fontFamily: '"JetBrains Mono", monospace',
             color: "var(--gold-ink)", letterSpacing: "0.04em",
           }}>
-            Source-of-truth baseline: Montana DNRC/DOR public cadastral owner records. Court-file changes and votes are dated overlays against this original map.
+            Source-of-truth baseline: Montana DNRC/DOR public cadastral owner records. Court-file changes and satellite observations are dated overlays against this original map.
           </div>
         )}
 
@@ -450,6 +448,29 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                 {propertySummary.note}
               </div>
             )}
+          </div>
+        )}
+
+        {operatorRelationships.length > 0 && (
+          <div className="pd-community-ask pd-operator-relationships" style={{ background:"rgba(241,210,132,0.10)", borderLeft:"3px solid #f1d284" }}>
+            <div className="pd-community-ask-copy">
+              <div className="mono pd-community-ask-label" style={{ color:"var(--gold-ink, #8a6520)" }}>
+                Operator relationship layer
+              </div>
+              <div className="serif pd-community-ask-metric">Partner-managed land</div>
+              {operatorRelationships.map((relationship) => (
+                <div key={relationship.id} style={{ marginTop:12, paddingTop:12, borderTop:"1px solid rgba(26,24,21,0.12)" }}>
+                  <div className="serif" style={{ fontSize:18, lineHeight:1.15 }}>{relationship.name}</div>
+                  <div className="mono" style={{ marginTop:6, fontSize:10, lineHeight:1.45, color:"var(--ink-2)" }}>
+                    Owner / landholder: <strong>{relationship.owner}</strong> · Monette role: <strong>{relationship.monetteRole}</strong>
+                  </div>
+                  <p>{relationship.publicNote}</p>
+                  <div className="pd-community-ask-contact">
+                    Evidence: {relationship.evidence} Source: {relationship.sourceLabel}. Exposure note: {relationship.currentExposureLabel}.
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -566,9 +587,9 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                 </p>
               </div>
               <div>
-                <span className="mono">Why no sold button?</span>
+                <span className="mono">Why no satellite data?</span>
                 <p>
-                  The live vote model is quarter-based. Regina South currently has no quarter rows, so a property-wide sold claim needs source evidence before it becomes public status.
+                  Satellite seeding analysis requires mapped quarter geometry. Without parcel rows, no per-parcel SAR change-detection can run. Evidence threads on Agnonymous help us map these blocks.
                 </p>
               </div>
             </div>

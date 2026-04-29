@@ -1,44 +1,9 @@
 // VIEW 1 - Editorial. Investigation-style landing surface.
 //
-// Masthead -> live ticker -> dossier feature -> hero headline ->
-// known sale lead story -> "also in the file" cards -> full court-file
-// ledger table -> legal disclaimer footer.
-
-// Dossier feature block: dark slab below the ticker featuring the
-// most recently released dossier and a teaser for the next one.
-// Reads from window.MONETTE_DOSSIERS_CURRENT + MONETTE_DOSSIERS_NEXT.
-const DossierFeature = ({ onSwitchView }) => {
-  const current = window.MONETTE_DOSSIERS_CURRENT;
-  const next = window.MONETTE_DOSSIERS_NEXT;
-  if (!current) return null;
-
-  const goToDossier = () => {
-    if (onSwitchView) onSwitchView("dossier", current.id);
-    else window.location.hash = `#dossier/${current.id}`;
-  };
-
-  return (
-    <div className="editorial-dossier-feature">
-      <div>
-        <div className="edf-kicker caps">
-          ● Dossier {String(current.number).padStart(2, "0")} · {current.kicker}
-        </div>
-        <h2 className="serif edf-headline">{current.headline}</h2>
-        <p className="edf-subhead">{current.teaser}</p>
-        <button className="edf-cta" onClick={goToDossier}>
-          Read the full dossier →
-        </button>
-      </div>
-      {next && (
-        <div className="edf-next">
-          <div className="edf-next-label caps">Next · {next.releasedAt}</div>
-          <div className="serif edf-next-headline">{next.headline}</div>
-          <div>{next.teaser}</div>
-        </div>
-      )}
-    </div>
-  );
-};
+// Masthead -> live ticker -> hero headline -> known sale lead story ->
+// "also in the file" cards -> full court-file ledger table -> disclaimer.
+// Seeding progress and live vote feed have been removed in the satellite
+// pivot 2026-04-29; seeding status is now satellite-driven.
 
 const EditorialLeadMap = ({ prop, onOpen, eyebrow, ctaLabel = "open file ->" }) => {
   const containerRef = useRef(null);
@@ -167,52 +132,8 @@ const editorialNavButtonStyle = {
   textTransform: "inherit",
 };
 
-function LiveActivityPanel({ onOpenProperty }) {
-  const activity = useActivityFeed(7);
-
-  return (
-    <section className="activity-feed-panel" aria-label="Recent vote activity">
-      <div className="activity-feed-head">
-        <span className="mono">Live vote feed</span>
-        <span className="mono">{activity.length ? `${activity.length} live` : "standby"}</span>
-      </div>
-
-      {activity.length ? (
-        <div className="activity-feed-list">
-          {activity.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className="activity-feed-row"
-              onClick={() => onOpenProperty && onOpenProperty(item.propId)}
-            >
-              <span className="activity-feed-dot" style={{ background: item.color }} />
-              <span className="activity-feed-main">
-                <span className="activity-feed-title">
-                  {item.propertyName} / {item.quarterLoc}
-                </span>
-                <span className="activity-feed-sub mono">
-                  {item.action}: {item.label}
-                </span>
-              </span>
-              <span className="activity-feed-time mono">
-                {item.optimistic ? "sending" : formatRelativeTime(item.createdAt)}
-              </span>
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div className="activity-feed-empty">
-          <span className="mono">No live public votes yet. New sold, seeded, listed, or returned marks appear here.</span>
-        </div>
-      )}
-    </section>
-  );
-}
-
-const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => {
+const EditorialView = ({ onSwitchView, onOpenHeadlineForm }) => {
   const [sel, setSel] = useState(null);
-  const talliesVersion = useTalliesVersion();
   const props = D.properties;
   const leadSale = (D.soldProperties || []).find((sale) => sale.id === "sold-stewart-valley");
   const leadProperty = props.find((p) => p.id === "swift-current") || props.find((p) => p.id === "vanguard");
@@ -227,7 +148,7 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
     const map = {};
     props.forEach((p) => { map[p.id] = rollupProperty(p.id).rollup; });
     return map;
-  }, [props, talliesVersion]);
+  }, [props]);
   const openAgnonymous = (payload = {}) => {
     if (window.openAgnonymousDiscussion) {
       window.openAgnonymousDiscussion(payload);
@@ -259,8 +180,6 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
         kind: "clarification",
       })} />
 
-      <DossierFeature onSwitchView={onSwitchView} />
-
       <div className="ed-hero" style={{ padding: "48px 48px 28px", borderBottom: "1px solid var(--ink)" }}>
         <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 480px", gap: 48 }}>
           <div>
@@ -270,14 +189,14 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
             <h1 className="serif" style={{ margin: 0, fontSize: 86, lineHeight: 0.95, letterSpacing: "-0.03em", fontWeight: 400 }}>
               {PORTFOLIO.farmedAcresLabel} acre footprint.<br />
               {fmt(PORTFOLIO.courtOwnedAcres)} owned acres in court file.<br />
-              <span style={{ color: "var(--mute)" }}>{fmt(PORTFOLIO.totalMappedParcels)} community rows live.</span>
+              <span style={{ color: "var(--mute)" }}>{fmt(PORTFOLIO.totalMappedParcels)} parcel rows live.</span>
             </h1>
             <div style={{ marginTop: 26, fontSize: 16, lineHeight: 1.55, maxWidth: 640, color: "var(--ink-2)" }}>
-              Monette Farms Ltd. entered creditor protection under the CCAA on April 21, 2026. The Ledger now separates the court-file roster from the parcel-mapped community layer: {PORTFOLIO.totalProperties} property records, {PORTFOLIO.mappedPropertyCount} parcel-mapped records, {PORTFOLIO.syntheticPropertyCount} synthetic fallback record, and {PORTFOLIO.pointOnlyPropertyCount} point-only records waiting on better geometry.
+              Monette Farms Ltd. entered creditor protection under the CCAA on April 21, 2026. The Ledger separates the court-file roster from the parcel-mapped satellite layer: {PORTFOLIO.totalProperties} property records, {PORTFOLIO.mappedPropertyCount} parcel-mapped records, {PORTFOLIO.syntheticPropertyCount} synthetic fallback record, and {PORTFOLIO.pointOnlyPropertyCount} point-only records waiting on better geometry.
             </div>
             <div style={{ display: "flex", gap: 10, marginTop: 28 }}>
               <button onClick={() => onSwitchView && onSwitchView("list")} className="btn btn-dark">Browse properties -></button>
-              <button onClick={() => onOpenTutorial && onOpenTutorial()} className="btn">How voting works</button>
+              <button onClick={() => onSwitchView && onSwitchView("map")} className="btn">Explore the atlas -></button>
               <button onClick={() => openAgnonymous({
                 title: "Monette Ledger correction or evidence thread",
                 body: "Add the property, claim, source link, and confidence level. If this should change the controlled Monette record, say exactly what should change.",
@@ -300,14 +219,34 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
                 </div>
               ))}
             </div>
-            <LiveActivityPanel
-              onOpenProperty={(propId) => {
-                const property = props.find((p) => p.id === propId);
-                if (property) setSel(property);
-              }}
-            />
+            <div style={{ marginTop: 24, padding: "18px 20px", background: "var(--paper-2)", border: "1px solid var(--rule)" }}>
+              <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 10 }}>
+                Verified observations + corrections
+              </div>
+              <p style={{ fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)", margin: "0 0 14px" }}>
+                Submit verified field observations, legal-description corrections, and source-cited rumors through agnonymous.buperac.com — the single intake channel for all tips.
+              </p>
+              <a
+                href={window.AGNONYMOUS_URL || "https://agnonymous.buperac.com"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-dark"
+                style={{ display: "inline-block" }}
+              >
+                agnonymous.buperac.com →
+              </a>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Reader-support card placed ABOVE the Stewart Valley lead-sale. */}
+      <div className="editorial-support-wrap editorial-support-wrap-mid">
+        <SupportCard
+          headline="Built by hand, one quarter-section at a time."
+          sub="Title-record digging, court-file extraction, and the parcel atlas all take real time. If this work is useful to you, chip in, it is appreciated."
+          signoff="~bushels"
+        />
       </div>
 
       <div style={{ padding: "40px 48px", borderBottom: "1px solid var(--ink)", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
@@ -408,7 +347,7 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
           <thead>
             <tr style={{ borderBottom: "1.5px solid var(--ink)", textAlign: "left" }}>
-              {["Property", "Prov", "File ac", "Titles", "Owned", "Sold", "Rented", "For sale", "Seeded", "Rollup"].map((heading) => (
+              {["Property", "Prov", "File ac", "Titles", "Owned", "Sold", "Rented", "For sale", "Rollup"].map((heading) => (
                 <th key={heading} style={{
                   padding: "10px 8px",
                   color: "var(--mute)",
@@ -416,7 +355,7 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
                   fontSize: 10,
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  textAlign: ["File ac", "Titles", "Owned", "Sold", "Rented", "For sale", "Seeded"].includes(heading) ? "right" : "left",
+                  textAlign: ["File ac", "Titles", "Owned", "Sold", "Rented", "For sale"].includes(heading) ? "right" : "left",
                 }}>
                   {heading}
                 </th>
@@ -452,7 +391,6 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
                   <td style={{ padding: "12px 8px", textAlign: "right", fontFamily: '"JetBrains Mono", monospace', color: OWN.sold.color }}>{rollup.sold}</td>
                   <td style={{ padding: "12px 8px", textAlign: "right", fontFamily: '"JetBrains Mono", monospace', color: OWN["rented-monette"].color }}>{rollup.rented}</td>
                   <td style={{ padding: "12px 8px", textAlign: "right", fontFamily: '"JetBrains Mono", monospace', color: LIST["listed-for-sale"].color }}>{rollup.forSale}</td>
-                  <td style={{ padding: "12px 8px", textAlign: "right", fontFamily: '"JetBrains Mono", monospace', color: "#4e6a30" }}>{rollup.seeded}</td>
                   <td style={{ padding: "12px 8px", width: 100 }}><RollupBar rollup={rollup} /></td>
                 </tr>
               );
@@ -463,7 +401,7 @@ const EditorialView = ({ onSwitchView, onOpenTutorial, onOpenHeadlineForm }) => 
       </div>
 
       <div style={{ padding: "32px 48px", fontSize: 13, color: "var(--ink-2)", lineHeight: 1.6 }}>
-        An independent, crowdsourced tracker. Not affiliated with Monette Farms, the Monitor, or the courts. Court-file acreage, mapped quarter rows, point-only assets, title counts, and community votes are labeled separately so public claims stay auditable.
+        An independent, satellite-assisted tracker. Not affiliated with Monette Farms, the Monitor, or the courts. Court-file acreage, mapped quarter rows, point-only assets, title counts, and satellite observations are labeled separately so public claims stay auditable.
       </div>
 
       <PropertyDrawer
