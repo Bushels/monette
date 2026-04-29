@@ -1,11 +1,12 @@
 # Homepage Redesign — Session 2 Retrospective (2026-04-29)
 
-**Status:** Implementation complete, awaiting Codex post-review verdict.
+**Status:** Implementation + Codex review-fixes complete. 5 PASS / 2 WARN both addressed.
 **Plan:** [`2026-04-29-homepage-redesign-plan.md`](./2026-04-29-homepage-redesign-plan.md)
 **Codex pre-implementation pressure-test:** `bvqyinxv4`
-**Branch:** `main` — two commits landed:
+**Branch:** `main` — three commits landed:
 - `af4fcea feat: make seeding atlas the home surface`
 - `d31b563 chore: remove Stewart Valley sold marker from public atlas`
+- `d3f3728 fix: address Codex review WARNs on homepage redesign` (post-review fixes)
 
 ---
 
@@ -126,10 +127,36 @@ Browser smoke at `localhost:8765/#map`:
 
 ---
 
+## Codex post-implementation review
+
+Subagent `a998a52f51779bfa1` (Codex `gpt-5.5/xhigh`, read-only). Reviewed the diff between HEAD~2 and HEAD against all 7 priority items. Output:
+
+| # | Item | Status |
+|---|------|--------|
+| 1 | Routing default + redirect | **WARN** — stale references |
+| 2 | Deep-link hero suppression | ✅ PASS |
+| 3 | Map-mode reduction | ✅ PASS |
+| 4 | Layout / map height contract | ✅ PASS |
+| 5 | Donate button | ✅ PASS |
+| 6 | Stewart Valley deletion | **WARN** — Hafford acre mismatch |
+| 7 | Build hygiene (HomeHero) | ✅ PASS |
+
+**Both WARNs fixed in commit `d3f3728`:**
+
+1. **WARN 1** — `app.jsx:53` `go()` default param was `"editorial"`; `view-dossier.jsx:186, 197, 209` back-button + crumb pointed at `#dossiers`. Both caught by silent redirects (no runtime throw) but flashed the wrong hash for a frame. Fixed: default → `"map"`, dossier back-button + crumb → `#map` (with relabeled UI: "Back to the atlas", "Open the atlas →", crumb "Atlas").
+
+2. **WARN 2** — pre-existing inconsistency that my Commit 2 left visible: timeline said `Hafford $29M / 2,553 ac` (literal affidavit ¶158 figure) while the canonical sold record at `data.js:1147` says `acres:3657` (Ledger working assumption — $29M bundle of 2,553 Monette Farms Ltd. + 1,104 Monette Ag Ventures Ltd.). Fixed: timeline now says `3,657 ac` with an inline parenthetical preserving the affidavit literal for cross-reference.
+
+Codex specifically confirmed:
+- `vigorColorFor` orphan + `vigor_color` parcel property cleanup is complete (Q3 PASS)
+- CSS specificity collision risk is resolved by the `min-width: 901px` scope (Q4 PASS)
+- All viewports show exactly one CTA label (Q5 PASS)
+- $30.78M math: $29M Hafford + $1.78M Wymark = correct (Q6 confirm)
+- `HomeHero` window-exported and reachable from view-map.jsx without import (Q7 PASS)
+
 ## Open follow-ups
 
 1. **Session 3** — Live feed reframe. Plan section "Session 3 kickoff" is paste-ready in the redesign plan.
-2. **Codex review** — In progress, background agent `a998a52f51779bfa1`. Will append findings here.
-3. **EditorialView dead-code audit** — `view-editorial.jsx` is unreachable (silent-redirected) but still ~600 lines of unused JSX. A future cleanup commit could delete the file + its window export + the script tag in index.html. Out of scope for this session.
-4. **Atlas-toolbar visibility on bare `#map`** — Currently shown above the atlas grid; could be suppressed when hero is present if user prefers the cleaner hero→atlas transition.
-5. **Vercel deployment** — All changes live on `main` locally. User can `vercel --prod` from C: when ready (per memory `project_local_copy.md`).
+2. **EditorialView dead-code audit** — `view-editorial.jsx` is unreachable (silent-redirected) but still ~600 lines of unused JSX. A future cleanup commit could delete the file + its window export + the script tag in index.html. Out of scope for this session.
+3. **Atlas-toolbar visibility on bare `#map`** — Currently shown above the atlas grid; could be suppressed when hero is present if user prefers the cleaner hero→atlas transition.
+4. **Vercel deployment** — All changes live on `main` locally. User can `vercel --prod` from C: when ready (per memory `project_local_copy.md`).
