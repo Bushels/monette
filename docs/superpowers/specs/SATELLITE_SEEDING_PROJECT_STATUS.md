@@ -16,6 +16,9 @@
 - `beyzs2ym9` — Bucket B final review (GREENLIGHT; Phase 4 unblocked; v1.5 risks captured under "Pending non-fix work")
 - `b05w54lpy` — Satellite pivot architecture pressure-test (6-step removal plan, surfaced 5 missed coupling files + pre-existing `vigorColorFor` bug)
 - `bwgf1888o` — Satellite pivot review (BLOCKER: migration SQL bugs + drawer guardrails missed; all addressed in `7bf8284`)
+- `bvqyinxv4` — Homepage redesign pressure-test (Codex-as-architect for the home + atlas merge; design baked into `2026-04-29-homepage-redesign-plan.md`)
+
+**Next-session pickup:** Homepage redesign — see `docs/superpowers/specs/2026-04-29-homepage-redesign-plan.md` for the paste-able Session 2 + Session 3 kickoffs. User explicitly split this work across sessions ("we will likely need to spin up new sessions to complete all this work").
 
 This is the canonical entrypoint for understanding where the satellite seeding project stands. Updated after every milestone session per the workflow established in `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md`.
 
