@@ -232,10 +232,22 @@ def run_single_parcel(
     # produce enormous per-pixel ratios that dominate the mean and inflate ΔVH.
     # See Codex review b53izop76 for the live diagnostic (+10.9 dB vs +4.6 dB
     # on PA NW-32-51-23-W2).
-    t1_vh_masked = t1.select("VH").updateMask(masked)
-    t0_vh_masked = t0.select("VH").updateMask(masked)
-    t1_vv_masked = t1.select("VV").updateMask(masked)
-    t0_vv_masked = t0.select("VV").updateMask(masked)
+    #
+    # Fix (Codex b08awunq3): build ONE common valid mask spanning T1, T0, and
+    # the cropland mask so that all four bands are reduced over an identical
+    # pixel support. Without this, if T1 has data where T0 doesn't (or vice
+    # versa), mean(T1_VH) and mean(T0_VH) are computed over *different* pixel
+    # sets, making the ratio biased. The common mask forces equal support.
+    common_mask = (
+        t1.select("VH").mask()
+        .And(t0.select("VH").mask())
+        .And(cropland_mask)
+    )
+
+    t1_vh_masked = t1.select("VH").updateMask(common_mask)
+    t0_vh_masked = t0.select("VH").updateMask(common_mask)
+    t1_vv_masked = t1.select("VV").updateMask(common_mask)
+    t0_vv_masked = t0.select("VV").updateMask(common_mask)
 
     stats = (
         t1_vh_masked
@@ -256,6 +268,25 @@ def run_single_parcel(
     mean_t1_vh = stats.getNumber("VH_mean")
     mean_t0_vh = stats.getNumber("VH_t0_mean")
     n_pixels = stats.getNumber("VH_count")
+
+    # Post-reduce sanity check: all four count bands must be equal because they
+    # were all masked to the same common_mask support. If GEE's per-band
+    # masking produced unequal counts, the ratio would be computed over
+    # different pixel sets — fail closed rather than ship a biased ΔVH.
+    vh_count_val = stats.getNumber("VH_count").getInfo()
+    vh_t0_count_val = stats.getNumber("VH_t0_count").getInfo()
+    vv_count_val = stats.getNumber("VV_t1_count").getInfo()
+    vv_t0_count_val = stats.getNumber("VV_t0_count").getInfo()
+    if not (vh_count_val == vh_t0_count_val == vv_count_val == vv_t0_count_val):
+        return _build_record(
+            territory=territory,
+            cropland_coverage=float(cc_value.getInfo() or 0),
+            prior_crop=crop_name,
+            applicability="insufficient_baseline",
+            mean_dvh_db=None,
+            n_pixels=0,
+            run_date=run_date,
+        )
 
     # Symmetric ratio guard: if either mean is null OR <= 0, the ratio + log
     # is undefined. ee.Dictionary.getNumber() always returns a (lazy) ee.Number,
