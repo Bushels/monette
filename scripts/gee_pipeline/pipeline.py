@@ -144,23 +144,24 @@ def run_single_parcel(
         cropland_mask = cropland_img.select("landcover").gte(100)
     else:
         cropland_mask = cropland_img.select("cropland").neq(0)
-    masked = cropland_mask.clip(eroded)
 
     # 3. cropland_coverage
-    total_pixels = ee.Image.constant(1).clip(eroded).reduceRegion(
-        reducer=ee.Reducer.count(),
+    # Fix (Codex b08awunq3): the previous two-step count()/count() approach
+    # was wrong on two counts:
+    # (a) Reducer.count() counts unmasked pixels regardless of *value*, so the
+    #     binary 0/1 mask was counted as 100 % present even where class < 100.
+    # (b) Image.constant(1) lives in geographic projection; the denominator
+    #     count() at scale=20 differed from the ACI Albers numerator count(),
+    #     making the ratio a projection-mismatch artifact, not a real fraction.
+    # Fix: mean() of the 0/1 binary image over the eroded geometry gives the
+    # true fraction of pixels equal to 1 — i.e. the real cropland fraction.
+    # The .clip() is dropped; the reducer geometry already restricts the domain.
+    cc_value = cropland_mask.reduceRegion(
+        reducer=ee.Reducer.mean(),
         geometry=eroded,
         scale=20,
         maxPixels=1e7,
-    ).getNumber("constant")
-    cropland_pixels = masked.reduceRegion(
-        reducer=ee.Reducer.count(),
-        geometry=eroded,
-        scale=20,
-        maxPixels=1e7,
-    ).getNumber(masked.bandNames().get(0))
-
-    cc_value = cropland_pixels.divide(total_pixels)
+    ).getNumber(cropland_mask.bandNames().get(0))
 
     # 4. Modal prior_crop class
     modal_class = cropland_img.reduceRegion(
