@@ -183,8 +183,8 @@ const DossierView = ({ forcedSelect, onSwitchView }) => {
             <div className="dossier-placeholder-status mono">
               Status: {meta.status} · Releases {meta.releasedAt}
             </div>
-            <button className="btn" onClick={() => window.location.hash = "#dossiers"}>
-              ← Back to all dossiers
+            <button className="btn" onClick={() => window.location.hash = "#map"}>
+              ← Back to the atlas
             </button>
           </div>
         </div>
@@ -194,8 +194,8 @@ const DossierView = ({ forcedSelect, onSwitchView }) => {
       <div className="dossier-wrap">
         <div className="dossier-placeholder">
           <h1 className="serif">No dossier selected.</h1>
-          <button className="btn" onClick={() => window.location.hash = "#dossiers"}>
-            Browse the dossiers →
+          <button className="btn" onClick={() => window.location.hash = "#map"}>
+            Open the atlas →
           </button>
         </div>
       </div>
@@ -206,7 +206,7 @@ const DossierView = ({ forcedSelect, onSwitchView }) => {
     <article className="dossier-wrap">
       <header className="dossier-header">
         <div className="dossier-crumb caps">
-          <a href="#dossiers">Dossiers</a>
+          <a href="#map">Atlas</a>
           <span className="mute"> · </span>
           <span>Dossier {String(dossier.number).padStart(2, "0")}</span>
         </div>

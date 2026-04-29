@@ -1,8 +1,11 @@
 # Homepage Redesign Plan — 2026-04-29
 
-**Status:** Plan + handoff brief; execution split across 2 future sessions per user direction ("we will likely need to spin up new sessions to complete all this work").
-**Codex pressure-test:** `bvqyinxv4` — see below for the integrated guidance.
-**Repo state:** HEAD = `b770cc0` (satellite pivot complete; voting fully removed; Atlas already satellite-driven).
+**Status:**
+- ✅ **Session 2 LANDED 2026-04-29 mid-day.** Commits `af4fcea` (homepage shell) + `d31b563` (Stewart Valley removal) on `main`. See [`2026-04-29-homepage-redesign-retrospective.md`](./2026-04-29-homepage-redesign-retrospective.md) for the full implementation ledger.
+- ⏸ Session 3 (live feed reframe) deferred — paste-ready kickoff at the bottom of this file.
+
+**Codex pressure-test (pre-implementation):** `bvqyinxv4` — see below for the integrated guidance.
+**Repo state at planning time:** HEAD = `b770cc0` (satellite pivot complete; voting fully removed; Atlas already satellite-driven).
 **Branch:** `main`.
 
 ---

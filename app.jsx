@@ -50,7 +50,7 @@ function App() {
   }, []);
 
   const go = (nextView, nextProp, nextQuarter) => {
-    const parts = [nextView || "editorial"];
+    const parts = [nextView || "map"];
     if (nextProp) parts.push(nextProp);
     if (nextQuarter) parts.push(nextQuarter);
     window.location.hash = parts.join("/");
