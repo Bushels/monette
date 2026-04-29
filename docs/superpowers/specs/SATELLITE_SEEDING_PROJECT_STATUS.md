@@ -213,7 +213,16 @@ The community voting feature (season votes for seeded/sprayed/harvested + owners
 - `vote-board.jsx` orphan referencing `window.QUARTER_STATES` → file deleted
 - Migration SQL bugs caught at review (`quarter_current_state` is VIEW; `submit_vote` signature) — would have failed at execution
 
-**Pending: SQL migration execution.** The DROP migration at `supabase/migrations/20260429000000_drop_voting_tables.sql` is committed and validated against the actual schema. **Awaiting user authorization** to execute against the Monette Supabase project. Same gate as the Bucket A T0 deletion — destructive shared-infrastructure changes need explicit "go."
+**SQL migration executed 2026-04-29.** After browser smoke test passed, the user authorized "tackle both" and the migration was applied via the Supabase MCP `apply_migration` tool. Post-execution verification:
+- `public.votes` (52 rows, base table) → DROPPED
+- `public.vote_tallies` (VIEW) → DROPPED
+- `public.vote_activity_feed` (VIEW) → DROPPED
+- `public.vote_latest_seeded_per_prop` (VIEW) → DROPPED
+- `public.quarter_current_state` (VIEW) → DROPPED
+- `public.submit_vote(text x 6)` (FUNCTION) → DROPPED
+- `public.tips` table → PRESERVED (tip submission unchanged)
+
+Browser re-verified post-migration: local preview renders cleanly, no console errors, atlas in Seeding mode, drawer satellite-row works, `monetteSubmitTip` function intact. The atlas reads only from `imagery-data.js` (static, GEE-pipeline-produced); the only writable Supabase surface is `public.tips` for agnonymous submissions.
 
 ### 🟡 Bucket C — Production readiness (v1.5; ~3–4 hr)
 
