@@ -47,6 +47,39 @@ CROPLAND_MASKS = {
     "co": "USDA/NASS/CDL/2025",
 }
 
+# USDA CDL agricultural class filter (Codex review bd5gaxmye — Fix 1).
+#
+# CDL's "cropland" band is a 256-class land-cover map, NOT a binary mask.
+# The previous neq(0) incorrectly included Open Water (111), Developed
+# (121–124), Forest (141–143), Grass/Pasture (176), Wetlands (190–194),
+# etc. — affecting 245 of 1,260 parcels (MT 220 + AZ 23 + CO 2).
+#
+# Per USDA NASS CDL legend (https://www.nass.usda.gov/Research_and_Science/
+# Cropland/docs/cdl_codes.pdf and GEE catalog):
+#   1–60:   Major crops (corn, wheat, cotton, soybeans, alfalfa, oats, etc.)
+#   66–80:  Tree fruits and orchard crops (cherries, apples, peaches, etc.)
+#   195–254: Extended crops (herbs, vegetables, berries, specialty crops)
+#
+# Explicitly excluded (must not be treated as cropland for seeding detection):
+#   0:       Background / no-data
+#   61–65:   Fallow/Idle Cropland, Pasture mixes — not seeded; return
+#            out_of_season or unmapped via applicability_for_crop
+#   81:      Clouds/No Data
+#   82–83:   Developed, Water
+#   87–92:   Wetlands / Aquaculture
+#   111:     Open Water
+#   121–124: Developed/Impervious
+#   131:     Barren Land
+#   141–143: Deciduous/Evergreen/Mixed Forest
+#   152:     Shrubland
+#   176:     Grass/Pasture
+#   190–194: Wetlands
+CDL_CROPLAND_CLASSES_RANGES = [
+    (1, 60),    # major crops
+    (66, 80),   # orchard / tree crops
+    (195, 254), # extended crops (specialty vegetables, herbs, berries)
+]
+
 # CDL → AAFC ACI common-name map (subset; expand as needed)
 CDL_CLASS_TO_NAME = {
     1: "spring_wheat",
@@ -139,11 +172,19 @@ def run_single_parcel(
     # applicability.py.
     cropland_collection = CROPLAND_MASKS[territory]
     cropland_img = ee.Image(cropland_collection)
-    # AAFC ACI: cropland classes are 100+; CDL: cropland is non-zero non-pasture
+    # AAFC ACI: cropland classes are 100+; this branch is correct — no change.
+    # CDL: the "cropland" band is a 256-class land-cover map (NOT a binary mask).
+    # Build a proper agricultural-class filter using CDL_CROPLAND_CLASSES_RANGES
+    # (see module constant above). Codex review bd5gaxmye — Fix 1.
     if territory in {"sk", "mb"}:
         cropland_mask = cropland_img.select("landcover").gte(100)
     else:
-        cropland_mask = cropland_img.select("cropland").neq(0)
+        cl = cropland_img.select("cropland")
+        cropland_mask = (
+            cl.gte(CDL_CROPLAND_CLASSES_RANGES[0][0]).And(cl.lte(CDL_CROPLAND_CLASSES_RANGES[0][1]))
+            .Or(cl.gte(CDL_CROPLAND_CLASSES_RANGES[1][0]).And(cl.lte(CDL_CROPLAND_CLASSES_RANGES[1][1])))
+            .Or(cl.gte(CDL_CROPLAND_CLASSES_RANGES[2][0]).And(cl.lte(CDL_CROPLAND_CLASSES_RANGES[2][1])))
+        )
 
     # 3. cropland_coverage
     # Fix (Codex b08awunq3): the previous two-step count()/count() approach
