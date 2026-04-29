@@ -4,26 +4,35 @@
 // View state lives in the URL hash so refreshes (and direct links from
 // external sources like X/Instagram) land on the right view.
 //   #editorial             → The Monette Ledger (default)
-//   #dossiers              → The serial-investigation roadmap
-//   #dossier/{slug}        → A single dossier (e.g. #dossier/insurance-tower)
+//   #dossier/{slug}        → A single dossier article (e.g. #dossier/insurance-tower)
 //   #list                  → Asset register
-//   #map                   → Field atlas
+//   #map                   → Field atlas (satellite seeding mode when in Apr-Jun window)
 // Extra hash segments target a specific property / quarter:
 //   #map/vanguard
 //   #map/vanguard/NW-26-10-16-W3
+//
+// Note: #dossiers (index) was removed in the satellite pivot 2026-04-29.
+// Visiting #dossiers silently redirects to #map.
 
 const VIEWS = [
   { key: "editorial", label: "Ledger",   Component: () => null /* filled below */ },
-  { key: "dossiers",  label: "Dossiers", Component: () => null },
   { key: "list",      label: "Register", Component: () => null },
   { key: "creditors", label: "Creditors", Component: () => null },
+  { key: "structure", label: "Structure", Component: () => null },
+  { key: "stack",     label: "Debt",     Component: () => null },
   { key: "map",       label: "Atlas",    Component: () => null },
 ];
 
 function parseHash() {
   const h = (window.location.hash || "#editorial").replace(/^#/, "");
+  // Silently redirect #dossiers (index) to #map. The singular #dossier/<slug>
+  // route is preserved so individual article links still work.
+  if (h === "dossiers" || h === "dossiers/") {
+    history.replaceState({}, "", "#map");
+    return { view: "map", prop: null, quarter: null };
+  }
   const [view, prop, quarter] = h.split("/");
-  const known = ["editorial", "dossiers", "dossier", "list", "creditors", "map"];
+  const known = ["editorial", "dossier", "list", "creditors", "structure", "stack", "map"];
   return {
     view: known.includes(view) ? view : "editorial",
     prop: prop || null,
@@ -33,7 +42,6 @@ function parseHash() {
 
 function App() {
   const [{ view, prop, quarter }, setRoute] = useState(parseHash());
-  const [tutorialOpen, setTutorialOpen] = useState(false);
   const [headlineFormOpen, setHeadlineFormOpen] = useState(false);
   const [headlineFormPropertyId, setHeadlineFormPropertyId] = useState("");
   const [headlineFormDraft, setHeadlineFormDraft] = useState("");
@@ -77,14 +85,16 @@ function App() {
   const ViewComponent =
     view === "list"     ? window.ListView :
     view === "creditors" ? window.CreditorsView :
+    view === "structure" ? window.GroupStructureView :
+    view === "stack"    ? window.DebtStackView :
     view === "map"      ? window.MapView  :
-    view === "dossiers" ? window.DossiersIndexView :
     view === "dossier"  ? window.DossierView :
                           window.EditorialView;
 
   // The Dossier reader takes a slug as its first hash segment (#dossier/{slug}),
   // not a property id. We pass it through `forcedSelect` like the map view.
-  const navTab = view === "dossier" ? "dossiers" : view;
+  // (#dossiers index has been removed; redirect to #map is handled in parseHash)
+  const navTab = view;
 
   return (
     <>
@@ -99,10 +109,6 @@ function App() {
           ))}
         </div>
         <div className="nav-ctas">
-          {/* Keep education + public correction discussion reachable from every view. */}
-          <button className="nav-cta nav-cta-ghost" onClick={() => setTutorialOpen(true)}>
-            ? How voting works
-          </button>
           <button className="nav-cta nav-cta-gold" onClick={openAgnonymous}>
             + Submit Update
           </button>
@@ -114,15 +120,14 @@ function App() {
           forcedSelect={view === "map" || view === "dossier" ? prop : null}
           forcedQuarter={view === "map" ? quarter : null}
           onSwitchView={go}
-          onOpenTutorial={() => setTutorialOpen(true)}
           onOpenHeadlineForm={openHeadlineForm}
         />
       </div>
-      <HowVotingWorks
-        open={tutorialOpen}
-        onClose={() => setTutorialOpen(false)}
-        onStart={() => go("list")}
-      />
+      {/* Persistent site footer with low-pressure support link.
+          The map view fills its container so the footer ends up below the
+          fold there, which is the desired behavior — readers of the long-form
+          views (editorial, dossiers) get an inline support card too. */}
+      <SiteFooter />
       <SubmitHeadlineModal
         open={headlineFormOpen}
         initialPropertyId={headlineFormPropertyId}

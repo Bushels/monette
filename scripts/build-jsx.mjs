@@ -55,9 +55,10 @@ const entries = [
   "view-editorial.jsx",
   "view-list.jsx",
   "view-creditors.jsx",
+  "view-group-structure.jsx",
+  "view-debt-stack.jsx",
   "view-map.jsx",
   "view-dossier.jsx",
-  "view-dossiers-index.jsx",
   "app.jsx",
 ];
 
