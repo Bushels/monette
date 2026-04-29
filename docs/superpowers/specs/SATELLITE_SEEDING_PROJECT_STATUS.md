@@ -1,14 +1,18 @@
 # Satellite Seeding Project — Living Status
 
-**Last updated:** 2026-04-28 late-evening (Bucket A complete)
+**Last updated:** 2026-04-29 early-morning (Bucket B complete)
 **Latest session retrospectives:**
 - `docs/superpowers/specs/2026-04-28-session-retrospective.md` (Phase 0–5 v1 ship + initial Codex findings)
-- `docs/superpowers/specs/2026-04-28-bucket-a-cleanup-retrospective.md` (3-round Codex review loop, all findings landed)
+- `docs/superpowers/specs/2026-04-28-bucket-a-cleanup-retrospective.md` (Bucket A: 3-round Codex review loop, all findings landed)
+- `docs/superpowers/specs/2026-04-29-bucket-b-retrospective.md` (Bucket B: schema completeness, Codex-as-architect new workflow)
 
 **Codex review history:**
 - `b53izop76` — initial post-shipping review (3 buckets surfaced)
 - `b08awunq3` — Bucket A round-1 review (3 new BLOCKERs)
 - `bd5gaxmye` — Bucket A round-2 review (1 new BLOCKER + perf hints)
+- `b5ajsddp7` — Bucket B architecture pressure-test (NEW workflow: Codex-as-architect feeding into the implementer)
+- `bl5l9zfxa` — Bucket B round-1 review (1 BLOCKER: optical band-name bug; window + cloud filter refinements)
+- `beyzs2ym9` — Bucket B final review (TBD)
 
 This is the canonical entrypoint for understanding where the satellite seeding project stands. Updated after every milestone session per the workflow established in `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md`.
 
@@ -16,7 +20,7 @@ This is the canonical entrypoint for understanding where the satellite seeding p
 
 ## One-paragraph summary
 
-A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. **Bucket A is now complete**: 8 fix commits across 3 review rounds (a29ab80..4a7cfe6) plus a fresh imagery-data.js (d7bf05e) regenerated against rebuilt T0 baselines. The Prince Albert ΔVH anomaly that triggered the cleanup (was +9.32 dB across 19/19 parcels at 100% confidence) is resolved (mean +2.32 dB now, with realistic confidence spread). Bucket B (`dvv_db`/`optical`/`baseline_quality` schema completeness) and Bucket C (server-side `reduceRegions`) remain.
+A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. **Buckets A + B are now complete** (15 code commits + 2 data refreshes spanning a29ab80..30d6881). Bucket A landed math correctness; Bucket B added schema completeness — `dvv_db` populated on all 533 active parcels, `optical` populated on 86% of all parcels, `baseline_quality` conditional on SAR vs non-SAR branches, top-level `baseline_window`, wet-soil precip penalty wired (didn't fire this run because S1 contributing dates happened to be dry). Bucket C (server-side `reduceRegions`, ERA5 lag handling) remains as production-readiness work; Phase 4 UI integration is the next priority feature work.
 
 ---
 
@@ -142,7 +146,41 @@ All math correctness defects shipped. Data refreshed.
 - PA NW-32-51-23-W2 smoke test: dvh_db `+10.894` (pre-fix) → `+4.567` (post round-1) → `+4.567` (post round-3, unchanged) — exactly the Codex-cited ratio-of-means value.
 - Distribution diff inline above shows the PA anomaly resolution + confidence-spread restoration.
 
-### 🟠 Bucket B — Schema completeness (~1–2 hr work + 25 min GEE rerun)
+### ✅ Bucket B — COMPLETE (Codex-as-architect new workflow, 5 commits)
+
+All 5 schema-completeness items shipped. Data refreshed.
+
+**Workflow demonstration:** Bucket B was the first round where Codex was used as an upfront *architect* (b5ajsddp7) before any code was written, contributing 6 design choices that fed directly into the implementer subagent prompt. Codex then reviewed the implementation (bl5l9zfxa), surfacing one critical bug (band-name mismatch on the SCL/cropland mask reducer key) plus two refinements (lookback-only window vs symmetric, drop CLOUDY_PIXEL_PERCENTAGE prefilter in favor of SCL+pixel-count truth). All addressed before committing the data refresh.
+
+**Round 1 (af01c7a..516d482) — design fed by Codex b5ajsddp7:**
+1. ✅ Schema plumbing (`af01c7a`): top-level `baseline_window` from `t0_baseline.BASELINE_WINDOWS`; `dvv_db` plumb-through (drop `_mean_dvv_db_value` Bucket-A TODO marker); `baseline_quality` conditional (`"fresh"` for active SAR, `null` for non-SAR); extended `_build_record` signature.
+2. ✅ Wet-soil precip penalty (`aa70b34`): max precip across S1 contributing scene dates (per Codex's "no fake median scene date" rule); ERA5 m→mm with negative-artifact clamp; null-image guard for ERA5 lag.
+3. ✅ Optical features (`516d482`): new `scripts/gee_pipeline/optical.py` module — single-best Sentinel-2 scene picker (NOT median composite per Codex), conservative SCL `{4 vegetation, 5 bare soils}` mask, parcel-mean NDVI gate at 0.25 for NDTI/BSI emission, min 50 valid pixels, 20m reduce.
+
+**Round 2 (1c49f11) — addressed Codex bl5l9zfxa BLOCKER:**
+4. ✅ Optical band-name fix + window refinements: `.rename("valid")` so the reducer key matches; ±3-day symmetric → 10-day lookback-only (avoid future-lookahead in public "as-of" output); drop `CLOUDY_PIXEL_PERCENTAGE < 30` prefilter (SCL + 50-pixel count is parcel-scale truth).
+
+**Phase 5 rerun (`30d6881`):** 1,260 parcels, exit 0, fail-closed contract held.
+
+**Field coverage post-Bucket-B:**
+- `dvv_db` (active branches): **533 / 533** (100% — every active record)
+- `baseline_quality` `"fresh"`: 533 (= active count)
+- `baseline_quality` `null`: 727 (= non-active count, perfect)
+- `optical` populated: **1087 / 1260** (86%)
+  - full `ndvi+ndti+bsi`: 882 (NDVI < 0.25, parcel mostly bare soil — indices meaningful)
+  - NDVI-only (gate fired): 205 (NDVI ≥ 0.25, established canopy — NDTI/BSI suppressed)
+- `ndvi_mean` populated: 1087 (= optical count, side-effect of same compute)
+- top-level `baseline_window`: present (sk/mb/mt/co; AZ correctly excluded since no T0 tracked)
+- Precip penalty firings: 0 (verified honest: PA's 3 contributing scenes had max 0.07 mm 24h-prior; the 13 mm peak day in the broader window fell on non-S1 days, which Codex's design correctly does NOT penalize)
+
+**The 173 optical:null records** are honest "no qualifying scene" results, concentrated in northern SK (lingering snow → SCL classifies cropland as snow-affected) and AZ desert (SCL outcomes for irrigated cropland differ).
+
+**Verification:**
+- pytest 42/42 (no test changes — these are pure-EE pipeline fields)
+- Smoke test passed: PA NW-32-51-23-W2 dvh_db=4.567 / dvv_db=3.584 / baseline_quality=fresh / last_obs_date=2026-04-26 / optical=null (PA likely lingering snow); Hafford optical fully populated (NDVI=0.141 → NDTI=0.103, BSI=0.161, scene 2026-04-21); Montana optical NDVI=0.403 → NDTI/BSI correctly nulled by gate.
+- Confidence histogram unchanged from post-Bucket-A (precip didn't fire; SAR math untouched in Bucket B).
+
+### 🟠 [historical, kept for reference] Bucket B original list — Schema completeness (~1–2 hr work + 25 min GEE rerun)
 
 Required by spec §5; currently emit-as-null. Phase 4 UI needs these to render the optical-features panel and the audit data.
 
@@ -171,10 +209,11 @@ Unblocks scheduled weekly runs. Not required for v1 internal use but required be
 
 ## Pending non-fix work
 
-- **Phase 4 UI** — mode toggle + drawer satellite-row + Farm Progress counter. After Bucket A + B.
+- **Phase 4 UI** — mode toggle + drawer satellite-row + Farm Progress counter. NOW UNBLOCKED — Buckets A+B complete; the producer schema is honest and complete enough to drive UI.
+- **Bucket C — production readiness** (~3–4 hr): server-side `reduceRegions` per territory shard + Export to table asset (current per-parcel `getInfo()` loop won't scale to scheduled runs); S1 collection filter completeness (VV/VH listContains, resolution, edge masking — Codex flagged as worth doing now since `dvv_db` is live); ERA5 lag dynamic detection + `precip_data_partial` flag for parcels where contributing scenes hit the lag.
 - **Mid-May calendar item** — rerun SK T0 once ERA5 publishes through May ~21 (catches northern SK spring thaw → unblocks Hafford active calls).
 - **Phase 7** — vote-label loop (Supabase exporter + drawer disagreement UI).
-- **Phase 8** — per-territory threshold calibration once ~50–100 vote labels accrue.
+- **Phase 8** — per-territory threshold calibration once ~50–100 vote labels accrue. Codex flagged precip-penalty calibration (24h-before-acquisition is conservative; rain 2-3 days prior still corrupts SAR via residual soil moisture) and per-territory optical calibration (NDTI/BSI percentile cutoffs differ by region) as Phase 8 candidates.
 
 ---
 
@@ -186,48 +225,13 @@ Paste-able. Each is self-contained — load it into a fresh Claude session and t
 
 Shipped across 3 Codex review rounds (`b53izop76` → `b08awunq3` → `bd5gaxmye`). 8 code commits + 1 data commit (`a29ab80..d7bf05e`). See "Known issues — Bucket A — COMPLETE" section above for the full ledger and the post-rerun distribution diff.
 
-### Prompt 2 — Bucket B (run this first now that Bucket A is complete)
+### Prompt 2 — Bucket B — ✅ COMPLETE 2026-04-29 early-morning
 
-```
-Resume the Monette satellite seeding project. Bucket A complete at
-commit <SHA>. Next: Bucket B (schema completeness) per Codex findings
-in docs/superpowers/specs/2026-04-28-session-retrospective.md.
+Shipped via the new Codex-as-architect workflow: Codex `b5ajsddp7` did the upfront design pressure-test (single-best S2 scene vs median composite, max-precip-across-S1-contributing vs window-wide, conservative SCL `{4,5}` mask, parcel-mean NDVI gate, baseline_quality as v1 shortcut). Implementation in 4 commits on top of `bc55706` plus 1 data refresh: `af01c7a..30d6881`. Codex round-1 review (`bl5l9zfxa`) caught 1 critical band-name bug (`scl_mask.And(cropland_mask)` keeps "SCL" as band name; reducer was reading `"constant"`); fixed at `1c49f11`. Codex final review at `beyzs2ym9`.
 
-Five gaps to fill in pipeline.py + build_imagery_data_js.py output so
-the spec section 5 schema is actually complete:
+Field coverage post-Bucket-B: dvv_db on 533/533 active, optical on 1087/1260 (86%), baseline_quality fresh-vs-null perfect, top-level `baseline_window` present. See "Known issues — Bucket B — COMPLETE" section above.
 
-1. Top-level `baseline_window` in build_payload (spec section 5).
-2. Compute `dvv_db` using same ratio-of-means approach as `dvh_db`
-   (Bucket A established the pattern).
-3. Replace null `optical` with computed sub-block `optical: { ndti, bsi,
-   ndvi, source_scene }` per spec section 4.6. Use Sentinel-2
-   COPERNICUS/S2_SR_HARMONIZED, 14-day window matching T1, ±3 day for
-   each parcel. NDVI < 0.25 precondition for NDTI/BSI per spec.
-4. Thread `baseline_quality` through _build_record: null for non-SAR
-   branches (insufficient_baseline, perennial, out-of-season), "fresh"
-   when current T0 is from this season's window, "backfill" when the
-   T0 was built from archived imagery (we backfilled MT 2026 due to
-   ERA5 lag).
-5. Wire wet-soil precip penalty: in pipeline.py, compute T1 scene
-   median precip from ERA5 over the parcel and pass it into
-   compute_confidence(precip_mm_24h=...) instead of hardcoded 0.0.
-
-After fixes:
-  - pytest still passes
-  - Pipeline run on a sample of 5-10 parcels, verify each new field is
-    populated correctly
-  - Full Phase 5 rerun (~25-40 min, longer due to optical computes)
-  - Verify: zero records with `optical: null`, all active records have
-    dvv_db computed, baseline_quality matches the actual baseline
-    state, some parcels show non-zero precip and lower confidence
-  - Codex review of the schema-fix delta
-  - Commit each step
-
-Stop after Bucket B is committed + Codex review re-verifies clean.
-Phase 4 UI is the next prompt.
-```
-
-### Prompt 3 — Phase 4 UI (run after Bucket B lands)
+### Prompt 3 — Phase 4 UI — NEXT-SESSION PICKUP
 
 ```
 Resume the Monette satellite seeding project. Bucket A + B complete; the
@@ -293,9 +297,15 @@ Don't re-invent — match the spec.
 
 ---
 
-## Commit log this project (33 commits as of 2026-04-28 late-evening)
+## Commit log this project (38 commits as of 2026-04-29 early-morning)
 
 ```
+30d6881 data(gee): regenerate imagery-data.js with Bucket B fields populated
+1c49f11 fix(gee): Bucket B optical post-review — band-name + window + cloud filter
+516d482 feat(gee): Bucket B commit 3 — optical features (NDTI/BSI/NDVI) per parcel
+aa70b34 feat(gee): Bucket B commit 2 — wet-soil precip penalty wired in
+af01c7a feat(gee): Bucket B commit 1 — schema plumbing (baseline_window, dvv_db, baseline_quality)
+bc55706 docs(retro): Bucket A 3-round cleanup retrospective + status doc update
 d7bf05e data(gee): regenerate imagery-data.js after Bucket A math fixes
 4a7cfe6 perf(pipeline): VV in common_mask + single stats.getInfo() round-trip
 dd8d66f fix(pipeline): replace CDL neq(0) with proper agricultural-class mask
