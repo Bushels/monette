@@ -37,12 +37,14 @@ GEE_PROJECT = "monette-494717"
 PARCEL_ASSET = f"projects/{GEE_PROJECT}/assets/monette/parcels_v1"
 T0_PARENT = f"projects/{GEE_PROJECT}/assets/monette/sar_baseline_2026"
 
-# Per-territory cropland masks
+# Per-territory cropland masks. CDL 2025 confirmed available in GEE (Task 0d).
+# AAFC ACI's latest may still be 2024; left at /2024 conservatively.
 CROPLAND_MASKS = {
     "sk": "AAFC/ACI/2024",
     "mb": "AAFC/ACI/2024",
-    "mt": "USDA/NASS/CDL/2024",
-    "co": "USDA/NASS/CDL/2024",
+    "mt": "USDA/NASS/CDL/2025",
+    "az": "USDA/NASS/CDL/2025",
+    "co": "USDA/NASS/CDL/2025",
 }
 
 # CDL → AAFC ACI common-name map (subset; expand as needed)
@@ -112,12 +114,29 @@ def run_single_parcel(
 
     # 1. Erode by 80m
     eroded = geom.buffer(-80)
-
-    if territory == "az":
-        # AZ is flagged out at the territory level for v1 spring runs
-        return _empty_record(territory, "perennial_or_out_of_season", run_date)
+    # Defensive: very small parcels (sub-quarter MT aliquots, small AZ
+    # fee parcels) can erode to nothing, which then crashes downstream
+    # GEE ops with "Image.clip: empty geometry." Detect and return a
+    # spec-compliant insufficient_baseline record instead.
+    eroded_area_m2 = eroded.area().getInfo()
+    if eroded_area_m2 is None or eroded_area_m2 < 100:
+        return _build_record(
+            territory=territory,
+            cropland_coverage=0.0,
+            prior_crop="unknown",
+            applicability="insufficient_baseline",
+            mean_dvh_db=None,
+            n_pixels=0,
+            run_date=run_date,
+        )
 
     # 2. Cropland mask
+    # No special-case territory branches: AZ + every other territory go
+    # through the same cropland-mask + applicability_for_crop path. AZ
+    # parcels with crop_class='alfalfa' will resolve to applicability=
+    # 'perennial', cotton resolves to 'out-of-season' (planting Feb-Apr
+    # already past for spring runs), etc. -- exactly as designed in
+    # applicability.py.
     cropland_collection = CROPLAND_MASKS[territory]
     cropland_img = ee.Image(cropland_collection)
     # AAFC ACI: cropland classes are 100+; CDL: cropland is non-zero non-pasture
@@ -174,7 +193,26 @@ def run_single_parcel(
     # multi-orbit median. T1 here also uses all descending IW scenes
     # (no orbit filter). See t0_baseline.build_baseline_image docstring
     # for the bias tradeoff and v1.5 plan.
-    t0 = ee.Image(f"{T0_PARENT}/{territory}")
+    #
+    # Some territories (e.g. MB Eddystone in 2026) don't have a T0 asset
+    # because their baseline window had zero qualifying scenes (see
+    # InsufficientBaselineError in t0_baseline.py). Probe the asset
+    # before reading it; if missing, return insufficient_baseline rather
+    # than crashing on a 0-band image.
+    asset_id = f"{T0_PARENT}/{territory}"
+    try:
+        ee.data.getAsset(asset_id)
+    except ee.EEException:
+        return _build_record(
+            territory=territory,
+            cropland_coverage=float(cc_value.getInfo() or 0),
+            prior_crop=crop_name,
+            applicability="insufficient_baseline",
+            mean_dvh_db=None,
+            n_pixels=0,
+            run_date=run_date,
+        )
+    t0 = ee.Image(asset_id)
     t1_window_start = ee.Date(run_date).advance(-14, "day")
     t1_window_end = ee.Date(run_date)
     t1 = (
