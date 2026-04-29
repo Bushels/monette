@@ -3,38 +3,35 @@
 //
 // View state lives in the URL hash so refreshes (and direct links from
 // external sources like X/Instagram) land on the right view.
-//   #editorial             → The Monette Ledger (default)
+//   #map                   → Field atlas (default homepage; satellite seeding mode in Apr-Jun)
+//   #map/{property}        → Atlas focused on one property; hero suppressed
+//   #map/{property}/{loc}  → Atlas focused on a specific quarter; hero suppressed
 //   #dossier/{slug}        → A single dossier article (e.g. #dossier/insurance-tower)
 //   #list                  → Asset register
-//   #map                   → Field atlas (satellite seeding mode when in Apr-Jun window)
-// Extra hash segments target a specific property / quarter:
-//   #map/vanguard
-//   #map/vanguard/NW-26-10-16-W3
 //
-// Note: #dossiers (index) was removed in the satellite pivot 2026-04-29.
-// Visiting #dossiers silently redirects to #map.
+// Note: the editorial Ledger and dossiers index were removed in the homepage
+// redesign (2026-04-29). Both #editorial and #dossiers silently redirect to #map.
 
 const VIEWS = [
-  { key: "editorial", label: "Ledger",   Component: () => null /* filled below */ },
-  { key: "list",      label: "Register", Component: () => null },
+  { key: "list",      label: "Register",  Component: () => null /* filled below */ },
   { key: "creditors", label: "Creditors", Component: () => null },
   { key: "structure", label: "Structure", Component: () => null },
-  { key: "stack",     label: "Debt",     Component: () => null },
-  { key: "map",       label: "Atlas",    Component: () => null },
+  { key: "stack",     label: "Debt",      Component: () => null },
+  { key: "map",       label: "Atlas",     Component: () => null },
 ];
 
 function parseHash() {
-  const h = (window.location.hash || "#editorial").replace(/^#/, "");
-  // Silently redirect #dossiers (index) to #map. The singular #dossier/<slug>
+  const h = (window.location.hash || "#map").replace(/^#/, "");
+  // Silently redirect retired routes to #map. The singular #dossier/<slug>
   // route is preserved so individual article links still work.
-  if (h === "dossiers" || h === "dossiers/") {
+  if (h === "dossiers" || h === "dossiers/" || h === "editorial" || h === "editorial/") {
     history.replaceState({}, "", "#map");
     return { view: "map", prop: null, quarter: null };
   }
   const [view, prop, quarter] = h.split("/");
-  const known = ["editorial", "dossier", "list", "creditors", "structure", "stack", "map"];
+  const known = ["dossier", "list", "creditors", "structure", "stack", "map"];
   return {
-    view: known.includes(view) ? view : "editorial",
+    view: known.includes(view) ? view : "map",
     prop: prop || null,
     quarter: quarter || null,
   };
@@ -87,14 +84,16 @@ function App() {
     view === "creditors" ? window.CreditorsView :
     view === "structure" ? window.GroupStructureView :
     view === "stack"    ? window.DebtStackView :
-    view === "map"      ? window.MapView  :
     view === "dossier"  ? window.DossierView :
-                          window.EditorialView;
+                          window.MapView;
 
   // The Dossier reader takes a slug as its first hash segment (#dossier/{slug}),
   // not a property id. We pass it through `forcedSelect` like the map view.
-  // (#dossiers index has been removed; redirect to #map is handled in parseHash)
+  // (#dossiers index and #editorial have been removed; both redirect to #map.)
   const navTab = view;
+  const supportUrl = (typeof window.supportCustomAmountUrl === "function")
+    ? window.supportCustomAmountUrl()
+    : "https://paypal.me/buperac";
 
   return (
     <>
@@ -109,8 +108,18 @@ function App() {
           ))}
         </div>
         <div className="nav-ctas">
+          <a
+            href={supportUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta nav-cta-ghost nav-cta-donate"
+          >
+            <span className="nav-cta-full">Donate</span>
+            <span className="nav-cta-short">Donate</span>
+          </a>
           <button className="nav-cta nav-cta-gold" onClick={openAgnonymous}>
-            + Submit Update
+            <span className="nav-cta-full">+ Submit Update</span>
+            <span className="nav-cta-short">Submit</span>
           </button>
         </div>
       </nav>

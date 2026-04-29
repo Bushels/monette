@@ -37,7 +37,7 @@ const DossierBody = ({ blocks, dossier }) => (
                 });
                 return;
               }
-              window.location.hash = "#editorial";
+              window.location.hash = "#map";
             }}
           >
             + Submit Update on Agnonymous
@@ -224,6 +224,11 @@ const DossierView = ({ forcedSelect, onSwitchView }) => {
         <main className="dossier-main">
           <DossierBody blocks={dossier.body || []} dossier={dossier} />
           <DossierSources sources={dossier.sources} />
+          <SupportCard
+            headline="If this dossier was worth your time, chip in."
+            sub="Each dossier is independent reporting — no sponsor, no paywall, no hidden agenda. Reader contributions fund the next one."
+            signoff="~bushels"
+          />
           <DossierNext next={dossier.next} />
         </main>
         <DossierBriefing briefing={dossier.briefing || {}} />

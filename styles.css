@@ -1191,11 +1191,17 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .site-nav .tabs button { padding: 8px 10px; font-size: 10px; }
   .site-nav .nav-ctas { gap: 6px; }
   .nav-cta { padding: 7px 10px; font-size: 11px; }
-  .nav-cta-ghost { /* Hide on very small — keep gold "Submit" visible */ }
+  /* Below 720px: swap CTA labels to the short variant. Donate stays visible
+     (overrides the legacy .nav-cta-ghost hide that was originally written
+     for a different ghost CTA). */
+  .nav-cta-full { display: none; }
+  .nav-cta-short { display: inline; }
   .site-nav .utility { display: none; }
 
-  .atlas-grid {
+  .atlas-grid,
+  .atlas-grid.atlas-shell {
     grid-template-columns: 1fr !important;
+    height: auto !important;
     min-height: 0 !important;
   }
   .atlas-map { order: 1; }
@@ -1203,8 +1209,9 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .atlas-rail { order: 3; }
   .atlas-feed { display: none !important; }
   .atlas-map {
-    height: min(64svh, 560px) !important;
-    min-height: 430px;
+    /* Codex bvqyinxv4 Q1 mobile height contract — prevents address-bar
+       collapse from squeezing the map below ~390px on iOS Safari. */
+    height: clamp(390px, 58svh, 560px) !important;
     padding: 8px !important;
   }
   .pd-community-ask {
@@ -1439,7 +1446,9 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .site-nav { padding: 6px 12px; }
   .site-nav .brand .wordmark { font-size: 15px; }
   .site-nav .brand .tag { display: none; }
-  .nav-cta-ghost { display: none; /* Keep Submit + tabs only on phone */ }
+  /* Hide non-donate ghost CTAs on very small screens; keep Donate (a ghost
+     CTA structurally, but a primary call-to-action by intent) visible. */
+  .nav-cta-ghost:not(.nav-cta-donate) { display: none; }
   .site-nav .tabs {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -3350,6 +3359,32 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   color: #7a7160;
   max-width: 80ch;
   margin-top: 6px;
+}
+
+/* ─── Homepage shell — atlas as the front door ────────────────────────────── */
+/* Bare #map: HomeHero stats band (paper) sits above the dark Atlas. The
+   atlas-grid gets an explicit height contract per Codex bvqyinxv4 Q1 so
+   the embedded Mapbox container always has a defined height (Mapbox does
+   not auto-resize on container size changes; explicit height is the
+   safest path to avoid the "blank map" failure mode below the hero).
+   svh (small viewport height) is used over vh because mobile browsers
+   collapse address bars — vh on iOS Safari intermittently overshoots and
+   pushes the atlas-grid below the visible viewport. */
+.atlas-grid.atlas-shell {
+  height: clamp(620px, 72svh, 820px);
+}
+.atlas-grid.atlas-shell > .atlas-rail {
+  max-height: 100%;
+}
+
+/* CTA labels: full text on desktop, short text on tablet/mobile. The Donate
+   anchor and Submit button both carry .nav-cta-full + .nav-cta-short so the
+   same DOM serves both breakpoints without an extra responsive component.
+   The desktop rule is scoped to min-width: 901px so it can't override the
+   short-label rule that lives inside @media (max-width: 900px) below — CSS
+   source order would otherwise let this default win and hide both labels. */
+@media (min-width: 901px) {
+  .nav-cta-short { display: none; }
 }
 
 /* ─── Atlas mode pill toggle ──────────────────────────────────────────────── */

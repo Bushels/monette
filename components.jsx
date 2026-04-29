@@ -21,7 +21,7 @@ function onActionKey(e, fn) {
 }
 
 function currentMonetteUrl() {
-  return `${window.location.origin}${window.location.pathname}${window.location.hash || "#editorial"}`;
+  return `${window.location.origin}${window.location.pathname}${window.location.hash || "#map"}`;
 }
 
 function buildAgnonymousUrl({
@@ -741,6 +741,102 @@ function SubmitHeadlineModal({ open, onClose, initialPropertyId, initialText = "
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// HomeHero — top-of-page hero stats portion. Hoisted out of view-editorial.jsx
+// (which is now silent-redirected to #map per the satellite pivot). Renders
+// the "400,000+ acre footprint" headline, the per-province stats grid, and
+// the Verified Observations card. Used as the bare-#map landing surface;
+// suppressed when a property deep-link is in the URL (#map/{property})
+// per Codex bvqyinxv4 Q1 — deep-linked atlases skip the hero so shared
+// property links land directly on the map.
+// ─────────────────────────────────────────────────────────────────────────────
+function HomeHero({ onSwitchView, onOpenSubmit }) {
+  const provinceNames = {
+    AB: "Alberta", SK: "Saskatchewan", MB: "Manitoba", BC: "British Columbia",
+    MT: "Montana", CO: "Colorado", AZ: "Arizona",
+  };
+  const provinces = Object.entries(PORTFOLIO.byProvince)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, stats]) => [provinceNames[key] || key, stats]);
+
+  const submit = () => {
+    if (typeof onOpenSubmit === "function") {
+      onOpenSubmit({
+        title: "Monette Ledger correction or evidence thread",
+        body: "Add the property, claim, source link, and confidence level. If this should change the controlled Monette record, say exactly what should change.",
+        kind: "clarification",
+      });
+      return;
+    }
+    if (window.openAgnonymousDiscussion) {
+      window.openAgnonymousDiscussion({
+        title: "Monette Ledger correction or evidence thread",
+        body: "Add the property, claim, source link, and confidence level.",
+        kind: "clarification",
+      });
+      return;
+    }
+    window.open(window.AGNONYMOUS_URL || "https://agnonymous.buperac.com", "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <section className="home-hero ed-hero" style={{ padding: "48px 48px 28px", borderBottom: "1px solid var(--ink)", background: "var(--paper)", color: "var(--ink)" }}>
+      <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 480px", gap: 48 }}>
+        <div>
+          <div style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9a3a2a", marginBottom: 20 }}>
+            ● Filing date · Apr 21, 2026
+          </div>
+          <h1 className="serif" style={{ margin: 0, fontSize: 86, lineHeight: 0.95, letterSpacing: "-0.03em", fontWeight: 400 }}>
+            {PORTFOLIO.farmedAcresLabel} acre footprint.<br />
+            {fmt(PORTFOLIO.courtOwnedAcres)} owned acres in court file.<br />
+            <span style={{ color: "var(--mute)" }}>{fmt(PORTFOLIO.totalMappedParcels)} parcel rows live.</span>
+          </h1>
+          <div style={{ marginTop: 26, fontSize: 16, lineHeight: 1.55, maxWidth: 640, color: "var(--ink-2)" }}>
+            Monette Farms Ltd. entered creditor protection under the CCAA on April 21, 2026. The Ledger separates the court-file roster from the parcel-mapped satellite layer: {PORTFOLIO.totalProperties} property records, {PORTFOLIO.mappedPropertyCount} parcel-mapped records, {PORTFOLIO.syntheticPropertyCount} synthetic fallback record, and {PORTFOLIO.pointOnlyPropertyCount} point-only records waiting on better geometry.
+          </div>
+          <div style={{ display: "flex", gap: 10, marginTop: 28, flexWrap: "wrap" }}>
+            <button onClick={() => onSwitchView && onSwitchView("list")} className="btn btn-dark">Browse properties →</button>
+            <button onClick={submit} className="btn">+ Submit Update</button>
+          </div>
+        </div>
+        <div>
+          <div className="prov-stats" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 16 }}>
+            {provinces.map(([name, stats]) => (
+              <div key={name} style={{ borderTop: "1px solid var(--ink)", paddingTop: 10 }}>
+                <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>{name}</div>
+                <div className="serif" style={{ fontSize: 38, lineHeight: 1, marginTop: 4 }}>
+                  {fmt(stats.totalAcres)}<span style={{ fontSize: 11, color: "var(--mute)", marginLeft: 4 }}>ac</span>
+                </div>
+                <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: "var(--mute)", marginTop: 6, display: "flex", justifyContent: "space-between" }}>
+                  <span>{stats.properties} prop.</span>
+                  <span>{stats.pctOwned}% owned</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 24, padding: "18px 20px", background: "var(--paper-2)", border: "1px solid var(--rule)" }}>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 10 }}>
+              Verified observations + corrections
+            </div>
+            <p style={{ fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)", margin: "0 0 14px" }}>
+              Submit verified field observations, legal-description corrections, and source-cited rumors through agnonymous.buperac.com — the single intake channel for all tips.
+            </p>
+            <a
+              href={window.AGNONYMOUS_URL || "https://agnonymous.buperac.com"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-dark"
+              style={{ display: "inline-block" }}
+            >
+              agnonymous.buperac.com →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 Object.assign(window, {
   D,
   Q,
@@ -772,4 +868,5 @@ Object.assign(window, {
   SupportCard,
   SiteFooter,
   SubmitHeadlineModal,
+  HomeHero,
 });
