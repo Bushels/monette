@@ -1,10 +1,11 @@
 # Satellite Seeding Project — Living Status
 
-**Last updated:** 2026-04-29 early-morning (Bucket B complete)
+**Last updated:** 2026-04-29 mid-day (satellite pivot complete — community voting removed)
 **Latest session retrospectives:**
 - `docs/superpowers/specs/2026-04-28-session-retrospective.md` (Phase 0–5 v1 ship + initial Codex findings)
 - `docs/superpowers/specs/2026-04-28-bucket-a-cleanup-retrospective.md` (Bucket A: 3-round Codex review loop, all findings landed)
 - `docs/superpowers/specs/2026-04-29-bucket-b-retrospective.md` (Bucket B: schema completeness, Codex-as-architect new workflow)
+- `docs/superpowers/specs/2026-04-29-satellite-pivot-retrospective.md` (Satellite pivot: community voting removed, Atlas now satellite-driven main page)
 
 **Codex review history:**
 - `b53izop76` — initial post-shipping review (3 buckets surfaced)
@@ -13,6 +14,8 @@
 - `b5ajsddp7` — Bucket B architecture pressure-test (NEW workflow: Codex-as-architect feeding into the implementer)
 - `bl5l9zfxa` — Bucket B round-1 review (1 BLOCKER: optical band-name bug; window + cloud filter refinements)
 - `beyzs2ym9` — Bucket B final review (GREENLIGHT; Phase 4 unblocked; v1.5 risks captured under "Pending non-fix work")
+- `b05w54lpy` — Satellite pivot architecture pressure-test (6-step removal plan, surfaced 5 missed coupling files + pre-existing `vigorColorFor` bug)
+- `bwgf1888o` — Satellite pivot review (BLOCKER: migration SQL bugs + drawer guardrails missed; all addressed in `7bf8284`)
 
 This is the canonical entrypoint for understanding where the satellite seeding project stands. Updated after every milestone session per the workflow established in `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md`.
 
@@ -20,7 +23,7 @@ This is the canonical entrypoint for understanding where the satellite seeding p
 
 ## One-paragraph summary
 
-A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. **Buckets A + B are now complete** (15 code commits + 2 data refreshes spanning a29ab80..30d6881). Bucket A landed math correctness; Bucket B added schema completeness — `dvv_db` populated on all 533 active parcels, `optical` populated on 86% of all parcels, `baseline_quality` conditional on SAR vs non-SAR branches, top-level `baseline_window`, wet-soil precip penalty wired (didn't fire this run because S1 contributing dates happened to be dry). Bucket C (server-side `reduceRegions`, ERA5 lag handling) remains as production-readiness work; Phase 4 UI integration is the next priority feature work.
+A SAR + cropland-mask change-detection pipeline that produces per-parcel `seeded: true | false | null` calls with confidence percentages for all 14 mapped Monette Farms properties (~213k acres, 1,260 parcels). Built end-to-end on Google Earth Engine via Application Default Credentials → ADC. **Buckets A + B + Satellite Pivot are now complete** (22 code commits spanning a29ab80..7bf8284). Bucket A landed math correctness; Bucket B added schema completeness; the Satellite Pivot removed the entire community voting feature and consolidated to a satellite-driven Atlas as the main page (Tenure / Vigor / Seeding modes; Seeding default during Apr 1 – Jun 30; confidence-modulated fill ramp; drawer satellite-row with optical features panel). The DROP migration for the 4 voting Supabase tables is committed but **NOT yet executed** — awaiting user authorization. Bucket C (server-side `reduceRegions`, ERA5 lag handling) remains as production-readiness work.
 
 ---
 
@@ -180,6 +183,38 @@ All 5 schema-completeness items shipped. Data refreshed.
 - Smoke test passed: PA NW-32-51-23-W2 dvh_db=4.567 / dvv_db=3.584 / baseline_quality=fresh / last_obs_date=2026-04-26 / optical=null (PA likely lingering snow); Hafford optical fully populated (NDVI=0.141 → NDTI=0.103, BSI=0.161, scene 2026-04-21); Montana optical NDVI=0.403 → NDTI/BSI correctly nulled by gate.
 - Confidence histogram unchanged from post-Bucket-A (precip didn't fire; SAR math untouched in Bucket B).
 
+### ✅ Satellite Pivot — COMPLETE (Codex-as-architect for strategic removal, 7 commits)
+
+The community voting feature (season votes for seeded/sprayed/harvested + ownership votes + listing votes) was removed entirely. Atlas (`#map`) is now the satellite-driven main page; Farm Progress page (`#dossiers` index) was killed; `#dossier/<slug>` route preserved for individual articles; `#dossiers` silent-redirects to `#map` via `replaceState`. Codex pressure-test `b05w54lpy` produced the 6-step removal plan; Codex review `bwgf1888o` caught the migration SQL bugs + drawer guardrails which landed in the post-review fix commit.
+
+**Workflow demonstration:** First time using Codex-as-architect for a strategic *removal* (not just feature increment). Codex's pressure-test surfaced 5 files that I'd missed in the initial scope (`tutorial.jsx`, `view-editorial.jsx`, `quarter-panel.jsx`, `vote-board.jsx`, plus 4 localStorage keys). Codex Q1 framed as "what coupling am I missing?" was the key prompt.
+
+**Commits (43f6a98..7bf8284):**
+1. ✅ `43f6a98` — operator-relationship layer + supporting data (separate feature; in-flight workdir cleanup before pivot)
+2. ✅ `6dfebf6` — quiesce voting backend (Supabase reads/writes); supabase-client.js 319→104 lines; localStorage cleanup of `monette.voter.fp`, `monette.myvotes.v1`, `monette.activity.v1`, `monette.q.v4.*`
+3. ✅ `d99433d` — kill Farm Progress page; `#dossiers` silent-redirects to `#map`
+4. ✅ `c50e6e2` — remove all vote UI/copy/tutorial/live feed (11 files, −914 net lines); `tutorial.jsx`, `vote-board.jsx`, `view-dossiers-index.jsx` deleted
+5. ✅ `bb550d6` — Seeding mode added to Atlas + drawer satellite-row + `vigorColorFor` fix (pre-existing crash bug Codex Q8 surfaced; Bucket B's NDVI population made it imminent)
+6. ✅ `bd492e0` — DROP migration SQL written (NOT executed yet; awaiting user authorization)
+7. ✅ `7bf8284` — Codex review (`bwgf1888o`) post-fix: corrected migration SQL (`quarter_current_state` is a VIEW; `submit_vote` signature is `text x 6`); drawer guardrails for `prior_crop="unknown"` badge + `last_obs_date` SAR-presence check; stale vote copy in mobile legend / point-only drawer / `config.template.js`; confidence-modulated `seedingFillColor` ramp
+
+**Atlas state post-pivot:**
+- Mode toggle: Tenure / Vigor / Seeding (mutually exclusive; localStorage `monette.atlas.mode`; Seeding default Apr 1 – Jun 30)
+- 533 active-window parcels: 99 confirmed-seeded (green ramp by confidence), 135 not-yet-seeded (red ramp), remainder uncertain (amber)
+- Polygon-quality=low parcels render with dashed outline (separate `PARCEL_SEEDING_OUTLINE_LAYER`)
+
+**Drawer state post-pivot:**
+- Satellite-row per parcel: 🛰 status + confidence + `last_obs_date` (suppressed when `dvh_db` is null) + cropland coverage
+- Collapsible optical features panel (NDTI/BSI/NDVI + source_scene)
+- "Crop type unmapped" badge on `prior_crop="unknown"` records (177 active records — Codex `beyzs2ym9` Q5 guardrail)
+
+**Pre-existing bugs surfaced + fixed during pivot:**
+- `vigorColorFor` undefined → defined with 4-stop NDVI ramp (Codex `b05w54lpy` Q8)
+- `vote-board.jsx` orphan referencing `window.QUARTER_STATES` → file deleted
+- Migration SQL bugs caught at review (`quarter_current_state` is VIEW; `submit_vote` signature) — would have failed at execution
+
+**Pending: SQL migration execution.** The DROP migration at `supabase/migrations/20260429000000_drop_voting_tables.sql` is committed and validated against the actual schema. **Awaiting user authorization** to execute against the Monette Supabase project. Same gate as the Bucket A T0 deletion — destructive shared-infrastructure changes need explicit "go."
+
 ### 🟡 Bucket C — Production readiness (v1.5; ~3–4 hr)
 
 Unblocks scheduled weekly runs. Not required for v1 internal use but required before reliable production.
@@ -204,8 +239,8 @@ Unblocks scheduled weekly runs. Not required for v1 internal use but required be
   - **`last_obs_date` defaults to `run_date` for non-SAR records.** Phase 4 must IGNORE `last_obs_date` when `dvh_db` is null OR `baseline_quality` is null. Otherwise the drawer would show a "last observed 2026-04-28" claim for parcels that had no actual SAR observation.
 - **Bucket C — production readiness** (~3–4 hr): server-side `reduceRegions` per territory shard + Export to table asset (current per-parcel `getInfo()` loop won't scale to scheduled runs); S1 collection filter completeness (VV/VH listContains, resolution, edge masking — Codex flagged as worth doing now since `dvv_db` is live); ERA5 lag dynamic detection + `precip_data_partial` flag for parcels where contributing scenes hit the lag.
 - **Mid-May calendar item** — rerun SK T0 once ERA5 publishes through May ~21 (catches northern SK spring thaw → unblocks Hafford active calls).
-- **Phase 7** — vote-label loop (Supabase exporter + drawer disagreement UI).
-- **Phase 8** — per-territory threshold calibration once ~50–100 vote labels accrue. Codex `beyzs2ym9` flagged three Phase-8 candidates:
+- **Phase 7** — ~~vote-label loop~~ **OBSOLETE.** With voting removed, the calibration source no longer exists. Alternative: agnonymous-tip-driven ground-truth labels submitted by operators reviewing satellite calls; or operator-internal review of satellite/court-data disagreements.
+- **Phase 8** — per-territory threshold calibration. Original plan was "after ~50–100 vote labels accrue" but votes are gone. Calibration now needs an alternative source (agnonymous tips, operator review, or satellite-vs-court-record disagreement). Codex `beyzs2ym9` flagged three Phase-8 candidates that still apply regardless of label source:
   - **Precip window 24h → 48–72h.** Rain 2-3 days prior still affects SAR backscatter via residual soil moisture; the current 24h-before-acquisition window is conservative.
   - **Optical-null calibration by territory + parcel size.** Optical:null is concentrated: Kamsack 76, Montana 23, Eddystone 22, PA 20, Aguila 12. Plus tiny parcels can't reach `MIN_VALID_PIXELS=50` at 20 m scale after 80 m erosion (small AZ parcels and small Montana aliquots). v1.5 should switch to area-normalized threshold or expose `MIN_VALID_PIXELS` as a per-territory tunable.
   - **Per-territory NDTI/BSI percentile cutoffs.** v1 emits raw values; v1.5 calibrates against vote labels.
@@ -226,54 +261,105 @@ Shipped via the new Codex-as-architect workflow: Codex `b5ajsddp7` did the upfro
 
 Field coverage post-Bucket-B: dvv_db on 533/533 active, optical on 1087/1260 (86%), baseline_quality fresh-vs-null perfect, top-level `baseline_window` present. See "Known issues — Bucket B — COMPLETE" section above.
 
-### Prompt 3 — Phase 4 UI — NEXT-SESSION PICKUP
+### Prompt 3 — Phase 4 UI — ✅ COMPLETE (rolled into Satellite Pivot 2026-04-29 mid-day)
+
+Phase 4 was originally intended as a vote-aware UI extension. Mid-flight, the user pivoted to "kill voting entirely; satellite IS the headline." The Phase 4 deliverables (mode toggle, drawer satellite-row, fill encoding) all landed as part of the Satellite Pivot — see "Satellite Pivot — COMPLETE" section above. Farm Progress satellite counter became moot when the page was killed.
+
+### Prompt 4 — Browser smoke test + SQL migration execution — NEXT-SESSION PICKUP
 
 ```
-Resume the Monette satellite seeding project. Bucket A + B complete; the
-v1 producer now emits clean spec section 5 records. Next: Phase 4 UI
-integration so the imagery-data.js data renders on monette.buperac.com.
+Resume the Monette satellite seeding project at HEAD 7bf8284. Buckets A+B
++ Satellite Pivot are complete in code. Two remaining steps before
+declaring v1 fully shipped:
 
-Spec section 6 has the complete fill-encoding tables. Five surfaces to
-wire:
+1. Browser smoke test against the local preview server. Run from C:
+       cd C:\Users\kyle\Agriculture\Monette
+       python -m http.server --directory C:/Users/kyle/Agriculture/Monette 8000
+   then open http://localhost:8000 and verify:
+   - Atlas loads with Seeding mode default (Apr–Jun window)
+   - Mode toggle persists across reloads (Tenure / Vigor / Seeding)
+   - Drawer satellite-row renders correctly for each applicability:
+       active / perennial / out-of-season / insufficient_baseline /
+       unmapped
+   - "Crop type unmapped" badge appears on prior_crop="unknown"
+     records (177 active records affected — pick any of those to verify)
+   - last_obs_date is suppressed on non-SAR records (Aguila + Genoa
+     parcels are insufficient_baseline; their drawers should NOT show a
+     "Last obs" line)
+   - Optical-features panel collapsible chrome works (Hafford or PA
+     active parcel with optical populated is the test case)
+   - #dossiers URL silent-redirects to #map (clean back button — open
+     #dossiers, hit back, should not return to #dossiers)
+   - No console errors related to undefined functions or missing globals
+   - localStorage shows orphan vote keys (monette.voter.fp,
+     monette.myvotes.v1, monette.activity.v1, monette.q.v4.*) cleared
+     on the first visit
 
-1. Atlas map mode toggle in view-map.jsx — add Seeding mode alongside
-   the existing Tenure / Vigor (and a Harvest placeholder for v2).
-   Mutually exclusive. Persist to localStorage. Default: Seeding mode
-   on Apr 1 - Jun 30 per spec section 2.
+2. SQL migration execution (DESTRUCTIVE — needs explicit user "go"):
+   Once the smoke test passes, the migration at
+   supabase/migrations/20260429000000_drop_voting_tables.sql can be
+   executed against the Monette Supabase project (tcsfwdljaedznqiucsdz).
+   The Bushels Pro org's MCP connector at
+   b5a4a7b9-c6ac-499f-8de3-efb29e0384b3 (per memory
+   supabase_mcp_org_scoping.md) can run via apply_migration once
+   authorized.
 
-2. CRITICAL: extend buildPreparedMapData() in view-map.jsx:586-590 to
-   copy seeding_seeded, seeding_confidence, seeding_applicability, and
-   polygon_quality into Mapbox feature properties. Without this, the
-   fill expressions can't read the new fields. Codex's rev-3 audit
-   flagged this.
+   The migration is idempotent + transactional. Verify post-execution:
+       \d+ public.votes                  -- expected: not exists
+       \d+ public.vote_tallies           -- expected: not exists
+       \d+ public.quarter_current_state  -- expected: not exists
+       \df public.submit_vote            -- expected: no rows
+       \d+ public.tips                   -- expected: still exists
+       SELECT count(*) FROM public.tips; -- expected: row count preserved
+```
 
-3. Drawer satellite-row in property-drawer.jsx — alongside vote tally,
-   show "🛰 Likely seeded (X%)" / "Likely not seeded (X%)" / "Uncertain
-   (X%)" / "Perennial alfalfa" / "Out of season" / "No current scene"
-   per parcel, plus collapsible optical features panel (raw NDTI/BSI/
-   NDVI + source_scene date).
+### Prompt 5 — Bucket C production readiness — FUTURE WORK
 
-4. Farm Progress satellite counter in view-dossiers-index.jsx — add
-   "🛰 Satellite signal: A of 14 properties likely seeded" line under
-   existing vote-confirmed counter. Per-property cell gets a second
-   stacked progress bar.
+```
+Resume the Monette satellite seeding project. Buckets A+B + Satellite
+Pivot all complete. Next priority is Bucket C — production readiness
+for scheduled weekly runs:
 
-5. CSS for the new mode pills, polygon-QC dashed-outline distinction,
-   and disagreement icon when satellite + vote disagree.
+1. Server-side reduceRegions per territory shard + Export to table
+   asset. Current per-parcel getInfo() loop won't scale to scheduled
+   runs (latency + quota risk).
 
-Plan doesn't have detailed Phase 4 tasks. Suggest writing a small
-follow-up plan first via superpowers:writing-plans, then dispatching
-subagents per surface (1 + 2 together since they share view-map.jsx;
-3 + 4 each on their own; 5 across all).
+2. S1 collection filter completeness:
+   - ee.Filter.listContains for VV + VH polarization
+   - Resolution filter
+   - Explicit .select(["VV", "VH"])
+   - Edge masking
+   Codex flagged this as worth doing now since dvv_db is live.
+
+3. ERA5 lag dynamic detection:
+   - Query latest available ERA5 date dynamically
+   - Mark precip_data_partial: true when contributing scenes hit the lag
+   - Mark baseline_quality: "backfill" when T0 source window extends
+     beyond ERA5 publication
+
+4. config.template.js audit (Codex Q8) — confirmed no longer stale post-
+   pivot but verify after any future style changes.
+
+5. vote_latest_seeded_per_prop migration definition was missing
+   (Codex Q8). Now moot since the view is dropped, but flag for
+   future migration audits: every view should have a discoverable
+   creating migration in supabase/migrations/.
+
+Plan doesn't have detailed Bucket C tasks. Suggest:
+  - Write a small follow-up plan via superpowers:writing-plans before dispatching
+  - Codex pressure-test the architectural choices upfront (server-side reduceRegions
+    has subtle GEE patterns — Export.table.toAsset vs reduceRegions().getInfo();
+    feature collection schema; territory shard boundaries for parallelism)
+  - Subagent implementation per Codex's plan
+  - Codex review of the diff
+  - Phase 5 rerun on the new server-side path; verify distribution unchanged
+    (the optimization is correctness-preserving — just compute placement)
+  - Update memory + retrospective
 
 Always:
-  - Test in local preview before committing each surface
-  - Verify the mode toggle persists across reloads
-  - Verify drawer disagreement UI fires correctly
-  - Codex review of the JSX/CSS before declaring done
-
-Spec section 6 has all the color values, fill ramps, and copy text.
-Don't re-invent — match the spec.
+  - pytest 42/42 before/after
+  - Codex review before declaring Bucket C done
+  - Standing practices 1–14 in session_workflow_practices.md apply
 ```
 
 ---
@@ -282,19 +368,30 @@ Don't re-invent — match the spec.
 
 | Topic | Path |
 |---|---|
+| **This file** (canonical project status) | `docs/superpowers/specs/SATELLITE_SEEDING_PROJECT_STATUS.md` |
 | Design contract (spec, rev 4) | `docs/superpowers/specs/2026-04-28-monette-satellite-seeding-design.md` |
 | Implementation plan (Phase 0-3) with divergence notes | `docs/superpowers/plans/2026-04-28-monette-satellite-seeding-foundation.md` |
 | Phenology calibration table (Gemini) | `docs/superpowers/specs/2026-04-28-phenology-priors.md` |
-| Last session retrospective + Codex findings | `docs/superpowers/specs/2026-04-28-session-retrospective.md` |
-| **This file** (canonical project status) | `docs/superpowers/specs/SATELLITE_SEEDING_PROJECT_STATUS.md` |
+| v1 ship retrospective | `docs/superpowers/specs/2026-04-28-session-retrospective.md` |
+| Bucket A retrospective (3-round Codex review loop) | `docs/superpowers/specs/2026-04-28-bucket-a-cleanup-retrospective.md` |
+| Bucket B retrospective (Codex-as-architect debut) | `docs/superpowers/specs/2026-04-29-bucket-b-retrospective.md` |
+| Satellite Pivot retrospective (community voting removed) | `docs/superpowers/specs/2026-04-29-satellite-pivot-retrospective.md` |
 | GEE platform gotchas (cross-session memory) | `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/gee_setup_gotchas.md` |
-| Workflow practices (cross-session memory) | `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md` |
+| Workflow practices — 14 standing practices (cross-session memory) | `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/session_workflow_practices.md` |
+| CLI reference (Codex/Gemini/Claude) | `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/cli_reference.md` |
 
 ---
 
-## Commit log this project (38 commits as of 2026-04-29 early-morning)
+## Commit log this project (45 commits as of 2026-04-29 mid-day)
 
 ```
+7bf8284 fix(pivot): Codex post-review fixes — migration SQL, guardrails, stale copy
+bd492e0 docs(supabase): write DROP migration for voting tables — DO NOT execute yet
+bb550d6 feat(atlas): add Seeding mode, vigorColorFor fix, satellite-row in QuarterDetail
+c50e6e2 chore(ui): remove community voting UI, copy, and live feed entirely
+d99433d chore(ui): kill Farm Progress page; #dossiers silent-redirects to #map
+6dfebf6 refactor(supa): quiesce voting backend — keep tips, remove vote reads/writes
+43f6a98 feat(atlas): operator-relationship layer with popups + supporting data
 30d6881 data(gee): regenerate imagery-data.js with Bucket B fields populated
 1c49f11 fix(gee): Bucket B optical post-review — band-name + window + cloud filter
 516d482 feat(gee): Bucket B commit 3 — optical features (NDTI/BSI/NDVI) per parcel
