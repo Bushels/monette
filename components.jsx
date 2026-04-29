@@ -464,6 +464,283 @@ function SiteFooter() {
   );
 }
 
+// SubmitHeadlineModal — agnonymous tip-submission modal triggered by the
+// "Submit Update" nav button (and openHeadlineForm callback from per-property
+// drawers). Originally lived in tutorial.jsx, which was deleted in the
+// 2026-04-29 satellite pivot (commit c50e6e2) because the rest of that file
+// was vote-tutorial content. This modal is independent of voting — it writes
+// to the public.tips Supabase table via window.monetteSubmitTip — so it
+// belongs here alongside SiteFooter and other shared chrome. Restored 2026-04-29.
+function SubmitHeadlineModal({ open, onClose, initialPropertyId, initialText = "" }) {
+  const [propertyId, setPropertyId] = useState("");
+  const [text, setText] = useState("");
+  const [author, setAuthor] = useState("");
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (open) return;
+    setPropertyId("");
+    setText("");
+    setAuthor("");
+    setStatus("idle");
+    setError("");
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    setPropertyId(initialPropertyId || "");
+    setText(initialText || "");
+  }, [open, initialPropertyId, initialText]);
+
+  if (!open) return null;
+
+  const submit = async () => {
+    const body = text.trim();
+    if (!body || status === "saving") return;
+
+    setStatus("saving");
+    setError("");
+
+    try {
+      const ok = await (window.monetteSubmitTip
+        ? window.monetteSubmitTip({
+            kind: "headline",
+            propId: propertyId || null,
+            body,
+            author: author.trim() || null,
+          })
+        : false);
+
+      if (!ok) {
+        setStatus("error");
+        setError("Update queue unavailable. Enable Supabase or check the tips table permissions.");
+        return;
+      }
+
+      setStatus("success");
+      if (window.monetteHydrateHeadlines) {
+        window.monetteHydrateHeadlines().catch(() => {});
+      }
+    } catch (err) {
+      setStatus("error");
+      setError(err && err.message ? err.message : "Unable to queue the update.");
+    }
+  };
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(19,17,14,0.62)",
+        zIndex: 80,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 20,
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          width: 680,
+          maxWidth: "100%",
+          background: "var(--paper)",
+          border: "2px solid var(--ink)",
+          boxShadow: "0 10px 40px rgba(0,0,0,0.35)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "16px 24px",
+            background: "var(--ink)",
+            color: "var(--paper)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+            <span className="serif" style={{ fontSize: 22, letterSpacing: "-0.01em" }}>Submit an update</span>
+            <span className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", color: "#b48638" }}>
+              MODERATED QUEUE
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            style={{
+              padding: "6px 10px",
+              fontSize: 11,
+              fontFamily: "inherit",
+              border: "1px solid #3a342a",
+              background: "transparent",
+              color: "var(--paper)",
+              cursor: "pointer",
+              letterSpacing: "0.06em",
+            }}
+          >
+            Close x
+          </button>
+        </div>
+
+        <div style={{ padding: "20px 24px" }}>
+          {status === "success" ? (
+            <div style={{
+              padding: "14px 16px",
+              background: "rgba(78,106,48,0.08)",
+              border: "1px solid rgba(78,106,48,0.28)",
+              color: "var(--ink)",
+            }}>
+              <div className="serif" style={{ fontSize: 26, lineHeight: 1.1 }}>Queued for review</div>
+              <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)" }}>
+                Your update was stored in the moderation queue. Reviewed items can be promoted into the public ticker, used to update point-only files, or used to create future parcel rows.
+              </div>
+            </div>
+          ) : (
+            <>
+              <div style={{ fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)", marginBottom: 16 }}>
+                Use this only for grounded source evidence a Monette moderator needs to review directly. Public correction threads and banter belong on Agnonymous.
+              </div>
+
+              <label htmlFor="submit-property" style={{ display: "block", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 6, fontWeight: 600 }}>
+                Property (optional)
+              </label>
+              <select
+                id="submit-property"
+                value={propertyId}
+                onChange={(e) => setPropertyId(e.target.value)}
+                style={{
+                  width: "100%",
+                  fontFamily: "inherit",
+                  fontSize: 13,
+                  padding: "10px 12px",
+                  border: "1px solid var(--rule-2)",
+                  background: "var(--paper)",
+                  color: "var(--ink)",
+                  marginBottom: 14,
+                }}
+              >
+                <option value="">General / not tied to one property</option>
+                {D.properties.map((property) => (
+                  <option key={property.id} value={property.id}>
+                    {property.name} · {property.province}
+                  </option>
+                ))}
+              </select>
+
+              <label htmlFor="submit-body" style={{ display: "block", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 6, fontWeight: 600 }}>
+                What did you see?
+              </label>
+              <textarea
+                id="submit-body"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                autoFocus
+                rows={4}
+                placeholder="Example: Regina South sale report - link/source, buyer if known, quarter/legal description, and how certain you are."
+                style={{
+                  width: "100%",
+                  fontFamily: "inherit",
+                  fontSize: 14,
+                  padding: "10px 12px",
+                  border: "1px solid var(--rule-2)",
+                  background: "var(--paper)",
+                  color: "var(--ink)",
+                  marginBottom: 14,
+                  resize: "vertical",
+                }}
+              />
+
+              <label htmlFor="submit-author" style={{ display: "block", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 6, fontWeight: 600 }}>
+                Your handle (optional)
+              </label>
+              <input
+                id="submit-author"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="@prairiespotter"
+                style={{
+                  width: "100%",
+                  fontFamily: '"JetBrains Mono", monospace',
+                  fontSize: 13,
+                  padding: "10px 12px",
+                  border: "1px solid var(--rule-2)",
+                  background: "var(--paper)",
+                  color: "var(--ink)",
+                  marginBottom: 16,
+                }}
+              />
+
+              <div
+                className="mono"
+                style={{
+                  padding: "10px 12px",
+                  background: "var(--paper-2)",
+                  borderLeft: "3px solid var(--gold)",
+                  fontSize: 12,
+                  color: "var(--ink)",
+                  marginBottom: 18,
+                }}
+              >
+                Queue rule: one concrete observation per submission. If the claim is uncertain, say that plainly. Reviewed updates can become public ticker items or source material for new parcel rows.
+              </div>
+
+              {status === "error" && (
+                <div style={{ marginBottom: 12, color: "#9a3a2a", fontSize: 12 }}>
+                  {error}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: 10,
+            padding: "14px 24px",
+            borderTop: "1px solid var(--rule)",
+            background: "var(--paper-2)",
+          }}
+        >
+          {status === "success" ? (
+            <button onClick={onClose} className="btn btn-dark">
+              Close
+            </button>
+          ) : (
+            <>
+              <button onClick={onClose} className="btn">Cancel</button>
+              <button
+                onClick={submit}
+                className="btn btn-dark"
+                disabled={!text.trim() || status === "saving"}
+                style={{
+                  opacity: text.trim() && status !== "saving" ? 1 : 0.45,
+                  cursor: text.trim() && status !== "saving" ? "pointer" : "default",
+                }}
+              >
+                {status === "saving" ? "Queueing..." : "Queue for review"}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 Object.assign(window, {
   D,
   Q,
@@ -494,4 +771,5 @@ Object.assign(window, {
   supportTierUrl,
   SupportCard,
   SiteFooter,
+  SubmitHeadlineModal,
 });
