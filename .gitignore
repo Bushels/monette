@@ -37,6 +37,20 @@ supabase/.temp/
 # Logs
 *.log
 
+# Python build/cache artifacts. Producer pipeline (scripts/, tests/) is
+# Python — these directories regenerate on every test/import and should
+# never enter git history.
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Transient diagnostic / scratch scripts under scripts/gee_pipeline/ —
+# the underscore-prefix convention marks one-off Codex/manual debug runs
+# (e.g., _dist_check.py, _poll_t0.py, _rebuild_t0.py, _run_phase5.py).
+# Real producer scripts live without the underscore.
+scripts/gee_pipeline/_*.py
+
 # Private content not published via this repo
 # Deploys go directly via `vercel --prod` from local C:; these stay off GitHub.
 docs/
