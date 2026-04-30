@@ -154,6 +154,26 @@ Codex specifically confirmed:
 - $30.78M math: $29M Hafford + $1.78M Wymark = correct (Q6 confirm)
 - `HomeHero` window-exported and reachable from view-map.jsx without import (Q7 PASS)
 
+## Pre-deploy independent review (Claude general-purpose, late afternoon)
+
+A second independent review was dispatched parallel to a long-running Codex job (`bti9riska`, 25+ min and counting due to Windows PowerShell sandbox slowness). Used a Claude general-purpose subagent with bash-based `git diff HEAD~7 HEAD` instead of per-file PowerShell reads — completed in 72 seconds.
+
+**Verdict: GREEN — ship it.** All 6 priority items PASS:
+
+| Item | Status | Notes |
+|---|---|---|
+| A · view-editorial.jsx deletion safety | PASS | `parseHash` `#editorial → #map` redirect runs BEFORE ViewComponent dispatch (`app.jsx:27`); `known` array allow-list defends against case/format edge cases. |
+| B · view-debt-stack + view-group-structure tracking | PASS | Both window-exported, null-guarded against missing data, built successfully. |
+| C · refresh:us-az-co script | PASS | Stdlib-only (urllib + json + pathlib); no env/creds; doesn't run at Vercel build (manual local script via npm); writes only inside project root. |
+| D · build cleanup (rm outDir) | PASS | `outDir` correctly scoped to project's `build/` subdirectory; `rm` ordered before `mkdir`; sequential awaits, no races. |
+| E · index.html script-tag mapping | PASS | All 10 `<script src="build/X.js">` map exactly to files in `public/build/`. |
+| F · workdir hygiene | PASS | `git status --short` empty; `_refs/2026-04-27-prefiling-launch-artifacts/` gitignored as expected. |
+
+**One cosmetic finding (NOT deploy-blocking):**
+- `scripts/update_us_holdings_az_co.py:194` — dead assignment `s18_geom = s18 = secs["18"]["geometry"]` (`s18_geom` never read). Pick up on next pass through that file.
+
+The Codex job is still running and will be integrated to this section if it surfaces anything Claude's review missed.
+
 ## Cleanup pass (late afternoon — same session, follow-on)
 
 After the redesign + Codex review-fix commits landed, an end-of-session audit caught additional hygiene gaps. 4 cleanup commits:
