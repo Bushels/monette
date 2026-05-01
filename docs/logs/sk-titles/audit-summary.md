@@ -1,7 +1,7 @@
 # ISC vs quarters-data.js — Audit Summary
 
 **Snapshot date:** 2026-01-18
-**Generated:** 2026-05-01T19:55:29.356691Z
+**Generated:** 2026-05-01T21:54:36.585846Z
 
 Title-row counts and unique-map-feature counts are NOT 1:1.
 One legal location can have multiple CSV title rows (extension variants);
@@ -23,8 +23,8 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 | `outlook` | 13 | 24 | 0 | 13 / 10 | 0 / 0 | 0 | 14 |
 | `ponteix` | 85 | 130 | 0 | 85 / 85 | 0 / 0 | 0 | 45 |
 | `prince-albert` | 12 | 20 | 0 | 12 / 12 | 0 / 0 | 0 | 8 |
-| `raymore` | 4 | 122 | 0 | 4 / 4 | 0 / 0 | 1 | 117 |
-| `regina-south` | 126 | 0 | 125 | 0 / 0 | 1 / 1 | 0 | 0 |
+| `raymore` | 4 | 121 | 0 | 4 / 4 | 0 / 0 | 0 | 117 |
+| `regina-south` | 126 | 1 | 125 | 1 / 1 | 0 / 0 | 0 | 0 |
 | `swift-current` | 31 | 30 | 0 | 31 / 30 | 0 / 0 | 0 | 0 |
 | `vanguard` | 65 | 93 | 1 | 64 / 63 | 0 / 0 | 2 | 28 |
 | `wymark` | 22 | 85 | 0 | 22 / 19 | 0 / 0 | 0 | 66 |
@@ -46,9 +46,7 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 - `montana`: 220 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
 - `outlook`: 14 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
 - `ponteix`: 45 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
-- `raymore`: 1 features moving out to another property — REASSIGN-out
 - `raymore`: 117 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
-- `regina-south`: 1 title rows arriving from other properties (1 unique features) — REASSIGN-in
 - `regina-south`: 125 net-new ADD parcels — likely needs geometry computation
 - `vanguard`: 2 features moving out to another property — REASSIGN-out
 - `vanguard`: 28 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass

@@ -1,15 +1,10 @@
 # Audit — `raymore`
 
 - CSV title rows for this property: **4**
-- Current map records (quarters-data.js): **122**
-- ADD: 0  ·  KEEP 4 title rows / 4 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 1 features  ·  FLAG 117
+- Current map records (quarters-data.js): **121**
+- ADD: 0  ·  KEEP 4 title rows / 4 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 117
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
-
-## REASSIGN-out — currently under this property, CSV claims another
-
-- CURRENT: `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J
-  · CSV-claimed by: `regina-south`
 
 ## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 

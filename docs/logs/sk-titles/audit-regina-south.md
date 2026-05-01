@@ -1,8 +1,8 @@
 # Audit — `regina-south`
 
 - CSV title rows for this property: **126**
-- Current map records (quarters-data.js): **0**
-- ADD: 125  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 1 title rows / 1 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
+- Current map records (quarters-data.js): **1**
+- ADD: 125  ·  KEEP 1 title rows / 1 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 
@@ -134,8 +134,7 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `SE-5-16-18-W2`  · pn `110406620`  · RM OF EDENWOLD NO. 158  · ext 0  · QUARTER
 - `SW-5-16-18-W2`  · pn `110406631`  · RM OF EDENWOLD NO. 158  · ext 0  · QUARTER
 
-## REASSIGN-in — CSV claims this property, currently filed under another
+## KEEP — confirmed MFL-titled (in both CSV and current map)
 
-- CSV: `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ext 0  · QUARTER
-  · CURRENT: under `raymore`  → `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J
+- `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J  ← CSV title `157473018` ext 0
 
