@@ -1,27 +1,30 @@
 # PROJECT_STATE.md
 
 ## Last verified commit (this branch)
-577888c feat(sk-titles): Phase 0 scaffolding — ISC parser + audit + per-property diffs
+c571923 feat(sk-titles): apply Wymark + Swift Current deltas to quarters-data.js
 
 ## Active task
-**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. Reconciling the parcel layer of the SK portion of the Monette Ledger atlas against a court-grade snapshot of land titled to MONETTE FARMS LTD. (559 surface parcels across 20 SK Rural Municipalities, current as of 2026-01-18).
+**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. 6 commits land Phase 0 + worked example + first applied area. Awaiting user sign-off to proceed with bulk replication for the remaining 12 SK areas.
 
-Plan doc (local-only): `docs/superpowers/specs/2026-05-01-sk-titles-update-plan.md`
+Plan doc (local): `docs/superpowers/specs/2026-05-01-sk-titles-update-plan.md`
 Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
+Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
 
-Workflow:
-- Phase 0 done: parser + audit + per-property diffs committed
-- Codex 5.5/xhigh now working Wymark + Swift Current pair as worked example
-- Claude will analyze Codex's methodology, then replicate the playbook for 12 remaining areas in 5 waves (high-confidence → combined → uncertain → new → town-lots)
-- Final: Codex full-branch review + Vercel preview + merge
+Done so far:
+- Phase 0: parser + audit + per-property diffs (commit 577888c)
+- Codex 5.5/xhigh worked example for Wymark + Swift Current (commit 5380074)
+- Audit script improvements per Codex feedback — `reassign_out` view + title-rows-vs-features distinction (commit 60e8d49)
+- Delta-application script `scripts/apply_sk_titles_deltas.py` + applied first area pair (commit c571923)
+
+Effect on map: wymark 101 → 85 records (16 features moved to swift-current), swift-current 0 → 30 records (was point-only). Cache-bust deferred until Phase 4 pipeline rebuild lands LSD polygon computations.
+
+Remaining: replicate methodology for 12 areas in 4 waves, then knowledge-layer pass + pipeline rebuild + Codex full-branch review + merge.
 
 ## Other branches in flight (not currently active)
 - `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
 
 ## Known blockers
-None active. Codex `.codex/config.toml` was using TOML tables and rejected by the CLI — fixed in commit `577888c` with flat-key syntax. Per-call `xhigh` override on dispatches.
+None active.
 
 ## Next action
-Wait for Codex to return Wymark worked-example deliverables (`docs/logs/sk-titles/wymark/proposed-deltas.json`, `methodology.md`, two narratives, and an appended findings section in the methodology log). Then analyze, document the playbook, and replicate for Wave A (Prince Albert, Raymore — both have clean small CSV sets) before tackling Wave B/C.
-
-Notable early signal from audit: most properties have very high FLAG counts (Raymore 118 of 122, Hafford 156 of 158, Wymark 82 of 101) — confirming most operational footprint is titled to non-MFL Monette entities. The FLAG taxonomy Codex builds will drive Phase 3 knowledge-layer work.
+Awaiting user sign-off to begin Wave A replication: Prince Albert (12 KEEP / 8 FLAG, simple) + Raymore (4 KEEP / 1 REASSIGN-out / 117 FLAG, heaviest FLAG taxonomy work). The applied Wymark + Swift Current pair should be browser-verified first.
