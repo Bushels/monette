@@ -1,10 +1,12 @@
 # Audit — `outlook`
 
-- CSV parcels claimed for this property: **13**
-- Current parcels in quarters-data.js: **24**
-- ADD: 0  |  KEEP: 13  |  REASSIGN-in: 0  |  FLAG: 14
+- CSV title rows for this property: **13**
+- Current map records (quarters-data.js): **24**
+- ADD: 0  ·  KEEP 13 title rows / 10 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 14
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-03-31-07-W3`  · pn `119444845`  · RM OF RUDY NO. 284  · ac 160  · soil M
 - `NE-34-31-7-W3`  · pn `119443855`  · RM OF MONTROSE NO. 315  · ac 159.7  · soil M

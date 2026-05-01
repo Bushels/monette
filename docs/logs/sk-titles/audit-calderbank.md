@@ -1,10 +1,12 @@
 # Audit — `calderbank`
 
-- CSV parcels claimed for this property: **141**
-- Current parcels in quarters-data.js: **110**
-- ADD: 3  |  KEEP: 138  |  REASSIGN-in: 0  |  FLAG: 0
+- CSV title rows for this property: **141**
+- Current map records (quarters-data.js): **110**
+- ADD: 3  ·  KEEP 138 title rows / 110 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `BLK-A-PLAN-101641991`  · pn `151739321`  · RM OF MORSE NO. 165  · ext 13  · PLANNED
 - `LSD-3-9-18-7-W3`  · pn `151448160`  · RM OF MORSE NO. 165  · ext 11  · LSD

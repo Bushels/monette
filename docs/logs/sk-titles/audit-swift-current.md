@@ -1,10 +1,12 @@
 # Audit — `swift-current`
 
-- CSV parcels claimed for this property: **31**
-- Current parcels in quarters-data.js: **0**
-- ADD: 14  |  KEEP: 0  |  REASSIGN-in: 17  |  FLAG: 0
+- CSV title rows for this property: **31**
+- Current map records (quarters-data.js): **0**
+- ADD: 14  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 17 title rows / 16 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `LSD-3-19-13-13-W3`  · pn `150738453`  · RM OF SWIFT CURRENT NO. 137  · ext 33  · LSD
 - `LSD-4-19-13-13-W3`  · pn `150738419`  · RM OF SWIFT CURRENT NO. 137  · ext 35  · LSD
@@ -21,7 +23,7 @@
 - `LSD-15-24-13-14-W3`  · pn `147557953`  · RM OF SWIFT CURRENT NO. 137  · ext 3  · LSD
 - `LSD-9-24-13-14-W3`  · pn `147558011`  · RM OF SWIFT CURRENT NO. 137  · ext 12  · LSD
 
-## REASSIGN-in — in CSV under this property, currently filed under another
+## REASSIGN-in — CSV claims this property, currently filed under another
 
 - CSV: `LSD-6-19-13-13-W3`  · pn `150738475`  · RM OF SWIFT CURRENT NO. 137  · ext 34  · LSD
   · CURRENT: under `wymark`  → `SW-19-13-13-W3`  · pn `150738475`  · RM OF SWIFT CURRENT NO. 137  · ac 159.46  · soil G

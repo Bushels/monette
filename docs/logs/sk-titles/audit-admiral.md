@@ -1,10 +1,12 @@
 # Audit — `admiral`
 
-- CSV parcels claimed for this property: **2**
-- Current parcels in quarters-data.js: **15**
-- ADD: 0  |  KEEP: 2  |  REASSIGN-in: 0  |  FLAG: 13
+- CSV title rows for this property: **2**
+- Current map records (quarters-data.js): **15**
+- ADD: 0  ·  KEEP 2 title rows / 2 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 13
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-5-10-16-W3`  · pn `141482617`  · RM OF BONE CREEK NO. 108  · ac 159.92  · soil K
 - `NE-6-10-16-W3`  · pn `203009138`  · RM OF BONE CREEK NO. 108  · ac 157.47  · soil H

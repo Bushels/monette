@@ -1,10 +1,12 @@
 # Audit — `montana`
 
-- CSV parcels claimed for this property: **0**
-- Current parcels in quarters-data.js: **220**
-- ADD: 0  |  KEEP: 0  |  REASSIGN-in: 0  |  FLAG: 220
+- CSV title rows for this property: **0**
+- Current map records (quarters-data.js): **220**
+- ADD: 0  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 220
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `T01N-R33E-S29-22104029201010000`  · pn `22104029201010000`  · None  · ac 400  · soil None
 - `T01N-R33E-S29-22104029401020000`  · pn `22104029401020000`  · None  · ac 0.229  · soil None

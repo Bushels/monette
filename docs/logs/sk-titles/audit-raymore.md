@@ -1,10 +1,17 @@
 # Audit — `raymore`
 
-- CSV parcels claimed for this property: **4**
-- Current parcels in quarters-data.js: **122**
-- ADD: 0  |  KEEP: 4  |  REASSIGN-in: 0  |  FLAG: 118
+- CSV title rows for this property: **4**
+- Current map records (quarters-data.js): **122**
+- ADD: 0  ·  KEEP 4 title rows / 4 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 1 features  ·  FLAG 117
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## REASSIGN-out — currently under this property, CSV claims another
+
+- CURRENT: `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J
+  · CSV-claimed by: `regina-south`
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-1-26-21-W2`  · pn `110370080`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 159.91  · soil L
 - `NE-12-26-21-W2`  · pn `110383916`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 140.65  · soil K
@@ -108,7 +115,6 @@
 - `SW-28-25-20-W2`  · pn `108641347`  · RM OF MOUNT HOPE NO. 279  · ac 160.31  · soil J
 - `SW-3-27-19-W2`  · pn `113593811`  · RM OF MOUNT HOPE NO. 279  · ac 163.23  · soil H
 - `SW-3-27-20-W2`  · pn `113602317`  · RM OF MOUNT HOPE NO. 279  · ac 161.39  · soil J
-- `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J
 - `SW-32-25-20-W2`  · pn `108641505`  · RM OF MOUNT HOPE NO. 279  · ac 159.17  · soil J
 - `SW-32-26-20-W2`  · pn `108667851`  · RM OF MOUNT HOPE NO. 279  · ac 159.47  · soil J
 - `SW-33-26-19-W2`  · pn `108651304`  · RM OF MOUNT HOPE NO. 279  · ac 161.75  · soil J

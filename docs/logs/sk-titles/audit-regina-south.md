@@ -1,10 +1,12 @@
 # Audit — `regina-south`
 
-- CSV parcels claimed for this property: **126**
-- Current parcels in quarters-data.js: **0**
-- ADD: 125  |  KEEP: 0  |  REASSIGN-in: 1  |  FLAG: 0
+- CSV title rows for this property: **126**
+- Current map records (quarters-data.js): **0**
+- ADD: 125  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 1 title rows / 1 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `NE-18-13-19-W2`  · pn `162092246`  · RM OF BRATT'S LAKE NO. 129  · ext 1  · QUARTER
 - `NW-18-13-19-W2`  · pn `107612737`  · RM OF BRATT'S LAKE NO. 129  · ext 0  · QUARTER
@@ -132,7 +134,7 @@
 - `SE-5-16-18-W2`  · pn `110406620`  · RM OF EDENWOLD NO. 158  · ext 0  · QUARTER
 - `SW-5-16-18-W2`  · pn `110406631`  · RM OF EDENWOLD NO. 158  · ext 0  · QUARTER
 
-## REASSIGN-in — in CSV under this property, currently filed under another
+## REASSIGN-in — CSV claims this property, currently filed under another
 
 - CSV: `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ext 0  · QUARTER
   · CURRENT: under `raymore`  → `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J

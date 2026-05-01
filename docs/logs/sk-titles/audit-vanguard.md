@@ -1,14 +1,23 @@
 # Audit — `vanguard`
 
-- CSV parcels claimed for this property: **65**
-- Current parcels in quarters-data.js: **93**
-- ADD: 1  |  KEEP: 64  |  REASSIGN-in: 0  |  FLAG: 30
+- CSV title rows for this property: **65**
+- Current map records (quarters-data.js): **93**
+- ADD: 1  ·  KEEP 64 title rows / 63 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 2 features  ·  FLAG 28
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `SW-31-11-12-W3`  · pn `143344469`  · RM OF WHISKA CREEK NO. 106  · ext 1  · QUARTER
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+## REASSIGN-out — currently under this property, CSV claims another
+
+- CURRENT: `SE-6-12-12-W3`  · pn `143320384`  · RM OF WHISKA CREEK NO. 106  · ac 87.55000000000001  · soil G
+  · CSV-claimed by: `__neville__`
+- CURRENT: `SW-6-12-12-W3`  · pn `151624199`  · RM OF WHISKA CREEK NO. 106  · ac 65.19  · soil G
+  · CSV-claimed by: `__neville__`
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-30-11-9-W3`  · pn `142341454`  · RM OF GLEN BAIN NO. 105  · ac 160.35  · soil J
 - `NE-35-10-11-W3`  · pn `141964016`  · RM OF WHISKA CREEK NO. 106  · ac 160.22  · soil E
@@ -27,7 +36,6 @@
 - `SE-17-11-10-W3`  · pn `143310372`  · RM OF WHISKA CREEK NO. 106  · ac 160.08  · soil F
 - `SE-22-11-10-W3`  · pn `143315300`  · RM OF WHISKA CREEK NO. 106  · ac 159.94  · soil F
 - `SE-31-11-9-W3`  · pn `142341465`  · RM OF GLEN BAIN NO. 105  · ac 160.45  · soil J
-- `SE-6-12-12-W3`  · pn `143320384`  · RM OF WHISKA CREEK NO. 106  · ac 87.55000000000001  · soil G
 - `SE-7-11-10-W3`  · pn `143310057`  · RM OF WHISKA CREEK NO. 106  · ac 160.65  · soil F
 - `SW-10-10-9-W3`  · pn `142175527`  · RM OF GLEN BAIN NO. 105  · ac 159.44  · soil F
 - `SW-2-10-9-W3`  · pn `149439189`  · RM OF GLEN BAIN NO. 105  · ac 79.93  · soil H
@@ -37,7 +45,6 @@
 - `SW-31-10-10-W3`  · pn `141969729`  · RM OF WHISKA CREEK NO. 106  · ac 159.52  · soil E
 - `SW-32-12-12-W3`  · pn `143341286`  · RM OF WHISKA CREEK NO. 106  · ac 159.87  · soil G
 - `SW-5-12-12-W3`  · pn `204127859`  · RM OF WHISKA CREEK NO. 106 (VILLAGE OF NEVILLE)  · ac 147.99  · soil H
-- `SW-6-12-12-W3`  · pn `151624199`  · RM OF WHISKA CREEK NO. 106  · ac 65.19  · soil G
 - `SW-8-10-10-W3`  · pn `141968874`  · RM OF WHISKA CREEK NO. 106  · ac 159.86  · soil G
 - `SW-8-11-10-W3`  · pn `143310103`  · RM OF WHISKA CREEK NO. 106  · ac 160.48  · soil F
 

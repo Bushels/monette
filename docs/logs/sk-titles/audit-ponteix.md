@@ -1,10 +1,12 @@
 # Audit — `ponteix`
 
-- CSV parcels claimed for this property: **85**
-- Current parcels in quarters-data.js: **130**
-- ADD: 0  |  KEEP: 85  |  REASSIGN-in: 0  |  FLAG: 45
+- CSV title rows for this property: **85**
+- Current map records (quarters-data.js): **130**
+- ADD: 0  ·  KEEP 85 title rows / 85 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 45
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-13-9-10-W3`  · pn `141972217`  · RM OF AUVERGNE NO. 076  · ac 160.17  · soil H
 - `NE-13-9-9-W3`  · pn `142188307`  · RM OF PINTO CREEK NO. 075  · ac 160  · soil H

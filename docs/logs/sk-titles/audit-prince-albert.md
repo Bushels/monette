@@ -1,10 +1,12 @@
 # Audit — `prince-albert`
 
-- CSV parcels claimed for this property: **12**
-- Current parcels in quarters-data.js: **20**
-- ADD: 0  |  KEEP: 12  |  REASSIGN-in: 0  |  FLAG: 8
+- CSV title rows for this property: **12**
+- Current map records (quarters-data.js): **20**
+- ADD: 0  ·  KEEP 12 title rows / 12 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 8
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-12-52-24-W2`  · pn `133927780`  · RM OF PADDOCKWOOD NO. 520  · ac 161.08  · soil H
 - `NE-20-52-23-W2`  · pn `203928857`  · RM OF PADDOCKWOOD NO. 520  · ac 126.03  · soil J

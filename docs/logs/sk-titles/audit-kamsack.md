@@ -1,17 +1,19 @@
 # Audit — `kamsack`
 
-- CSV parcels claimed for this property: **40**
-- Current parcels in quarters-data.js: **77**
-- ADD: 4  |  KEEP: 36  |  REASSIGN-in: 0  |  FLAG: 42
+- CSV title rows for this property: **40**
+- Current map records (quarters-data.js): **77**
+- ADD: 4  ·  KEEP 36 title rows / 35 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 42
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `LSD-10-27-28-1-W2`  · pn `151797134`  · RM OF SLIDING HILLS NO. 273  · ext 29  · LSD
 - `LSD-15-27-28-1-W2`  · pn `151797145`  · RM OF SLIDING HILLS NO. 273  · ext 31  · LSD
 - `LSD-16-27-28-1-W2`  · pn `151797156`  · RM OF SLIDING HILLS NO. 273  · ext 32  · LSD
 - `LSD-12-31-29-31-W1`  · pn `144965706`  · RM OF COTE NO. 271  · ext 72  · LSD
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-17-29-1-W2`  · pn `164747975`  · RM OF SLIDING HILLS NO. 273  · ac 149.09  · soil E
 - `NE-22-31-31-W1`  · pn `142535752`  · RM OF ST. PHILIPS NO. 301  · ac 159.05  · soil J

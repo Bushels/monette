@@ -87,11 +87,19 @@ def diff_property(
     quarters: dict,
     quarters_pn: dict,
     quarters_loc_rm: dict,
+    parsed: dict,
 ) -> dict:
-    """Bucket every parcel for this property into ADD / KEEP / FLAG / REASSIGN."""
+    """Bucket every parcel for this property into ADD / KEEP / REASSIGN-in / REASSIGN-out / FLAG.
+
+    Codex round-1 improvements (per docs/logs/sk-titles/wymark/methodology.md):
+      - Distinguish reassign_in (CSV claims this property, currently elsewhere)
+        from reassign_out (current under this property, CSV claims another).
+        The flag bucket no longer hides reassign-out features.
+      - Track unique_map_features alongside csv_title_rows since they aren't 1:1.
+    """
+    reassign_in: list[dict] = []   # CSV says this property, currently filed elsewhere
     add: list[dict] = []
     keep: list[dict] = []
-    reassign: list[dict] = []  # CSV says this property, but currently filed elsewhere
 
     csv_seen_pns: set[str] = set()
     csv_seen_loc_rm: set[tuple[str, str]] = set()
@@ -116,16 +124,45 @@ def diff_property(
         elif match_pid == pid:
             keep.append({"csv": r, "current": match})
         else:
-            reassign.append({"csv": r, "current": match, "current_property": match_pid})
+            reassign_in.append({"csv": r, "current": match, "current_property": match_pid})
 
-    # FLAG: any current parcel for this property not matched by CSV (kept, not deleted)
+    # Build a lookup for "is this current parcel claimed by another property's CSV set?"
+    # Used to split FLAG into reassign_out (claimed elsewhere) vs true FLAG.
+    other_csv_pns: dict[str, str] = {}      # pn -> claimant property_id
+    other_csv_loc_rm: dict[tuple, str] = {}
+    for other_pid, other_recs in parsed["by_property"].items():
+        if other_pid == pid:
+            continue
+        for r in other_recs:
+            opn = str(r["parcel_no"]) if r["parcel_no"] else None
+            olrm = (r["loc"], r["rm"]) if r.get("loc") and r.get("rm") else None
+            if opn:
+                other_csv_pns[opn] = other_pid
+            if olrm:
+                other_csv_loc_rm[olrm] = other_pid
+
+    reassign_out: list[dict] = []
     flag: list[dict] = []
     for cur in quarters.get(pid, []):
         cur_pn = str(cur["parcel_no"]) if cur.get("parcel_no") is not None else None
         cur_loc_rm = (cur.get("loc"), cur.get("rm")) if cur.get("loc") and cur.get("rm") else None
-        in_csv = (cur_pn and cur_pn in csv_seen_pns) or (cur_loc_rm and cur_loc_rm in csv_seen_loc_rm)
-        if not in_csv:
+        in_own_csv = (cur_pn and cur_pn in csv_seen_pns) or (cur_loc_rm and cur_loc_rm in csv_seen_loc_rm)
+        if in_own_csv:
+            continue  # already accounted for in keep
+        # Is it claimed by another property's CSV?
+        claimant = (other_csv_pns.get(cur_pn) if cur_pn else None) or (
+            other_csv_loc_rm.get(cur_loc_rm) if cur_loc_rm else None
+        )
+        if claimant:
+            reassign_out.append({"current": cur, "target_property": claimant})
+        else:
             flag.append(cur)
+
+    # Unique-map-feature counts (not title-row counts).
+    # KEEP/FLAG/REASSIGN-out are already keyed off current map features (deduplicated).
+    # KEEP can have multiple CSV title rows pointing to the same current feature — collapse.
+    unique_keep_features = len({id(e["current"]) for e in keep})
+    unique_reassign_in = len({id(e["current"]) for e in reassign_in})
 
     return {
         "property_id": pid,
@@ -133,12 +170,16 @@ def diff_property(
         "current_total": len(quarters.get(pid, [])),
         "add": add,
         "keep": keep,
-        "reassign": reassign,
+        "reassign_in": reassign_in,
+        "reassign_out": reassign_out,
         "flag": flag,
         "summary": {
             "add": len(add),
-            "keep": len(keep),
-            "reassign": len(reassign),
+            "keep_title_rows": len(keep),
+            "keep_unique_features": unique_keep_features,
+            "reassign_in_title_rows": len(reassign_in),
+            "reassign_in_unique_features": unique_reassign_in,
+            "reassign_out": len(reassign_out),
             "flag": len(flag),
         },
     }
@@ -151,16 +192,23 @@ def write_summary_md(audit: dict, out_path: Path):
         f"**Snapshot date:** {audit['snapshot_date']}",
         f"**Generated:** {audit.get('generated_at', '')}",
         "",
+        "Title-row counts and unique-map-feature counts are NOT 1:1.",
+        "One legal location can have multiple CSV title rows (extension variants);",
+        "one current map feature is one polygon. KEEP/REASSIGN-in show both.",
+        "",
         "## Per-property reconciliation",
         "",
-        "| Property | CSV parcels | Current parcels | ADD | KEEP | REASSIGN-in | FLAG |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| Property | CSV rows | Cur rows | ADD | KEEP rows / feats | REASSIGN-in rows / feats | REASSIGN-out feats | FLAG |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for pid in sorted(audit["per_property"].keys()):
         p = audit["per_property"][pid]
         s = p["summary"]
         lines.append(
-            f"| `{pid}` | {p['csv_total']} | {p['current_total']} | {s['add']} | {s['keep']} | {s['reassign']} | {s['flag']} |"
+            f"| `{pid}` | {p['csv_total']} | {p['current_total']} | {s['add']} | "
+            f"{s['keep_title_rows']} / {s['keep_unique_features']} | "
+            f"{s['reassign_in_title_rows']} / {s['reassign_in_unique_features']} | "
+            f"{s['reassign_out']} | {s['flag']} |"
         )
 
     lines += [
@@ -177,12 +225,15 @@ def write_summary_md(audit: dict, out_path: Path):
     # Surface biggest-impact decisions
     decisions = []
     for pid, p in audit["per_property"].items():
-        if p["summary"]["reassign"] > 0:
-            decisions.append(f"- `{pid}`: {p['summary']['reassign']} parcels arriving from other properties (REASSIGN)")
-        if p["summary"]["add"] > 5:
-            decisions.append(f"- `{pid}`: {p['summary']['add']} net-new ADD parcels — likely needs geometry computation")
-        if p["summary"]["flag"] > 10:
-            decisions.append(f"- `{pid}`: {p['summary']['flag']} FLAG parcels — large unverified-by-CSV set; investigate post-Codex")
+        s = p["summary"]
+        if s["reassign_in_title_rows"] > 0:
+            decisions.append(f"- `{pid}`: {s['reassign_in_title_rows']} title rows arriving from other properties ({s['reassign_in_unique_features']} unique features) — REASSIGN-in")
+        if s["reassign_out"] > 0:
+            decisions.append(f"- `{pid}`: {s['reassign_out']} features moving out to another property — REASSIGN-out")
+        if s["add"] > 5:
+            decisions.append(f"- `{pid}`: {s['add']} net-new ADD parcels — likely needs geometry computation")
+        if s["flag"] > 10:
+            decisions.append(f"- `{pid}`: {s['flag']} FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass")
     lines.extend(decisions or ["- (none surfaced — all properties land cleanly)"])
 
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -193,9 +244,15 @@ def write_property_md(pid: str, p: dict, out_path: Path):
     lines = [
         f"# Audit — `{pid}`",
         "",
-        f"- CSV parcels claimed for this property: **{p['csv_total']}**",
-        f"- Current parcels in quarters-data.js: **{p['current_total']}**",
-        f"- ADD: {s['add']}  |  KEEP: {s['keep']}  |  REASSIGN-in: {s['reassign']}  |  FLAG: {s['flag']}",
+        f"- CSV title rows for this property: **{p['csv_total']}**",
+        f"- Current map records (quarters-data.js): **{p['current_total']}**",
+        f"- ADD: {s['add']}  ·  "
+        f"KEEP {s['keep_title_rows']} title rows / {s['keep_unique_features']} unique features  ·  "
+        f"REASSIGN-in {s['reassign_in_title_rows']} title rows / {s['reassign_in_unique_features']} unique features  ·  "
+        f"REASSIGN-out {s['reassign_out']} features  ·  "
+        f"FLAG {s['flag']}",
+        "",
+        "_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._",
         "",
     ]
 
@@ -206,20 +263,27 @@ def write_property_md(pid: str, p: dict, out_path: Path):
         return f"`{r.get('loc')}`  · pn `{r.get('parcel_no')}`  · {r.get('rm')}  · ac {r.get('ac')}  · soil {r.get('soil')}"
 
     if p["add"]:
-        lines += ["## ADD — in CSV, not in any current property", ""]
+        lines += ["## ADD — in CSV, not in any current map record", ""]
         for r in p["add"]:
             lines.append(f"- {fmt_csv(r)}")
         lines.append("")
 
-    if p["reassign"]:
-        lines += ["## REASSIGN-in — in CSV under this property, currently filed under another", ""]
-        for entry in p["reassign"]:
+    if p["reassign_in"]:
+        lines += ["## REASSIGN-in — CSV claims this property, currently filed under another", ""]
+        for entry in p["reassign_in"]:
             lines.append(f"- CSV: {fmt_csv(entry['csv'])}")
             lines.append(f"  · CURRENT: under `{entry['current_property']}`  → {fmt_cur(entry['current'])}")
         lines.append("")
 
+    if p.get("reassign_out"):
+        lines += ["## REASSIGN-out — currently under this property, CSV claims another", ""]
+        for entry in p["reassign_out"]:
+            lines.append(f"- CURRENT: {fmt_cur(entry['current'])}")
+            lines.append(f"  · CSV-claimed by: `{entry['target_property']}`")
+        lines.append("")
+
     if p["flag"]:
-        lines += ["## FLAG — currently mapped, not in CSV (keep, investigate)", ""]
+        lines += ["## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)", ""]
         for r in p["flag"]:
             lines.append(f"- {fmt_cur(r)}")
         lines.append("")
@@ -251,7 +315,7 @@ def main():
 
     for pid in sorted(all_csv_pids | all_q_pids):
         csv_recs = parsed["by_property"].get(pid, [])
-        per_property[pid] = diff_property(pid, csv_recs, quarters, q_pn, q_loc_rm)
+        per_property[pid] = diff_property(pid, csv_recs, quarters, q_pn, q_loc_rm, parsed)
 
     # CSV totals reconciliation
     csv_total = sum(len(recs) for recs in parsed["by_property"].values())
@@ -293,18 +357,20 @@ def main():
 
     # Top-line console output
     print()
-    print("=" * 70)
+    print("=" * 90)
     print(f"CSV parcels total: {csv_total}")
     print(f"  matched by parcel_no: {matched_pn}")
     print(f"  matched by (loc,rm) only: {matched_loc_rm_only}")
     print(f"  unmatched: {audit['csv_unmatched']}")
     print()
-    print("Per-property summary:")
-    print(f"  {'property':<20} {'CSV':>5} {'CUR':>5} {'ADD':>5} {'KEEP':>5} {'REASN':>5} {'FLAG':>5}")
+    print("Per-property summary (rows = CSV title rows; feats = unique map features):")
+    print(f"  {'property':<20} {'CSV':>5} {'CUR':>5} {'ADD':>4} {'KEEPrf':>7} {'RASIrf':>7} {'RASOf':>6} {'FLAG':>5}")
     for pid in sorted(per_property.keys()):
         p = per_property[pid]
         s = p["summary"]
-        print(f"  {pid:<20} {p['csv_total']:>5} {p['current_total']:>5} {s['add']:>5} {s['keep']:>5} {s['reassign']:>5} {s['flag']:>5}")
+        keeps = f"{s['keep_title_rows']}/{s['keep_unique_features']}"
+        rasi = f"{s['reassign_in_title_rows']}/{s['reassign_in_unique_features']}"
+        print(f"  {pid:<20} {p['csv_total']:>5} {p['current_total']:>5} {s['add']:>4} {keeps:>7} {rasi:>7} {s['reassign_out']:>6} {s['flag']:>5}")
 
 
 if __name__ == "__main__":

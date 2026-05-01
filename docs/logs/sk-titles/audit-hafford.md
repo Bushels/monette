@@ -1,10 +1,12 @@
 # Audit — `hafford`
 
-- CSV parcels claimed for this property: **2**
-- Current parcels in quarters-data.js: **158**
-- ADD: 0  |  KEEP: 2  |  REASSIGN-in: 0  |  FLAG: 156
+- CSV title rows for this property: **2**
+- Current map records (quarters-data.js): **158**
+- ADD: 0  ·  KEEP 2 title rows / 2 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 156
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-1-45-12-W3`  · pn `None`  · 436  · ac 160.13  · soil C
 - `NE-1-45-13-W3`  · pn `None`  · 436  · ac 158.05  · soil E

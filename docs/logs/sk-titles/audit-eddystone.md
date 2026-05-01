@@ -1,10 +1,12 @@
 # Audit — `eddystone`
 
-- CSV parcels claimed for this property: **0**
-- Current parcels in quarters-data.js: **165**
-- ADD: 0  |  KEEP: 0  |  REASSIGN-in: 0  |  FLAG: 165
+- CSV title rows for this property: **0**
+- Current map records (quarters-data.js): **165**
+- ADD: 0  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 165
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `NE-1-25-11-W1`  · pn `None`  · 601 - RM OF ALONSA  · ac 155.8  · soil None
 - `NE-1-26-12-W1`  · pn `None`  · 601 - RM OF ALONSA  · ac 150.97  · soil None

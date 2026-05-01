@@ -1,10 +1,12 @@
 # Audit — `aguila`
 
-- CSV parcels claimed for this property: **0**
-- Current parcels in quarters-data.js: **23**
-- ADD: 0  |  KEEP: 0  |  REASSIGN-in: 0  |  FLAG: 23
+- CSV title rows for this property: **0**
+- Current map records (quarters-data.js): **23**
+- ADD: 0  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 23
 
-## FLAG — currently mapped, not in CSV (keep, investigate)
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
 - `T07N-R08W-S28-50607077`  · pn `506-07-077`  · None  · ac 9.99  · soil None
 - `T07N-R08W-S29-50607017`  · pn `506-07-017`  · None  · ac 640.0  · soil None

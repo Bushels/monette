@@ -1,10 +1,12 @@
 # Audit — `__neville__`
 
-- CSV parcels claimed for this property: **16**
-- Current parcels in quarters-data.js: **0**
-- ADD: 14  |  KEEP: 0  |  REASSIGN-in: 2  |  FLAG: 0
+- CSV title rows for this property: **16**
+- Current map records (quarters-data.js): **0**
+- ADD: 14  ·  KEEP 0 title rows / 0 unique features  ·  REASSIGN-in 2 title rows / 2 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
-## ADD — in CSV, not in any current property
+_Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
 
 - `BLK-B-PLAN-101658124`  · pn `150833482`  · VILLAGE OF NEVILLE  · ext 11  · PLANNED
 - `LOT-1-BLK-13-PLAN-N3619`  · pn `143320395`  · VILLAGE OF NEVILLE  · ext 0  · TOWN-LOT
@@ -21,7 +23,7 @@
 - `SE-6-12-12-W3`  · pn `151624166`  · VILLAGE OF NEVILLE  · ext 8  · QUARTER
 - `SE-6-12-12-W3`  · pn `151624177`  · VILLAGE OF NEVILLE  · ext 19  · QUARTER
 
-## REASSIGN-in — in CSV under this property, currently filed under another
+## REASSIGN-in — CSV claims this property, currently filed under another
 
 - CSV: `LOT-2-BLK-13-PLAN-N3619`  · pn `143320384`  · VILLAGE OF NEVILLE  · ext 0  · TOWN-LOT
   · CURRENT: under `vanguard`  → `SE-6-12-12-W3`  · pn `143320384`  · RM OF WHISKA CREEK NO. 106  · ac 87.55000000000001  · soil G
