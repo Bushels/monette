@@ -1,24 +1,43 @@
 # PROJECT_STATE.md
 
 ## Last verified commit (this branch)
-c571923 feat(sk-titles): apply Wymark + Swift Current deltas to quarters-data.js
+330a86a feat(sk-titles): Wave C complete — ponteix, vanguard, regina-south, hafford
+(plus Wave E pending commit for __neville__'s 14 ADDs)
 
 ## Active task
-**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. 6 commits land Phase 0 + worked example + first applied area. Awaiting user sign-off to proceed with bulk replication for the remaining 12 SK areas.
+**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. 10 commits in. **Phase 2 (per-area reconciliation) complete** — every one of the 559 titled-to-MFL parcels accounted for; final audit shows `unmatched: 0`.
 
 Plan doc (local): `docs/superpowers/specs/2026-05-01-sk-titles-update-plan.md`
 Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
 Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
 
 Done so far:
-- Phase 0: parser + audit + per-property diffs (commit 577888c)
-- Codex 5.5/xhigh worked example for Wymark + Swift Current (commit 5380074)
-- Audit script improvements per Codex feedback — `reassign_out` view + title-rows-vs-features distinction (commit 60e8d49)
-- Delta-application script `scripts/apply_sk_titles_deltas.py` + applied first area pair (commit c571923)
+- Phase 0: parser + audit + per-property diffs (577888c)
+- Codex 5.5/xhigh worked example: Wymark + Swift Current (5380074)
+- Audit script: reassign_out + title-rows-vs-features (60e8d49)
+- apply_sk_titles_deltas.py + Wymark+SC applied (c571923)
+- Wave A: prince-albert + raymore + regina-south reassign (b1b784a)
+- Wave B: outlook + kamsack + calderbank+morse (8766c61)
+- Wave C: ponteix + vanguard + regina-south + hafford (330a86a)
+- Wave E: __neville__ town lots (pending commit)
 
-Effect on map: wymark 101 → 85 records (16 features moved to swift-current), swift-current 0 → 30 records (was point-only). Cache-bust deferred until Phase 4 pipeline rebuild lands LSD polygon computations.
+Net effect on map: 176 new MFL-titled records added across 5 properties; 19 records reassigned across property boundaries; every record in the 14 SK property buckets + __neville__ now carries reconciliation metadata (KEEP/FLAG/ADD/REASSIGN with snapshot_date 2026-01-18).
 
-Remaining: replicate methodology for 12 areas in 4 waves, then knowledge-layer pass + pipeline rebuild + Codex full-branch review + merge.
+156 records have geometry: null pending Phase 4 (LSD/town-lot/quarter polygon computation): regina-south 125 + kamsack 4 + calderbank 3 + neville 14 ADDs + 10 already-resolved ADDs.
+
+## Remaining work
+- Phase 3: Knowledge layer pass — neville anchor decision, data.js property-totals updates, hafford rented-back narrative copy
+- Phase 4: Pipeline rebuild — compute polygons for the 156 ADDs, cache-bust index.html
+- Phase 5: Codex final review (full-branch architectural pass) + Vercel preview + browser smoke test + merge to main
+
+## Other branches in flight (not currently active)
+- `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline.
+
+## Known blockers
+None active. Pre-existing layout bug in main's index.html (the `useTalliesVersion is not defined` ReferenceError + 2-column grid stale build) is independent of this branch and surfaces in the local preview when run from G:.
+
+## Next action
+Wave E commit + decide whether to proceed to Phase 3+4+5 or hand back for user review of the 10-commit branch and the methodology log.
 
 ## Other branches in flight (not currently active)
 - `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.

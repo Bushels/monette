@@ -1,7 +1,7 @@
 # ISC vs quarters-data.js — Audit Summary
 
 **Snapshot date:** 2026-01-18
-**Generated:** 2026-05-01T23:13:27.323261Z
+**Generated:** 2026-05-01T23:14:38.167182Z
 
 Title-row counts and unique-map-feature counts are NOT 1:1.
 One legal location can have multiple CSV title rows (extension variants);
@@ -11,7 +11,7 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 
 | Property | CSV rows | Cur rows | ADD | KEEP rows / feats | REASSIGN-in rows / feats | REASSIGN-out feats | FLAG |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| `__neville__` | 16 | 2 | 14 | 2 / 2 | 0 / 0 | 0 | 0 |
+| `__neville__` | 16 | 16 | 0 | 16 / 16 | 0 / 0 | 0 | 0 |
 | `admiral` | 2 | 15 | 0 | 2 / 2 | 0 / 0 | 0 | 13 |
 | `aguila` | 0 | 23 | 0 | 0 / 0 | 0 / 0 | 0 | 23 |
 | `calderbank` | 141 | 113 | 0 | 141 / 113 | 0 / 0 | 0 | 0 |
@@ -36,7 +36,6 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 - **FLAG**: parcel is in current map under this property but not in CSV — could be (a) sold pre-2026-01-18, (b) leased/rented, (c) titled to a different Monette entity. Keep on map; flag for follow-up.
 
 ## Top decisions surfaced
-- `__neville__`: 14 net-new ADD parcels — likely needs geometry computation
 - `admiral`: 13 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
 - `aguila`: 23 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
 - `eddystone`: 165 FLAG features — large unverified-by-CSV set; apply FLAG taxonomy in per-area pass
