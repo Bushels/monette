@@ -1,19 +1,27 @@
 # PROJECT_STATE.md
 
-## Last verified commit (main)
-c6725d4 docs(state,journal): add PROJECT_STATE.md + 2026-05 portfolio-cleanup journal entry
+## Last verified commit (this branch)
+577888c feat(sk-titles): Phase 0 scaffolding — ISC parser + audit + per-property diffs
 
 ## Active task
-GEE seeding-calibration pipeline — per-property smoke-test then full-run cadence with `--merge-existing` to avoid wiping `imagery-data.js`. **WIP lives on branch `feat/seeding-calibration`** (commit `2632275`, 12 files mid-iteration). To resume: `git checkout feat/seeding-calibration`.
+**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. Reconciling the parcel layer of the SK portion of the Monette Ledger atlas against a court-grade snapshot of land titled to MONETTE FARMS LTD. (559 surface parcels across 20 SK Rural Municipalities, current as of 2026-01-18).
 
-Branch contents (will be split into atomic commits before merge):
-- GEE pipeline: scripts/gee_pipeline/decision_rule.py, pipeline.py, qc.py + tests/gee_pipeline/test_decision_rule.py, test_qc.py
-- Build: scripts/build_imagery_data_js.py
-- UI: components.jsx, imagery-data.js, property-drawer.jsx, quarter-panel.jsx, view-map.jsx, styles.css
-- Methodology log (already on main): docs/logs/seeding-calibration.md
+Plan doc (local-only): `docs/superpowers/specs/2026-05-01-sk-titles-update-plan.md`
+Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
+
+Workflow:
+- Phase 0 done: parser + audit + per-property diffs committed
+- Codex 5.5/xhigh now working Wymark + Swift Current pair as worked example
+- Claude will analyze Codex's methodology, then replicate the playbook for 12 remaining areas in 5 waves (high-confidence → combined → uncertain → new → town-lots)
+- Final: Codex full-branch review + Vercel preview + merge
+
+## Other branches in flight (not currently active)
+- `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
 
 ## Known blockers
-None active. Snow/freeze QC gate is in place after the Raymore false-positive episode (earlier runs showed ~639 likely-seeded acres that collapsed to 0 once the gate was added). Watch for similar QC gaps when adding new properties.
+None active. Codex `.codex/config.toml` was using TOML tables and rejected by the CLI — fixed in commit `577888c` with flat-key syntax. Per-call `xhigh` override on dispatches.
 
 ## Next action
-Switch to `feat/seeding-calibration` and continue the audit-geometry -> 3-quarter smoke-test -> full-property-run loop per the operating pattern in `docs/logs/seeding-calibration.md`. Rebuild and verify served `public/imagery-data.js` after each full run.
+Wait for Codex to return Wymark worked-example deliverables (`docs/logs/sk-titles/wymark/proposed-deltas.json`, `methodology.md`, two narratives, and an appended findings section in the methodology log). Then analyze, document the playbook, and replicate for Wave A (Prince Albert, Raymore — both have clean small CSV sets) before tackling Wave B/C.
+
+Notable early signal from audit: most properties have very high FLAG counts (Raymore 118 of 122, Hafford 156 of 158, Wymark 82 of 101) — confirming most operational footprint is titled to non-MFL Monette entities. The FLAG taxonomy Codex builds will drive Phase 3 knowledge-layer work.
