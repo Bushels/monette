@@ -70,6 +70,9 @@ docs/*
 !docs/logs/**
 # but skip large machine-generated audit JSON (regenerates from scripts).
 docs/logs/sk-titles/audit.json
+# Backup files made before applying SK-titles deltas — safety net during this
+# branch's work. Branch commits provide the real history.
+quarters-data.js.bak.*
 dossiers/
 _refs/
 *.pdf

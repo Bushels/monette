@@ -1,45 +1,10 @@
 # Audit — `wymark`
 
 - CSV title rows for this property: **22**
-- Current map records (quarters-data.js): **101**
-- ADD: 0  ·  KEEP 22 title rows / 19 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 16 features  ·  FLAG 66
+- Current map records (quarters-data.js): **85**
+- ADD: 0  ·  KEEP 22 title rows / 19 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 66
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
-
-## REASSIGN-out — currently under this property, CSV claims another
-
-- CURRENT: `NE-13-13-14-W3`  · pn `150531612`  · RM OF SWIFT CURRENT NO. 137  · ac 79.65  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NE-14-13-14-W3`  · pn `150402956`  · RM OF SWIFT CURRENT NO. 137  · ac 81.67  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NE-24-13-14-W3`  · pn `147558033`  · RM OF SWIFT CURRENT NO. 137  · ac 158.65  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NE-7-13-13-W3`  · pn `144542730`  · RM OF SWIFT CURRENT NO. 137  · ac 156.85  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NE-7-13-14-W3`  · pn `144532009`  · RM OF SWIFT CURRENT NO. 137  · ac 161.68  · soil J
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NW-14-13-14-W3`  · pn `150403058`  · RM OF SWIFT CURRENT NO. 137  · ac 81.78  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NW-18-13-14-W3`  · pn `144530658`  · RM OF SWIFT CURRENT NO. 137  · ac 163.57  · soil J
-  · CSV-claimed by: `swift-current`
-- CURRENT: `NW-7-13-14-W3`  · pn `144589168`  · RM OF SWIFT CURRENT NO. 137  · ac 160.87  · soil j
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SE-24-13-14-W3`  · pn `144530906`  · RM OF SWIFT CURRENT NO. 137  · ac 159.5  · soil J
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SE-25-13-14-W3`  · pn `146641192`  · RM OF SWIFT CURRENT NO. 137  · ac 119.93  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SE-7-13-13-W3`  · pn `144542707`  · RM OF SWIFT CURRENT NO. 137  · ac 158.17  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SE-8-13-13-W3`  · pn `144541515`  · RM OF SWIFT CURRENT NO. 137  · ac 159.49  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SW-14-13-14-W3`  · pn `151308525`  · RM OF SWIFT CURRENT NO. 137  · ac 81.62  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SW-18-13-14-W3`  · pn `144530647`  · RM OF SWIFT CURRENT NO. 137  · ac 162.32  · soil J
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SW-19-13-13-W3`  · pn `150738475`  · RM OF SWIFT CURRENT NO. 137  · ac 159.46  · soil G
-  · CSV-claimed by: `swift-current`
-- CURRENT: `SW-8-13-13-W3`  · pn `144541526`  · RM OF SWIFT CURRENT NO. 137  · ac 156.84  · soil G
-  · CSV-claimed by: `swift-current`
 
 ## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
