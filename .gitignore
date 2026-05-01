@@ -19,7 +19,13 @@ service-account-key.json
 .vercel
 .firecrawl/
 .playwright-cli/
-.claude/
+.claude/*
+!.claude/
+!.claude/agents/
+!.claude/agents/**
+!.claude/skills/
+!.claude/skills/**
+.claude/settings.local.json
 .superpowers/
 
 # Node
@@ -54,6 +60,14 @@ scripts/gee_pipeline/_*.py
 # Private content not published via this repo
 # Deploys go directly via `vercel --prod` from local C:; these stay off GitHub.
 docs/
+!docs/
+docs/*
+# Exception: cleanup-journal is a tracked record of portfolio-state changes.
+!docs/journal/
+!docs/journal/**
+# Exception: tracked methodology logs (seeding calibration, GEE QC, etc.).
+!docs/logs/
+!docs/logs/**
 dossiers/
 _refs/
 *.pdf
