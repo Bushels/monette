@@ -1,7 +1,7 @@
 # ISC vs quarters-data.js — Audit Summary
 
 **Snapshot date:** 2026-01-18
-**Generated:** 2026-05-01T21:54:36.585846Z
+**Generated:** 2026-05-01T21:56:28.575539Z
 
 Title-row counts and unique-map-feature counts are NOT 1:1.
 One legal location can have multiple CSV title rows (extension variants);
@@ -14,11 +14,11 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 | `__neville__` | 16 | 0 | 14 | 0 / 0 | 2 / 2 | 0 | 0 |
 | `admiral` | 2 | 15 | 0 | 2 / 2 | 0 / 0 | 0 | 13 |
 | `aguila` | 0 | 23 | 0 | 0 / 0 | 0 / 0 | 0 | 23 |
-| `calderbank` | 141 | 110 | 3 | 138 / 110 | 0 / 0 | 0 | 0 |
+| `calderbank` | 141 | 113 | 0 | 141 / 113 | 0 / 0 | 0 | 0 |
 | `eddystone` | 0 | 165 | 0 | 0 / 0 | 0 / 0 | 0 | 165 |
 | `genoa` | 0 | 2 | 0 | 0 / 0 | 0 / 0 | 0 | 2 |
 | `hafford` | 2 | 158 | 0 | 2 / 2 | 0 / 0 | 0 | 156 |
-| `kamsack` | 40 | 77 | 4 | 36 / 35 | 0 / 0 | 0 | 42 |
+| `kamsack` | 40 | 81 | 0 | 40 / 39 | 0 / 0 | 0 | 42 |
 | `montana` | 0 | 220 | 0 | 0 / 0 | 0 / 0 | 0 | 220 |
 | `outlook` | 13 | 24 | 0 | 13 / 10 | 0 / 0 | 0 | 14 |
 | `ponteix` | 85 | 130 | 0 | 85 / 85 | 0 / 0 | 0 | 45 |

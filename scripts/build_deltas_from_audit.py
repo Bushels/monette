@@ -228,20 +228,40 @@ def build_for_property(
 
     primary_rms = {r["rm"] for r in csv_recs_for_pid if r.get("rm")}
 
-    keep_records: list[dict] = []
+    # Collapse audit's KEEP title rows by unique current map feature so a
+    # parcel with multiple CSV title rows (extension variants like
+    # NW-7-13-14-W3 with 2 parcel_nos -> 1 polygon) becomes one keep record
+    # with all CSV matches attached. Title rows != map features.
+    keep_groups: dict[tuple, dict] = {}
     for entry in p_audit.get("keep", []):
         cur = entry["current"]
-        # Find ALL CSV title rows that point to this current map feature
-        cur_pn = str(cur.get("parcel_no")) if cur.get("parcel_no") else None
-        matches = []
+        cur_pn = str(cur.get("parcel_no")) if cur.get("parcel_no") is not None else None
+        key = ("pn", cur_pn) if cur_pn else ("locrm", cur.get("loc"), cur.get("rm"))
+        if key not in keep_groups:
+            keep_groups[key] = {"current": cur, "csv_matches": []}
+        keep_groups[key]["csv_matches"].append(entry["csv"])
+
+    keep_records: list[dict] = []
+    for group in keep_groups.values():
+        cur = group["current"]
+        # Also pull any CSV rows under the same property that match this current
+        # feature but weren't represented in the audit's keep entries (defensive).
+        cur_pn = str(cur.get("parcel_no")) if cur.get("parcel_no") is not None else None
+        seen_match_keys = {
+            (m.get("title_number"), m.get("parcel_no"), m.get("ext"))
+            for m in group["csv_matches"]
+        }
         for r in csv_recs_for_pid:
+            mk = (r.get("title_number"), r.get("parcel_no"), r.get("ext"))
+            if mk in seen_match_keys:
+                continue
             if r.get("parcel_no") and str(r["parcel_no"]) == cur_pn:
-                matches.append(r)
+                group["csv_matches"].append(r)
+                seen_match_keys.add(mk)
             elif r.get("loc") == cur.get("loc") and r.get("rm") == cur.get("rm"):
-                matches.append(r)
-        if not matches:
-            matches = [entry["csv"]]
-        keep_records.append(build_keep_record(cur, matches, pid, snapshot))
+                group["csv_matches"].append(r)
+                seen_match_keys.add(mk)
+        keep_records.append(build_keep_record(cur, group["csv_matches"], pid, snapshot))
 
     flag_records: list[dict] = [
         build_flag_record(cur, pid, snapshot, primary_rms)

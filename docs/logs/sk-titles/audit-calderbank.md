@@ -1,19 +1,14 @@
 # Audit — `calderbank`
 
 - CSV title rows for this property: **141**
-- Current map records (quarters-data.js): **110**
-- ADD: 3  ·  KEEP 138 title rows / 110 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
+- Current map records (quarters-data.js): **113**
+- ADD: 0  ·  KEEP 141 title rows / 113 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 
-## ADD — in CSV, not in any current map record
-
-- `BLK-A-PLAN-101641991`  · pn `151739321`  · RM OF MORSE NO. 165  · ext 13  · PLANNED
-- `LSD-3-9-18-7-W3`  · pn `151448160`  · RM OF MORSE NO. 165  · ext 11  · LSD
-- `LSD-4-9-18-7-W3`  · pn `151448182`  · RM OF MORSE NO. 165  · ext 12  · LSD
-
 ## KEEP — confirmed MFL-titled (in both CSV and current map)
 
+- `BLK-A-PLAN-101641991`  · pn `151739321`  · RM OF MORSE NO. 165  · ac None  · soil None  ← CSV title `157479834` ext 13
 - `NW-15-18-7-W3`  · pn `144633573`  · RM OF MORSE NO. 165  · ac 155.62  · soil J  ← CSV title `157480320` ext 1
 - `NW-15-18-7-W3`  · pn `144633573`  · RM OF MORSE NO. 165  · ac 155.62  · soil J  ← CSV title `157480331` ext 2
 - `NE-25-18-7-W3`  · pn `144632527`  · RM OF MORSE NO. 165  · ac 158.87  · soil K  ← CSV title `157480308` ext 0
@@ -31,6 +26,8 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `NW-35-18-7-W3`  · pn `151861574`  · RM OF MORSE NO. 165  · ac 152.75  · soil J  ← CSV title `157480263` ext 17
 - `SW-35-18-7-W3`  · pn `144633449`  · RM OF MORSE NO. 165  · ac 160.66  · soil L  ← CSV title `157480274` ext 0
 - `NW-4-18-7-W3`  · pn `144632808`  · RM OF MORSE NO. 165  · ac 159.54  · soil K  ← CSV title `157480410` ext 0
+- `LSD-3-9-18-7-W3`  · pn `151448160`  · RM OF MORSE NO. 165  · ac 40.0  · soil None  ← CSV title `157480375` ext 11
+- `LSD-4-9-18-7-W3`  · pn `151448182`  · RM OF MORSE NO. 165  · ac 40.0  · soil None  ← CSV title `157480397` ext 12
 - `SW-9-18-7-W3`  · pn `151448395`  · RM OF MORSE NO. 165  · ac 159.52  · soil J  ← CSV title `157480353` ext 8
 - `NE-18-19-6-W3`  · pn `144643079`  · RM OF ENFIELD NO. 194  · ac 159.73  · soil J  ← CSV title `158130806` ext 0
 - `SE-18-19-6-W3`  · pn `144657973`  · RM OF ENFIELD NO. 194  · ac 159.82  · soil H  ← CSV title `158130941` ext 0
@@ -61,8 +58,5 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `SW-16-19-7-W3`  · pn `153240689`  · RM OF MORSE NO. 165  · ac 0  · soil K  ← CSV title `157479856` ext 20
 - `SE-17-19-7-W3`  · pn `162107715`  · RM OF MORSE NO. 165  · ac 159.86999999999998  · soil K  ← CSV title `157479744` ext 1
 - `SE-17-19-7-W3`  · pn `162107715`  · RM OF MORSE NO. 165  · ac 159.86999999999998  · soil K  ← CSV title `157479777` ext 3
-- `SE-19-19-7-W3`  · pn `142145793`  · RM OF MORSE NO. 165  · ac 157.06  · soil J  ← CSV title `157479564` ext 0
-- `NE-2-19-7-W3`  · pn `142145276`  · RM OF MORSE NO. 165  · ac 158.47  · soil K  ← CSV title `158131661` ext 0
-- `NW-2-19-7-W3`  · pn `142145265`  · RM OF MORSE NO. 165  · ac 157.99  · soil K  ← CSV title `158130996` ext 1
-- ... (88 more, omitted from narrative)
+- ... (91 more, omitted from narrative)
 

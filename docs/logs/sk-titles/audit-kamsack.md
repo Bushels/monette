@@ -1,17 +1,10 @@
 # Audit — `kamsack`
 
 - CSV title rows for this property: **40**
-- Current map records (quarters-data.js): **77**
-- ADD: 4  ·  KEEP 36 title rows / 35 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 42
+- Current map records (quarters-data.js): **81**
+- ADD: 0  ·  KEEP 40 title rows / 39 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 42
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
-
-## ADD — in CSV, not in any current map record
-
-- `LSD-10-27-28-1-W2`  · pn `151797134`  · RM OF SLIDING HILLS NO. 273  · ext 29  · LSD
-- `LSD-15-27-28-1-W2`  · pn `151797145`  · RM OF SLIDING HILLS NO. 273  · ext 31  · LSD
-- `LSD-16-27-28-1-W2`  · pn `151797156`  · RM OF SLIDING HILLS NO. 273  · ext 32  · LSD
-- `LSD-12-31-29-31-W1`  · pn `144965706`  · RM OF COTE NO. 271  · ext 72  · LSD
 
 ## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
@@ -62,6 +55,9 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 
 - `NE-26-28-1-W2`  · pn `144183146`  · RM OF SLIDING HILLS NO. 273  · ac 159.56  · soil G  ← CSV title `157472422` ext 0
 - `SW-26-28-1-W2`  · pn `144183135`  · RM OF SLIDING HILLS NO. 273  · ac 159.92  · soil G  ← CSV title `157472039` ext 0
+- `LSD-10-27-28-1-W2`  · pn `151797134`  · RM OF SLIDING HILLS NO. 273  · ac 40.0  · soil None  ← CSV title `157472028` ext 29
+- `LSD-15-27-28-1-W2`  · pn `151797145`  · RM OF SLIDING HILLS NO. 273  · ac 40.0  · soil None  ← CSV title `157472017` ext 31
+- `LSD-16-27-28-1-W2`  · pn `151797156`  · RM OF SLIDING HILLS NO. 273  · ac 40.0  · soil None  ← CSV title `157471982` ext 32
 - `NE-27-28-1-W2`  · pn `151797123`  · RM OF SLIDING HILLS NO. 273  · ac 160.04000000000002  · soil G  ← CSV title `157471993` ext 28
 - `SE-27-28-1-W2`  · pn `144183157`  · RM OF SLIDING HILLS NO. 273  · ac 159.74  · soil G  ← CSV title `157471960` ext 0
 - `NE-34-28-1-W2`  · pn `144181997`  · RM OF SLIDING HILLS NO. 273  · ac 158.69  · soil F  ← CSV title `157472107` ext 0
@@ -93,6 +89,7 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `NW-3-29-1-W2`  · pn `144346754`  · RM OF SLIDING HILLS NO. 273  · ac 158.2  · soil F  ← CSV title `157472163` ext 0
 - `SE-3-29-1-W2`  · pn `144346732`  · RM OF SLIDING HILLS NO. 273  · ac 158.99  · soil E  ← CSV title `157472196` ext 0
 - `NW-31-29-31-W1`  · pn `144965694`  · RM OF COTE NO. 271  · ac 79.98  · soil C  ← CSV title `157472792` ext 71
+- `LSD-12-31-29-31-W1`  · pn `144965706`  · RM OF COTE NO. 271  · ac 40.0  · soil None  ← CSV title `157472804` ext 72
 - `SE-1-29-32-W1`  · pn `142355527`  · RM OF COTE NO. 271  · ac 160.02  · soil E  ← CSV title `157472781` ext 0
 - `SW-28-29-32-W1`  · pn `148968556`  · RM OF COTE NO. 271  · ac 149.36  · soil E  ← CSV title `157472815` ext 8
 - `SE-1-29-33-W1`  · pn `144419092`  · RM OF COTE NO. 271  · ac 147.44  · soil D  ← CSV title `157472758` ext 0
