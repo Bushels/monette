@@ -1,8 +1,7 @@
 // Quarter detail panel — parcel inspection view.
 // Shows parcel metadata (RM, assessed value, owner, etc.) and ownership
 // status pills. Voting UI has been removed in the satellite pivot 2026-04-29;
-// the QuarterDetail area is a placeholder for satellite-row integration
-// (commit 5 wires in seeding_seeded, seeding_confidence, etc.).
+// QuarterDetail now exposes the GEE seeding read and optical evidence fields.
 
 function QuarterRow({ propId, q, i, onOpen, expanded }) {
   const [st] = useQuarter(propId, q, i);
@@ -65,45 +64,41 @@ function QuarterRow({ propId, q, i, onOpen, expanded }) {
   );
 }
 
-function SeedingStatusLabel({ applicability, seeded, confidence }) {
+function SeedingStatusLabel({ applicability, seeded, confidence, vetoReason }) {
   if (!applicability) return React.createElement("span", { style: { color: "var(--mute)" } }, "No satellite data");
+  if (vetoReason === "snow_or_freeze_risk") return React.createElement("span", { style: { color: "#7a7a7a", fontWeight: 600 } }, "Snow/freeze risk - confidence withheld");
   if (applicability === "insufficient_baseline") return React.createElement("span", { style: { color: "#7a7a7a" } }, "Insufficient baseline — SAR pending");
   if (applicability === "out-of-season") return React.createElement("span", { style: { color: "#5a7a8a" } }, "Out of season");
   if (applicability === "perennial") return React.createElement("span", { style: { color: "#5a7a8a" } }, "Perennial crop — seeding n/a");
   // active window
   if (seeded === true) {
     return React.createElement("span", { style: { color: "#3a8c2a", fontWeight: 600 } },
-      `Seeded confirmed${confidence ? ` (${confidence}% confidence)` : ""}`
+      `Likely seeded${confidence ? ` (${confidence}% confidence)` : ""}`
     );
   }
   if (seeded === false) {
-    return React.createElement("span", { style: { color: "#c0392b" } },
-      `Not yet seeded${confidence ? ` (${confidence}% confidence)` : ""}`
+    return React.createElement("span", { style: { color: "#686868" } },
+      `Likely not seeded${confidence ? ` (${confidence}% confidence)` : ""}`
     );
   }
-  return React.createElement("span", { style: { color: "#c8a84b" } }, "Active window — indeterminate");
+  return React.createElement("span", { style: { color: "#686868" } }, "No confident seeded call");
 }
 
 function QuarterDetail({ propId, q, i, onClose }) {
   const [st] = useQuarter(propId, q, i);
-  const [opticsOpen, setOpticsOpen] = useState(false);
   const imageryStore = window.MONETTE_IMAGERY || { parcels: {} };
   const imgRow = (imageryStore.parcels || {})[`${propId}:${q.loc}`] || null;
-  const seedingBlock = imgRow && imgRow.seeding ? imgRow.seeding : null;
-  const opticalBlock = seedingBlock && seedingBlock.optical ? seedingBlock.optical : null;
   const hasSatelliteData = !!(imgRow && imgRow.status === "ok");
   const applicability = imgRow ? imgRow.seeding_applicability : null;
   const seeded = imgRow ? imgRow.seeding_seeded : null;
   const confidence = imgRow ? (imgRow.seeding_confidence || 0) : 0;
-  // last_obs_date is meaningful only when there's an actual SAR observation
-  // (dvh_db non-null). Non-SAR branches (insufficient_baseline, perennial,
-  // out-of-season) default last_obs_date to run_date which would falsely imply
-  // a SAR observation occurred. Guardrail per Codex review beyzs2ym9 Q5.
-  const hasSarObservation = !!(seedingBlock && seedingBlock.dvh_db != null);
-  const lastObsDate = hasSarObservation ? (seedingBlock.last_obs_date || null) : null;
+  const vetoReason = imgRow ? (imgRow.seeding_veto_reason || (imgRow.seeding && imgRow.seeding.veto_reason) || null) : null;
   const polygonQuality = imgRow ? (imgRow.polygon_quality || null) : null;
-  const croplandCoverage = imgRow ? (imgRow.cropland_coverage || null) : null;
   const priorCrop = imgRow ? (imgRow.prior_crop || null) : null;
+  const parcelAcres = Number(q.ac || q.titled_ac || 0);
+  const evidenceRows = Number.isFinite(parcelAcres) && parcelAcres > 0
+    ? [["Parcel acres", fmtAc(parcelAcres)], ...seedingEvidenceRows(imgRow)]
+    : seedingEvidenceRows(imgRow);
   const isLowQc = polygonQuality === "low";
 
   return (
@@ -133,86 +128,50 @@ function QuarterDetail({ propId, q, i, onClose }) {
         {st.listing && st.listing !== "not-listed" && <ListingPill kind={st.listing} />}
       </div>
 
-      {/* Satellite seeding row */}
       <div className={`qd-satellite-row${isLowQc ? " is-low-qc" : ""}`}>
         <div className="qd-satellite-header">
-          <span className="qd-satellite-label">Satellite · 2026 seeding</span>
-          {isLowQc && (
-            <span className="qd-lowqc-badge">low-QC polygon</span>
-          )}
+          <span className="qd-satellite-label">Satellite - 2026 seeding</span>
+          {isLowQc && <span className="qd-lowqc-badge">low-QC polygon</span>}
           {priorCrop && priorCrop !== "unknown" && (
             <span className="qd-satellite-crop mono">prior: {priorCrop.replace(/_/g, " ")}</span>
           )}
           {priorCrop === "unknown" && (
-            // Codex review beyzs2ym9 Q5 guardrail: 177 active records have
-            // unmapped CDL/ACI classes. UI must NOT imply crop-specific
-            // certainty — surface a "crop type unmapped" badge so users see
-            // the seeded/not-seeded call without inferring a specific crop.
             <span className="qd-satellite-crop-unmapped mono">crop type unmapped</span>
           )}
         </div>
         <div className="qd-satellite-status">
-          <SeedingStatusLabel applicability={applicability} seeded={seeded} confidence={confidence} />
+          <SeedingStatusLabel applicability={applicability} seeded={seeded} confidence={confidence} vetoReason={vetoReason} />
         </div>
-        {lastObsDate && (
-          <div className="qd-satellite-obs mono">
-            Last obs: {lastObsDate}
-            {croplandCoverage != null && ` · cropland cov ${Math.round(croplandCoverage * 100)}%`}
+        {hasSatelliteData ? (
+          <div className="qd-evidence-card">
+            <div className="qd-evidence-head">
+              <span className="qd-evidence-label">Selected parcel read</span>
+              <span className="qd-evidence-chip is-ready">confidence only</span>
+              <button
+                type="button"
+                className="qd-evidence-close"
+                aria-label="Close selected parcel read"
+                title="Close selected parcel read"
+                onClick={onClose}
+              >
+                X
+              </button>
+            </div>
+            {evidenceRows.length > 0 && (
+              <div className="qd-evidence-grid mono">
+                {evidenceRows.map(([label, value]) => (
+                  <React.Fragment key={label}>
+                    <span>{label}</span>
+                    <strong>{value}</strong>
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
           </div>
-        )}
-        {!hasSatelliteData && !imgRow && (
+        ) : (
           <div className="qd-satellite-obs mono" style={{ color: "var(--mute)" }}>
             No imagery record for this parcel.
           </div>
-        )}
-        {opticalBlock && (
-          <details
-            className="qd-optical-details"
-            open={opticsOpen}
-            onToggle={(e) => setOpticsOpen(e.target.open)}
-          >
-            <summary className="qd-optical-summary mono">
-              Optical indices {opticsOpen ? "▲" : "▼"}
-            </summary>
-            <div className="qd-optical-grid mono">
-              {opticalBlock.ndvi != null && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>NDVI</span>
-                  <span>{Number(opticalBlock.ndvi).toFixed(3)}</span>
-                </>
-              )}
-              {opticalBlock.ndti != null && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>NDTI</span>
-                  <span>{Number(opticalBlock.ndti).toFixed(3)}</span>
-                </>
-              )}
-              {opticalBlock.bsi != null && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>BSI</span>
-                  <span>{Number(opticalBlock.bsi).toFixed(3)}</span>
-                </>
-              )}
-              {seedingBlock && seedingBlock.dvh_db != null && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>dVH (SAR)</span>
-                  <span>{Number(seedingBlock.dvh_db).toFixed(2)} dB</span>
-                </>
-              )}
-              {seedingBlock && seedingBlock.dvv_db != null && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>dVV (SAR)</span>
-                  <span>{Number(seedingBlock.dvv_db).toFixed(2)} dB</span>
-                </>
-              )}
-              {opticalBlock.source_scene && (
-                <>
-                  <span style={{ color: "var(--mute)" }}>Optical scene</span>
-                  <span>{opticalBlock.source_scene}</span>
-                </>
-              )}
-            </div>
-          </details>
         )}
       </div>
 

@@ -176,6 +176,28 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     }, 0),
     [imageryRows, prop?.id, quarters]
   );
+  const seedingAcreSummary = useMemo(
+    () => quarters.reduce((acc, q) => {
+      const row = imageryRows[`${prop?.id}:${q.loc}`];
+      if (!row || row.status !== "ok") return acc;
+      const acres = Number(q.ac || q.titled_ac || 0);
+      const ac = Number.isFinite(acres) && acres > 0 ? acres : 0;
+      acc.totalAc += ac;
+      if (row.polygon_quality === "low") acc.lowQcAc += ac;
+      if (row.seeding_applicability === "active") {
+        acc.activeAc += ac;
+        if (row.seeding_seeded === true) {
+          acc.seededAc += ac;
+        } else {
+          acc.noCallAc += ac;
+        }
+      } else {
+        acc.noCallAc += ac;
+      }
+      return acc;
+    }, { totalAc: 0, activeAc: 0, seededAc: 0, noCallAc: 0, lowQcAc: 0 }),
+    [imageryRows, prop?.id, quarters]
+  );
 
   if (!prop) return null;
   const { rollup } = rollupProperty(prop.id);
@@ -326,12 +348,20 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             fontSize: 10,
             color: "var(--ink-2)",
           }}>
-            <span style={{ color: "var(--mute)" }}>Vegetation vigor</span>
+            <span style={{ color: "var(--mute)" }}>GEE seeding records</span>
             <span>
               {imageryOkCount
                 ? `${imageryOkCount} parcels`
                 : imageryStore.note || "Pending generated imagery build"}
             </span>
+            <span style={{ color: "var(--mute)" }}>Likely seeded acres</span>
+            <span style={{ color: "#4e6a30" }}>{fmtAc(seedingAcreSummary.seededAc)}</span>
+            <span style={{ color: "var(--mute)" }}>No confident call acres</span>
+            <span>{fmtAc(seedingAcreSummary.noCallAc)}</span>
+            <span style={{ color: "var(--mute)" }}>GEE-read acres</span>
+            <span>{fmtAc(seedingAcreSummary.totalAc)}</span>
+            <span style={{ color: "var(--mute)" }}>Active GEE-read acres</span>
+            <span>{fmtAc(seedingAcreSummary.activeAc)}</span>
             <span style={{ color: "var(--mute)" }}>Imagery window</span>
             <span>
               {imageryStore.window_days
@@ -340,6 +370,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             </span>
             <span style={{ color: "var(--mute)" }}>No clear imagery</span>
             <span>{imageryMissingCount || 0}</span>
+            <span style={{ color: "var(--mute)" }}>Low-QC acres</span>
+            <span>{fmtAc(seedingAcreSummary.lowQcAc)}</span>
           </div>
         </div>
 

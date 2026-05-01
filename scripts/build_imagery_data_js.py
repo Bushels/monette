@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -144,6 +145,42 @@ def write_js(payload: dict) -> None:
         )
 
 
+def load_existing_payload(path: Path = OUT) -> dict:
+    """Parse an existing window.MONETTE_IMAGERY assignment from disk."""
+    if not path.exists():
+        raise SystemExit(f"--merge-existing requested but {path.name} does not exist.")
+    text = path.read_text(encoding="utf-8")
+    match = re.search(r"window\.MONETTE_IMAGERY\s*=\s*(\{.*\});\s*$", text, re.DOTALL)
+    if not match:
+        raise SystemExit(f"Could not parse existing imagery payload: {path}")
+    return json.loads(match.group(1))
+
+
+def merge_existing_payload(existing: dict, update: dict, *, run_date: str, scope_label: str) -> dict:
+    """Replace only the just-run parcel records, preserving other properties."""
+    merged = dict(existing)
+    existing_parcels = dict(existing.get("parcels") or {})
+    update_parcels = update.get("parcels") or {}
+    existing_parcels.update(update_parcels)
+    merged.update({
+        "generated_at": update["generated_at"],
+        "source": update["source"],
+        "ready": update["ready"],
+        "window_days": update["window_days"],
+        "thresholds_version": update["thresholds_version"],
+        "baseline_window": update["baseline_window"],
+        "coverage": update["coverage"],
+        "parcels": existing_parcels,
+        "partial_update": {
+            "generated_at": update["generated_at"],
+            "run_date": run_date,
+            "scope": scope_label,
+            "updated_parcels": len(update_parcels),
+        },
+    })
+    return merged
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Build imagery-data.js by calling the GEE pipeline."
@@ -158,6 +195,8 @@ def main() -> None:
                         help="Optional path to a JSON file with a list of "
                              "'property_id:loc' keys. Overrides --property-id "
                              "filtering when provided.")
+    parser.add_argument("--merge-existing", action="store_true",
+                        help="Preserve existing imagery records outside the requested scope.")
     args = parser.parse_args()
 
     coverage = load_parcel_index()
@@ -181,6 +220,13 @@ def main() -> None:
 
     print(f"Processing {len(keys)} parcels — scope: {scope_label}, run_date={args.run_date}")
     payload = build_payload(keys, args.run_date)
+    if args.merge_existing:
+        payload = merge_existing_payload(
+            load_existing_payload(),
+            payload,
+            run_date=args.run_date,
+            scope_label=scope_label,
+        )
     write_js(payload)
     print(f"Wrote {OUT.name} and {PUBLIC_OUT.relative_to(ROOT)}")
 

@@ -11,8 +11,65 @@ const OWN = D.ownership, LIST = D.listing, SEA = D.season;
 
 const fmt = (n) => (n || 0).toLocaleString("en-CA");
 const fmtM = (n) => n >= 1000000 ? "$" + (n / 1000000).toFixed(1) + "M" : "$" + fmt(n);
+const fmtAc = (n) => `${Math.round(n || 0).toLocaleString("en-CA")} ac`;
 const now = () => new Date().toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 const ACTION_KEYS = new Set(["Enter", " "]);
+
+function fmtSatelliteNumber(value, digits = 3, suffix = "") {
+  if (value == null || value === "") return null;
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return `${n.toFixed(digits)}${suffix ? ` ${suffix}` : ""}`;
+}
+
+function seedingCallText(applicability, seeded, confidence, vetoReason) {
+  if (!applicability) return "No satellite data";
+  if (vetoReason === "snow_or_freeze_risk") return "Snow/freeze risk - confidence withheld";
+  if (applicability === "insufficient_baseline") return "Insufficient baseline - SAR pending";
+  if (applicability === "out-of-season") return "Out of season";
+  if (applicability === "perennial") return "Perennial crop - seeding n/a";
+  if (seeded === true) return `Likely seeded${confidence ? ` (${confidence}% confidence)` : ""}`;
+  if (seeded === false) return `Likely not seeded${confidence ? ` (${confidence}% confidence)` : ""}`;
+  return "No confident seeded call";
+}
+
+function seedingEvidenceAsset(imgRow) {
+  if (!imgRow) return null;
+  const seeding = imgRow.seeding || {};
+  const evidence = imgRow.evidence || imgRow.evidence_asset || seeding.evidence || seeding.evidence_asset || {};
+  const imageUrl = evidence.image_url
+    || evidence.imageUrl
+    || evidence.thumbnail_url
+    || evidence.thumbnailUrl
+    || imgRow.evidence_image_url
+    || imgRow.evidence_thumbnail_url
+    || null;
+  const tileUrl = evidence.tile_url || evidence.tileUrl || imgRow.evidence_tile_url || null;
+  if (!imageUrl && !tileUrl) return null;
+  return {
+    imageUrl,
+    tileUrl,
+    label: evidence.label || evidence.asset_label || "GEE parcel evidence",
+    sourceScene: evidence.source_scene || evidence.scene_date || (seeding.optical && seeding.optical.source_scene) || null,
+  };
+}
+
+function seedingEvidenceRows(imgRow) {
+  if (!imgRow) return [];
+  const confidence = Number(imgRow.seeding_confidence || 0);
+  const vetoReason = imgRow.seeding_veto_reason || (imgRow.seeding && imgRow.seeding.veto_reason) || null;
+  const confidenceLabel = confidence >= 80
+    ? "High"
+    : confidence >= 50
+      ? "Medium"
+      : confidence > 0
+        ? "Low"
+        : "Not available";
+  return [
+    ["Call", seedingCallText(imgRow.seeding_applicability, imgRow.seeding_seeded, imgRow.seeding_confidence || 0, vetoReason)],
+    ["Confidence", vetoReason === "snow_or_freeze_risk" ? "Withheld" : (confidence > 0 ? `${confidenceLabel} (${confidence}%)` : confidenceLabel)],
+  ].filter((row) => row[1] != null && row[1] !== "");
+}
 
 function onActionKey(e, fn) {
   if (!ACTION_KEYS.has(e.key)) return;
