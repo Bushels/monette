@@ -1,0 +1,6286 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "vanguard",
+    "__neville__"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "vanguard": {
+      "add": [
+        {
+          "loc": "SW-31-11-12-W3",
+          "parcel_no": 143344469,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "ac": 160.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "SW 31-11-12-3  Ext 1 As described on Certificate of Title 00SC01394C which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to_vanguard_geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "SW-31-11-12-W3",
+                "parcel_no": "143344469",
+                "title_number": "143042330",
+                "title_text": "SW 31-11-12-3  Ext 1 As described on Certificate of Title 00SC01394C which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "31",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "keep": [
+        {
+          "ac": 159.39,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.256813,
+                  49.839445
+                ],
+                [
+                  -107.245592,
+                  49.839445
+                ],
+                [
+                  -107.245592,
+                  49.846681
+                ],
+                [
+                  -107.256813,
+                  49.846681
+                ],
+                [
+                  -107.256813,
+                  49.839445
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-26-10-10-W3",
+          "owner": null,
+          "parcel_no": 150859761,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "sw-26-10-10-W3 As described on Certificate of Title 90SC08351, description 1.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "BLK-A-PLAN-101606240",
+                "parcel_no": "150859761",
+                "title_number": "143051958",
+                "title_text": "Blk/Par A-Plan 101606240 Ext 1 As described on Certificate of Title 90SC08351, description 1.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": null,
+                "block": "A",
+                "plan": "101606240",
+                "ext": "1",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": true,
+                "csv_source": "Monette - file 2.csv"
+              },
+              {
+                "loc": "SW-26-10-10-W3",
+                "parcel_no": "150859716",
+                "title_number": "143051947",
+                "title_text": "SW 26-10-10-3  Ext 2 As described on Certificate of Title 71SC03425, description 2.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "26",
+                "twp": "10",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 88.48,
+          "assessment": 196200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.280599,
+                  49.890101
+                ],
+                [
+                  -107.269366,
+                  49.890101
+                ],
+                [
+                  -107.269366,
+                  49.897337
+                ],
+                [
+                  -107.280599,
+                  49.897337
+                ],
+                [
+                  -107.280599,
+                  49.890101
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-10-11-10-W3",
+          "owner": null,
+          "parcel_no": 143316402,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-10-11-10-W3 As described on Certificate of Title 01SC13165A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "BLK-C-PLAN-01SC13165",
+                "parcel_no": "143316402",
+                "title_number": "142895919",
+                "title_text": "Blk/Par C-Plan 01SC13165 Ext 0 As described on Certificate of Title 01SC13165A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": null,
+                "block": "C",
+                "plan": "01SC13165",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": true,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 34.11,
+          "assessment": 74800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.608295,
+                  49.947993
+                ],
+                [
+                  -107.597049,
+                  49.947993
+                ],
+                [
+                  -107.597049,
+                  49.95523
+                ],
+                [
+                  -107.608295,
+                  49.95523
+                ],
+                [
+                  -107.608295,
+                  49.947993
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-31-11-12-W3",
+          "owner": null,
+          "parcel_no": 151170656,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-31-11-12-W3 As described on Certificate of Title 00SC01394, description 29.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "BLK-C-PLAN-101623935",
+                "parcel_no": "151170656",
+                "title_number": "143042352",
+                "title_text": "Blk/Par C-Plan 101623935 Ext 29 As described on Certificate of Title 00SC01394, description 29.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": null,
+                "block": "C",
+                "plan": "101623935",
+                "ext": "29",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": true,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 157.98,
+          "assessment": 411900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.3017,
+                  49.839445
+                ],
+                [
+                  -107.290478,
+                  49.839445
+                ],
+                [
+                  -107.290478,
+                  49.846681
+                ],
+                [
+                  -107.3017,
+                  49.846681
+                ],
+                [
+                  -107.3017,
+                  49.839445
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-28-10-10-W3",
+          "owner": null,
+          "parcel_no": 141927969,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-28-10-10-W3 As described on Certificate of Title 73SC07025.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-28-10-10-W3",
+                "parcel_no": "141927969",
+                "title_number": "143051969",
+                "title_text": "SW 28-10-10-3  Ext 0 As described on Certificate of Title 73SC07025.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "28",
+                "twp": "10",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.62,
+          "assessment": 383800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.268415,
+                  49.853918
+                ],
+                [
+                  -107.25719,
+                  49.853918
+                ],
+                [
+                  -107.25719,
+                  49.861154
+                ],
+                [
+                  -107.268415,
+                  49.861154
+                ],
+                [
+                  -107.268415,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-34-10-10-W3",
+          "owner": null,
+          "parcel_no": 141969785,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-34-10-10-W3 As described on Certificate of Title 71SC03317.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-34-10-10-W3",
+                "parcel_no": "141969785",
+                "title_number": "143051970",
+                "title_text": "SE 34-10-10-3  Ext 0 As described on Certificate of Title 71SC03317.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "34",
+                "twp": "10",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.4,
+          "assessment": 291100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.245965,
+                  49.853918
+                ],
+                [
+                  -107.23474,
+                  49.853918
+                ],
+                [
+                  -107.23474,
+                  49.861154
+                ],
+                [
+                  -107.245965,
+                  49.861154
+                ],
+                [
+                  -107.245965,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-35-10-10-W3",
+          "owner": null,
+          "parcel_no": 141969819,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-35-10-10-W3 As described on Certificate of Title 78SC00108.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-35-10-10-W3",
+                "parcel_no": "141969819",
+                "title_number": "143051981",
+                "title_text": "SE 35-10-10-3  Ext 0 As described on Certificate of Title 78SC00108.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "35",
+                "twp": "10",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.47,
+          "assessment": 352100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.25719,
+                  49.853918
+                ],
+                [
+                  -107.245965,
+                  49.853918
+                ],
+                [
+                  -107.245965,
+                  49.861154
+                ],
+                [
+                  -107.25719,
+                  49.861154
+                ],
+                [
+                  -107.25719,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-35-10-10-W3",
+          "owner": null,
+          "parcel_no": 141928016,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-35-10-10-W3 As described on Certificate of Title 78SC00109.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-35-10-10-W3",
+                "parcel_no": "141928016",
+                "title_number": "143051936",
+                "title_text": "SW 35-10-10-3  Ext 0 As described on Certificate of Title 78SC00109.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "35",
+                "twp": "10",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.58,
+          "assessment": 441700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.424497,
+                  49.817735
+                ],
+                [
+                  -107.413281,
+                  49.817735
+                ],
+                [
+                  -107.413281,
+                  49.824971
+                ],
+                [
+                  -107.424497,
+                  49.824971
+                ],
+                [
+                  -107.424497,
+                  49.817735
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-16-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964331,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-16-10-11-W3 As described on Certificate of Title 78SC14676.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-16-10-11-W3",
+                "parcel_no": "141964331",
+                "title_number": "148083532",
+                "title_text": "NE 16-10-11-3  Ext 0 As described on Certificate of Title 78SC14676.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "16",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.58,
+          "assessment": 385300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.424284,
+                  49.810498
+                ],
+                [
+                  -107.413069,
+                  49.810498
+                ],
+                [
+                  -107.413069,
+                  49.817735
+                ],
+                [
+                  -107.424284,
+                  49.817735
+                ],
+                [
+                  -107.424284,
+                  49.810498
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-16-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964319,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-16-10-11-W3 As described on Certificate of Title 78SC14677.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-16-10-11-W3",
+                "parcel_no": "141964319",
+                "title_number": "148083543",
+                "title_text": "SE 16-10-11-3  Ext 0 As described on Certificate of Title 78SC14677.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "16",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.66,
+          "assessment": 383000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.435499,
+                  49.810498
+                ],
+                [
+                  -107.424284,
+                  49.810498
+                ],
+                [
+                  -107.424284,
+                  49.817735
+                ],
+                [
+                  -107.435499,
+                  49.817735
+                ],
+                [
+                  -107.435499,
+                  49.810498
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-16-10-11-W3",
+          "owner": null,
+          "parcel_no": 141927341,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-16-10-11-W3 As described on Certificate of Title 98SC05375.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-16-10-11-W3",
+                "parcel_no": "141927341",
+                "title_number": "148083587",
+                "title_text": "SW 16-10-11-3  Ext 0 As described on Certificate of Title 98SC05375.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "16",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.97,
+          "assessment": 340400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.469143,
+                  49.810498
+                ],
+                [
+                  -107.457929,
+                  49.810498
+                ],
+                [
+                  -107.457929,
+                  49.817735
+                ],
+                [
+                  -107.469143,
+                  49.817735
+                ],
+                [
+                  -107.469143,
+                  49.810498
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-18-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963307,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-18-10-11-W3 As described on Certificate of Title 96SC14787A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-18-10-11-W3",
+                "parcel_no": "141963307",
+                "title_number": "148083598",
+                "title_text": "SE 18-10-11-3  Ext 0 As described on Certificate of Title 96SC14787A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "18",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.64,
+          "assessment": 448800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.436143,
+                  49.832208
+                ],
+                [
+                  -107.424923,
+                  49.832208
+                ],
+                [
+                  -107.424923,
+                  49.839445
+                ],
+                [
+                  -107.436143,
+                  49.839445
+                ],
+                [
+                  -107.436143,
+                  49.832208
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-21-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963442,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-21-10-11-W3 As described on Certificate of Title 78SC14678.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-21-10-11-W3",
+                "parcel_no": "141963442",
+                "title_number": "148083510",
+                "title_text": "NW 21-10-11-3  Ext 0 As described on Certificate of Title 78SC14678.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "21",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.65,
+          "assessment": 438300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.435928,
+                  49.824971
+                ],
+                [
+                  -107.42471,
+                  49.824971
+                ],
+                [
+                  -107.42471,
+                  49.832208
+                ],
+                [
+                  -107.435928,
+                  49.832208
+                ],
+                [
+                  -107.435928,
+                  49.824971
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-21-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963431,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-21-10-11-W3 As described on Certificate of Title 78SC14678.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-21-10-11-W3",
+                "parcel_no": "141963431",
+                "title_number": "148083521",
+                "title_text": "SW 21-10-11-3  Ext 0 As described on Certificate of Title 78SC14678.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "21",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.77,
+          "assessment": 448800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.413492,
+                  49.824971
+                ],
+                [
+                  -107.402274,
+                  49.824971
+                ],
+                [
+                  -107.402274,
+                  49.832208
+                ],
+                [
+                  -107.413492,
+                  49.832208
+                ],
+                [
+                  -107.413492,
+                  49.824971
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-22-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963475,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-22-10-11-W3 As described on Certificate of Title 85SC02609.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-22-10-11-W3",
+                "parcel_no": "141963475",
+                "title_number": "143197768",
+                "title_text": "SW 22-10-11-3  Ext 0 As described on Certificate of Title 85SC02609.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "22",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.24,
+          "assessment": 444100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.380044,
+                  49.832208
+                ],
+                [
+                  -107.368824,
+                  49.832208
+                ],
+                [
+                  -107.368824,
+                  49.839445
+                ],
+                [
+                  -107.380044,
+                  49.839445
+                ],
+                [
+                  -107.380044,
+                  49.832208
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-23-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963532,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-23-10-11-W3 As described on Certificate of Title 85SC10945.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-23-10-11-W3",
+                "parcel_no": "141963532",
+                "title_number": "147523967",
+                "title_text": "NE 23-10-11-3  Ext 0 As described on Certificate of Title 85SC10945.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "23",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.17,
+          "assessment": 436800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.379837,
+                  49.824971
+                ],
+                [
+                  -107.368619,
+                  49.824971
+                ],
+                [
+                  -107.368619,
+                  49.832208
+                ],
+                [
+                  -107.379837,
+                  49.832208
+                ],
+                [
+                  -107.379837,
+                  49.824971
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-23-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963509,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-23-10-11-W3 As described on Certificate of Title 95SC07420.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-23-10-11-W3",
+                "parcel_no": "141963509",
+                "title_number": "147524025",
+                "title_text": "SE 23-10-11-3  Ext 0 As described on Certificate of Title 95SC07420.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "23",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.14,
+          "assessment": 448800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.357604,
+                  49.832208
+                ],
+                [
+                  -107.346384,
+                  49.832208
+                ],
+                [
+                  -107.346384,
+                  49.839445
+                ],
+                [
+                  -107.357604,
+                  49.839445
+                ],
+                [
+                  -107.357604,
+                  49.832208
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-24-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963576,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-24-10-11-W3 As described on Certificate of Title 95SC07421.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-24-10-11-W3",
+                "parcel_no": "141963576",
+                "title_number": "147524047",
+                "title_text": "NE 24-10-11-3  Ext 0 As described on Certificate of Title 95SC07421.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "24",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.13,
+          "assessment": 442400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.357401,
+                  49.824971
+                ],
+                [
+                  -107.346183,
+                  49.824971
+                ],
+                [
+                  -107.346183,
+                  49.832208
+                ],
+                [
+                  -107.357401,
+                  49.832208
+                ],
+                [
+                  -107.357401,
+                  49.824971
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-24-10-11-W3",
+          "owner": null,
+          "parcel_no": 153053265,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-24-10-11-W3 As described on Certificate of Title 95SC07421, description 12.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-24-10-11-W3",
+                "parcel_no": "153053265",
+                "title_number": "147524069",
+                "title_text": "SE 24-10-11-3  Ext 12 As described on Certificate of Title 95SC07421, description 12.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "24",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "12",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.08,
+          "assessment": 448800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.368619,
+                  49.824971
+                ],
+                [
+                  -107.357401,
+                  49.824971
+                ],
+                [
+                  -107.357401,
+                  49.832208
+                ],
+                [
+                  -107.368619,
+                  49.832208
+                ],
+                [
+                  -107.368619,
+                  49.824971
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-24-10-11-W3",
+          "owner": null,
+          "parcel_no": 141963554,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-24-10-11-W3 As described on Certificate of Title 95SC07420.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-24-10-11-W3",
+                "parcel_no": "141963554",
+                "title_number": "147524014",
+                "title_text": "SW 24-10-11-3  Ext 0 As described on Certificate of Title 95SC07420.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "24",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 155.8,
+          "assessment": 389100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.446065,
+                  49.788788
+                ],
+                [
+                  -107.434855,
+                  49.788788
+                ],
+                [
+                  -107.434855,
+                  49.796025
+                ],
+                [
+                  -107.446065,
+                  49.796025
+                ],
+                [
+                  -107.446065,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-5-10-11-W3",
+          "owner": null,
+          "parcel_no": 141965804,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-5-10-11-W3 As described on Certificate of Title 96SC08361C.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-5-10-11-W3",
+                "parcel_no": "141965804",
+                "title_number": "143427337",
+                "title_text": "NE 05-10-11-3  Ext 0 As described on Certificate of Title 96SC08361C.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "5",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 155.61,
+          "assessment": 389100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.457275,
+                  49.788788
+                ],
+                [
+                  -107.446065,
+                  49.788788
+                ],
+                [
+                  -107.446065,
+                  49.796025
+                ],
+                [
+                  -107.457275,
+                  49.796025
+                ],
+                [
+                  -107.457275,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-5-10-11-W3",
+          "owner": null,
+          "parcel_no": 141965792,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-5-10-11-W3 As described on Certificate of Title 96SC08361C.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-5-10-11-W3",
+                "parcel_no": "141965792",
+                "title_number": "143427348",
+                "title_text": "NW 05-10-11-3  Ext 0 As described on Certificate of Title 96SC08361C.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "5",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.1,
+          "assessment": 247200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.445849,
+                  49.781552
+                ],
+                [
+                  -107.434641,
+                  49.781552
+                ],
+                [
+                  -107.434641,
+                  49.788788
+                ],
+                [
+                  -107.445849,
+                  49.788788
+                ],
+                [
+                  -107.445849,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-5-10-11-W3",
+          "owner": null,
+          "parcel_no": 141927532,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-5-10-11-W3 As described on Certificate of Title 92SC05680.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-5-10-11-W3",
+                "parcel_no": "141927532",
+                "title_number": "143427304",
+                "title_text": "SE 05-10-11-3  Ext 0 As described on Certificate of Title 92SC05680.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "5",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.81,
+          "assessment": 292100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.457057,
+                  49.781552
+                ],
+                [
+                  -107.445849,
+                  49.781552
+                ],
+                [
+                  -107.445849,
+                  49.788788
+                ],
+                [
+                  -107.457057,
+                  49.788788
+                ],
+                [
+                  -107.457057,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-5-10-11-W3",
+          "owner": null,
+          "parcel_no": 141965781,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-5-10-11-W3 As described on Certificate of Title 92SC05680A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-5-10-11-W3",
+                "parcel_no": "141965781",
+                "title_number": "143427315",
+                "title_text": "SW 05-10-11-3  Ext 0 As described on Certificate of Title 92SC05680A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "5",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.14,
+          "assessment": 389100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.468485,
+                  49.788788
+                ],
+                [
+                  -107.457275,
+                  49.788788
+                ],
+                [
+                  -107.457275,
+                  49.796025
+                ],
+                [
+                  -107.468485,
+                  49.796025
+                ],
+                [
+                  -107.468485,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-10-11-W3",
+          "owner": null,
+          "parcel_no": 141965837,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-6-10-11-W3 As described on Certificate of Title 98SC05058.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-6-10-11-W3",
+                "parcel_no": "141965837",
+                "title_number": "143427281",
+                "title_text": "NE 06-10-11-3  Ext 0 As described on Certificate of Title 98SC05058.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "6",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 157.28,
+          "assessment": 381800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.479695,
+                  49.788788
+                ],
+                [
+                  -107.468485,
+                  49.788788
+                ],
+                [
+                  -107.468485,
+                  49.796025
+                ],
+                [
+                  -107.479695,
+                  49.796025
+                ],
+                [
+                  -107.479695,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-10-11-W3",
+          "owner": null,
+          "parcel_no": 141965826,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-6-10-11-W3 As described on Certificate of Title 83SC07755.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-6-10-11-W3",
+                "parcel_no": "141965826",
+                "title_number": "143427292",
+                "title_text": "NW 06-10-11-3  Ext 0 As described on Certificate of Title 83SC07755.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "6",
+                "twp": "10",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 157.32,
+          "assessment": 399400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.492689,
+                  49.846681
+                ],
+                [
+                  -107.481466,
+                  49.846681
+                ],
+                [
+                  -107.481466,
+                  49.853918
+                ],
+                [
+                  -107.492689,
+                  49.853918
+                ],
+                [
+                  -107.492689,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-25-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960506,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-25-10-12-W3 As described on Certificate of Title 93SC07172.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-25-10-12-W3",
+                "parcel_no": "141960506",
+                "title_number": "143427461",
+                "title_text": "NE 25-10-12-3  Ext 0 As described on Certificate of Title 93SC07172.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "25",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.58,
+          "assessment": 412200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.503913,
+                  49.846681
+                ],
+                [
+                  -107.492689,
+                  49.846681
+                ],
+                [
+                  -107.492689,
+                  49.853918
+                ],
+                [
+                  -107.503913,
+                  49.853918
+                ],
+                [
+                  -107.503913,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-25-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960494,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-25-10-12-W3 As described on Certificate of Title 93SC07172A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-25-10-12-W3",
+                "parcel_no": "141960494",
+                "title_number": "143427483",
+                "title_text": "NW 25-10-12-3  Ext 0 As described on Certificate of Title 93SC07172A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "25",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.72,
+          "assessment": 8100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.526359,
+                  49.846681
+                ],
+                [
+                  -107.515136,
+                  49.846681
+                ],
+                [
+                  -107.515136,
+                  49.853918
+                ],
+                [
+                  -107.526359,
+                  49.853918
+                ],
+                [
+                  -107.526359,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-26-10-12-W3",
+          "owner": null,
+          "parcel_no": 150734156,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-26-10-12-W3 As described on Certificate of Title 93SC07817A, description 4.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-26-10-12-W3",
+                "parcel_no": "150734134",
+                "title_number": "143265764",
+                "title_text": "NW 26-10-12-3  Ext 5 As described on Certificate of Title 93SC01103C, description 5.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "26",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "5",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.73,
+          "assessment": 347900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.537582,
+                  49.846681
+                ],
+                [
+                  -107.526359,
+                  49.846681
+                ],
+                [
+                  -107.526359,
+                  49.853918
+                ],
+                [
+                  -107.537582,
+                  49.853918
+                ],
+                [
+                  -107.537582,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-27-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960584,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-27-10-12-W3 As described on Certificate of Title 95SC04426B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-27-10-12-W3",
+                "parcel_no": "141960584",
+                "title_number": "143265753",
+                "title_text": "NE 27-10-12-3  Ext 0 As described on Certificate of Title 95SC04426B.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "27",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.81,
+          "assessment": 320700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.548806,
+                  49.846681
+                ],
+                [
+                  -107.537582,
+                  49.846681
+                ],
+                [
+                  -107.537582,
+                  49.853918
+                ],
+                [
+                  -107.548806,
+                  49.853918
+                ],
+                [
+                  -107.548806,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-27-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960573,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-27-10-12-W3 As described on Certificate of Title 95SC04426B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-27-10-12-W3",
+                "parcel_no": "141960573",
+                "title_number": "143265731",
+                "title_text": "NW 27-10-12-3  Ext 0 As described on Certificate of Title 95SC04426B.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "27",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.44,
+          "assessment": 315400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.538043,
+                  49.861154
+                ],
+                [
+                  -107.526816,
+                  49.861154
+                ],
+                [
+                  -107.526816,
+                  49.868391
+                ],
+                [
+                  -107.538043,
+                  49.868391
+                ],
+                [
+                  -107.538043,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-34-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960865,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-34-10-12-W3 As described on Certificate of Title 95SC04426A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-34-10-12-W3",
+                "parcel_no": "141960865",
+                "title_number": "143265720",
+                "title_text": "NE 34-10-12-3  Ext 0 As described on Certificate of Title 95SC04426A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "34",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.47,
+          "assessment": 316200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.54927,
+                  49.861154
+                ],
+                [
+                  -107.538043,
+                  49.861154
+                ],
+                [
+                  -107.538043,
+                  49.868391
+                ],
+                [
+                  -107.54927,
+                  49.868391
+                ],
+                [
+                  -107.54927,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-34-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960854,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-34-10-12-W3 As described on Certificate of Title 95SC04426.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-34-10-12-W3",
+                "parcel_no": "141960854",
+                "title_number": "143265719",
+                "title_text": "NW 34-10-12-3  Ext 0 As described on Certificate of Title 95SC04426.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "34",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.59,
+          "assessment": 330500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.537813,
+                  49.853918
+                ],
+                [
+                  -107.526588,
+                  49.853918
+                ],
+                [
+                  -107.526588,
+                  49.861154
+                ],
+                [
+                  -107.537813,
+                  49.861154
+                ],
+                [
+                  -107.537813,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-34-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960832,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-34-10-12-W3 As described on Certificate of Title 92SC06755.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-34-10-12-W3",
+                "parcel_no": "141960832",
+                "title_number": "143265955",
+                "title_text": "SE 34-10-12-3  Ext 0 As described on Certificate of Title 92SC06755.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "34",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.66,
+          "assessment": 351100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.526588,
+                  49.853918
+                ],
+                [
+                  -107.515363,
+                  49.853918
+                ],
+                [
+                  -107.515363,
+                  49.861154
+                ],
+                [
+                  -107.526588,
+                  49.861154
+                ],
+                [
+                  -107.526588,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-35-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960887,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-35-10-12-W3 As described on Certificate of Title 93SC01103C.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-35-10-12-W3",
+                "parcel_no": "141960887",
+                "title_number": "143265900",
+                "title_text": "SW 35-10-12-3  Ext 0 As described on Certificate of Title 93SC01103C.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "35",
+                "twp": "10",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.08,
+          "assessment": 217600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.270509,
+                  49.93352
+                ],
+                [
+                  -107.259266,
+                  49.93352
+                ],
+                [
+                  -107.259266,
+                  49.940757
+                ],
+                [
+                  -107.270509,
+                  49.940757
+                ],
+                [
+                  -107.270509,
+                  49.93352
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-27-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310732,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-27-11-10-W3 As described on Certificate of Title 77SC05992.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-27-11-10-W3",
+                "parcel_no": "143310732",
+                "title_number": "143051868",
+                "title_text": "NE 27-11-10-3  Ext 0 As described on Certificate of Title 77SC05992.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "27",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.08,
+          "assessment": 272700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.270318,
+                  49.926284
+                ],
+                [
+                  -107.259076,
+                  49.926284
+                ],
+                [
+                  -107.259076,
+                  49.93352
+                ],
+                [
+                  -107.270318,
+                  49.93352
+                ],
+                [
+                  -107.270318,
+                  49.926284
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-27-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310710,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-27-11-10-W3 As described on Certificate of Title 77SC05992.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-27-11-10-W3",
+                "parcel_no": "143310710",
+                "title_number": "143051857",
+                "title_text": "SE 27-11-10-3  Ext 0 As described on Certificate of Title 77SC05992.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "27",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.48,
+          "assessment": 337400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.268985,
+                  49.875627
+                ],
+                [
+                  -107.257755,
+                  49.875627
+                ],
+                [
+                  -107.257755,
+                  49.882864
+                ],
+                [
+                  -107.268985,
+                  49.882864
+                ],
+                [
+                  -107.268985,
+                  49.875627
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-3-11-10-W3",
+          "owner": null,
+          "parcel_no": 143309943,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-3-11-10-W3 As described on Certificate of Title 00SC11798.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-3-11-10-W3",
+                "parcel_no": "143309943",
+                "title_number": "143265630",
+                "title_text": "NE 03-11-10-3  Ext 0 As described on Certificate of Title 00SC11798.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "3",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 149.92,
+          "assessment": 350200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.280215,
+                  49.875627
+                ],
+                [
+                  -107.268985,
+                  49.875627
+                ],
+                [
+                  -107.268985,
+                  49.882864
+                ],
+                [
+                  -107.280215,
+                  49.882864
+                ],
+                [
+                  -107.280215,
+                  49.875627
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-3-11-10-W3",
+          "owner": null,
+          "parcel_no": 151391044,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-3-11-10-W3 As described on Certificate of Title 00SC11798, description 1.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-3-11-10-W3",
+                "parcel_no": "151391044",
+                "title_number": "143265652",
+                "title_text": "NW 03-11-10-3  Ext 1 As described on Certificate of Title 00SC11798, description 1.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "3",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 162.01,
+          "assessment": 407700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.268795,
+                  49.868391
+                ],
+                [
+                  -107.257567,
+                  49.868391
+                ],
+                [
+                  -107.257567,
+                  49.875627
+                ],
+                [
+                  -107.268795,
+                  49.875627
+                ],
+                [
+                  -107.268795,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-3-11-10-W3",
+          "owner": null,
+          "parcel_no": 143309932,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-3-11-10-W3 As described on Certificate of Title 97SC15208.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-3-11-10-W3",
+                "parcel_no": "143309932",
+                "title_number": "143265663",
+                "title_text": "SE 03-11-10-3  Ext 0 As described on Certificate of Title 97SC15208.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "3",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.66,
+          "assessment": 381800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.280023,
+                  49.868391
+                ],
+                [
+                  -107.268795,
+                  49.868391
+                ],
+                [
+                  -107.268795,
+                  49.875627
+                ],
+                [
+                  -107.280023,
+                  49.875627
+                ],
+                [
+                  -107.280023,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-3-11-10-W3",
+          "owner": null,
+          "parcel_no": 143316165,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-3-11-10-W3 As described on Certificate of Title 96SC02060.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-3-11-10-W3",
+                "parcel_no": "143316165",
+                "title_number": "143265674",
+                "title_text": "SW 03-11-10-3  Ext 0 As described on Certificate of Title 96SC02060.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "3",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.56,
+          "assessment": 325000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.291445,
+                  49.875627
+                ],
+                [
+                  -107.280215,
+                  49.875627
+                ],
+                [
+                  -107.280215,
+                  49.882864
+                ],
+                [
+                  -107.291445,
+                  49.882864
+                ],
+                [
+                  -107.291445,
+                  49.875627
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-4-11-10-W3",
+          "owner": null,
+          "parcel_no": 143316198,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-4-11-10-W3 As described on Certificate of Title 95SC09465.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-4-11-10-W3",
+                "parcel_no": "143316198",
+                "title_number": "142895863",
+                "title_text": "NE 04-11-10-3  Ext 0 As described on Certificate of Title 95SC09465.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "4",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 153.92,
+          "assessment": 351300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.291251,
+                  49.868391
+                ],
+                [
+                  -107.280023,
+                  49.868391
+                ],
+                [
+                  -107.280023,
+                  49.875627
+                ],
+                [
+                  -107.291251,
+                  49.875627
+                ],
+                [
+                  -107.291251,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-4-11-10-W3",
+          "owner": null,
+          "parcel_no": 143316187,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-4-11-10-W3 As described on Certificate of Title 97SC15208A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-4-11-10-W3",
+                "parcel_no": "143316187",
+                "title_number": "143265685",
+                "title_text": "SE 04-11-10-3  Ext 0 As described on Certificate of Title 97SC15208A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "4",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 161.75,
+          "assessment": 285400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.30248,
+                  49.868391
+                ],
+                [
+                  -107.291251,
+                  49.868391
+                ],
+                [
+                  -107.291251,
+                  49.875627
+                ],
+                [
+                  -107.30248,
+                  49.875627
+                ],
+                [
+                  -107.30248,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-4-11-10-W3",
+          "owner": null,
+          "parcel_no": 143309954,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-4-11-10-W3 As described on Certificate of Title 96SC02056.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-4-11-10-W3",
+                "parcel_no": "143309954",
+                "title_number": "142895807",
+                "title_text": "SW 04-11-10-3  Ext 0 As described on Certificate of Title 96SC02056.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "4",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 161.31,
+          "assessment": 412300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.347393,
+                  49.868391
+                ],
+                [
+                  -107.336164,
+                  49.868391
+                ],
+                [
+                  -107.336164,
+                  49.875627
+                ],
+                [
+                  -107.347393,
+                  49.875627
+                ],
+                [
+                  -107.347393,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310024,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-11-10-W3 As described on Certificate of Title 95SC03711.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-6-11-10-W3",
+                "parcel_no": "143310024",
+                "title_number": "149258100",
+                "title_text": "SW 06-11-10-3  Ext 0 As described on Certificate of Title 95SC03711.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "6",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.55,
+          "assessment": 301300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.314102,
+                  49.882864
+                ],
+                [
+                  -107.30287,
+                  49.882864
+                ],
+                [
+                  -107.30287,
+                  49.890101
+                ],
+                [
+                  -107.314102,
+                  49.890101
+                ],
+                [
+                  -107.314102,
+                  49.882864
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-8-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310091,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-8-11-10-W3 As described on Certificate of Title 02SC04817A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-8-11-10-W3",
+                "parcel_no": "143310091",
+                "title_number": "142037221",
+                "title_text": "SE 08-11-10-3  Ext 0 As described on Certificate of Title 02SC04817A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "8",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.41,
+          "assessment": 228700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.291638,
+                  49.882864
+                ],
+                [
+                  -107.280407,
+                  49.882864
+                ],
+                [
+                  -107.280407,
+                  49.890101
+                ],
+                [
+                  -107.291638,
+                  49.890101
+                ],
+                [
+                  -107.291638,
+                  49.882864
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-9-11-10-W3",
+          "owner": null,
+          "parcel_no": 143316200,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-9-11-10-W3 As described on Certificate of Title 95SC09465.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-9-11-10-W3",
+                "parcel_no": "143316200",
+                "title_number": "142037210",
+                "title_text": "SE 09-11-10-3  Ext 0 As described on Certificate of Title 95SC09465.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "9",
+                "twp": "11",
+                "rng": "10",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 161.4,
+          "assessment": 415300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.358621,
+                  49.868391
+                ],
+                [
+                  -107.347393,
+                  49.868391
+                ],
+                [
+                  -107.347393,
+                  49.875627
+                ],
+                [
+                  -107.358621,
+                  49.875627
+                ],
+                [
+                  -107.358621,
+                  49.868391
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-1-11-11-W3",
+          "owner": null,
+          "parcel_no": 143311395,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-1-11-11-W3 As described on Certificate of Title 95SC03711A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-1-11-11-W3",
+                "parcel_no": "143311395",
+                "title_number": "149258098",
+                "title_text": "SE 01-11-11-3  Ext 0 As described on Certificate of Title 95SC03711A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "1",
+                "twp": "11",
+                "rng": "11",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.98,
+          "assessment": 325700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.606847,
+                  49.904574
+                ],
+                [
+                  -107.59561,
+                  49.904574
+                ],
+                [
+                  -107.59561,
+                  49.91181
+                ],
+                [
+                  -107.606847,
+                  49.91181
+                ],
+                [
+                  -107.606847,
+                  49.904574
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-18-11-12-W3",
+          "owner": null,
+          "parcel_no": 143312138,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-18-11-12-W3 As described on Certificate of Title 76SC02433.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-18-11-12-W3",
+                "parcel_no": "143312138",
+                "title_number": "142037445",
+                "title_text": "NE 18-11-12-3  Ext 0 As described on Certificate of Title 76SC02433.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "18",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 148.68,
+          "assessment": 336100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.60733,
+                  49.919047
+                ],
+                [
+                  -107.596089,
+                  49.919047
+                ],
+                [
+                  -107.596089,
+                  49.926284
+                ],
+                [
+                  -107.60733,
+                  49.926284
+                ],
+                [
+                  -107.60733,
+                  49.919047
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-19-11-12-W3",
+          "owner": null,
+          "parcel_no": 203186651,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-19-11-12-W3 Title not available",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-19-11-12-W3",
+                "parcel_no": "203186651",
+                "title_number": "147853031",
+                "title_text": "NE 19-11-12-3  Ext 1",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "19",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.98,
+          "assessment": 364000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.61857,
+                  49.919047
+                ],
+                [
+                  -107.60733,
+                  49.919047
+                ],
+                [
+                  -107.60733,
+                  49.926284
+                ],
+                [
+                  -107.61857,
+                  49.926284
+                ],
+                [
+                  -107.61857,
+                  49.919047
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-19-11-12-W3",
+          "owner": null,
+          "parcel_no": 143346292,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-19-11-12-W3 As described on Certificate of Title 66SC03487.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-19-11-12-W3",
+                "parcel_no": "143346292",
+                "title_number": "142037456",
+                "title_text": "NW 19-11-12-3  Ext 0 As described on Certificate of Title 66SC03487.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "19",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.6,
+          "assessment": 360300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.607088,
+                  49.91181
+                ],
+                [
+                  -107.59585,
+                  49.91181
+                ],
+                [
+                  -107.59585,
+                  49.919047
+                ],
+                [
+                  -107.607088,
+                  49.919047
+                ],
+                [
+                  -107.607088,
+                  49.91181
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-19-11-12-W3",
+          "owner": null,
+          "parcel_no": 143346270,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-19-11-12-W3 As described on Certificate of Title 85SC11824.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-19-11-12-W3",
+                "parcel_no": "143346270",
+                "title_number": "142037467",
+                "title_text": "SE 19-11-12-3  Ext 0 As described on Certificate of Title 85SC11824.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "19",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 149.7,
+          "assessment": 298100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.596089,
+                  49.919047
+                ],
+                [
+                  -107.584849,
+                  49.919047
+                ],
+                [
+                  -107.584849,
+                  49.926284
+                ],
+                [
+                  -107.596089,
+                  49.926284
+                ],
+                [
+                  -107.596089,
+                  49.919047
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-20-11-12-W3",
+          "owner": null,
+          "parcel_no": 202933065,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-20-11-12-W3 Title not available",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-20-11-12-W3",
+                "parcel_no": "202933065",
+                "title_number": "146069039",
+                "title_text": "NW 20-11-12-3  Ext 1",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "20",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.98,
+          "assessment": 345400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.59585,
+                  49.91181
+                ],
+                [
+                  -107.584612,
+                  49.91181
+                ],
+                [
+                  -107.584612,
+                  49.919047
+                ],
+                [
+                  -107.59585,
+                  49.919047
+                ],
+                [
+                  -107.59585,
+                  49.91181
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-20-11-12-W3",
+          "owner": null,
+          "parcel_no": 143346315,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-20-11-12-W3 As described on Certificate of Title 02SC04477.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-20-11-12-W3",
+                "parcel_no": "143346315",
+                "title_number": "142037489",
+                "title_text": "SW 20-11-12-3  Ext 0 As described on Certificate of Title 02SC04477.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "20",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.22,
+          "assessment": 362600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.549734,
+                  49.875627
+                ],
+                [
+                  -107.538504,
+                  49.875627
+                ],
+                [
+                  -107.538504,
+                  49.882864
+                ],
+                [
+                  -107.549734,
+                  49.882864
+                ],
+                [
+                  -107.549734,
+                  49.875627
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-3-11-12-W3",
+          "owner": null,
+          "parcel_no": 143345808,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-3-11-12-W3 As described on Certificate of Title 93SC01104A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-3-11-12-W3",
+                "parcel_no": "143345808",
+                "title_number": "143265988",
+                "title_text": "NW 03-11-12-3  Ext 0 As described on Certificate of Title 93SC01104A.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "3",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.85,
+          "assessment": 344100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.618813,
+                  49.926284
+                ],
+                [
+                  -107.607571,
+                  49.926284
+                ],
+                [
+                  -107.607571,
+                  49.93352
+                ],
+                [
+                  -107.618813,
+                  49.93352
+                ],
+                [
+                  -107.618813,
+                  49.926284
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-30-11-12-W3",
+          "owner": null,
+          "parcel_no": 143344436,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-30-11-12-W3 As described on Certificate of Title 95SC06992B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-30-11-12-W3",
+                "parcel_no": "143344436",
+                "title_number": "143051802",
+                "title_text": "SW 30-11-12-3  Ext 0 As described on Certificate of Title 95SC06992B.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "30",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.39000000000001,
+          "assessment": 215300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.619299,
+                  49.940757
+                ],
+                [
+                  -107.608054,
+                  49.940757
+                ],
+                [
+                  -107.608054,
+                  49.947993
+                ],
+                [
+                  -107.619299,
+                  49.947993
+                ],
+                [
+                  -107.619299,
+                  49.940757
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-31-11-12-W3",
+          "owner": null,
+          "parcel_no": 143506021,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106 (VILLAGE OF NEVILLE)",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-31-11-12-W3 As described on Certificate of Title 00SC01394C which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-31-11-12-W3",
+                "parcel_no": "143506021",
+                "title_number": "143042341",
+                "title_text": "SW 31-11-12-3  Ext 2 As described on Certificate of Title 00SC01394C which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "31",
+                "twp": "11",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.65,
+          "assessment": 358900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.587233,
+                  49.991413
+                ],
+                [
+                  -107.575976,
+                  49.991413
+                ],
+                [
+                  -107.575976,
+                  49.99865
+                ],
+                [
+                  -107.587233,
+                  49.99865
+                ],
+                [
+                  -107.587233,
+                  49.991413
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-17-12-12-W3",
+          "owner": null,
+          "parcel_no": 143343468,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-17-12-12-W3 As described on Certificate of Title 97SC12330.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-17-12-12-W3",
+                "parcel_no": "143343468",
+                "title_number": "142037074",
+                "title_text": "NE 17-12-12-3  Ext 0 As described on Certificate of Title 97SC12330.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "17",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 149.71,
+          "assessment": 306400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.608779,
+                  49.962467
+                ],
+                [
+                  -107.597529,
+                  49.962467
+                ],
+                [
+                  -107.597529,
+                  49.969703
+                ],
+                [
+                  -107.608779,
+                  49.969703
+                ],
+                [
+                  -107.608779,
+                  49.962467
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 166248164,
+          "property_card": null,
+          "rm": "\"VILLAGE OF NEVILLE\"",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-6-12-12-W3 Title not available",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-6-12-12-W3",
+                "parcel_no": "166248164",
+                "title_number": "142924709",
+                "title_text": "NE 06-12-12-3  Ext 1",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.47,
+          "assessment": 369900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.620273,
+                  49.969703
+                ],
+                [
+                  -107.609021,
+                  49.969703
+                ],
+                [
+                  -107.609021,
+                  49.97694
+                ],
+                [
+                  -107.620273,
+                  49.97694
+                ],
+                [
+                  -107.620273,
+                  49.969703
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-7-12-12-W3",
+          "owner": null,
+          "parcel_no": 143343143,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-7-12-12-W3 As described on Certificate of Title 00SC02449.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-7-12-12-W3",
+                "parcel_no": "143343143",
+                "title_number": "141598716",
+                "title_text": "SW 07-12-12-3  Ext 0 As described on Certificate of Title 00SC02449.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "7",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.66,
+          "assessment": 378500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.564249,
+                  49.97694
+                ],
+                [
+                  -107.552995,
+                  49.97694
+                ],
+                [
+                  -107.552995,
+                  49.984176
+                ],
+                [
+                  -107.564249,
+                  49.984176
+                ],
+                [
+                  -107.564249,
+                  49.97694
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-9-12-12-W3",
+          "owner": null,
+          "parcel_no": 143311698,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-9-12-12-W3 As described on Certificate of Title 98SC07032E.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-9-12-12-W3",
+                "parcel_no": "143311698",
+                "title_number": "142037153",
+                "title_text": "NE 09-12-12-3  Ext 0 As described on Certificate of Title 98SC07032E.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NE",
+                "sec": "9",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.65,
+          "assessment": 338700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.575502,
+                  49.97694
+                ],
+                [
+                  -107.564249,
+                  49.97694
+                ],
+                [
+                  -107.564249,
+                  49.984176
+                ],
+                [
+                  -107.575502,
+                  49.984176
+                ],
+                [
+                  -107.575502,
+                  49.97694
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-9-12-12-W3",
+          "owner": null,
+          "parcel_no": 143343211,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-9-12-12-W3 As described on Certificate of Title 98SC07032E.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-9-12-12-W3",
+                "parcel_no": "143343211",
+                "title_number": "142037197",
+                "title_text": "NW 09-12-12-3  Ext 0 As described on Certificate of Title 98SC07032E.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "NW",
+                "sec": "9",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.57,
+          "assessment": 207300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.564013,
+                  49.969703
+                ],
+                [
+                  -107.552761,
+                  49.969703
+                ],
+                [
+                  -107.552761,
+                  49.97694
+                ],
+                [
+                  -107.564013,
+                  49.97694
+                ],
+                [
+                  -107.564013,
+                  49.969703
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-9-12-12-W3",
+          "owner": null,
+          "parcel_no": 143343198,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-9-12-12-W3 As described on Certificate of Title 98SC07032F.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-9-12-12-W3",
+                "parcel_no": "143343198",
+                "title_number": "142037164",
+                "title_text": "SE 09-12-12-3  Ext 0 As described on Certificate of Title 98SC07032F.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SE",
+                "sec": "9",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.65,
+          "assessment": 230300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.575265,
+                  49.969703
+                ],
+                [
+                  -107.564013,
+                  49.969703
+                ],
+                [
+                  -107.564013,
+                  49.97694
+                ],
+                [
+                  -107.575265,
+                  49.97694
+                ],
+                [
+                  -107.575265,
+                  49.969703
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-9-12-12-W3",
+          "owner": null,
+          "parcel_no": 143343200,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-9-12-12-W3 As described on Certificate of Title 98SC07032F.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_vanguard_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-9-12-12-W3",
+                "parcel_no": "143343200",
+                "title_number": "142037142",
+                "title_text": "SW 09-12-12-3  Ext 0 As described on Certificate of Title 98SC07032F.",
+                "rm": "RM OF WHISKA CREEK NO. 106",
+                "qtr": "SW",
+                "sec": "9",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [
+        {
+          "ac": 160.35,
+          "assessment": 230800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.203048,
+                  49.93352
+                ],
+                [
+                  -107.191805,
+                  49.93352
+                ],
+                [
+                  -107.191805,
+                  49.940757
+                ],
+                [
+                  -107.203048,
+                  49.940757
+                ],
+                [
+                  -107.203048,
+                  49.93352
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-30-11-9-W3",
+          "owner": null,
+          "parcel_no": 142341454,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-30-11-9-W3 As described on Certificate of Title 97SC04881.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.22,
+          "assessment": 427100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.380871,
+                  49.861154
+                ],
+                [
+                  -107.369644,
+                  49.861154
+                ],
+                [
+                  -107.369644,
+                  49.868391
+                ],
+                [
+                  -107.380871,
+                  49.868391
+                ],
+                [
+                  -107.380871,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-35-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964016,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-35-10-11-W3 As described on Certificate of Title 82SC08406.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.87,
+          "assessment": 398700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.358417,
+                  49.861154
+                ],
+                [
+                  -107.347191,
+                  49.861154
+                ],
+                [
+                  -107.347191,
+                  49.868391
+                ],
+                [
+                  -107.358417,
+                  49.868391
+                ],
+                [
+                  -107.358417,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-36-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964050,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-36-10-11-W3 As described on Certificate of Title 67SC04471.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.57,
+          "assessment": 397700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.336365,
+                  49.875627
+                ],
+                [
+                  -107.325135,
+                  49.875627
+                ],
+                [
+                  -107.325135,
+                  49.882864
+                ],
+                [
+                  -107.336365,
+                  49.882864
+                ],
+                [
+                  -107.336365,
+                  49.875627
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310046,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-6-11-10-W3 As described on Certificate of Title 67SC07389.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.6,
+          "assessment": 402700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.336765,
+                  49.890101
+                ],
+                [
+                  -107.325532,
+                  49.890101
+                ],
+                [
+                  -107.325532,
+                  49.897337
+                ],
+                [
+                  -107.336765,
+                  49.897337
+                ],
+                [
+                  -107.336765,
+                  49.890101
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-7-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310080,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-7-11-10-W3 As described on Certificate of Title 73SC00671.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.07,
+          "assessment": 322700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.314299,
+                  49.890101
+                ],
+                [
+                  -107.303066,
+                  49.890101
+                ],
+                [
+                  -107.303066,
+                  49.897337
+                ],
+                [
+                  -107.314299,
+                  49.897337
+                ],
+                [
+                  -107.314299,
+                  49.890101
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-8-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310125,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-8-11-10-W3 As described on Certificate of Title 89SC21156.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.65,
+          "assessment": 465400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.435714,
+                  49.817735
+                ],
+                [
+                  -107.424497,
+                  49.817735
+                ],
+                [
+                  -107.424497,
+                  49.824971
+                ],
+                [
+                  -107.435714,
+                  49.824971
+                ],
+                [
+                  -107.435714,
+                  49.817735
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-16-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964320,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-16-10-11-W3 As described on Certificate of Title 95SC14006.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.53,
+          "assessment": 418100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.347191,
+                  49.861154
+                ],
+                [
+                  -107.335964,
+                  49.861154
+                ],
+                [
+                  -107.335964,
+                  49.868391
+                ],
+                [
+                  -107.347191,
+                  49.868391
+                ],
+                [
+                  -107.347191,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-31-10-10-W3",
+          "owner": null,
+          "parcel_no": 141969730,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-31-10-10-W3 As described on Certificate of Title 68SC06217.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.08,
+          "assessment": 419800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.392097,
+                  49.861154
+                ],
+                [
+                  -107.380871,
+                  49.861154
+                ],
+                [
+                  -107.380871,
+                  49.868391
+                ],
+                [
+                  -107.392097,
+                  49.868391
+                ],
+                [
+                  -107.392097,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-35-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964005,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-35-10-11-W3 As described on Certificate of Title 82SC08405.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.8,
+          "assessment": 378800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.369644,
+                  49.861154
+                ],
+                [
+                  -107.358417,
+                  49.861154
+                ],
+                [
+                  -107.358417,
+                  49.868391
+                ],
+                [
+                  -107.369644,
+                  49.868391
+                ],
+                [
+                  -107.369644,
+                  49.861154
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-36-10-11-W3",
+          "owner": null,
+          "parcel_no": 141964049,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-36-10-11-W3 As described on Certificate of Title 67SC04471.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.46,
+          "assessment": 297300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.347999,
+                  49.890101
+                ],
+                [
+                  -107.336765,
+                  49.890101
+                ],
+                [
+                  -107.336765,
+                  49.897337
+                ],
+                [
+                  -107.347999,
+                  49.897337
+                ],
+                [
+                  -107.347999,
+                  49.890101
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-7-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310079,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-7-11-10-W3 As described on Certificate of Title 82SC08409.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.96,
+          "assessment": 369200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.323153,
+                  49.803262
+                ],
+                [
+                  -107.31194,
+                  49.803262
+                ],
+                [
+                  -107.31194,
+                  49.810498
+                ],
+                [
+                  -107.323153,
+                  49.810498
+                ],
+                [
+                  -107.323153,
+                  49.803262
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-8-10-10-W3",
+          "owner": null,
+          "parcel_no": 141968885,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-8-10-10-W3 As described on Certificate of Title 97SC08066A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.37,
+          "assessment": 369200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.325532,
+                  49.890101
+                ],
+                [
+                  -107.314299,
+                  49.890101
+                ],
+                [
+                  -107.314299,
+                  49.897337
+                ],
+                [
+                  -107.325532,
+                  49.897337
+                ],
+                [
+                  -107.325532,
+                  49.890101
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-8-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310114,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-8-11-10-W3 As described on Certificate of Title 89SC21156.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.42,
+          "assessment": 307800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.13236,
+                  49.796025
+                ],
+                [
+                  -107.121148,
+                  49.796025
+                ],
+                [
+                  -107.121148,
+                  49.803262
+                ],
+                [
+                  -107.13236,
+                  49.803262
+                ],
+                [
+                  -107.13236,
+                  49.796025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-10-10-9-W3",
+          "owner": null,
+          "parcel_no": 142175516,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-10-10-9-W3 As described on Certificate of Title 61SC03564.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.08,
+          "assessment": 342400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.314496,
+                  49.897337
+                ],
+                [
+                  -107.303261,
+                  49.897337
+                ],
+                [
+                  -107.303261,
+                  49.904574
+                ],
+                [
+                  -107.314496,
+                  49.904574
+                ],
+                [
+                  -107.314496,
+                  49.897337
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-17-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310372,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-17-11-10-W3 As described on Certificate of Title 82SC08408.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.94,
+          "assessment": 327200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.269937,
+                  49.91181
+                ],
+                [
+                  -107.258699,
+                  49.91181
+                ],
+                [
+                  -107.258699,
+                  49.919047
+                ],
+                [
+                  -107.269937,
+                  49.919047
+                ],
+                [
+                  -107.269937,
+                  49.91181
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-22-11-10-W3",
+          "owner": null,
+          "parcel_no": 143315300,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-22-11-10-W3 As described on Certificate of Title 80SC02742.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.45,
+          "assessment": 213200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.203229,
+                  49.940757
+                ],
+                [
+                  -107.191984,
+                  49.940757
+                ],
+                [
+                  -107.191984,
+                  49.947993
+                ],
+                [
+                  -107.203229,
+                  49.947993
+                ],
+                [
+                  -107.203229,
+                  49.940757
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-31-11-9-W3",
+          "owner": null,
+          "parcel_no": 142341465,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-31-11-9-W3 As described on Certificate of Title 89SC11272.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.65,
+          "assessment": 377200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.336565,
+                  49.882864
+                ],
+                [
+                  -107.325333,
+                  49.882864
+                ],
+                [
+                  -107.325333,
+                  49.890101
+                ],
+                [
+                  -107.336565,
+                  49.890101
+                ],
+                [
+                  -107.336565,
+                  49.882864
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-7-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310057,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-7-11-10-W3 As described on Certificate of Title 67SC07389.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.44,
+          "assessment": 306600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.143571,
+                  49.796025
+                ],
+                [
+                  -107.13236,
+                  49.796025
+                ],
+                [
+                  -107.13236,
+                  49.803262
+                ],
+                [
+                  -107.143571,
+                  49.803262
+                ],
+                [
+                  -107.143571,
+                  49.796025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-10-10-9-W3",
+          "owner": null,
+          "parcel_no": 142175527,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-10-10-9-W3 As described on Certificate of Title 61SC03564.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 79.93,
+          "assessment": 75800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.120813,
+                  49.781552
+                ],
+                [
+                  -107.109605,
+                  49.781552
+                ],
+                [
+                  -107.109605,
+                  49.788788
+                ],
+                [
+                  -107.120813,
+                  49.788788
+                ],
+                [
+                  -107.120813,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-2-10-9-W3",
+          "owner": null,
+          "parcel_no": 149439189,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-2-10-9-W3 As described on Certificate of Title 66SC10225, description 14.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.66,
+          "assessment": 393500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.503688,
+                  49.839445
+                ],
+                [
+                  -107.492466,
+                  49.839445
+                ],
+                [
+                  -107.492466,
+                  49.846681
+                ],
+                [
+                  -107.503688,
+                  49.846681
+                ],
+                [
+                  -107.503688,
+                  49.839445
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-25-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960483,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-25-10-12-W3 As described on Certificate of Title 93SC07817.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.82,
+          "assessment": 334200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.526131,
+                  49.839445
+                ],
+                [
+                  -107.514909,
+                  49.839445
+                ],
+                [
+                  -107.514909,
+                  49.846681
+                ],
+                [
+                  -107.526131,
+                  49.846681
+                ],
+                [
+                  -107.526131,
+                  49.839445
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-26-10-12-W3",
+          "owner": null,
+          "parcel_no": 141960528,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-26-10-12-W3 As described on Certificate of Title 93SC07817.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.21,
+          "assessment": 233200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.191626,
+                  49.926284
+                ],
+                [
+                  -107.180384,
+                  49.926284
+                ],
+                [
+                  -107.180384,
+                  49.93352
+                ],
+                [
+                  -107.191626,
+                  49.93352
+                ],
+                [
+                  -107.191626,
+                  49.926284
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-29-11-9-W3",
+          "owner": null,
+          "parcel_no": 142341397,
+          "property_card": null,
+          "rm": "RM OF GLEN BAIN NO. 105",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-29-11-9-W3 As described on Certificate of Title 95SC06514.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "glen_bain_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.52,
+          "assessment": 391400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.346989,
+                  49.853918
+                ],
+                [
+                  -107.335764,
+                  49.853918
+                ],
+                [
+                  -107.335764,
+                  49.861154
+                ],
+                [
+                  -107.346989,
+                  49.861154
+                ],
+                [
+                  -107.346989,
+                  49.853918
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-31-10-10-W3",
+          "owner": null,
+          "parcel_no": 141969729,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-31-10-10-W3 As described on Certificate of Title 68SC06217.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.87,
+          "assessment": 365400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.599694,
+                  50.027596
+                ],
+                [
+                  -107.588429,
+                  50.027596
+                ],
+                [
+                  -107.588429,
+                  50.034832
+                ],
+                [
+                  -107.599694,
+                  50.034832
+                ],
+                [
+                  -107.599694,
+                  50.027596
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-32-12-12-W3",
+          "owner": null,
+          "parcel_no": 143341286,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-32-12-12-W3 As described on Certificate of Title 91SC00976.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 147.99,
+          "assessment": 468300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.597289,
+                  49.95523
+                ],
+                [
+                  -107.58604,
+                  49.95523
+                ],
+                [
+                  -107.58604,
+                  49.962467
+                ],
+                [
+                  -107.597289,
+                  49.962467
+                ],
+                [
+                  -107.597289,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-5-12-12-W3",
+          "owner": null,
+          "parcel_no": 204127859,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106 (VILLAGE OF NEVILLE)",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-5-12-12-W3 Extension 2",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.86,
+          "assessment": 365500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.322955,
+                  49.796025
+                ],
+                [
+                  -107.311743,
+                  49.796025
+                ],
+                [
+                  -107.311743,
+                  49.803262
+                ],
+                [
+                  -107.322955,
+                  49.803262
+                ],
+                [
+                  -107.322955,
+                  49.796025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-8-10-10-W3",
+          "owner": null,
+          "parcel_no": 141968874,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-8-10-10-W3 As described on Certificate of Title 97SC08066A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.48,
+          "assessment": 358800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.325333,
+                  49.882864
+                ],
+                [
+                  -107.314102,
+                  49.882864
+                ],
+                [
+                  -107.314102,
+                  49.890101
+                ],
+                [
+                  -107.325333,
+                  49.890101
+                ],
+                [
+                  -107.325333,
+                  49.882864
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-8-11-10-W3",
+          "owner": null,
+          "parcel_no": 143310103,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-8-11-10-W3 As described on Certificate of Title 79SC01071.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_vanguard_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "whiska_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        }
+      ],
+      "remove": [],
+      "reassign_out": [
+        {
+          "ac": 87.55000000000001,
+          "assessment": 16600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 143320384,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-12-12-W3 As described on Certificate of Title 79SC14097.",
+          "reconciliation": {
+            "bucket": "REASSIGN_OUT",
+            "action": "move_from_vanguard_to___neville__",
+            "source_property_id": "vanguard",
+            "target_property_id": "__neville__",
+            "status": "csv_confirms_mfl_titled_under___neville__",
+            "snapshot_date": "2026-01-18"
+          }
+        },
+        {
+          "ac": 65.19,
+          "assessment": 337200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.619786,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 151624199,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-12-12-W3 As described on Certificate of Title 79SC14668, description 10.",
+          "reconciliation": {
+            "bucket": "REASSIGN_OUT",
+            "action": "move_from_vanguard_to___neville__",
+            "source_property_id": "vanguard",
+            "target_property_id": "__neville__",
+            "status": "csv_confirms_mfl_titled_under___neville__",
+            "snapshot_date": "2026-01-18"
+          }
+        }
+      ],
+      "reassign_in": []
+    },
+    "__neville__": {
+      "add": [],
+      "keep": [],
+      "flag": [],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": [
+        {
+          "ac": 87.55000000000001,
+          "assessment": 16600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 143320384,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-12-12-W3 As described on Certificate of Title 79SC14097.",
+          "reconciliation": {
+            "bucket": "REASSIGN_IN",
+            "action": "move_from_vanguard_to___neville__",
+            "source_property_id": "vanguard",
+            "target_property_id": "__neville__",
+            "status": "csv_confirms_mfl_titled_under___neville__",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LOT-2-BLK-13-PLAN-N3619",
+                "parcel_no": "143320384",
+                "title_number": "148055621",
+                "title_text": "Lot 2-Blk/Par 13-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "2",
+                "block": "13",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 65.19,
+          "assessment": 337200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.619786,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 151624199,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-12-12-W3 As described on Certificate of Title 79SC14668, description 10.",
+          "reconciliation": {
+            "bucket": "REASSIGN_IN",
+            "action": "move_from_vanguard_to___neville__",
+            "source_property_id": "vanguard",
+            "target_property_id": "__neville__",
+            "status": "csv_confirms_mfl_titled_under___neville__",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LSD-6-6-12-12-W3",
+                "parcel_no": "151624199",
+                "title_number": "143051790",
+                "title_text": "LSD 6-06-12-12-3  Ext 10 As described on Certificate of Title 79SC14668, description 10.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": "6",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "10",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

@@ -55,13 +55,22 @@ def load_quarters() -> dict:
     return json.loads(m.group(1))
 
 
-def slug_rm(rm: str | None) -> str:
+def slug_rm(rm) -> str:
     """Turn 'RM OF MOUNT HOPE NO. 279' -> 'mount_hope'.
 
     Also strips parentheticals like '(TOWN OF RAYMORE)' and trailing
     'NO. <n>' even when buried mid-string.
+
+    Defensive: some legacy XLSX rows (notably hafford) store rm as the
+    bare RM number (int) instead of the full RM name string. For those
+    we fall back to 'rm_no_<n>' so each RM still gets a distinct FLAG
+    subtype rather than collapsing them all into 'unknown'.
     """
-    if not rm:
+    if rm is None or rm == "":
+        return "unknown"
+    if isinstance(rm, (int, float)):
+        return f"rm_no_{int(rm)}"
+    if not isinstance(rm, str):
         return "unknown"
     s = rm.upper()
     s = re.sub(r"\([^)]*\)", "", s)            # strip parentheticals
@@ -76,8 +85,8 @@ def slug_rm(rm: str | None) -> str:
 
 def flag_subtype_for(record: dict, primary_rms: set[str]) -> str:
     """Choose a FLAG subtype based on the record's RM. Generic default."""
-    rm = (record.get("rm") or "").strip()
-    if not rm:
+    rm = record.get("rm")
+    if rm is None or rm == "":
         return "unknown_not_in_mfl_csv"
     return f"{slug_rm(rm)}_not_in_mfl_csv"
 

@@ -78,8 +78,11 @@ def main(deltas_path: str):
     affected_pids: set[str] = set()
 
     for pid, p in deltas.get("properties", {}).items():
-        if pid.startswith("_"):
-            continue  # _other_affected metadata block, not a property bucket
+        # Skip only the explicit Codex-convention metadata block.
+        # Placeholder pids like __neville__ are real data buckets and
+        # must be processed.
+        if pid == "_other_affected":
+            continue
         affected_pids.add(pid)
         new_records: list[dict] = []
         bucket_counts = {"keep": 0, "flag": 0, "add": 0, "reassign_in": 0, "reassign_out_skipped": 0}

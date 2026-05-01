@@ -1,21 +1,10 @@
 # Audit — `vanguard`
 
 - CSV title rows for this property: **65**
-- Current map records (quarters-data.js): **93**
-- ADD: 1  ·  KEEP 64 title rows / 63 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 2 features  ·  FLAG 28
+- Current map records (quarters-data.js): **92**
+- ADD: 0  ·  KEEP 65 title rows / 64 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
-
-## ADD — in CSV, not in any current map record
-
-- `SW-31-11-12-W3`  · pn `143344469`  · RM OF WHISKA CREEK NO. 106  · ext 1  · QUARTER
-
-## REASSIGN-out — currently under this property, CSV claims another
-
-- CURRENT: `SE-6-12-12-W3`  · pn `143320384`  · RM OF WHISKA CREEK NO. 106  · ac 87.55000000000001  · soil G
-  · CSV-claimed by: `__neville__`
-- CURRENT: `SW-6-12-12-W3`  · pn `151624199`  · RM OF WHISKA CREEK NO. 106  · ac 65.19  · soil G
-  · CSV-claimed by: `__neville__`
 
 ## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
@@ -100,5 +89,5 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `SE-1-11-11-W3`  · pn `143311395`  · RM OF WHISKA CREEK NO. 106  · ac 161.4  · soil E  ← CSV title `149258098` ext 0
 - `NE-18-11-12-W3`  · pn `143312138`  · RM OF WHISKA CREEK NO. 106  · ac 159.98  · soil H  ← CSV title `142037445` ext 0
 - `NE-19-11-12-W3`  · pn `203186651`  · RM OF WHISKA CREEK NO. 106  · ac 148.68  · soil G  ← CSV title `147853031` ext 1
-- ... (14 more, omitted from narrative)
+- ... (15 more, omitted from narrative)
 
