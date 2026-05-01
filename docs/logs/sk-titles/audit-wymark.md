@@ -1,0 +1,116 @@
+# Audit — `wymark`
+
+- CSV parcels claimed for this property: **22**
+- Current parcels in quarters-data.js: **101**
+- ADD: 0  |  KEEP: 22  |  REASSIGN-in: 0  |  FLAG: 82
+
+## FLAG — currently mapped, not in CSV (keep, investigate)
+
+- `NE-12-13-14-W3`  · pn `164590791`  · RM OF SWIFT CURRENT NO. 137  · ac 118.22  · soil G
+- `NE-13-12-15-W3`  · pn `144388323`  · RM OF LAC PELLETIER NO. 107  · ac 158.3  · soil L
+- `NE-13-13-14-W3`  · pn `150531612`  · RM OF SWIFT CURRENT NO. 137  · ac 79.65  · soil G
+- `NE-14-13-14-W3`  · pn `150402956`  · RM OF SWIFT CURRENT NO. 137  · ac 81.67  · soil G
+- `NE-15-11-14-W3`  · pn `143312958`  · RM OF LAC PELLETIER NO. 107  · ac 159.83  · soil J
+- `NE-16-13-15-W3`  · pn `141582753`  · RM OF SWIFT CURRENT NO. 137  · ac 160.12  · soil K
+- `NE-17-12-14-W3`  · pn `150791205`  · RM OF LAC PELLETIER NO. 107  · ac 153.99  · soil J
+- `NE-17-16-12-W3`  · pn `151641288`  · RM OF EXCELSIOR NO. 166  · ac 140.94  · soil J
+- `NE-18-12-14-W3`  · pn `143330778`  · RM OF LAC PELLETIER NO. 107  · ac 154.64  · soil J
+- `NE-19-13-13-W3`  · pn `150852506`  · RM OF SWIFT CURRENT NO. 137  · ac 68.69999999999999  · soil G
+- `NE-20-11-13-W3`  · pn `143338754`  · RM OF LAC PELLETIER NO. 107  · ac 160.36  · soil K
+- `NE-22-13-15-W3`  · pn `141582933`  · RM OF SWIFT CURRENT NO. 137  · ac 160.71  · soil K
+- `NE-23-13-15-W3`  · pn `141582977`  · RM OF SWIFT CURRENT NO. 137  · ac 157.72  · soil J
+- `NE-24-13-14-W3`  · pn `147558033`  · RM OF SWIFT CURRENT NO. 137  · ac 158.65  · soil G
+- `NE-26-12-15-W3`  · pn `144387445`  · RM OF LAC PELLETIER NO. 107  · ac 160  · soil K
+- `NE-27-12-13-W3`  · pn `143335267`  · RM OF LAC PELLETIER NO. 107  · ac 35.69  · soil G
+- `NE-29-10-13-W3`  · pn `151464797`  · RM OF LAC PELLETIER NO. 107  · ac 158.21  · soil H
+- `NE-3-13-15-W3`  · pn `151073254`  · RM OF SWIFT CURRENT NO. 137  · ac 160.12  · soil K
+- `NE-30-13-13-W3`  · pn `203142316`  · RM OF SWIFT CURRENT NO. 137  · ac 138.03  · soil G
+- `NE-33-12-15-W3`  · pn `144385937`  · RM OF LAC PELLETIER NO. 107  · ac 160.38  · soil K
+- `NE-34-12-15-W3`  · pn `144385971`  · RM OF LAC PELLETIER NO. 107  · ac 159.92  · soil K
+- `NE-4-13-15-W3`  · pn `141582360`  · RM OF SWIFT CURRENT NO. 137  · ac 160.22  · soil K
+- `NE-6-13-13-W3`  · pn `144542695`  · RM OF SWIFT CURRENT NO. 137  · ac 157.84  · soil G
+- `NE-7-13-12-W3`  · pn `144523403`  · RM OF COULEE NO. 136  · ac 159.86  · soil G
+- `NE-7-13-13-W3`  · pn `144542730`  · RM OF SWIFT CURRENT NO. 137  · ac 156.85  · soil G
+- `NE-7-13-14-W3`  · pn `144532009`  · RM OF SWIFT CURRENT NO. 137  · ac 161.68  · soil J
+- `NE-9-13-15-W3`  · pn `141582494`  · RM OF SWIFT CURRENT NO. 137  · ac 160.34  · soil K
+- `NW-14-13-14-W3`  · pn `150403058`  · RM OF SWIFT CURRENT NO. 137  · ac 81.78  · soil G
+- `NW-15-11-14-W3`  · pn `143333760`  · RM OF LAC PELLETIER NO. 107  · ac 157.14  · soil K
+- `NW-17-16-12-W3`  · pn `151641312`  · RM OF EXCELSIOR NO. 166  · ac 120.95  · soil J
+- `NW-18-12-14-W3`  · pn `143330767`  · RM OF LAC PELLETIER NO. 107  · ac 154.38  · soil K
+- `NW-18-13-14-W3`  · pn `144530658`  · RM OF SWIFT CURRENT NO. 137  · ac 163.57  · soil J
+- `NW-19-12-14-W3`  · pn `143330790`  · RM OF LAC PELLETIER NO. 107  · ac 153.88  · soil K
+- `NW-20-11-13-W3`  · pn `143338743`  · RM OF LAC PELLETIER NO. 107  · ac 157.64  · soil K
+- `NW-22-13-15-W3`  · pn `141582922`  · RM OF SWIFT CURRENT NO. 137  · ac 156.98  · soil K
+- `NW-23-13-15-W3`  · pn `141582966`  · RM OF SWIFT CURRENT NO. 137  · ac 159.92  · soil J
+- `NW-3-13-15-W3`  · pn `141582337`  · RM OF SWIFT CURRENT NO. 137  · ac 159.97  · soil K
+- `NW-3-16-12-W3`  · pn `143269904`  · RM OF EXCELSIOR NO. 166  · ac 162.46  · soil J
+- `NW-33-12-14-W3`  · pn `143328450`  · RM OF LAC PELLETIER NO. 107  · ac 159.72  · soil H
+- `NW-33-12-15-W3`  · pn `144385926`  · RM OF LAC PELLETIER NO. 107  · ac 159.68  · soil K
+- `NW-35-12-15-W3`  · pn `144386006`  · RM OF LAC PELLETIER NO. 107  · ac 159.96  · soil K
+- `NW-4-13-15-W3`  · pn `141545134`  · RM OF SWIFT CURRENT NO. 137  · ac 157.72  · soil J
+- `NW-7-13-14-W3`  · pn `144589168`  · RM OF SWIFT CURRENT NO. 137  · ac 160.87  · soil j
+- `SE-1-13-13-W3`  · pn `147668068`  · RM OF SWIFT CURRENT NO. 137  · ac 156.96  · soil H
+- `SE-13-12-15-W3`  · pn `144289749`  · RM OF LAC PELLETIER NO. 107  · ac 159.04  · soil J
+- `SE-15-16-12-W3`  · pn `143268992`  · RM OF EXCELSIOR NO. 166  · ac 160.61  · soil M
+- `SE-16-13-15-W3`  · pn `141582742`  · RM OF SWIFT CURRENT NO. 137  · ac 160.17  · soil K
+- `SE-17-12-14-W3`  · pn `143330723`  · RM OF LAC PELLETIER NO. 107  · ac 159.87  · soil K
+- `SE-18-12-14-W3`  · pn `143330756`  · RM OF LAC PELLETIER NO. 107  · ac 158.72  · soil K
+- `SE-18-13-12-W3`  · pn `166037418`  · RM OF COULEE NO. 136  · ac 160.37  · soil F
+- `SE-20-13-13-W3`  · pn `146944086`  · RM OF SWIFT CURRENT NO. 137  · ac 86.75  · soil G
+- `SE-22-13-15-W3`  · pn `141582900`  · RM OF SWIFT CURRENT NO. 137  · ac 158.6  · soil K
+- `SE-23-13-15-W3`  · pn `141582944`  · RM OF SWIFT CURRENT NO. 137  · ac 155.27  · soil J
+- `SE-24-11-14-W3`  · pn `143332714`  · RM OF LAC PELLETIER NO. 107  · ac 160.2  · soil H
+- `SE-24-13-14-W3`  · pn `144530906`  · RM OF SWIFT CURRENT NO. 137  · ac 159.5  · soil J
+- `SE-25-13-14-W3`  · pn `146641192`  · RM OF SWIFT CURRENT NO. 137  · ac 119.93  · soil G
+- `SE-29-10-13-W3`  · pn `141467519`  · RM OF LAC PELLETIER NO. 107  · ac 160.1  · soil H
+- `SE-29-11-13-W3`  · pn `143339238`  · RM OF LAC PELLETIER NO. 107  · ac 160.05  · soil K
+- `SE-33-12-13-W3`  · pn `143336493`  · RM OF LAC PELLETIER NO. 107  · ac 156.43  · soil G
+- `SE-33-12-15-W3`  · pn `144385904`  · RM OF LAC PELLETIER NO. 107  · ac 160.46  · soil J
+- `SE-4-13-15-W3`  · pn `141582359`  · RM OF SWIFT CURRENT NO. 137  · ac 160.12  · soil K
+- `SE-7-13-13-W3`  · pn `144542707`  · RM OF SWIFT CURRENT NO. 137  · ac 158.17  · soil G
+- `SE-8-13-13-W3`  · pn `144541515`  · RM OF SWIFT CURRENT NO. 137  · ac 159.49  · soil G
+- `SE-9-13-15-W3`  · pn `141582483`  · RM OF SWIFT CURRENT NO. 137  · ac 160.25  · soil K
+- `SW-10-13-15-W3`  · pn `141582517`  · RM OF SWIFT CURRENT NO. 137  · ac 159.99  · soil L
+- `SW-12-12-13-W3`  · pn `147142795`  · RM OF LAC PELLETIER NO. 107  · ac 79.65  · soil H
+- `SW-14-13-14-W3`  · pn `151308525`  · RM OF SWIFT CURRENT NO. 137  · ac 81.62  · soil G
+- `SW-15-16-12-W3`  · pn `143269005`  · RM OF EXCELSIOR NO. 166  · ac 161.74  · soil L
+- `SW-18-12-14-W3`  · pn `143314747`  · RM OF LAC PELLETIER NO. 107  · ac 158.85  · soil J
+- `SW-18-13-14-W3`  · pn `144530647`  · RM OF SWIFT CURRENT NO. 137  · ac 162.32  · soil J
+- `SW-19-12-14-W3`  · pn `143314758`  · RM OF LAC PELLETIER NO. 107  · ac 158.92  · soil J
+- `SW-19-13-13-W3`  · pn `150738475`  · RM OF SWIFT CURRENT NO. 137  · ac 159.46  · soil G
+- `SW-2-13-15-W3`  · pn `141583563`  · RM OF SWIFT CURRENT NO. 137  · ac 159.81  · soil K
+- `SW-22-13-15-W3`  · pn `141802163`  · RM OF SWIFT CURRENT NO. 137  · ac 158.84  · soil J
+- `SW-23-13-15-W3`  · pn `141582955`  · RM OF SWIFT CURRENT NO. 137  · ac 15.9  · soil K
+- `SW-3-13-15-W3`  · pn `141582326`  · RM OF SWIFT CURRENT NO. 137  · ac 159.95  · soil H
+- `SW-33-12-15-W3`  · pn `144385915`  · RM OF LAC PELLETIER NO. 107  · ac 159.37  · soil J
+- `SW-35-12-15-W3`  · pn `144385993`  · RM OF LAC PELLETIER NO. 107  · ac 160.05  · soil K
+- `SW-4-13-15-W3`  · pn `151233892`  · RM OF SWIFT CURRENT NO. 137  · ac 155.57  · soil J
+- `SW-8-13-13-W3`  · pn `144541526`  · RM OF SWIFT CURRENT NO. 137  · ac 156.84  · soil G
+- `SW-9-12-13-W3`  · pn `143335649`  · RM OF LAC PELLETIER NO. 107  · ac 160.44  · soil H
+- `SW-9-13-15-W3`  · pn `141545190`  · RM OF SWIFT CURRENT NO. 137  · ac 157.79  · soil H
+
+## KEEP — confirmed MFL-titled (in both CSV and current map)
+
+- `SE-36-11-13-W3`  · pn `147451013`  · RM OF LAC PELLETIER NO. 107  · ac 160.46  · soil J  ← CSV title `143051835` ext 3
+- `SE-30-11-13-W3`  · pn `203137635`  · RM OF LAC PELLETIER NO. 107  · ac 22.88  · soil H  ← CSV title `151471740` ext 0
+- `NW-13-11-13-W3`  · pn `143506245`  · RM OF LAC PELLETIER NO. 107  · ac 158.94  · soil J  ← CSV title `143042363` ext 1
+- `NW-13-11-13-W3`  · pn `143506245`  · RM OF LAC PELLETIER NO. 107  · ac 158.94  · soil J  ← CSV title `143042374` ext 2
+- `SW-13-11-13-W3`  · pn `143340588`  · RM OF LAC PELLETIER NO. 107  · ac 160.55  · soil J  ← CSV title `143042385` ext 0
+- `NE-24-11-13-W3`  · pn `143338888`  · RM OF LAC PELLETIER NO. 107  · ac 160.76  · soil H  ← CSV title `142037434` ext 0
+- `NE-25-11-13-W3`  · pn `143313500`  · RM OF LAC PELLETIER NO. 107  · ac 160.5  · soil H  ← CSV title `143051846` ext 0
+- `SE-25-11-13-W3`  · pn `143338899`  · RM OF LAC PELLETIER NO. 107  · ac 160.57  · soil H  ← CSV title `143051813` ext 0
+- `SW-29-11-13-W3`  · pn `143313601`  · RM OF LAC PELLETIER NO. 107  · ac 157.67  · soil H  ← CSV title `148761726` ext 0
+- `SE-36-11-13-W3`  · pn `147451013`  · RM OF LAC PELLETIER NO. 107  · ac 160.46  · soil J  ← CSV title `143051824` ext 11
+- `NE-6-11-13-W3`  · pn `143312598`  · RM OF LAC PELLETIER NO. 107  · ac 153.9  · soil H  ← CSV title `151209299` ext 0
+- `NW-6-11-13-W3`  · pn `143340667`  · RM OF LAC PELLETIER NO. 107  · ac 156.21  · soil J  ← CSV title `151209301` ext 0
+- `SW-7-11-13-W3`  · pn `143340689`  · RM OF LAC PELLETIER NO. 107  · ac 160.43  · soil J  ← CSV title `151209323` ext 0
+- `NE-10-11-14-W3`  · pn `143333614`  · RM OF LAC PELLETIER NO. 107  · ac 159.45  · soil K  ← CSV title `143265708` ext 0
+- `SE-10-11-14-W3`  · pn `143333591`  · RM OF LAC PELLETIER NO. 107  · ac 159.55  · soil K  ← CSV title `143265696` ext 0
+- `NE-21-11-14-W3`  · pn `149802600`  · RM OF LAC PELLETIER NO. 107  · ac 145.81  · soil K  ← CSV title `141598727` ext 7
+- `NW-21-11-14-W3`  · pn `143332613`  · RM OF LAC PELLETIER NO. 107  · ac 160.63  · soil J  ← CSV title `143042295` ext 0
+- `SE-21-11-14-W3`  · pn `143332590`  · RM OF LAC PELLETIER NO. 107  · ac 159.08  · soil K  ← CSV title `141598761` ext 0
+- `SW-21-11-14-W3`  · pn `143508641`  · RM OF LAC PELLETIER NO. 107  · ac 158.94  · soil K  ← CSV title `143042318` ext 1
+- `SW-21-11-14-W3`  · pn `143508641`  · RM OF LAC PELLETIER NO. 107  · ac 158.94  · soil K  ← CSV title `143042329` ext 2
+- `SE-23-11-14-W3`  · pn `143332679`  · RM OF LAC PELLETIER NO. 107  · ac 159.88  · soil H  ← CSV title `141598783` ext 0
+- `SE-29-11-14-W3`  · pn `143331218`  · RM OF LAC PELLETIER NO. 107  · ac 159.39  · soil J  ← CSV title `137118258` ext 0
+

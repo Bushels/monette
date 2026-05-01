@@ -1,0 +1,134 @@
+# Audit — `raymore`
+
+- CSV parcels claimed for this property: **4**
+- Current parcels in quarters-data.js: **122**
+- ADD: 0  |  KEEP: 4  |  REASSIGN-in: 0  |  FLAG: 118
+
+## FLAG — currently mapped, not in CSV (keep, investigate)
+
+- `NE-1-26-21-W2`  · pn `110370080`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 159.91  · soil L
+- `NE-12-26-21-W2`  · pn `110383916`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 140.65  · soil K
+- `NE-13-26-20-W2`  · pn `108661013`  · RM OF MOUNT HOPE NO. 279  · ac 159.33  · soil K
+- `NE-14-26-20-W2`  · pn `108661057`  · RM OF MOUNT HOPE NO. 279  · ac 158.99  · soil M
+- `NE-14-28-19-W2`  · pn `152272447`  · RM OF MOUNT HOPE NO. 279  · ac 82.74  · soil G
+- `NE-14-29-21-W2`  · pn `112814007`  · RM OF MOUNT HOPE NO. 279  · ac 160.01  · soil J
+- `NE-15-28-19-W2`  · pn `113591280`  · RM OF MOUNT HOPE NO. 279  · ac 162.08  · soil G
+- `NE-17-27-19-W2`  · pn `113594395`  · RM OF MOUNT HOPE NO. 279  · ac 160.55  · soil H
+- `NE-18-26-19-W2`  · pn `108650842`  · RM OF MOUNT HOPE NO. 279  · ac 158.97  · soil K
+- `NE-2-26-19-W2`  · pn `108652811`  · RM OF MOUNT HOPE NO. 279  · ac 159.12  · soil H
+- `NE-21-25-20-W2`  · pn `108664993`  · RM OF MOUNT HOPE NO. 279  · ac 160.98  · soil J
+- `NE-22-27-20-W2`  · pn `113613948`  · RM OF MOUNT HOPE NO. 279  · ac 159.07  · soil J
+- `NE-22-29-21-W2`  · pn `112814322`  · RM OF MOUNT HOPE NO. 279  · ac 158.57  · soil K
+- `NE-23-29-21-W2`  · pn `112814366`  · RM OF MOUNT HOPE NO. 279  · ac 159.01  · soil J
+- `NE-3-28-19-W2`  · pn `113592933`  · RM OF MOUNT HOPE NO. 279  · ac 165.03  · soil G
+- `NE-31-26-19-W2`  · pn `108274855`  · RM OF MOUNT HOPE NO. 279  · ac 162.73  · soil H
+- `NE-32-25-20-W2`  · pn `108641527`  · RM OF MOUNT HOPE NO. 279  · ac 158.55  · soil J
+- `NE-32-26-20-W2`  · pn `108268184`  · RM OF MOUNT HOPE NO. 279  · ac 153.01  · soil J
+- `NE-33-25-20-W2`  · pn `108641572`  · RM OF MOUNT HOPE NO. 279  · ac 158.07  · soil J
+- `NE-33-26-19-W2`  · pn `108274877`  · RM OF MOUNT HOPE NO. 279  · ac 158.2  · soil H
+- `NE-33-26-20-W2`  · pn `108268195`  · RM OF MOUNT HOPE NO. 279  · ac 160.07  · soil J
+- `NE-34-29-21-W2`  · pn `112814704`  · RM OF MOUNT HOPE NO. 279  · ac 159.26  · soil J
+- `NE-35-25-21-W2`  · pn `110370721`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 158.68  · soil H
+- `NE-4-27-20-W2`  · pn `113613230`  · RM OF MOUNT HOPE NO. 279  · ac 161.15  · soil J
+- `NE-5-27-20-W2`  · pn `152450658`  · RM OF MOUNT HOPE NO. 279  · ac 157.82  · soil J
+- `NE-6-27-19-W2`  · pn `113593956`  · RM OF MOUNT HOPE NO. 279  · ac 158.45  · soil H
+- `NE-9-29-21-W2`  · pn `112813804`  · RM OF MOUNT HOPE NO. 279  · ac 82.84  · soil K
+- `NW-1-26-20-W2`  · pn `108297063`  · RM OF MOUNT HOPE NO. 279  · ac 159.21  · soil J
+- `NW-10-26-20-W2`  · pn `108660887`  · RM OF MOUNT HOPE NO. 279  · ac 157.19  · soil J
+- `NW-11-28-19-W2`  · pn `113591112`  · RM OF MOUNT HOPE NO. 279  · ac 159.89  · soil G
+- `NW-12-26-20-W2`  · pn `108660966`  · RM OF MOUNT HOPE NO. 279  · ac 158.24  · soil K
+- `NW-13-26-20-W2`  · pn `108661002`  · RM OF MOUNT HOPE NO. 279  · ac 159.37  · soil L
+- `NW-14-27-20-W2`  · pn `113613612`  · RM OF MOUNT HOPE NO. 279  · ac 156.82  · soil J
+- `NW-14-28-19-W2`  · pn `113591235`  · RM OF MOUNT HOPE NO. 279  · ac 161.76  · soil G
+- `NW-14-29-21-W2`  · pn `112813994`  · RM OF MOUNT HOPE NO. 279  · ac 160.09  · soil J
+- `NW-18-26-19-W2`  · pn `108650831`  · RM OF MOUNT HOPE NO. 279  · ac 159.38  · soil L
+- `NW-21-25-20-W2`  · pn `144953488`  · RM OF MOUNT HOPE NO. 279  · ac 158.46  · soil J
+- `NW-21-27-19-W2`  · pn `113594531`  · RM OF MOUNT HOPE NO. 279  · ac 159.59  · soil H
+- `NW-23-29-21-W2`  · pn `112814355`  · RM OF MOUNT HOPE NO. 279  · ac 158.92  · soil K
+- `NW-3-26-20-W2`  · pn `108297085`  · RM OF MOUNT HOPE NO. 279  · ac 158.35  · soil H
+- `NW-3-27-19-W2`  · pn `113593822`  · RM OF MOUNT HOPE NO. 279  · ac 160.05  · soil H
+- `NW-3-27-20-W2`  · pn `113613207`  · RM OF MOUNT HOPE NO. 279  · ac 160.46  · soil J
+- `NW-32-25-20-W2`  · pn `108641516`  · RM OF MOUNT HOPE NO. 279  · ac 158.5  · soil J
+- `NW-32-26-20-W2`  · pn `108268173`  · RM OF MOUNT HOPE NO. 279  · ac 160.71  · soil J
+- `NW-33-25-20-W2`  · pn `108641561`  · RM OF MOUNT HOPE NO. 279  · ac 158.79  · soil J
+- `NW-33-26-19-W2`  · pn `108651315`  · RM OF MOUNT HOPE NO. 279  · ac 160.67  · soil K
+- `NW-33-26-20-W2`  · pn `108292158`  · RM OF MOUNT HOPE NO. 279  · ac 167.04  · soil J
+- `NW-33-27-20-W2`  · pn `113611979`  · RM OF MOUNT HOPE NO. 279  · ac 160.05  · soil K
+- `NW-34-25-20-W2`  · pn `108641606`  · RM OF MOUNT HOPE NO. 279  · ac 158.61  · soil J
+- `NW-4-27-20-W2`  · pn `113613229`  · RM OF MOUNT HOPE NO. 279  · ac 160.62  · soil J
+- `NW-5-27-20-W2`  · pn `113613252`  · RM OF MOUNT HOPE NO. 279  · ac 160.08  · soil J
+- `NW-6-27-19-W2`  · pn `113593945`  · RM OF MOUNT HOPE NO. 279  · ac 158.17  · soil H
+- `NW-9-26-20-W2`  · pn `108660843`  · RM OF MOUNT HOPE NO. 279  · ac 160.16  · soil J
+- `SE-1-26-21-W2`  · pn `110369965`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 158.87  · soil K
+- `SE-10-26-20-W2`  · pn `108660865`  · RM OF MOUNT HOPE NO. 279  · ac 158.31  · soil J
+- `SE-12-26-20-W2`  · pn `108660944`  · RM OF MOUNT HOPE NO. 279  · ac 159.4  · soil J
+- `SE-12-26-21-W2`  · pn `110369011`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 159.19  · soil K
+- `SE-13-26-20-W2`  · pn `108660988`  · RM OF MOUNT HOPE NO. 279  · ac 157.81  · soil J
+- `SE-14-28-19-W2`  · pn `113591213`  · RM OF MOUNT HOPE NO. 279  · ac 160.52  · soil G
+- `SE-14-29-21-W2`  · pn `112813972`  · RM OF MOUNT HOPE NO. 279  · ac 159.98  · soil J
+- `SE-15-28-19-W2`  · pn `203226386`  · RM OF MOUNT HOPE NO. 279  · ac 150.92  · soil H
+- `SE-17-26-20-W2`  · pn `108661147`  · RM OF MOUNT HOPE NO. 279  · ac 157.34  · soil J
+- `SE-2-26-19-W2`  · pn `108652787`  · RM OF MOUNT HOPE NO. 279  · ac 160.58  · soil H
+- `SE-20-27-19-W2`  · pn `113594485`  · RM OF MOUNT HOPE NO. 279  · ac 160.15  · soil H
+- `SE-22-27-20-W2`  · pn `113613915`  · RM OF MOUNT HOPE NO. 279  · ac 159.02  · soil J
+- `SE-22-29-21-W2`  · pn `112814298`  · RM OF MOUNT HOPE NO. 279  · ac 159.14  · soil K
+- `SE-23-26-20-W2`  · pn `108661383`  · RM OF MOUNT HOPE NO. 279  · ac 160  · soil M
+- `SE-23-28-19-W2`  · pn `113591516`  · RM OF MOUNT HOPE NO. 279 (TOWN OF RAYMORE)  · ac 158.99  · soil G
+- `SE-23-29-21-W2`  · pn `112814333`  · RM OF MOUNT HOPE NO. 279  · ac 160.26  · soil J
+- `SE-24-28-19-W2`  · pn `203755552`  · RM OF MOUNT HOPE NO. 279  · ac 18.07  · soil G
+- `SE-28-25-20-W2`  · pn `108641336`  · RM OF MOUNT HOPE NO. 279  · ac 159.03  · soil H
+- `SE-32-25-20-W2`  · pn `108641493`  · RM OF MOUNT HOPE NO. 279  · ac 159.11  · soil J
+- `SE-32-26-20-W2`  · pn `108667840`  · RM OF MOUNT HOPE NO. 279  · ac 155.39  · soil J
+- `SE-32-27-20-W2`  · pn `113611913`  · RM OF MOUNT HOPE NO. 279  · ac 160.73  · soil K
+- `SE-33-26-19-W2`  · pn `108651292`  · RM OF MOUNT HOPE NO. 279  · ac 159.24  · soil H
+- `SE-33-26-20-W2`  · pn `108297164`  · RM OF MOUNT HOPE NO. 279  · ac 159.09  · soil J
+- `SE-34-29-21-W2`  · pn `112814681`  · RM OF MOUNT HOPE NO. 279  · ac 159  · soil K
+- `SE-4-26-20-W2`  · pn `145339555`  · RM OF MOUNT HOPE NO. 279  · ac 158.08  · soil J
+- `SE-4-27-20-W2`  · pn `113602328`  · RM OF MOUNT HOPE NO. 279  · ac 161.18  · soil J
+- `SE-5-27-20-W2`  · pn `161628408`  · RM OF MOUNT HOPE NO. 279  · ac 159.68  · soil J
+- `SE-6-26-20-W2`  · pn `108660708`  · RM OF MOUNT HOPE NO. 279  · ac 158.34  · soil J
+- `SE-7-27-19-W2`  · pn `113593967`  · RM OF MOUNT HOPE NO. 279  · ac 158.45  · soil H
+- `SE-8-27-20-W2`  · pn `113613353`  · RM OF MOUNT HOPE NO. 279  · ac 160.28  · soil J
+- `SE-9-27-20-W2`  · pn `152450849`  · RM OF MOUNT HOPE NO. 279  · ac 160.27  · soil J
+- `SE-9-29-21-W2`  · pn `112886624`  · RM OF MOUNT HOPE NO. 279  · ac 149.16  · soil K
+- `SW-10-26-20-W2`  · pn `108660876`  · RM OF MOUNT HOPE NO. 279  · ac 158.09  · soil H
+- `SW-10-27-19-W2`  · pn `113594092`  · RM OF MOUNT HOPE NO. 279  · ac 160.01  · soil H
+- `SW-10-27-20-W2`  · pn `113613443`  · RM OF MOUNT HOPE NO. 279  · ac 160.18  · soil K
+- `SW-11-28-19-W2`  · pn `113591101`  · RM OF MOUNT HOPE NO. 279  · ac 159.22  · soil G
+- `SW-12-26-20-W2`  · pn `145115186`  · RM OF MOUNT HOPE NO. 279  · ac 157.52  · soil K
+- `SW-13-26-20-W2`  · pn `108660999`  · RM OF MOUNT HOPE NO. 279  · ac 159.69  · soil K
+- `SW-13-26-21-W2`  · pn `110369066`  · RM OF LAST MOUNTAIN VALLEY NO. 250  · ac 159.71  · soil K
+- `SW-14-29-21-W2`  · pn `112813983`  · RM OF MOUNT HOPE NO. 279  · ac 160.07  · soil J
+- `SW-16-26-20-W2`  · pn `108661114`  · RM OF MOUNT HOPE NO. 279  · ac 161.2  · soil J
+- `SW-20-27-19-W2`  · pn `113594496`  · RM OF MOUNT HOPE NO. 279  · ac 161.02  · soil H
+- `SW-21-27-19-W2`  · pn `113594520`  · RM OF MOUNT HOPE NO. 279  · ac 159.28  · soil H
+- `SW-23-27-20-W2`  · pn `113613960`  · RM OF MOUNT HOPE NO. 279  · ac 159.06  · soil K
+- `SW-23-28-19-W2`  · pn `113591527`  · RM OF MOUNT HOPE NO. 279  · ac 158.95  · soil G
+- `SW-23-29-21-W2`  · pn `112814344`  · RM OF MOUNT HOPE NO. 279  · ac 160.05  · soil J
+- `SW-28-25-20-W2`  · pn `108641347`  · RM OF MOUNT HOPE NO. 279  · ac 160.31  · soil J
+- `SW-3-27-19-W2`  · pn `113593811`  · RM OF MOUNT HOPE NO. 279  · ac 163.23  · soil H
+- `SW-3-27-20-W2`  · pn `113602317`  · RM OF MOUNT HOPE NO. 279  · ac 161.39  · soil J
+- `SW-31-25-19-W2`  · pn `108266823`  · RM OF LONGLAKETON NO. 219  · ac 156.34  · soil J
+- `SW-32-25-20-W2`  · pn `108641505`  · RM OF MOUNT HOPE NO. 279  · ac 159.17  · soil J
+- `SW-32-26-20-W2`  · pn `108667851`  · RM OF MOUNT HOPE NO. 279  · ac 159.47  · soil J
+- `SW-33-26-19-W2`  · pn `108651304`  · RM OF MOUNT HOPE NO. 279  · ac 161.75  · soil J
+- `SW-33-26-20-W2`  · pn `108667862`  · RM OF MOUNT HOPE NO. 279  · ac 162.79  · soil J
+- `SW-33-27-20-W2`  · pn `113611968`  · RM OF MOUNT HOPE NO. 279  · ac 161.16  · soil K
+- `SW-4-26-20-W2`  · pn `108670260`  · RM OF MOUNT HOPE NO. 279  · ac 160.41  · soil J
+- `SW-4-27-20-W2`  · pn `113602339`  · RM OF MOUNT HOPE NO. 279  · ac 159.41  · soil J
+- `SW-5-27-20-W2`  · pn `161628420`  · RM OF MOUNT HOPE NO. 279  · ac 161.96  · soil J
+- `SW-6-26-20-W2`  · pn `202780425`  · RM OF MOUNT HOPE NO. 279  · ac 148.68  · soil K
+- `SW-7-26-19-W2`  · pn `108652990`  · RM OF MOUNT HOPE NO. 279  · ac 159.71  · soil H
+- `SW-7-26-20-W2`  · pn `108660753`  · RM OF MOUNT HOPE NO. 279  · ac 158.93  · soil J
+- `SW-7-27-19-W2`  · pn `113593978`  · RM OF MOUNT HOPE NO. 279  · ac 158.28  · soil H
+- `SW-8-27-20-W2`  · pn `113613364`  · RM OF MOUNT HOPE NO. 279  · ac 160.36  · soil J
+- `SW-9-27-20-W2`  · pn `113613409`  · RM OF MOUNT HOPE NO. 279  · ac 161.17  · soil J
+- `SW-9-29-21-W2`  · pn `112886635`  · RM OF MOUNT HOPE NO. 279  · ac 128.15  · soil K
+
+## KEEP — confirmed MFL-titled (in both CSV and current map)
+
+- `NE-36-25-20-W2`  · pn `108664230`  · RM OF MOUNT HOPE NO. 279  · ac 156.39  · soil H  ← CSV title `157472983` ext 0
+- `NW-5-26-19-W2`  · pn `108652923`  · RM OF MOUNT HOPE NO. 279  · ac 159.71  · soil K  ← CSV title `157473063` ext 0
+- `SE-6-26-19-W2`  · pn `108652945`  · RM OF MOUNT HOPE NO. 279  · ac 159.9  · soil H  ← CSV title `157472994` ext 0
+- `SW-6-26-19-W2`  · pn `108652956`  · RM OF MOUNT HOPE NO. 279  · ac 160.19  · soil H  ← CSV title `157473007` ext 0
+

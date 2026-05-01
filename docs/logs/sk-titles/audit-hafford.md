@@ -1,0 +1,170 @@
+# Audit — `hafford`
+
+- CSV parcels claimed for this property: **2**
+- Current parcels in quarters-data.js: **158**
+- ADD: 0  |  KEEP: 2  |  REASSIGN-in: 0  |  FLAG: 156
+
+## FLAG — currently mapped, not in CSV (keep, investigate)
+
+- `NE-1-45-12-W3`  · pn `None`  · 436  · ac 160.13  · soil C
+- `NE-1-45-13-W3`  · pn `None`  · 436  · ac 158.05  · soil E
+- `NE-10-45-13-W3`  · pn `203849365`  · RM OF DOUGLAS NO. 436  · ac 145.35  · soil D
+- `NE-10-46-13-W3`  · pn `None`  · 467  · ac 98.7  · soil H
+- `NE-11-44-10-W3`  · pn `None`  · 435  · ac 159.2  · soil F
+- `NE-11-45-12-W3`  · pn `None`  · 436  · ac 159.41  · soil E
+- `NE-11-46-13-W3`  · pn `None`  · 467  · ac 112.11  · soil H
+- `NE-12-43-11-W3`  · pn `None`  · 436  · ac 160.78  · soil J
+- `NE-13-43-12-W3`  · pn `None`  · 436  · ac 154.58  · soil H
+- `NE-13-44-11-W3`  · pn `None`  · 436  · ac 160.25  · soil F
+- `NE-14-43-12-W3`  · pn `None`  · 436  · ac 160.71  · soil H
+- `NE-15-43-11-W3`  · pn `None`  · 436  · ac 152.93  · soil E
+- `NE-17-44-12-W3`  · pn `None`  · 436  · ac 140.41  · soil H
+- `NE-17-45-12-W3`  · pn `None`  · 436  · ac 158.8  · soil C
+- `NE-18-44-10-W3`  · pn `None`  · 435  · ac 143.03  · soil G
+- `NE-18-45-11-W3`  · pn `None`  · 436  · ac 159.9  · soil G
+- `NE-19-43-12-W3`  · pn `None`  · 436  · ac 154.79  · soil G
+- `NE-19-44-10-W3`  · pn `None`  · 435  · ac 157.97  · soil G
+- `NE-19-45-11-W3`  · pn `None`  · 436  · ac 159.85  · soil G
+- `NE-2-45-12-W3`  · pn `None`  · 436  · ac 160.1  · soil C
+- `NE-20-45-12-W3`  · pn `None`  · 436  · ac 158.93  · soil G
+- `NE-21-44-12-W3`  · pn `None`  · 436  · ac 158.76  · soil C
+- `NE-22-43-11-W3`  · pn `None`  · 436  · ac 155.88  · soil E
+- `NE-24-44-12-W3`  · pn `None`  · 436  · ac 150.36  · soil C
+- `NE-25-44-12-W3`  · pn `None`  · 436  · ac 160.11  · soil C
+- `NE-26-44-10-W3`  · pn `None`  · 435  · ac 148.09  · soil F
+- `NE-26-44-12-W3`  · pn `None`  · 436  · ac 159.77  · soil C
+- `NE-27-44-13-W3`  · pn `None`  · 436  · ac 159.84  · soil F
+- `NE-29-44-12-W3`  · pn `130807122`  · RM OF DOUGLAS NO. 436  · ac 159.38  · soil C
+- `NE-29-44-14-W3`  · pn `130800787`  · RM OF NORTH BATTLEFORD NO. 437  · ac 160.08  · soil J
+- `NE-3-44-10-W3`  · pn `None`  · 435  · ac 158.43  · soil F
+- `NE-3-44-12-W3`  · pn `None`  · 436  · ac 150.58  · soil G
+- `NE-30-44-12-W3`  · pn `None`  · 436  · ac 159.46  · soil E
+- `NE-30-44-14-W3`  · pn `None`  · 436  · ac 148.8  · soil K
+- `NE-31-43-11-W3`  · pn `None`  · 436  · ac 159.49  · soil E
+- `NE-31-44-11-W3`  · pn `None`  · 436  · ac 158.97  · soil C
+- `NE-32-44-12-W3`  · pn `None`  · 436  · ac 159.52  · soil C
+- `NE-33-44-12-W3`  · pn `None`  · 436  · ac 159.07  · soil C
+- `NE-34-44-13-W3`  · pn `None`  · 436  · ac 160.88  · soil G
+- `NE-35-44-12-W3`  · pn `None`  · 436  · ac 159.26  · soil C
+- `NE-36-44-13-W3`  · pn `None`  · 436  · ac 159.92  · soil F
+- `NE-5-43-10-W3`  · pn `None`  · 436  · ac 160.88  · soil J
+- `NE-5-45-12-W3`  · pn `None`  · 436  · ac 158.64  · soil C
+- `NE-6-45-12-W3`  · pn `None`  · 436  · ac 112.82  · soil O
+- `NE-8-45-12-W3`  · pn `None`  · 436  · ac 158.56  · soil C
+- `NE-9-45-12-W3`  · pn `None`  · 436  · ac 159.95  · soil D
+- `NW-1-45-12-W3`  · pn `None`  · 436  · ac 159.96  · soil C
+- `NW-1-45-13-W3`  · pn `None`  · 436  · ac 154.72  · soil E
+- `NW-10-45-13-W3`  · pn `128877586`  · RM OF DOUGLAS NO. 436  · ac 159.8  · soil F
+- `NW-10-46-13-W3`  · pn `None`  · 467  · ac 153.8  · soil K
+- `NW-11-44-10-W3`  · pn `None`  · 435  · ac 142.05  · soil F
+- `NW-11-45-12-W3`  · pn `None`  · 436  · ac 158.21  · soil F
+- `NW-11-46-13-W3`  · pn `None`  · 467  · ac 112.89  · soil H
+- `NW-12-43-11-W3`  · pn `None`  · 436  · ac 160.67  · soil J
+- `NW-12-45-13-W3`  · pn `None`  · 436  · ac 149.33  · soil E
+- `NW-14-43-11-W3`  · pn `None`  · 436  · ac 154.97  · soil F
+- `NW-15-43-11-W3`  · pn `None`  · 436  · ac 153.39  · soil F
+- `NW-17-44-12-W3`  · pn `130806749`  · RM OF DOUGLAS NO. 436  · ac 158.26  · soil F
+- `NW-18-43-11-W3`  · pn `None`  · 436  · ac 151.95  · soil J
+- `NW-18-45-11-W3`  · pn `None`  · 436  · ac 159.9  · soil F
+- `NW-19-45-11-W3`  · pn `None`  · 436  · ac 159.93  · soil G
+- `NW-2-45-12-W3`  · pn `None`  · 436  · ac 159.16  · soil C
+- `NW-2-45-13-W3`  · pn `128876888`  · RM OF DOUGLAS NO. 436  · ac 160.45  · soil E
+- `NW-21-44-12-W3`  · pn `None`  · 436  · ac 157.85  · soil D
+- `NW-22-43-11-W3`  · pn `None`  · 436  · ac 154.26  · soil E
+- `NW-23-43-10-W3`  · pn `131024696`  · RM OF DOUGLAS NO. 436  · ac 0.17  · soil O
+- `NW-24-44-12-W3`  · pn `None`  · 436  · ac 159.41  · soil C
+- `NW-26-44-12-W3`  · pn `None`  · 436  · ac 151.05  · soil C
+- `NW-27-44-12-W3`  · pn `None`  · 436  · ac 160.56  · soil C
+- `NW-28-44-14-W3`  · pn `130800732`  · RM OF NORTH BATTLEFORD NO. 437  · ac 160.64  · soil J
+- `NW-29-44-12-W3`  · pn `None`  · 436  · ac 160.4  · soil C
+- `NW-29-44-14-W3`  · pn `130800776`  · RM OF NORTH BATTLEFORD NO. 437  · ac 158.95  · soil K
+- `NW-3-45-13-W3`  · pn `128876967`  · RM OF DOUGLAS NO. 436  · ac 159.66  · soil E
+- `NW-30-44-14-W3`  · pn `None`  · 436  · ac 159.84  · soil K
+- `NW-31-44-12-W3`  · pn `None`  · 436  · ac 159.91  · soil E
+- `NW-32-44-12-W3`  · pn `None`  · 436  · ac 158.04  · soil D
+- `NW-34-44-12-W3`  · pn `None`  · 436  · ac 159.37  · soil C
+- `NW-36-44-12-W3`  · pn `None`  · 436  · ac 159.54  · soil C
+- `NW-4-45-12-W3`  · pn `None`  · 436  · ac 158.98  · soil C
+- `NW-5-45-12-W3`  · pn `None`  · 436  · ac 159.79  · soil C
+- `NW-6-45-12-W3`  · pn `None`  · 436  · ac 80.56  · soil L
+- `NW-9-45-12-W3`  · pn `None`  · 436  · ac 159.42  · soil D
+- `SE-10-45-12-W3`  · pn `None`  · 436  · ac 159.56  · soil C
+- `SE-10-45-13-W3`  · pn `128877542`  · RM OF DOUGLAS NO. 436  · ac 159.5  · soil E
+- `SE-11-44-10-W3`  · pn `None`  · 435  · ac 159.9  · soil F
+- `SE-11-45-12-W3`  · pn `None`  · 436  · ac 160.38  · soil D
+- `SE-12-43-11-W3`  · pn `None`  · 436  · ac 160.75  · soil H
+- `SE-12-45-13-W3`  · pn `None`  · 436  · ac 157.65  · soil E
+- `SE-13-43-12-W3`  · pn `None`  · 436  · ac 150.01  · soil G
+- `SE-13-45-14-W3`  · pn `None`  · 437  · ac 159.91  · soil K
+- `SE-14-45-12-W3`  · pn `None`  · 436  · ac 158.3  · soil F
+- `SE-15-46-13-W3`  · pn `None`  · 467  · ac 158.15  · soil J
+- `SE-16-44-12-W3`  · pn `130806693`  · RM OF DOUGLAS NO. 436  · ac 160.18  · soil E
+- `SE-17-44-12-W3`  · pn `None`  · 436  · ac 158.75  · soil F
+- `SE-17-45-12-W3`  · pn `None`  · 436  · ac 158.39  · soil E
+- `SE-19-44-10-W3`  · pn `None`  · 435  · ac 159.48  · soil G
+- `SE-19-45-11-W3`  · pn `None`  · 436  · ac 159.36  · soil G
+- `SE-2-45-12-W3`  · pn `None`  · 436  · ac 159  · soil C
+- `SE-21-43-11-W3`  · pn `None`  · 436  · ac 155.63  · soil E
+- `SE-21-44-12-W3`  · pn `None`  · 436  · ac 141.28  · soil E
+- `SE-22-43-11-W3`  · pn `None`  · 436  · ac 156.13  · soil E
+- `SE-24-44-11-W3`  · pn `None`  · 436  · ac 143.6  · soil G
+- `SE-24-44-12-W3`  · pn `None`  · 436  · ac 157.51  · soil C
+- `SE-25-44-12-W3`  · pn `None`  · 436  · ac 159.17  · soil C
+- `SE-29-44-12-W3`  · pn `130784935`  · RM OF DOUGLAS NO. 436  · ac 158.31  · soil C
+- `SE-29-45-12-W3`  · pn `None`  · 436  · ac 158.58  · soil P
+- `SE-3-44-10-W3`  · pn `None`  · 435  · ac 152.44  · soil F
+- `SE-3-44-12-W3`  · pn `None`  · 436  · ac 155.41  · soil F
+- `SE-3-45-12-W3`  · pn `None`  · 436  · ac 158.49  · soil C
+- `SE-30-44-14-W3`  · pn `None`  · 436  · ac 159.1  · soil H
+- `SE-31-44-14-W3`  · pn `None`  · 436  · ac 159.04  · soil H
+- `SE-32-44-12-W3`  · pn `130807199`  · RM OF DOUGLAS NO. 436  · ac 159.48  · soil C
+- `SE-32-44-14-W3`  · pn `130800877`  · RM OF NORTH BATTLEFORD NO. 437  · ac 160.18  · soil J
+- `SE-33-44-12-W3`  · pn `None`  · 436  · ac 160.05  · soil C
+- `SE-34-44-13-W3`  · pn `None`  · 436  · ac 159.76  · soil F
+- `SE-35-44-12-W3`  · pn `None`  · 436  · ac 159.74  · soil C
+- `SE-36-44-12-W3`  · pn `None`  · 436  · ac 160.1  · soil C
+- `SE-4-45-12-W3`  · pn `None`  · 436  · ac 159.15  · soil D
+- `SE-5-45-10-W3`  · pn `None`  · 435  · ac 158.64  · soil G
+- `SE-5-45-12-W3`  · pn `None`  · 436  · ac 159.04  · soil C
+- `SE-8-45-12-W3`  · pn `None`  · 436  · ac 145.17  · soil C
+- `SW-1-45-12-W3`  · pn `None`  · 436  · ac 159.07  · soil C
+- `SW-11-44-10-W3`  · pn `None`  · 435  · ac 157.2  · soil F
+- `SW-11-45-12-W3`  · pn `None`  · 436  · ac 159.14  · soil C
+- `SW-11-45-13-W3`  · pn `128877643`  · RM OF DOUGLAS NO. 436  · ac 160.79  · soil E
+- `SW-12-43-11-W3`  · pn `None`  · 436  · ac 158.4  · soil H
+- `SW-12-45-12-W3`  · pn `None`  · 436  · ac 160.15  · soil C
+- `SW-12-45-13-W3`  · pn `None`  · 436  · ac 159.51  · soil E
+- `SW-14-45-12-W3`  · pn `None`  · 436  · ac 159.44  · soil G
+- `SW-16-45-12-W3`  · pn `None`  · 436  · ac 159.3  · soil D
+- `SW-17-44-12-W3`  · pn `130913041`  · RM OF DOUGLAS NO. 436  · ac 160.23000000000002  · soil F
+- `SW-18-43-11-W3`  · pn `None`  · 436  · ac 159.18  · soil F
+- `SW-19-45-11-W3`  · pn `None`  · 436  · ac 159.69  · soil G
+- `SW-2-45-12-W3`  · pn `None`  · 436  · ac 158.06  · soil C
+- `SW-20-44-12-W3`  · pn `130787208`  · RM OF DOUGLAS NO. 436  · ac 160.69  · soil H
+- `SW-21-43-11-W3`  · pn `None`  · 436  · ac 149.83  · soil F
+- `SW-21-44-12-W3`  · pn `None`  · 436  · ac 159  · soil E
+- `SW-22-43-11-W3`  · pn `None`  · 436  · ac 155.76  · soil E
+- `SW-24-44-12-W3`  · pn `None`  · 436  · ac 157.18  · soil C
+- `SW-25-44-12-W3`  · pn `None`  · 436  · ac 158.98  · soil C
+- `SW-26-44-10-W3`  · pn `None`  · 435  · ac 158.96  · soil G
+- `SW-26-44-11-W3`  · pn `161620208`  · RM OF DOUGLAS NO. 436  · ac 158.03  · soil E
+- `SW-27-44-12-W3`  · pn `None`  · 436  · ac 159.91  · soil C
+- `SW-27-44-13-W3`  · pn `None`  · 436  · ac 158.86  · soil G
+- `SW-29-44-14-W3`  · pn `130800765`  · RM OF NORTH BATTLEFORD NO. 437  · ac 158.92  · soil H
+- `SW-3-45-13-W3`  · pn `128876945`  · RM OF DOUGLAS NO. 436  · ac 158.94  · soil E
+- `SW-31-44-14-W3`  · pn `None`  · 436  · ac 160.07  · soil H
+- `SW-32-44-12-W3`  · pn `130784968`  · RM OF DOUGLAS NO. 436  · ac 160.48  · soil C
+- `SW-34-44-12-W3`  · pn `None`  · 436  · ac 160.44  · soil C
+- `SW-35-44-12-W3`  · pn `None`  · 436  · ac 158.85  · soil C
+- `SW-36-44-12-W3`  · pn `None`  · 436  · ac 160.04  · soil C
+- `SW-4-45-12-W3`  · pn `None`  · 436  · ac 157.95  · soil C
+- `SW-5-45-12-W3`  · pn `None`  · 436  · ac 159.52  · soil C
+- `SW-6-45-12-W3`  · pn `None`  · 436  · ac 151.74  · soil M
+- `SW-8-43-12-W3`  · pn `None`  · 436  · ac 142.93  · soil G
+- `SW-8-45-12-W3`  · pn `None`  · 436  · ac 159.71  · soil C
+
+## KEEP — confirmed MFL-titled (in both CSV and current map)
+
+- `NE-3-45-13-W3`  · pn `128876989`  · RM OF DOUGLAS NO. 436  · ac 159.69  · soil G  ← CSV title `157473131` ext 0
+- `SE-3-45-13-W3`  · pn `128876923`  · RM OF DOUGLAS NO. 436  · ac 159.92  · soil F  ← CSV title `157473142` ext 0
+
