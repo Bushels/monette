@@ -115,14 +115,25 @@ def pick_canonical(records: list[dict]) -> int:
 
 
 def dedup_property(records: list[dict]) -> tuple[list[dict], int]:
-    """Collapse (loc, rm)-duplicate records. Returns (deduped, num_dropped)."""
+    """Collapse duplicate records keyed by `loc` only (within a property).
+
+    Originally keyed on (loc, rm) which matched the semantic title-rows-vs-features
+    rule. But Codex post-merge audit (codex-post-merge-audit.md) found that
+    view-map.jsx keys parcels at runtime as `property_id:loc` — RM is not part of
+    the key. Same-loc/different-rm pairs survived the (loc, rm) dedup but still
+    collide at render time as `vanguard:SW-31-11-12-W3` and `vanguard:SE-6-12-12-W3`.
+
+    Loc-only keying within a property mirrors the renderer's identity. RM
+    differences (extension variants from staged title transfers, or NEVILLE-vs-
+    Whiska-Creek stamping artifacts on the same legal location) are preserved by
+    merging into reconciliation.csv_matches on the canonical record.
+    """
     groups: dict[tuple, list[int]] = {}
     for i, r in enumerate(records):
         loc = r.get("loc")
-        rm = r.get("rm")
         if not loc:
             continue
-        key = (loc, rm)
+        key = (loc,)
         groups.setdefault(key, []).append(i)
 
     drop_indices: set[int] = set()

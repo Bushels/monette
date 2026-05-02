@@ -372,6 +372,34 @@ def main():
         rasi = f"{s['reassign_in_title_rows']}/{s['reassign_in_unique_features']}"
         print(f"  {pid:<20} {p['csv_total']:>5} {p['current_total']:>5} {s['add']:>4} {keeps:>7} {rasi:>7} {s['reassign_out']:>6} {s['flag']:>5}")
 
+    # Runtime-key invariant: view-map.jsx keys parcels as `property_id:loc`.
+    # Per Codex post-merge audit (codex-post-merge-audit.md), the `(loc, rm)`
+    # dedup is not strict enough — same-loc/different-rm pairs survive but
+    # collide at the renderer. Assert no duplicate `property_id:loc` rows.
+    print()
+    print("Runtime-key invariant check (property_id:loc must be unique):")
+    violations: list[tuple[str, str, list]] = []
+    for pid, recs in quarters.items():
+        from collections import defaultdict
+        loc_to_pns: dict[str, list] = defaultdict(list)
+        for r in recs:
+            loc = r.get("loc")
+            if not loc:
+                continue
+            loc_to_pns[loc].append(r.get("parcel_no"))
+        for loc, pns in loc_to_pns.items():
+            if len(pns) > 1:
+                violations.append((pid, loc, pns))
+    if violations:
+        print(f"  FAIL: {len(violations)} duplicate property_id:loc groups found")
+        for pid, loc, pns in violations:
+            print(f"    {pid}:{loc} — parcel_nos: {pns}")
+        print()
+        print("  Each duplicate would render as a single feature (last-write-wins)")
+        print("  at runtime. Run scripts/_dedup_quarters_by_loc_rm.py to collapse.")
+        sys.exit(1)
+    print(f"  PASS: 0 duplicate property_id:loc groups across {sum(len(r) for r in quarters.values())} records")
+
 
 if __name__ == "__main__":
     main()

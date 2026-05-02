@@ -1,10 +1,16 @@
 # Audit — `vanguard`
 
 - CSV title rows for this property: **81**
-- Current map records (quarters-data.js): **107**
-- ADD: 0  ·  KEEP 81 title rows / 79 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
+- Current map records (quarters-data.js): **105**
+- ADD: 3  ·  KEEP 78 title rows / 77 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
+
+## ADD — in CSV, not in any current map record
+
+- `SW-31-11-12-W3`  · pn `143344469`  · RM OF WHISKA CREEK NO. 106  · ext 1  · QUARTER
+- `SE-6-12-12-W3`  · pn `151624166`  · VILLAGE OF NEVILLE  · ext 8  · QUARTER
+- `SE-6-12-12-W3`  · pn `151624177`  · VILLAGE OF NEVILLE  · ext 19  · QUARTER
 
 ## FLAG — currently mapped, not claimed by any CSV row (keep, investigate)
 
@@ -89,5 +95,5 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `NE-27-11-10-W3`  · pn `143310732`  · RM OF WHISKA CREEK NO. 106  · ac 160.08  · soil J  ← CSV title `143051868` ext 0
 - `SE-27-11-10-W3`  · pn `143310710`  · RM OF WHISKA CREEK NO. 106  · ac 159.08  · soil H  ← CSV title `143051857` ext 0
 - `NE-3-11-10-W3`  · pn `143309943`  · RM OF WHISKA CREEK NO. 106  · ac 160.48  · soil G  ← CSV title `143265630` ext 0
-- ... (31 more, omitted from narrative)
+- ... (28 more, omitted from narrative)
 
