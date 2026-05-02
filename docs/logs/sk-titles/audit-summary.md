@@ -1,7 +1,7 @@
 # ISC vs quarters-data.js — Audit Summary
 
 **Snapshot date:** 2026-01-18
-**Generated:** 2026-05-02T01:04:43.799815Z
+**Generated:** 2026-05-02T01:22:28.274487Z
 
 Title-row counts and unique-map-feature counts are NOT 1:1.
 One legal location can have multiple CSV title rows (extension variants);
@@ -23,9 +23,9 @@ one current map feature is one polygon. KEEP/REASSIGN-in show both.
 | `ponteix` | 85 | 130 | 0 | 85 / 85 | 0 / 0 | 0 | 45 |
 | `prince-albert` | 12 | 20 | 0 | 12 / 12 | 0 / 0 | 0 | 8 |
 | `raymore` | 4 | 121 | 0 | 4 / 4 | 0 / 0 | 0 | 117 |
-| `regina-south` | 126 | 126 | 0 | 126 / 126 | 0 / 0 | 0 | 0 |
-| `swift-current` | 31 | 30 | 0 | 31 / 30 | 0 / 0 | 0 | 0 |
-| `vanguard` | 81 | 108 | 0 | 81 / 80 | 0 / 0 | 0 | 28 |
+| `regina-south` | 126 | 120 | 0 | 126 / 120 | 0 / 0 | 0 | 0 |
+| `swift-current` | 31 | 28 | 0 | 31 / 28 | 0 / 0 | 0 | 0 |
+| `vanguard` | 81 | 107 | 0 | 81 / 79 | 0 / 0 | 0 | 28 |
 | `wymark` | 22 | 85 | 0 | 22 / 19 | 0 / 0 | 0 | 66 |
 
 ## Bucket meanings

@@ -277,10 +277,39 @@ def build_for_property(
         for cur in p_audit.get("flag", [])
     ]
 
-    add_records: list[dict] = [
-        build_add_record(r, pid, snapshot)
-        for r in p_audit.get("add", [])
-    ]
+    # Collapse audit's ADD title rows by (loc, rm) so a legal location
+    # with multiple CSV title certificates (extension variants) becomes
+    # one ADD map feature with all CSV matches attached. Mirrors the
+    # KEEP dedup; the round-1 'title rows != map features' rule applies
+    # to ADDs too. Without this, regina-south / swift-current /
+    # vanguard would render duplicate stacked polygons (Codex final
+    # review NEEDS-FIXES finding).
+    add_groups: dict[tuple, dict] = {}
+    for r in p_audit.get("add", []):
+        loc = r.get("loc")
+        rm = r.get("rm")
+        # Use parcel_no as a tiebreaker if loc is missing
+        key = (loc, rm) if loc else ("__no_loc__", str(r.get("parcel_no")))
+        if key not in add_groups:
+            add_groups[key] = {"primary": r, "extras": []}
+        else:
+            add_groups[key]["extras"].append(r)
+
+    add_records: list[dict] = []
+    for group in add_groups.values():
+        primary = group["primary"]
+        rec = build_add_record(primary, pid, snapshot)
+        # Append every extra CSV title row to the primary's csv_matches
+        recon = rec.setdefault("reconciliation", {})
+        matches = recon.setdefault("csv_matches", [])
+        seen_keys = {(m.get("title_number"), m.get("parcel_no"), m.get("ext")) for m in matches}
+        for extra in group["extras"]:
+            key = (extra.get("title_number"), extra.get("parcel_no"), extra.get("ext"))
+            if key in seen_keys:
+                continue
+            matches.append(csv_match_block(extra))
+            seen_keys.add(key)
+        add_records.append(rec)
 
     reassign_out_records: list[dict] = []
     for entry in p_audit.get("reassign_out", []):
