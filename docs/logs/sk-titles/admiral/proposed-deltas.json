@@ -1,0 +1,815 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "admiral"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "admiral": {
+      "add": [],
+      "keep": [
+        {
+          "ac": 160.69,
+          "assessment": 343200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.065074,
+                  49.846681
+                ],
+                [
+                  -108.053851,
+                  49.846681
+                ],
+                [
+                  -108.053851,
+                  49.853918
+                ],
+                [
+                  -108.065074,
+                  49.853918
+                ],
+                [
+                  -108.065074,
+                  49.846681
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-26-10-16-W3",
+          "owner": null,
+          "parcel_no": 141483281,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-26-10-16-W3 As described on Certificate of Title 67SC11258.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_admiral_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-26-10-16-W3",
+                "parcel_no": "141483281",
+                "title_number": "149387406",
+                "title_text": "NW 26-10-16-3  Ext 0 As described on Certificate of Title 67SC11258.",
+                "rm": "RM OF BONE CREEK NO. 108",
+                "qtr": "NW",
+                "sec": "26",
+                "twp": "10",
+                "rng": "16",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.47,
+          "assessment": 363700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.064765,
+                  49.839445
+                ],
+                [
+                  -108.053543,
+                  49.839445
+                ],
+                [
+                  -108.053543,
+                  49.846681
+                ],
+                [
+                  -108.064765,
+                  49.846681
+                ],
+                [
+                  -108.064765,
+                  49.839445
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-26-10-16-W3",
+          "owner": null,
+          "parcel_no": 141447584,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-26-10-16-W3 As described on Certificate of Title 67SC11258.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_admiral_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-26-10-16-W3",
+                "parcel_no": "141447584",
+                "title_number": "149387428",
+                "title_text": "SW 26-10-16-3  Ext 0 As described on Certificate of Title 67SC11258.",
+                "rm": "RM OF BONE CREEK NO. 108",
+                "qtr": "SW",
+                "sec": "26",
+                "twp": "10",
+                "rng": "16",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [
+        {
+          "ac": 159.92,
+          "assessment": 188200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.118654,
+                  49.788788
+                ],
+                [
+                  -108.107444,
+                  49.788788
+                ],
+                [
+                  -108.107444,
+                  49.796025
+                ],
+                [
+                  -108.118654,
+                  49.796025
+                ],
+                [
+                  -108.118654,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-5-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482617,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "K",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-5-10-16-W3 As described on Certificate of Title 76SC14222.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.47,
+          "assessment": 334200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.141073,
+                  49.788788
+                ],
+                [
+                  -108.129863,
+                  49.788788
+                ],
+                [
+                  -108.129863,
+                  49.796025
+                ],
+                [
+                  -108.141073,
+                  49.796025
+                ],
+                [
+                  -108.141073,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-10-16-W3",
+          "owner": null,
+          "parcel_no": 203009138,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-6-10-16-W3 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.02,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.141713,
+                  49.803262
+                ],
+                [
+                  -108.1305,
+                  49.803262
+                ],
+                [
+                  -108.1305,
+                  49.810498
+                ],
+                [
+                  -108.141713,
+                  49.810498
+                ],
+                [
+                  -108.141713,
+                  49.803262
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-7-10-16-W3",
+          "owner": null,
+          "parcel_no": 141596219,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-7-10-16-W3 As described on Certificate of Title 74SC07613B which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.33,
+          "assessment": 340500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.129863,
+                  49.788788
+                ],
+                [
+                  -108.118654,
+                  49.788788
+                ],
+                [
+                  -108.118654,
+                  49.796025
+                ],
+                [
+                  -108.129863,
+                  49.796025
+                ],
+                [
+                  -108.129863,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-5-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482606,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-5-10-16-W3 As described on Certificate of Title 74SC05385.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.2,
+          "assessment": 249900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.152283,
+                  49.788788
+                ],
+                [
+                  -108.141073,
+                  49.788788
+                ],
+                [
+                  -108.141073,
+                  49.796025
+                ],
+                [
+                  -108.152283,
+                  49.796025
+                ],
+                [
+                  -108.152283,
+                  49.788788
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482640,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-6-10-16-W3 As described on Certificate of Title 79SC14920A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.98,
+          "assessment": 315800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.152926,
+                  49.803262
+                ],
+                [
+                  -108.141713,
+                  49.803262
+                ],
+                [
+                  -108.141713,
+                  49.810498
+                ],
+                [
+                  -108.152926,
+                  49.810498
+                ],
+                [
+                  -108.152926,
+                  49.803262
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-7-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482684,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-7-10-16-W3 As described on Certificate of Title 79SC14920A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.71,
+          "assessment": 218500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.097174,
+                  49.810498
+                ],
+                [
+                  -108.085959,
+                  49.810498
+                ],
+                [
+                  -108.085959,
+                  49.817735
+                ],
+                [
+                  -108.097174,
+                  49.817735
+                ],
+                [
+                  -108.097174,
+                  49.810498
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-16-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482965,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-16-10-16-W3 As described on Certificate of Title 85SC01140.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.52,
+          "assessment": 259300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.118337,
+                  49.781552
+                ],
+                [
+                  -108.107129,
+                  49.781552
+                ],
+                [
+                  -108.107129,
+                  49.788788
+                ],
+                [
+                  -108.118337,
+                  49.788788
+                ],
+                [
+                  -108.118337,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-5-10-16-W3",
+          "owner": null,
+          "parcel_no": 203821916,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-5-10-16-W3 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.37,
+          "assessment": 243200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.140753,
+                  49.781552
+                ],
+                [
+                  -108.129545,
+                  49.781552
+                ],
+                [
+                  -108.129545,
+                  49.788788
+                ],
+                [
+                  -108.140753,
+                  49.788788
+                ],
+                [
+                  -108.140753,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482628,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-10-16-W3 As described on Certificate of Title 74SC05385.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.28,
+          "assessment": 329400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.141393,
+                  49.796025
+                ],
+                [
+                  -108.130182,
+                  49.796025
+                ],
+                [
+                  -108.130182,
+                  49.803262
+                ],
+                [
+                  -108.141393,
+                  49.803262
+                ],
+                [
+                  -108.141393,
+                  49.796025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-7-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482662,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-7-10-16-W3 As described on Certificate of Title 96SC00433.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.77,
+          "assessment": 309800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.108389,
+                  49.810498
+                ],
+                [
+                  -108.097174,
+                  49.810498
+                ],
+                [
+                  -108.097174,
+                  49.817735
+                ],
+                [
+                  -108.108389,
+                  49.817735
+                ],
+                [
+                  -108.108389,
+                  49.810498
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-16-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482976,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-16-10-16-W3 As described on Certificate of Title 85SC00899.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 155.54,
+          "assessment": 304800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.129545,
+                  49.781552
+                ],
+                [
+                  -108.118337,
+                  49.781552
+                ],
+                [
+                  -108.118337,
+                  49.788788
+                ],
+                [
+                  -108.129545,
+                  49.788788
+                ],
+                [
+                  -108.129545,
+                  49.781552
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-5-10-16-W3",
+          "owner": null,
+          "parcel_no": 203821927,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-5-10-16-W3 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.18,
+          "assessment": 291900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -108.152605,
+                  49.796025
+                ],
+                [
+                  -108.141393,
+                  49.796025
+                ],
+                [
+                  -108.141393,
+                  49.803262
+                ],
+                [
+                  -108.152605,
+                  49.803262
+                ],
+                [
+                  -108.152605,
+                  49.796025
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-7-10-16-W3",
+          "owner": null,
+          "parcel_no": 141482673,
+          "property_card": null,
+          "rm": "RM OF BONE CREEK NO. 108",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-7-10-16-W3 As described on Certificate of Title 79SC14920A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_admiral_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "bone_creek_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        }
+      ],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": []
+    }
+  }
+}

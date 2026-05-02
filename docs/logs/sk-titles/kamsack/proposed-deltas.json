@@ -1,0 +1,4852 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "kamsack"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "kamsack": {
+      "add": [
+        {
+          "loc": "LSD-10-27-28-1-W2",
+          "parcel_no": 151797134,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "ac": 40.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "LSD 10-27-28-01-2  Ext 29 As described on Certificate of Title 97Y03414A, description 29.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to_kamsack_geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_lsd_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LSD-10-27-28-1-W2",
+                "parcel_no": "151797134",
+                "title_number": "157472028",
+                "title_text": "LSD 10-27-28-01-2  Ext 29 As described on Certificate of Title 97Y03414A, description 29.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": null,
+                "sec": "27",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": "10",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "29",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LSD-15-27-28-1-W2",
+          "parcel_no": 151797145,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "ac": 40.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "LSD 15-27-28-01-2  Ext 31 As described on Certificate of Title 97Y03418, description 31.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to_kamsack_geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_lsd_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LSD-15-27-28-1-W2",
+                "parcel_no": "151797145",
+                "title_number": "157472017",
+                "title_text": "LSD 15-27-28-01-2  Ext 31 As described on Certificate of Title 97Y03418, description 31.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": null,
+                "sec": "27",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": "15",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "31",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LSD-16-27-28-1-W2",
+          "parcel_no": 151797156,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "ac": 40.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "LSD 16-27-28-01-2  Ext 32 As described on Certificate of Title 97Y03418, description 32.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to_kamsack_geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_lsd_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LSD-16-27-28-1-W2",
+                "parcel_no": "151797156",
+                "title_number": "157471982",
+                "title_text": "LSD 16-27-28-01-2  Ext 32 As described on Certificate of Title 97Y03418, description 32.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": null,
+                "sec": "27",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": "16",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "32",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LSD-12-31-29-31-W1",
+          "parcel_no": 144965706,
+          "rm": "RM OF COTE NO. 271",
+          "ac": 40.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "LSD 12-31-29-31-1  Ext 72 As described on Certificate of Title 92Y08781, description 72.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to_kamsack_geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_lsd_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LSD-12-31-29-31-W1",
+                "parcel_no": "144965706",
+                "title_number": "157472804",
+                "title_text": "LSD 12-31-29-31-1  Ext 72 As described on Certificate of Title 92Y08781, description 72.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": null,
+                "sec": "31",
+                "twp": "29",
+                "rng": "31",
+                "mer": "1",
+                "lsd": "12",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "72",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "keep": [
+        {
+          "ac": 159.56,
+          "assessment": 383700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.034808,
+                  51.409785
+                ],
+                [
+                  -102.023205,
+                  51.409785
+                ],
+                [
+                  -102.023205,
+                  51.417021
+                ],
+                [
+                  -102.034808,
+                  51.417021
+                ],
+                [
+                  -102.034808,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-26-28-1-W2",
+          "owner": null,
+          "parcel_no": 144183146,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 26-28-01-2  Ext 0 As described on Certificate of Title 98Y01262.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-26-28-1-W2",
+                "parcel_no": "144183146",
+                "title_number": "157472422",
+                "title_text": "NE 26-28-01-2  Ext 0 As described on Certificate of Title 98Y01262.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NE",
+                "sec": "26",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.92,
+          "assessment": 417400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.046404,
+                  51.402548
+                ],
+                [
+                  -102.034803,
+                  51.402548
+                ],
+                [
+                  -102.034803,
+                  51.409785
+                ],
+                [
+                  -102.046404,
+                  51.409785
+                ],
+                [
+                  -102.046404,
+                  51.402548
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-26-28-1-W2",
+          "owner": null,
+          "parcel_no": 144183135,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 26-28-01-2  Ext 0 As described on Certificate of Title 98Y07170B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-26-28-1-W2",
+                "parcel_no": "144183135",
+                "title_number": "157472039",
+                "title_text": "SW 26-28-01-2  Ext 0 As described on Certificate of Title 98Y07170B.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "26",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.04000000000002,
+          "assessment": 202000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.058014,
+                  51.409785
+                ],
+                [
+                  -102.046411,
+                  51.409785
+                ],
+                [
+                  -102.046411,
+                  51.417021
+                ],
+                [
+                  -102.058014,
+                  51.417021
+                ],
+                [
+                  -102.058014,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-27-28-1-W2",
+          "owner": null,
+          "parcel_no": 151797123,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "LSD 9-27-28-01-2  Ext 28 As described on Certificate of Title 97Y03414A, description 28.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LSD-9-27-28-1-W2",
+                "parcel_no": "151797123",
+                "title_number": "157471993",
+                "title_text": "LSD 9-27-28-01-2  Ext 28 As described on Certificate of Title 97Y03414A, description 28.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": null,
+                "sec": "27",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": "9",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "28",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.74,
+          "assessment": 404000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.058005,
+                  51.402548
+                ],
+                [
+                  -102.046404,
+                  51.402548
+                ],
+                [
+                  -102.046404,
+                  51.409785
+                ],
+                [
+                  -102.058005,
+                  51.409785
+                ],
+                [
+                  -102.058005,
+                  51.402548
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-27-28-1-W2",
+          "owner": null,
+          "parcel_no": 144183157,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 27-28-01-2  Ext 0 As described on Certificate of Title 97Y03414.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-27-28-1-W2",
+                "parcel_no": "144183157",
+                "title_number": "157471960",
+                "title_text": "SE 27-28-01-2  Ext 0 As described on Certificate of Title 97Y03414.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "27",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.69,
+          "assessment": 316700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.058032,
+                  51.424258
+                ],
+                [
+                  -102.046426,
+                  51.424258
+                ],
+                [
+                  -102.046426,
+                  51.431495
+                ],
+                [
+                  -102.058032,
+                  51.431495
+                ],
+                [
+                  -102.058032,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-34-28-1-W2",
+          "owner": null,
+          "parcel_no": 144181997,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 34-28-01-2  Ext 0 As described on Certificate of Title 98Y04919.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-34-28-1-W2",
+                "parcel_no": "144181997",
+                "title_number": "157472107",
+                "title_text": "NE 34-28-01-2  Ext 0 As described on Certificate of Title 98Y04919.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NE",
+                "sec": "34",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 156.43,
+          "assessment": 403500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.069638,
+                  51.424258
+                ],
+                [
+                  -102.058032,
+                  51.424258
+                ],
+                [
+                  -102.058032,
+                  51.431495
+                ],
+                [
+                  -102.069638,
+                  51.431495
+                ],
+                [
+                  -102.069638,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-34-28-1-W2",
+          "owner": null,
+          "parcel_no": 144181986,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 34-28-01-2  Ext 0 As described on Certificate of Title 97Y03711.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-34-28-1-W2",
+                "parcel_no": "144181986",
+                "title_number": "157472118",
+                "title_text": "NW 34-28-01-2  Ext 0 As described on Certificate of Title 97Y03711.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NW",
+                "sec": "34",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.04,
+          "assessment": 379400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.058023,
+                  51.417021
+                ],
+                [
+                  -102.046418,
+                  51.417021
+                ],
+                [
+                  -102.046418,
+                  51.424258
+                ],
+                [
+                  -102.058023,
+                  51.424258
+                ],
+                [
+                  -102.058023,
+                  51.417021
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-34-28-1-W2",
+          "owner": null,
+          "parcel_no": 144181964,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 34-28-01-2  Ext 0 As described on Certificate of Title 97Y03422.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-34-28-1-W2",
+                "parcel_no": "144181964",
+                "title_number": "157472130",
+                "title_text": "SE 34-28-01-2  Ext 0 As described on Certificate of Title 97Y03422.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "34",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.02,
+          "assessment": 387800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.034819,
+                  51.424258
+                ],
+                [
+                  -102.023213,
+                  51.424258
+                ],
+                [
+                  -102.023213,
+                  51.431495
+                ],
+                [
+                  -102.034819,
+                  51.431495
+                ],
+                [
+                  -102.034819,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-35-28-1-W2",
+          "owner": null,
+          "parcel_no": 144182033,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 35-28-01-2  Ext 0 As described on Certificate of Title 92Y02196.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-35-28-1-W2",
+                "parcel_no": "144182033",
+                "title_number": "157472084",
+                "title_text": "NE 35-28-01-2  Ext 0 As described on Certificate of Title 92Y02196.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NE",
+                "sec": "35",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 152.53,
+          "assessment": 369300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.034814,
+                  51.417021
+                ],
+                [
+                  -102.023209,
+                  51.417021
+                ],
+                [
+                  -102.023209,
+                  51.424258
+                ],
+                [
+                  -102.034814,
+                  51.424258
+                ],
+                [
+                  -102.034814,
+                  51.417021
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-35-28-1-W2",
+          "owner": null,
+          "parcel_no": 203235814,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 35-28-01-2  Ext 5",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-35-28-1-W2",
+                "parcel_no": "203235814",
+                "title_number": "157472062",
+                "title_text": "SE 35-28-01-2  Ext 5",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "35",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "5",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.74,
+          "assessment": 378800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.046418,
+                  51.417021
+                ],
+                [
+                  -102.034814,
+                  51.417021
+                ],
+                [
+                  -102.034814,
+                  51.424258
+                ],
+                [
+                  -102.046418,
+                  51.424258
+                ],
+                [
+                  -102.046418,
+                  51.417021
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-35-28-1-W2",
+          "owner": null,
+          "parcel_no": 144182011,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 35-28-01-2  Ext 0 As described on Certificate of Title 97Y03461.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-35-28-1-W2",
+                "parcel_no": "144182011",
+                "title_number": "157472040",
+                "title_text": "SW 35-28-01-2  Ext 0 As described on Certificate of Title 97Y03461.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "35",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.65,
+          "assessment": 400400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.011606,
+                  51.424258
+                ],
+                [
+                  -102,
+                  51.424258
+                ],
+                [
+                  -102,
+                  51.431495
+                ],
+                [
+                  -102.011606,
+                  51.431495
+                ],
+                [
+                  -102.011606,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-36-28-1-W2",
+          "owner": null,
+          "parcel_no": 144182077,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 36-28-01-2  Ext 0 As described on Certificate of Title 97Y10306.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-36-28-1-W2",
+                "parcel_no": "144182077",
+                "title_number": "157472714",
+                "title_text": "NE 36-28-01-2  Ext 0 As described on Certificate of Title 97Y10306.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NE",
+                "sec": "36",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.58,
+          "assessment": 328800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.023213,
+                  51.424258
+                ],
+                [
+                  -102.011606,
+                  51.424258
+                ],
+                [
+                  -102.011606,
+                  51.431495
+                ],
+                [
+                  -102.023213,
+                  51.431495
+                ],
+                [
+                  -102.023213,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-36-28-1-W2",
+          "owner": null,
+          "parcel_no": 144182066,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 36-28-01-2  Ext 0 As described on Certificate of Title 98Y01262A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-36-28-1-W2",
+                "parcel_no": "144182066",
+                "title_number": "157472725",
+                "title_text": "NW 36-28-01-2  Ext 0 As described on Certificate of Title 98Y01262A.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NW",
+                "sec": "36",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.94,
+          "assessment": 314500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.011605,
+                  51.417021
+                ],
+                [
+                  -102,
+                  51.417021
+                ],
+                [
+                  -102,
+                  51.424258
+                ],
+                [
+                  -102.011605,
+                  51.424258
+                ],
+                [
+                  -102.011605,
+                  51.417021
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-36-28-1-W2",
+          "owner": null,
+          "parcel_no": 144182044,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 36-28-01-2  Ext 0 As described on Certificate of Title 97Y06465.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-36-28-1-W2",
+                "parcel_no": "144182044",
+                "title_number": "157472736",
+                "title_text": "SE 36-28-01-2  Ext 0 As described on Certificate of Title 97Y06465.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "36",
+                "twp": "28",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 154.32999999999998,
+          "assessment": 216800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.585298,
+                  51.380838
+                ],
+                [
+                  -101.573703,
+                  51.380838
+                ],
+                [
+                  -101.573703,
+                  51.388075
+                ],
+                [
+                  -101.585298,
+                  51.388075
+                ],
+                [
+                  -101.585298,
+                  51.380838
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-16-28-30-W1",
+          "owner": null,
+          "parcel_no": 141866556,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 16-28-30-1  Ext 2 As described on Certificate of Title 74Y09183 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-16-28-30-W1",
+                "parcel_no": "141808743",
+                "title_number": "157472837",
+                "title_text": "NW 16-28-30-1  Ext 1 As described on Certificate of Title 74Y09183 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NW",
+                "sec": "16",
+                "twp": "28",
+                "rng": "30",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              },
+              {
+                "loc": "NW-16-28-30-W1",
+                "parcel_no": "141866556",
+                "title_number": "157472848",
+                "title_text": "NW 16-28-30-1  Ext 2 As described on Certificate of Title 74Y09183 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NW",
+                "sec": "16",
+                "twp": "28",
+                "rng": "30",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.25,
+          "assessment": 283800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.506692,
+                  51.409785
+                ],
+                [
+                  -101.495089,
+                  51.409785
+                ],
+                [
+                  -101.495089,
+                  51.417021
+                ],
+                [
+                  -101.506692,
+                  51.417021
+                ],
+                [
+                  -101.506692,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-25-28-30-W1",
+          "owner": null,
+          "parcel_no": 141809025,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-25-28-30-W1 Ext 0 As described on Certificate of Title 91Y06990.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-25-28-30-W1",
+                "parcel_no": "141809025",
+                "title_number": "157472972",
+                "title_text": "NE 25-28-30-1  Ext 0 As described on Certificate of Title 91Y06990.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NE",
+                "sec": "25",
+                "twp": "28",
+                "rng": "30",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 109.07,
+          "assessment": 198100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.577613,
+                  51.424258
+                ],
+                [
+                  -101.566007,
+                  51.424258
+                ],
+                [
+                  -101.566007,
+                  51.431495
+                ],
+                [
+                  -101.577613,
+                  51.431495
+                ],
+                [
+                  -101.577613,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-33-28-30-W1",
+          "owner": null,
+          "parcel_no": 203196607,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 33-28-30-1  Ext 1",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-33-28-30-W1",
+                "parcel_no": "203196607",
+                "title_number": "157472860",
+                "title_text": "NE 33-28-30-1  Ext 1",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NE",
+                "sec": "33",
+                "twp": "28",
+                "rng": "30",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.45,
+          "assessment": 251700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.656199,
+                  51.395312
+                ],
+                [
+                  -101.644599,
+                  51.395312
+                ],
+                [
+                  -101.644599,
+                  51.402548
+                ],
+                [
+                  -101.656199,
+                  51.402548
+                ],
+                [
+                  -101.656199,
+                  51.395312
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-24-28-31-W1",
+          "owner": null,
+          "parcel_no": 141832582,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 24-28-31-1  Ext 0 As described on Certificate of Title 96Y04233.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-24-28-31-W1",
+                "parcel_no": "141832582",
+                "title_number": "157472826",
+                "title_text": "NW 24-28-31-1  Ext 0 As described on Certificate of Title 96Y04233.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NW",
+                "sec": "24",
+                "twp": "28",
+                "rng": "31",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.3,
+          "assessment": 324900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.806986,
+                  51.395312
+                ],
+                [
+                  -101.795387,
+                  51.395312
+                ],
+                [
+                  -101.795387,
+                  51.402548
+                ],
+                [
+                  -101.806986,
+                  51.402548
+                ],
+                [
+                  -101.806986,
+                  51.395312
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-23-28-32-W1",
+          "owner": null,
+          "parcel_no": 141847218,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 23-28-32-1  Ext 0 As described on Certificate of Title 97Y03640.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-23-28-32-W1",
+                "parcel_no": "141847218",
+                "title_number": "157472769",
+                "title_text": "NE 23-28-32-1  Ext 0 As described on Certificate of Title 97Y03640.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NE",
+                "sec": "23",
+                "twp": "28",
+                "rng": "32",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.55,
+          "assessment": 353100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.913493,
+                  51.417021
+                ],
+                [
+                  -101.901889,
+                  51.417021
+                ],
+                [
+                  -101.901889,
+                  51.424258
+                ],
+                [
+                  -101.913493,
+                  51.424258
+                ],
+                [
+                  -101.913493,
+                  51.417021
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-31-28-32-W1",
+          "owner": null,
+          "parcel_no": 141846936,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 31-28-32-1  Ext 0 As described on Certificate of Title 97Y02816A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-31-28-32-W1",
+                "parcel_no": "141846936",
+                "title_number": "157472747",
+                "title_text": "SW 31-28-32-1  Ext 0 As described on Certificate of Title 97Y02816A.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "SW",
+                "sec": "31",
+                "twp": "28",
+                "rng": "32",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 147.75,
+          "assessment": 441700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.798135,
+                  51.424258
+                ],
+                [
+                  -101.786529,
+                  51.424258
+                ],
+                [
+                  -101.786529,
+                  51.431495
+                ],
+                [
+                  -101.798135,
+                  51.431495
+                ],
+                [
+                  -101.798135,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-36-28-32-W1",
+          "owner": null,
+          "parcel_no": 145221218,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 36-28-32-1  Ext 6 As described on Certificate of Title 91Y02560, description 6.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-36-28-32-W1",
+                "parcel_no": "145221218",
+                "title_number": "157472770",
+                "title_text": "NW 36-28-32-1  Ext 6 As described on Certificate of Title 91Y02560, description 6.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "NW",
+                "sec": "36",
+                "twp": "28",
+                "rng": "32",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "6",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 148.43,
+          "assessment": 367300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.069683,
+                  51.453204
+                ],
+                [
+                  -102.058069,
+                  51.453204
+                ],
+                [
+                  -102.058069,
+                  51.460441
+                ],
+                [
+                  -102.069683,
+                  51.460441
+                ],
+                [
+                  -102.069683,
+                  51.453204
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-10-29-1-W2",
+          "owner": null,
+          "parcel_no": 166004827,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 10-29-01-2  Ext 1",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-10-29-1-W2",
+                "parcel_no": "166004827",
+                "title_number": "157472231",
+                "title_text": "NW 10-29-01-2  Ext 1",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NW",
+                "sec": "10",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 157.88,
+          "assessment": 354400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.05806,
+                  51.445968
+                ],
+                [
+                  -102.046448,
+                  51.445968
+                ],
+                [
+                  -102.046448,
+                  51.453204
+                ],
+                [
+                  -102.05806,
+                  51.453204
+                ],
+                [
+                  -102.05806,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-10-29-1-W2",
+          "owner": null,
+          "parcel_no": 151721636,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 10-29-01-2  Ext 86 As described on Certificate of Title 94Y10641, description 86.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-10-29-1-W2",
+                "parcel_no": "151721636",
+                "title_number": "157472208",
+                "title_text": "SE 10-29-01-2  Ext 86 As described on Certificate of Title 94Y10641, description 86.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "10",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "86",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 143.14,
+          "assessment": 312300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.069672,
+                  51.445968
+                ],
+                [
+                  -102.05806,
+                  51.445968
+                ],
+                [
+                  -102.05806,
+                  51.453204
+                ],
+                [
+                  -102.069672,
+                  51.453204
+                ],
+                [
+                  -102.069672,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-10-29-1-W2",
+          "owner": null,
+          "parcel_no": 163532853,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 10-29-01-2  Ext 89 As shown on Plan 101927527",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-10-29-1-W2",
+                "parcel_no": "163532853",
+                "title_number": "157472219",
+                "title_text": "SW 10-29-01-2  Ext 89 As shown on Plan 101927527",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "10",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "89",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.19,
+          "assessment": 391000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.081309,
+                  51.460441
+                ],
+                [
+                  -102.069694,
+                  51.460441
+                ],
+                [
+                  -102.069694,
+                  51.467677
+                ],
+                [
+                  -102.081309,
+                  51.467677
+                ],
+                [
+                  -102.081309,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-16-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347250,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 16-29-01-2  Ext 0 As described on Certificate of Title 96Y01485.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-16-29-1-W2",
+                "parcel_no": "144347250",
+                "title_number": "157472253",
+                "title_text": "SE 16-29-01-2  Ext 0 As described on Certificate of Title 96Y01485.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "16",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.98,
+          "assessment": 426900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.092925,
+                  51.460441
+                ],
+                [
+                  -102.081309,
+                  51.460441
+                ],
+                [
+                  -102.081309,
+                  51.467677
+                ],
+                [
+                  -102.092925,
+                  51.467677
+                ],
+                [
+                  -102.092925,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-16-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347261,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 16-29-01-2  Ext 0 As described on Certificate of Title 00Y09687B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-16-29-1-W2",
+                "parcel_no": "144347261",
+                "title_number": "157472400",
+                "title_text": "SW 16-29-01-2  Ext 0 As described on Certificate of Title 00Y09687B.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "16",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.19,
+          "assessment": 351800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.046433,
+                  51.431495
+                ],
+                [
+                  -102.034825,
+                  51.431495
+                ],
+                [
+                  -102.034825,
+                  51.438731
+                ],
+                [
+                  -102.046433,
+                  51.438731
+                ],
+                [
+                  -102.046433,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-2-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346709,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 02-29-01-2  Ext 0 As described on Certificate of Title 99Y03035.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-2-29-1-W2",
+                "parcel_no": "144346709",
+                "title_number": "157472411",
+                "title_text": "SW 02-29-01-2  Ext 0 As described on Certificate of Title 99Y03035.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "2",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 151.54,
+          "assessment": 424600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.011619,
+                  51.474914
+                ],
+                [
+                  -102,
+                  51.474914
+                ],
+                [
+                  -102,
+                  51.482151
+                ],
+                [
+                  -102.011619,
+                  51.482151
+                ],
+                [
+                  -102.011619,
+                  51.474914
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-24-29-1-W2",
+          "owner": null,
+          "parcel_no": 202894870,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "C",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 24-29-01-2  Ext 1",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-24-29-1-W2",
+                "parcel_no": "202894870",
+                "title_number": "157472893",
+                "title_text": "SE 24-29-01-2  Ext 1",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "24",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 146.36,
+          "assessment": 397400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.023239,
+                  51.474914
+                ],
+                [
+                  -102.011619,
+                  51.474914
+                ],
+                [
+                  -102.011619,
+                  51.482151
+                ],
+                [
+                  -102.023239,
+                  51.482151
+                ],
+                [
+                  -102.023239,
+                  51.474914
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-24-29-1-W2",
+          "owner": null,
+          "parcel_no": 202894858,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "C",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 24-29-01-2  Ext 1",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-24-29-1-W2",
+                "parcel_no": "202894858",
+                "title_number": "157472905",
+                "title_text": "SW 24-29-01-2  Ext 1",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SW",
+                "sec": "24",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.61,
+          "assessment": 313200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.05805,
+                  51.438731
+                ],
+                [
+                  -102.04644,
+                  51.438731
+                ],
+                [
+                  -102.04644,
+                  51.445968
+                ],
+                [
+                  -102.05805,
+                  51.445968
+                ],
+                [
+                  -102.05805,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-3-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346765,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 03-29-01-2  Ext 0 As described on Certificate of Title 97Y04436.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-3-29-1-W2",
+                "parcel_no": "144346765",
+                "title_number": "157472141",
+                "title_text": "NE 03-29-01-2  Ext 0 As described on Certificate of Title 97Y04436.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NE",
+                "sec": "3",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.2,
+          "assessment": 371900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.069661,
+                  51.438731
+                ],
+                [
+                  -102.05805,
+                  51.438731
+                ],
+                [
+                  -102.05805,
+                  51.445968
+                ],
+                [
+                  -102.069661,
+                  51.445968
+                ],
+                [
+                  -102.069661,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-3-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346754,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 03-29-01-2  Ext 0 As described on Certificate of Title 00Y09687A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-3-29-1-W2",
+                "parcel_no": "144346754",
+                "title_number": "157472163",
+                "title_text": "NW 03-29-01-2  Ext 0 As described on Certificate of Title 00Y09687A.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "NW",
+                "sec": "3",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.99,
+          "assessment": 368200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.058041,
+                  51.431495
+                ],
+                [
+                  -102.046433,
+                  51.431495
+                ],
+                [
+                  -102.046433,
+                  51.438731
+                ],
+                [
+                  -102.058041,
+                  51.438731
+                ],
+                [
+                  -102.058041,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-3-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346732,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 03-29-01-2  Ext 0 As described on Certificate of Title 97Y04223.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-3-29-1-W2",
+                "parcel_no": "144346732",
+                "title_number": "157472196",
+                "title_text": "SE 03-29-01-2  Ext 0 As described on Certificate of Title 97Y04223.",
+                "rm": "RM OF SLIDING HILLS NO. 273",
+                "qtr": "SE",
+                "sec": "3",
+                "twp": "29",
+                "rng": "1",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 79.98,
+          "assessment": 230900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.783148,
+                  51.511097
+                ],
+                [
+                  -101.77152,
+                  51.511097
+                ],
+                [
+                  -101.77152,
+                  51.518334
+                ],
+                [
+                  -101.783148,
+                  51.518334
+                ],
+                [
+                  -101.783148,
+                  51.511097
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-31-29-31-W1",
+          "owner": null,
+          "parcel_no": 144965694,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "C",
+          "source": null,
+          "tax_year": null,
+          "title": "LSD 11-31-29-31-1  Ext 71 As described on Certificate of Title 92Y08781, description 71.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LSD-11-31-29-31-W1",
+                "parcel_no": "144965694",
+                "title_number": "157472792",
+                "title_text": "LSD 11-31-29-31-1  Ext 71 As described on Certificate of Title 92Y08781, description 71.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": null,
+                "sec": "31",
+                "twp": "29",
+                "rng": "31",
+                "mer": "1",
+                "lsd": "11",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "71",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.02,
+          "assessment": 431800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.787214,
+                  51.431495
+                ],
+                [
+                  -101.775606,
+                  51.431495
+                ],
+                [
+                  -101.775606,
+                  51.438731
+                ],
+                [
+                  -101.787214,
+                  51.438731
+                ],
+                [
+                  -101.787214,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-1-29-32-W1",
+          "owner": null,
+          "parcel_no": 142355527,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 01-29-32-1  Ext 0 As described on Certificate of Title 91Y00761.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-1-29-32-W1",
+                "parcel_no": "142355527",
+                "title_number": "157472781",
+                "title_text": "SE 01-29-32-1  Ext 0 As described on Certificate of Title 91Y00761.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "SE",
+                "sec": "1",
+                "twp": "29",
+                "rng": "32",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 149.36,
+          "assessment": 395700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.874072,
+                  51.489387
+                ],
+                [
+                  -101.862449,
+                  51.489387
+                ],
+                [
+                  -101.862449,
+                  51.496624
+                ],
+                [
+                  -101.874072,
+                  51.496624
+                ],
+                [
+                  -101.874072,
+                  51.489387
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-28-29-32-W1",
+          "owner": null,
+          "parcel_no": 148968556,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 28-29-32-1  Ext 8 As described on Certificate of Title 97Y00302, description 8.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-28-29-32-W1",
+                "parcel_no": "148968556",
+                "title_number": "157472815",
+                "title_text": "SW 28-29-32-1  Ext 8 As described on Certificate of Title 97Y00302, description 8.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "SW",
+                "sec": "28",
+                "twp": "29",
+                "rng": "32",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "8",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 147.44,
+          "assessment": 392200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.926513,
+                  51.431495
+                ],
+                [
+                  -101.914905,
+                  51.431495
+                ],
+                [
+                  -101.914905,
+                  51.438731
+                ],
+                [
+                  -101.926513,
+                  51.438731
+                ],
+                [
+                  -101.926513,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-1-29-33-W1",
+          "owner": null,
+          "parcel_no": 144419092,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 01-29-33-1  Ext 0 As described on Certificate of Title 97Y02815B.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_kamsack_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-1-29-33-W1",
+                "parcel_no": "144419092",
+                "title_number": "157472758",
+                "title_text": "SE 01-29-33-1  Ext 0 As described on Certificate of Title 97Y02815B.",
+                "rm": "RM OF COTE NO. 271",
+                "qtr": "SE",
+                "sec": "1",
+                "twp": "29",
+                "rng": "33",
+                "mer": "1",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [
+        {
+          "ac": 149.09,
+          "assessment": 423000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104557,
+                  51.467677
+                ],
+                [
+                  -102.09294,
+                  51.467677
+                ],
+                [
+                  -102.09294,
+                  51.474914
+                ],
+                [
+                  -102.104557,
+                  51.474914
+                ],
+                [
+                  -102.104557,
+                  51.467677
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-17-29-1-W2",
+          "owner": null,
+          "parcel_no": 164747975,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-17-29-1-W2 As shown on Plan 102016505",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.05,
+          "assessment": 201100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.715291,
+                  51.655829
+                ],
+                [
+                  -101.703626,
+                  51.655829
+                ],
+                [
+                  -101.703626,
+                  51.663065
+                ],
+                [
+                  -101.715291,
+                  51.663065
+                ],
+                [
+                  -101.715291,
+                  51.655829
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-22-31-31-W1",
+          "owner": null,
+          "parcel_no": 142535752,
+          "property_card": null,
+          "rm": "RM OF ST. PHILIPS NO. 301",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-22-31-31-W1 As described on Certificate of Title 90Y01351.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "st_philips_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.42,
+          "assessment": 312200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.17465,
+                  51.56899
+                ],
+                [
+                  -102.163007,
+                  51.56899
+                ],
+                [
+                  -102.163007,
+                  51.576226
+                ],
+                [
+                  -102.17465,
+                  51.576226
+                ],
+                [
+                  -102.17465,
+                  51.56899
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-23-30-2-W2",
+          "owner": null,
+          "parcel_no": 151793714,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-23-30-2-W2 As described on Certificate of Title 97Y02569A, description 70.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.03,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.831947,
+                  51.655829
+                ],
+                [
+                  -101.820282,
+                  51.655829
+                ],
+                [
+                  -101.820282,
+                  51.663065
+                ],
+                [
+                  -101.831947,
+                  51.663065
+                ],
+                [
+                  -101.831947,
+                  51.655829
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-23-31-32-W1",
+          "owner": null,
+          "parcel_no": 143493385,
+          "property_card": null,
+          "rm": "RM OF ST. PHILIPS NO. 301",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-23-31-32-W1 As described on Certificate of Title 01Y04163 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "st_philips_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.57,
+          "assessment": 311700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.081219,
+                  51.409785
+                ],
+                [
+                  -102.069616,
+                  51.409785
+                ],
+                [
+                  -102.069616,
+                  51.417021
+                ],
+                [
+                  -102.081219,
+                  51.417021
+                ],
+                [
+                  -102.081219,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-28-28-1-W2",
+          "owner": null,
+          "parcel_no": 144152535,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-28-28-1-W2 As described on Certificate of Title 97Y04226.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 79.72,
+          "assessment": 200500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104491,
+                  51.438731
+                ],
+                [
+                  -102.092881,
+                  51.438731
+                ],
+                [
+                  -102.092881,
+                  51.445968
+                ],
+                [
+                  -102.104491,
+                  51.445968
+                ],
+                [
+                  -102.104491,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-5-29-1-W2",
+          "owner": null,
+          "parcel_no": 151722053,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-5-29-1-W2 As described on Certificate of Title 77Y02598, description 8.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 84,
+          "assessment": 174400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.889213,
+                  51.52557
+                ],
+                [
+                  -101.877581,
+                  51.52557
+                ],
+                [
+                  -101.877581,
+                  51.532807
+                ],
+                [
+                  -101.889213,
+                  51.532807
+                ],
+                [
+                  -101.889213,
+                  51.52557
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-5-30-32-W1",
+          "owner": null,
+          "parcel_no": 151685938,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-5-30-32-W1 As described on Certificate of Title 97Y06490, description 44.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.78,
+          "assessment": 182300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.127711,
+                  51.438731
+                ],
+                [
+                  -102.116101,
+                  51.438731
+                ],
+                [
+                  -102.116101,
+                  51.445968
+                ],
+                [
+                  -102.127711,
+                  51.445968
+                ],
+                [
+                  -102.127711,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-29-1-W2",
+          "owner": null,
+          "parcel_no": 151721951,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-6-29-1-W2 As described on Certificate of Title 01Y02998, description 61.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 156.79,
+          "assessment": 303000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.127752,
+                  51.453204
+                ],
+                [
+                  -102.116138,
+                  51.453204
+                ],
+                [
+                  -102.116138,
+                  51.460441
+                ],
+                [
+                  -102.127752,
+                  51.460441
+                ],
+                [
+                  -102.127752,
+                  51.453204
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-7-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346923,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-7-29-1-W2 As described on Certificate of Title 72Y03456.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.84,
+          "assessment": 439400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104524,
+                  51.453204
+                ],
+                [
+                  -102.09291,
+                  51.453204
+                ],
+                [
+                  -102.09291,
+                  51.460441
+                ],
+                [
+                  -102.104524,
+                  51.460441
+                ],
+                [
+                  -102.104524,
+                  51.453204
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-8-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346967,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-8-29-1-W2 As described on Certificate of Title 97Y10340.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.79,
+          "assessment": 348100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116175,
+                  51.467677
+                ],
+                [
+                  -102.104557,
+                  51.467677
+                ],
+                [
+                  -102.104557,
+                  51.474914
+                ],
+                [
+                  -102.116175,
+                  51.474914
+                ],
+                [
+                  -102.116175,
+                  51.467677
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-17-29-1-W2",
+          "owner": null,
+          "parcel_no": 144326538,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-17-29-1-W2 As described on Certificate of Title 98Y11647.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.7,
+          "assessment": 243900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.796951,
+                  51.655829
+                ],
+                [
+                  -101.785285,
+                  51.655829
+                ],
+                [
+                  -101.785285,
+                  51.663065
+                ],
+                [
+                  -101.796951,
+                  51.663065
+                ],
+                [
+                  -101.796951,
+                  51.655829
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-19-31-31-W1",
+          "owner": null,
+          "parcel_no": 143962522,
+          "property_card": null,
+          "rm": "RM OF ST. PHILIPS NO. 301",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-19-31-31-W1 As described on Certificate of Title 80Y08026.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "st_philips_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 60.050000000000004,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.186293,
+                  51.56899
+                ],
+                [
+                  -102.17465,
+                  51.56899
+                ],
+                [
+                  -102.17465,
+                  51.576226
+                ],
+                [
+                  -102.186293,
+                  51.576226
+                ],
+                [
+                  -102.186293,
+                  51.56899
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-23-30-2-W2",
+          "owner": null,
+          "parcel_no": 153703021,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-23-30-2-W2 AS DESCRIBED ON CERTIFICATE OF TITLE 97Y02569A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.48,
+          "assessment": 290600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.023205,
+                  51.409785
+                ],
+                [
+                  -102.011603,
+                  51.409785
+                ],
+                [
+                  -102.011603,
+                  51.417021
+                ],
+                [
+                  -102.023205,
+                  51.417021
+                ],
+                [
+                  -102.023205,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-25-28-1-W2",
+          "owner": null,
+          "parcel_no": 144152502,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-25-28-1-W2 As described on Certificate of Title 97Y06464.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 154.4,
+          "assessment": 221800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.092822,
+                  51.409785
+                ],
+                [
+                  -102.081219,
+                  51.409785
+                ],
+                [
+                  -102.081219,
+                  51.417021
+                ],
+                [
+                  -102.092822,
+                  51.417021
+                ],
+                [
+                  -102.092822,
+                  51.409785
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-28-28-1-W2",
+          "owner": null,
+          "parcel_no": 144314872,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-28-28-1-W2 As described on Certificate of Title 97Y04226A which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.09,
+          "assessment": 290400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116064,
+                  51.424258
+                ],
+                [
+                  -102.104458,
+                  51.424258
+                ],
+                [
+                  -102.104458,
+                  51.431495
+                ],
+                [
+                  -102.116064,
+                  51.431495
+                ],
+                [
+                  -102.116064,
+                  51.424258
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-32-28-1-W2",
+          "owner": null,
+          "parcel_no": 144181908,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-32-28-1-W2 As described on Certificate of Title 00Y00120A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.78,
+          "assessment": 70500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116101,
+                  51.438731
+                ],
+                [
+                  -102.104491,
+                  51.438731
+                ],
+                [
+                  -102.104491,
+                  51.445968
+                ],
+                [
+                  -102.116101,
+                  51.445968
+                ],
+                [
+                  -102.116101,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-5-29-1-W2",
+          "owner": null,
+          "parcel_no": 151095764,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-5-29-1-W2 As described on Certificate of Title 00Y00120, description 14.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 154.95,
+          "assessment": 374100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.139321,
+                  51.438731
+                ],
+                [
+                  -102.127711,
+                  51.438731
+                ],
+                [
+                  -102.127711,
+                  51.445968
+                ],
+                [
+                  -102.139321,
+                  51.445968
+                ],
+                [
+                  -102.139321,
+                  51.438731
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-29-1-W2",
+          "owner": null,
+          "parcel_no": 151721894,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-6-29-1-W2 As described on Certificate of Title 97Y01027, description 65.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 148.13,
+          "assessment": 472300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.92411,
+                  51.52557
+                ],
+                [
+                  -101.912478,
+                  51.52557
+                ],
+                [
+                  -101.912478,
+                  51.532807
+                ],
+                [
+                  -101.92411,
+                  51.532807
+                ],
+                [
+                  -101.92411,
+                  51.52557
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-30-32-W1",
+          "owner": null,
+          "parcel_no": 203416499,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-6-30-32-W1 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.79,
+          "assessment": 385900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116138,
+                  51.453204
+                ],
+                [
+                  -102.104524,
+                  51.453204
+                ],
+                [
+                  -102.104524,
+                  51.460441
+                ],
+                [
+                  -102.116138,
+                  51.460441
+                ],
+                [
+                  -102.116138,
+                  51.453204
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-8-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346956,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-8-29-1-W2 As described on Certificate of Title 99Y03819.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.07,
+          "assessment": 349600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.150907,
+                  51.431495
+                ],
+                [
+                  -102.139299,
+                  51.431495
+                ],
+                [
+                  -102.139299,
+                  51.438731
+                ],
+                [
+                  -102.150907,
+                  51.438731
+                ],
+                [
+                  -102.150907,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-1-29-2-W2",
+          "owner": null,
+          "parcel_no": 144327696,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-1-29-2-W2 As described on Certificate of Title 01Y02996.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.67,
+          "assessment": 463300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104541,
+                  51.460441
+                ],
+                [
+                  -102.092925,
+                  51.460441
+                ],
+                [
+                  -102.092925,
+                  51.467677
+                ],
+                [
+                  -102.104541,
+                  51.467677
+                ],
+                [
+                  -102.104541,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-17-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347283,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-17-29-1-W2 As described on Certificate of Title 80Y06226.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.9,
+          "assessment": 440100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.127772,
+                  51.460441
+                ],
+                [
+                  -102.116156,
+                  51.460441
+                ],
+                [
+                  -102.116156,
+                  51.467677
+                ],
+                [
+                  -102.127772,
+                  51.467677
+                ],
+                [
+                  -102.127772,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-18-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347317,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-18-29-1-W2 As described on Certificate of Title 88Y03561.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.08,
+          "assessment": 285500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104574,
+                  51.474914
+                ],
+                [
+                  -102.092954,
+                  51.474914
+                ],
+                [
+                  -102.092954,
+                  51.482151
+                ],
+                [
+                  -102.104574,
+                  51.482151
+                ],
+                [
+                  -102.104574,
+                  51.474914
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-20-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347373,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-20-29-1-W2 As described on Certificate of Title 86Y01865.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.57,
+          "assessment": 403500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.174622,
+                  51.561753
+                ],
+                [
+                  -102.162981,
+                  51.561753
+                ],
+                [
+                  -102.162981,
+                  51.56899
+                ],
+                [
+                  -102.174622,
+                  51.56899
+                ],
+                [
+                  -102.174622,
+                  51.561753
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-23-30-2-W2",
+          "owner": null,
+          "parcel_no": 144334245,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-23-30-2-W2 As described on Certificate of Title 97Y02569.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 27.7,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.807921,
+                  51.648592
+                ],
+                [
+                  -101.796258,
+                  51.648592
+                ],
+                [
+                  -101.796258,
+                  51.655829
+                ],
+                [
+                  -101.807921,
+                  51.655829
+                ],
+                [
+                  -101.807921,
+                  51.648592
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-24-31-32-W1",
+          "owner": null,
+          "parcel_no": 151455562,
+          "property_card": null,
+          "rm": "RM OF ST. PHILIPS NO. 301",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-24-31-32-W1 As described on Certificate of Title 01Y04164, description 20.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "st_philips_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 116.26,
+          "assessment": 223200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.081258,
+                  51.431495
+                ],
+                [
+                  -102.06965,
+                  51.431495
+                ],
+                [
+                  -102.06965,
+                  51.438731
+                ],
+                [
+                  -102.081258,
+                  51.438731
+                ],
+                [
+                  -102.081258,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-4-29-1-W2",
+          "owner": null,
+          "parcel_no": 149714062,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-4-29-1-W2 As described on Certificate of Title 95Y03688, description 7.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 150.41,
+          "assessment": 501000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.888509,
+                  51.518334
+                ],
+                [
+                  -101.876879,
+                  51.518334
+                ],
+                [
+                  -101.876879,
+                  51.52557
+                ],
+                [
+                  -101.888509,
+                  51.52557
+                ],
+                [
+                  -101.888509,
+                  51.518334
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-5-30-32-W1",
+          "owner": null,
+          "parcel_no": 142349452,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-5-30-32-W1 As described on Certificate of Title 02Y03883.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.66,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.127691,
+                  51.431495
+                ],
+                [
+                  -102.116083,
+                  51.431495
+                ],
+                [
+                  -102.116083,
+                  51.438731
+                ],
+                [
+                  -102.127691,
+                  51.438731
+                ],
+                [
+                  -102.127691,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-29-1-W2",
+          "owner": null,
+          "parcel_no": 144357273,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-29-1-W2 As described on Certificate of Title 81Y05374 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 107.75,
+          "assessment": 323100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.91177,
+                  51.518334
+                ],
+                [
+                  -101.900139,
+                  51.518334
+                ],
+                [
+                  -101.900139,
+                  51.52557
+                ],
+                [
+                  -101.91177,
+                  51.52557
+                ],
+                [
+                  -101.91177,
+                  51.518334
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-30-32-W1",
+          "owner": null,
+          "parcel_no": 142377385,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-30-32-W1 As described on Certificate of Title 01Y00278 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 158.41000000000003,
+          "assessment": 155500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.127731,
+                  51.445968
+                ],
+                [
+                  -102.116119,
+                  51.445968
+                ],
+                [
+                  -102.116119,
+                  51.453204
+                ],
+                [
+                  -102.127731,
+                  51.453204
+                ],
+                [
+                  -102.127731,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-7-29-1-W2",
+          "owner": null,
+          "parcel_no": 151721748,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-7-29-1-W2 As described on Certificate of Title 74Y10480, description 83.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.53,
+          "assessment": 350300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.104507,
+                  51.445968
+                ],
+                [
+                  -102.092895,
+                  51.445968
+                ],
+                [
+                  -102.092895,
+                  51.453204
+                ],
+                [
+                  -102.104507,
+                  51.453204
+                ],
+                [
+                  -102.104507,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-8-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346934,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-8-29-1-W2 As described on Certificate of Title 93Y03061.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.7,
+          "assessment": 463300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116156,
+                  51.460441
+                ],
+                [
+                  -102.104541,
+                  51.460441
+                ],
+                [
+                  -102.104541,
+                  51.467677
+                ],
+                [
+                  -102.116156,
+                  51.467677
+                ],
+                [
+                  -102.116156,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-17-29-1-W2",
+          "owner": null,
+          "parcel_no": 144347294,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-17-29-1-W2 As described on Certificate of Title 72Y04424.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.16,
+          "assessment": 428100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.139387,
+                  51.460441
+                ],
+                [
+                  -102.127772,
+                  51.460441
+                ],
+                [
+                  -102.127772,
+                  51.467677
+                ],
+                [
+                  -102.139387,
+                  51.467677
+                ],
+                [
+                  -102.139387,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-18-29-1-W2",
+          "owner": null,
+          "parcel_no": 151721355,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-18-29-1-W2 As described on Certificate of Title 99Y02736, description 10.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 48,
+          "assessment": 112800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.819585,
+                  51.648592
+                ],
+                [
+                  -101.807921,
+                  51.648592
+                ],
+                [
+                  -101.807921,
+                  51.655829
+                ],
+                [
+                  -101.819585,
+                  51.655829
+                ],
+                [
+                  -101.819585,
+                  51.648592
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-24-31-32-W1",
+          "owner": null,
+          "parcel_no": 151455584,
+          "property_card": null,
+          "rm": "RM OF ST. PHILIPS NO. 301",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-24-31-32-W1 As described on Certificate of Title 01Y04164, description 21.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "st_philips_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.04,
+          "assessment": 370400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.876879,
+                  51.518334
+                ],
+                [
+                  -101.865248,
+                  51.518334
+                ],
+                [
+                  -101.865248,
+                  51.52557
+                ],
+                [
+                  -101.876879,
+                  51.52557
+                ],
+                [
+                  -101.876879,
+                  51.518334
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-4-30-32-W1",
+          "owner": null,
+          "parcel_no": 152107983,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-4-30-32-W1 As described on Certificate of Title 85Y10950B, description 33.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 136.68,
+          "assessment": 38400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.900139,
+                  51.518334
+                ],
+                [
+                  -101.888509,
+                  51.518334
+                ],
+                [
+                  -101.888509,
+                  51.52557
+                ],
+                [
+                  -101.900139,
+                  51.52557
+                ],
+                [
+                  -101.900139,
+                  51.518334
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-5-30-32-W1",
+          "owner": null,
+          "parcel_no": 145104623,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "D",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-5-30-32-W1 As described on Certificate of Title 00Y08558, description 16.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.57999999999998,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.139299,
+                  51.431495
+                ],
+                [
+                  -102.127691,
+                  51.431495
+                ],
+                [
+                  -102.127691,
+                  51.438731
+                ],
+                [
+                  -102.139299,
+                  51.438731
+                ],
+                [
+                  -102.139299,
+                  51.431495
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346866,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-29-1-W2 As described on Certificate of Title 01Y02997 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 142.86,
+          "assessment": 322900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.9234,
+                  51.518334
+                ],
+                [
+                  -101.91177,
+                  51.518334
+                ],
+                [
+                  -101.91177,
+                  51.52557
+                ],
+                [
+                  -101.9234,
+                  51.52557
+                ],
+                [
+                  -101.9234,
+                  51.518334
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-30-32-W1",
+          "owner": null,
+          "parcel_no": 147667438,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-30-32-W1 As shown on Plan 101303334",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.36,
+          "assessment": 285300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.139343,
+                  51.445968
+                ],
+                [
+                  -102.127731,
+                  51.445968
+                ],
+                [
+                  -102.127731,
+                  51.453204
+                ],
+                [
+                  -102.139343,
+                  51.453204
+                ],
+                [
+                  -102.139343,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-7-29-1-W2",
+          "owner": null,
+          "parcel_no": 144346901,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-7-29-1-W2 As described on Certificate of Title 87Y07667.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.22,
+          "assessment": 467700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -101.92482,
+                  51.532807
+                ],
+                [
+                  -101.913186,
+                  51.532807
+                ],
+                [
+                  -101.913186,
+                  51.540043
+                ],
+                [
+                  -101.92482,
+                  51.540043
+                ],
+                [
+                  -101.92482,
+                  51.532807
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-7-30-32-W1",
+          "owner": null,
+          "parcel_no": 142349519,
+          "property_card": null,
+          "rm": "RM OF COTE NO. 271",
+          "soil": "E",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-7-30-32-W1 As described on Certificate of Title 99Y02606.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "cote_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 155.60999999999999,
+          "assessment": 96900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -102.116119,
+                  51.445968
+                ],
+                [
+                  -102.104507,
+                  51.445968
+                ],
+                [
+                  -102.104507,
+                  51.453204
+                ],
+                [
+                  -102.116119,
+                  51.453204
+                ],
+                [
+                  -102.116119,
+                  51.445968
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-8-29-1-W2",
+          "owner": null,
+          "parcel_no": 202786140,
+          "property_card": null,
+          "rm": "RM OF SLIDING HILLS NO. 273",
+          "soil": "F",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-8-29-1-W2 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_kamsack_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "sliding_hills_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        }
+      ],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": []
+    }
+  }
+}

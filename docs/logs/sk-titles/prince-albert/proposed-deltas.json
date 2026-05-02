@@ -1,0 +1,1285 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "prince-albert"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "prince-albert": {
+      "add": [],
+      "keep": [
+        {
+          "ac": 146.23,
+          "assessment": 344200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.327603,
+                  53.421557
+                ],
+                [
+                  -105.315459,
+                  53.421557
+                ],
+                [
+                  -105.315459,
+                  53.428794
+                ],
+                [
+                  -105.327603,
+                  53.428794
+                ],
+                [
+                  -105.327603,
+                  53.421557
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-32-51-23-W2",
+          "owner": null,
+          "parcel_no": 147790750,
+          "property_card": null,
+          "rm": "RM OF GARDEN RIVER NO. 490",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 32-51-23-2  Ext 77 As described on Certificate of Title 84PA04272, description 77.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-32-51-23-W2",
+                "parcel_no": "147790750",
+                "title_number": "151012460",
+                "title_text": "NW 32-51-23-2  Ext 77 As described on Certificate of Title 84PA04272, description 77.",
+                "rm": "RM OF GARDEN RIVER NO. 490",
+                "qtr": "NW",
+                "sec": "32",
+                "twp": "51",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "77",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.01999999999998,
+          "assessment": 239800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.400471,
+                  53.421557
+                ],
+                [
+                  -105.388326,
+                  53.421557
+                ],
+                [
+                  -105.388326,
+                  53.428794
+                ],
+                [
+                  -105.400471,
+                  53.428794
+                ],
+                [
+                  -105.400471,
+                  53.421557
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-35-51-24-W2",
+          "owner": null,
+          "parcel_no": 204133104,
+          "property_card": null,
+          "rm": "RM OF GARDEN RIVER NO. 490",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-35-51-24-W2 Ext 2",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-35-51-24-W2",
+                "parcel_no": "204133104",
+                "title_number": "158902331",
+                "title_text": "NW 35-51-24-2  Ext 1",
+                "rm": "RM OF GARDEN RIVER NO. 490",
+                "qtr": "NW",
+                "sec": "35",
+                "twp": "51",
+                "rng": "24",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 156.58,
+          "assessment": 314400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.343163,
+                  53.464977
+                ],
+                [
+                  -105.331006,
+                  53.464977
+                ],
+                [
+                  -105.331006,
+                  53.472213
+                ],
+                [
+                  -105.343163,
+                  53.472213
+                ],
+                [
+                  -105.343163,
+                  53.464977
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-18-52-23-W2",
+          "owner": null,
+          "parcel_no": 135339138,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 18-52-23-2  Ext 0 As described on Certificate of Title 97PA05656A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-18-52-23-W2",
+                "parcel_no": "135339138",
+                "title_number": "151012572",
+                "title_text": "NE 18-52-23-2  Ext 0 As described on Certificate of Title 97PA05656A.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "NE",
+                "sec": "18",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.21,
+          "assessment": 204100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.342594,
+                  53.45774
+                ],
+                [
+                  -105.330439,
+                  53.45774
+                ],
+                [
+                  -105.330439,
+                  53.464977
+                ],
+                [
+                  -105.342594,
+                  53.464977
+                ],
+                [
+                  -105.342594,
+                  53.45774
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-18-52-23-W2",
+          "owner": null,
+          "parcel_no": 135339105,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "L",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 18-52-23-2  Ext 0 As described on Certificate of Title 86PA09242.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-18-52-23-W2",
+                "parcel_no": "135339105",
+                "title_number": "151012448",
+                "title_text": "SE 18-52-23-2  Ext 0 As described on Certificate of Title 86PA09242.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SE",
+                "sec": "18",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.38,
+          "assessment": 252200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.354748,
+                  53.45774
+                ],
+                [
+                  -105.342594,
+                  53.45774
+                ],
+                [
+                  -105.342594,
+                  53.464977
+                ],
+                [
+                  -105.354748,
+                  53.464977
+                ],
+                [
+                  -105.354748,
+                  53.45774
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-18-52-23-W2",
+          "owner": null,
+          "parcel_no": 135339116,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 18-52-23-2  Ext 0 As described on Certificate of Title 77PA24586.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-18-52-23-W2",
+                "parcel_no": "135339116",
+                "title_number": "154759573",
+                "title_text": "SW 18-52-23-2  Ext 0 As described on Certificate of Title 77PA24586.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SW",
+                "sec": "18",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.2,
+          "assessment": 403000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.353034,
+                  53.43603
+                ],
+                [
+                  -105.340885,
+                  53.43603
+                ],
+                [
+                  -105.340885,
+                  53.443267
+                ],
+                [
+                  -105.353034,
+                  53.443267
+                ],
+                [
+                  -105.353034,
+                  53.43603
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-52-23-W2",
+          "owner": null,
+          "parcel_no": 135338643,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 06-52-23-2  Ext 0 As described on Certificate of Title 97PA05656.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-6-52-23-W2",
+                "parcel_no": "135338643",
+                "title_number": "153032611",
+                "title_text": "NW 06-52-23-2  Ext 0 As described on Certificate of Title 97PA05656.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "NW",
+                "sec": "6",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.53,
+          "assessment": 435300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.352463,
+                  53.428794
+                ],
+                [
+                  -105.340317,
+                  53.428794
+                ],
+                [
+                  -105.340317,
+                  53.43603
+                ],
+                [
+                  -105.352463,
+                  53.43603
+                ],
+                [
+                  -105.352463,
+                  53.428794
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-52-23-W2",
+          "owner": null,
+          "parcel_no": 135338632,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 06-52-23-2  Ext 0 As described on Certificate of Title 84PA04272A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-6-52-23-W2",
+                "parcel_no": "135338632",
+                "title_number": "153032532",
+                "title_text": "SW 06-52-23-2  Ext 0 As described on Certificate of Title 84PA04272A.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SW",
+                "sec": "6",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.24,
+          "assessment": 258500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.354177,
+                  53.450503
+                ],
+                [
+                  -105.342024,
+                  53.450503
+                ],
+                [
+                  -105.342024,
+                  53.45774
+                ],
+                [
+                  -105.354177,
+                  53.45774
+                ],
+                [
+                  -105.354177,
+                  53.450503
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-7-52-23-W2",
+          "owner": null,
+          "parcel_no": 135338687,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-7-52-23-W2 Ext 0 As described on Certificate of Title 77PA23764.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-7-52-23-W2",
+                "parcel_no": "135338687",
+                "title_number": "157473108",
+                "title_text": "NW 07-52-23-2  Ext 0 As described on Certificate of Title 77PA23764.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "NW",
+                "sec": "7",
+                "twp": "52",
+                "rng": "23",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.79,
+          "assessment": 357500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.365183,
+                  53.43603
+                ],
+                [
+                  -105.353034,
+                  53.43603
+                ],
+                [
+                  -105.353034,
+                  53.443267
+                ],
+                [
+                  -105.365183,
+                  53.443267
+                ],
+                [
+                  -105.365183,
+                  53.43603
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-1-52-24-W2",
+          "owner": null,
+          "parcel_no": 203812141,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 01-52-24-2 Plan 102342631 Ext 0",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-1-52-24-W2",
+                "parcel_no": "203812141",
+                "title_number": "153593387",
+                "title_text": "NE 01-52-24-2 Plan 102342631 Ext 0",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "NE",
+                "sec": "1",
+                "twp": "52",
+                "rng": "24",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": "102342631",
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 161.53,
+          "assessment": 229700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.40105,
+                  53.428794
+                ],
+                [
+                  -105.388903,
+                  53.428794
+                ],
+                [
+                  -105.388903,
+                  53.43603
+                ],
+                [
+                  -105.40105,
+                  53.43603
+                ],
+                [
+                  -105.40105,
+                  53.428794
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-2-52-24-W2",
+          "owner": null,
+          "parcel_no": 133945454,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-2-52-24-W2 As described on Certificate of Title 86PA09107A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-2-52-24-W2",
+                "parcel_no": "133945454",
+                "title_number": "156787015",
+                "title_text": "SW 02-52-24-2  Ext 0 As described on Certificate of Title 86PA09107A.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SW",
+                "sec": "2",
+                "twp": "52",
+                "rng": "24",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.62,
+          "assessment": 279900,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.445708,
+                  53.530106
+                ],
+                [
+                  -105.433533,
+                  53.530106
+                ],
+                [
+                  -105.433533,
+                  53.537342
+                ],
+                [
+                  -105.445708,
+                  53.537342
+                ],
+                [
+                  -105.445708,
+                  53.530106
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-9-53-24-W2",
+          "owner": null,
+          "parcel_no": 133839074,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-9-53-24-W2 As described on Certificate of Title 65PA02836.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-9-53-24-W2",
+                "parcel_no": "133839074",
+                "title_number": "150670986",
+                "title_text": "SE 09-53-24-2  Ext 0 As described on Certificate of Title 65PA02836.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SE",
+                "sec": "9",
+                "twp": "53",
+                "rng": "24",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 158.56,
+          "assessment": 275700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.457884,
+                  53.530106
+                ],
+                [
+                  -105.445708,
+                  53.530106
+                ],
+                [
+                  -105.445708,
+                  53.537342
+                ],
+                [
+                  -105.457884,
+                  53.537342
+                ],
+                [
+                  -105.457884,
+                  53.530106
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-9-53-24-W2",
+          "owner": null,
+          "parcel_no": 133839085,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-9-53-24-W2 As described on Certificate of Title 65PA02836.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_prince-albert_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-9-53-24-W2",
+                "parcel_no": "133839085",
+                "title_number": "150670975",
+                "title_text": "SW 09-53-24-2  Ext 0 As described on Certificate of Title 65PA02836.",
+                "rm": "RM OF PADDOCKWOOD NO. 520",
+                "qtr": "SW",
+                "sec": "9",
+                "twp": "53",
+                "rng": "24",
+                "mer": "2",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [
+        {
+          "ac": 161.08,
+          "assessment": 259600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.36633,
+                  53.450503
+                ],
+                [
+                  -105.354177,
+                  53.450503
+                ],
+                [
+                  -105.354177,
+                  53.45774
+                ],
+                [
+                  -105.36633,
+                  53.45774
+                ],
+                [
+                  -105.36633,
+                  53.450503
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-12-52-24-W2",
+          "owner": null,
+          "parcel_no": 133927780,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "H",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-12-52-24-W2 As described on Certificate of Title 90PA21743.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 126.03,
+          "assessment": 266100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.319982,
+                  53.47945
+                ],
+                [
+                  -105.307821,
+                  53.47945
+                ],
+                [
+                  -105.307821,
+                  53.486686
+                ],
+                [
+                  -105.319982,
+                  53.486686
+                ],
+                [
+                  -105.319982,
+                  53.47945
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-20-52-23-W2",
+          "owner": null,
+          "parcel_no": 203928857,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-20-52-23-W2 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.12,
+          "assessment": 185600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.378482,
+                  53.450503
+                ],
+                [
+                  -105.36633,
+                  53.450503
+                ],
+                [
+                  -105.36633,
+                  53.45774
+                ],
+                [
+                  -105.378482,
+                  53.45774
+                ],
+                [
+                  -105.378482,
+                  53.450503
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-12-52-24-W2",
+          "owner": null,
+          "parcel_no": 133927779,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "K",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-12-52-24-W2 As described on Certificate of Title 97PA05657.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.83,
+          "assessment": 257700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.280142,
+                  53.43603
+                ],
+                [
+                  -105.267993,
+                  53.43603
+                ],
+                [
+                  -105.267993,
+                  53.443267
+                ],
+                [
+                  -105.280142,
+                  53.443267
+                ],
+                [
+                  -105.280142,
+                  53.43603
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-3-52-23-W2",
+          "owner": null,
+          "parcel_no": 135338520,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "K",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-3-52-23-W2 As described on Certificate of Title 84PA15118.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 156.86,
+          "assessment": 47895,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.304439,
+                  53.43603
+                ],
+                [
+                  -105.292291,
+                  53.43603
+                ],
+                [
+                  -105.292291,
+                  53.443267
+                ],
+                [
+                  -105.304439,
+                  53.443267
+                ],
+                [
+                  -105.304439,
+                  53.43603
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-4-52-23-W2",
+          "owner": null,
+          "parcel_no": 203408760,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-4-52-23-W2 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 155.91,
+          "assessment": 269500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.319415,
+                  53.472213
+                ],
+                [
+                  -105.307256,
+                  53.472213
+                ],
+                [
+                  -105.307256,
+                  53.47945
+                ],
+                [
+                  -105.319415,
+                  53.47945
+                ],
+                [
+                  -105.319415,
+                  53.472213
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-20-52-23-W2",
+          "owner": null,
+          "parcel_no": 135339183,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-20-52-23-W2 As described on Certificate of Title 01PA11414A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.99,
+          "assessment": 234000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.377907,
+                  53.443267
+                ],
+                [
+                  -105.365756,
+                  53.443267
+                ],
+                [
+                  -105.365756,
+                  53.450503
+                ],
+                [
+                  -105.377907,
+                  53.450503
+                ],
+                [
+                  -105.377907,
+                  53.443267
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-12-52-24-W2",
+          "owner": null,
+          "parcel_no": 133927768,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-12-52-24-W2 As described on Certificate of Title 88PA10424B.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 35.5,
+          "assessment": 82400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -105.327037,
+                  53.41432
+                ],
+                [
+                  -105.314895,
+                  53.41432
+                ],
+                [
+                  -105.314895,
+                  53.421557
+                ],
+                [
+                  -105.327037,
+                  53.421557
+                ],
+                [
+                  -105.327037,
+                  53.41432
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-32-51-23-W2",
+          "owner": null,
+          "parcel_no": 203813243,
+          "property_card": null,
+          "rm": "RM OF PADDOCKWOOD NO. 520",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-32-51-23-W2 Title not available",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_prince-albert_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "paddockwood_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        }
+      ],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": []
+    }
+  }
+}

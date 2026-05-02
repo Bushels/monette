@@ -1,0 +1,823 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "__neville__"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "__neville__": {
+      "add": [
+        {
+          "loc": "BLK-B-PLAN-101658124",
+          "parcel_no": 150833482,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Blk/Par B-Plan 101658124 Ext 11 As described on Certificate of Title 95SC06993, description 11.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "BLK-B-PLAN-101658124",
+                "parcel_no": "150833482",
+                "title_number": "140206384",
+                "title_text": "Blk/Par B-Plan 101658124 Ext 11 As described on Certificate of Title 95SC06993, description 11.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": null,
+                "block": "B",
+                "plan": "101658124",
+                "ext": "11",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": true,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-1-BLK-13-PLAN-N3619",
+          "parcel_no": 143320395,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 1-Blk/Par 13-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-1-BLK-13-PLAN-N3619",
+                "parcel_no": "143320395",
+                "title_number": "148055597",
+                "title_text": "Lot 1-Blk/Par 13-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "1",
+                "block": "13",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-1-BLK-14-PLAN-N3619",
+          "parcel_no": 143320373,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 1-Blk/Par 14-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-1-BLK-14-PLAN-N3619",
+                "parcel_no": "143320373",
+                "title_number": "148055665",
+                "title_text": "Lot 1-Blk/Par 14-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "1",
+                "block": "14",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-1-BLK-15-PLAN-N3619",
+          "parcel_no": 143320351,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 1-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 92SC04174.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-1-BLK-15-PLAN-N3619",
+                "parcel_no": "143320351",
+                "title_number": "148055856",
+                "title_text": "Lot 1-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 92SC04174.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "1",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-10-BLK-15-PLAN-N3619",
+          "parcel_no": 152579548,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 10-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-10-BLK-15-PLAN-N3619",
+                "parcel_no": "152579548",
+                "title_number": "157789805",
+                "title_text": "Lot 10-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "10",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-11-BLK-15-PLAN-N3619",
+          "parcel_no": 152579560,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 11-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-11-BLK-15-PLAN-N3619",
+                "parcel_no": "152579560",
+                "title_number": "157789827",
+                "title_text": "Lot 11-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "11",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-12-BLK-15-PLAN-N3619",
+          "parcel_no": 143320340,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 12-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-12-BLK-15-PLAN-N3619",
+                "parcel_no": "143320340",
+                "title_number": "148055812",
+                "title_text": "Lot 12-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "12",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-2-BLK-14-PLAN-N3619",
+          "parcel_no": 143320362,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 2-Blk/Par 14-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-2-BLK-14-PLAN-N3619",
+                "parcel_no": "143320362",
+                "title_number": "148055687",
+                "title_text": "Lot 2-Blk/Par 14-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "2",
+                "block": "14",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-2-BLK-15-PLAN-N3619",
+          "parcel_no": 143320328,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 2-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-2-BLK-15-PLAN-N3619",
+                "parcel_no": "143320328",
+                "title_number": "148055744",
+                "title_text": "Lot 2-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "2",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-8-BLK-15-PLAN-N3619",
+          "parcel_no": 143320317,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 8-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-8-BLK-15-PLAN-N3619",
+                "parcel_no": "143320317",
+                "title_number": "148055799",
+                "title_text": "Lot 8-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "8",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LOT-9-BLK-15-PLAN-N3619",
+          "parcel_no": 152579526,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": null,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "Lot 9-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LOT-9-BLK-15-PLAN-N3619",
+                "parcel_no": "152579526",
+                "title_number": "148055867",
+                "title_text": "Lot 9-Blk/Par 15-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097CNV.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "9",
+                "block": "15",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "LSD-3-6-12-12-W3",
+          "parcel_no": 151624188,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": 40.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "LSD 3-06-12-12-3  Ext 9 As described on Certificate of Title 79SC14668, description 9.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_lsd_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "LSD-3-6-12-12-W3",
+                "parcel_no": "151624188",
+                "title_number": "143051789",
+                "title_text": "LSD 3-06-12-12-3  Ext 9 As described on Certificate of Title 79SC14668, description 9.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": "3",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "9",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "SE-6-12-12-W3",
+          "parcel_no": 151624166,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": 160.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "SE 06-12-12-3  Ext 8 As described on Certificate of Title 79SC14668, description 8.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "SE-6-12-12-W3",
+                "parcel_no": "151624166",
+                "title_number": "143051767",
+                "title_text": "SE 06-12-12-3  Ext 8 As described on Certificate of Title 79SC14668, description 8.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": "SE",
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "8",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        },
+        {
+          "loc": "SE-6-12-12-W3",
+          "parcel_no": 151624177,
+          "rm": "VILLAGE OF NEVILLE",
+          "ac": 160.0,
+          "geometry": null,
+          "owner": "MONETTE FARMS LTD.",
+          "title": "SE 06-12-12-3  Ext 19 As described on Certificate of Title 79SC14668, description 19.",
+          "soil": null,
+          "assessment": null,
+          "crop": null,
+          "tax_year": null,
+          "gis_ac": null,
+          "property_card": null,
+          "source": "isc_csv_2026_01_18",
+          "reconciliation": {
+            "bucket": "ADD",
+            "action": "add_to___neville___geometry_pending",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "geometry_action": "compute_quarter_polygon_from_dls",
+            "csv_matches": [
+              {
+                "loc": "SE-6-12-12-W3",
+                "parcel_no": "151624177",
+                "title_number": "143051778",
+                "title_text": "SE 06-12-12-3  Ext 19 As described on Certificate of Title 79SC14668, description 19.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": "SE",
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "19",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "keep": [
+        {
+          "ac": 87.55000000000001,
+          "assessment": 16600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.95523
+                ],
+                [
+                  -107.597289,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 143320384,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-6-12-12-W3 As described on Certificate of Title 79SC14097.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under___neville___and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LOT-2-BLK-13-PLAN-N3619",
+                "parcel_no": "143320384",
+                "title_number": "148055621",
+                "title_text": "Lot 2-Blk/Par 13-Plan N3619 Ext 0 As described on Certificate of Title 79SC14097.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": null,
+                "twp": null,
+                "rng": null,
+                "mer": null,
+                "lsd": null,
+                "lot": "2",
+                "block": "13",
+                "plan": "N3619",
+                "ext": "0",
+                "ac_estimated": null,
+                "is_lsd": false,
+                "is_town_lot": true,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 65.19,
+          "assessment": 337200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -107.619786,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.95523
+                ],
+                [
+                  -107.608537,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.962467
+                ],
+                [
+                  -107.619786,
+                  49.95523
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-12-12-W3",
+          "owner": null,
+          "parcel_no": 151624199,
+          "property_card": null,
+          "rm": "RM OF WHISKA CREEK NO. 106",
+          "soil": "G",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-6-12-12-W3 As described on Certificate of Title 79SC14668, description 10.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under___neville___and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "LSD-6-6-12-12-W3",
+                "parcel_no": "151624199",
+                "title_number": "143051790",
+                "title_text": "LSD 6-06-12-12-3  Ext 10 As described on Certificate of Title 79SC14668, description 10.",
+                "rm": "VILLAGE OF NEVILLE",
+                "qtr": null,
+                "sec": "6",
+                "twp": "12",
+                "rng": "12",
+                "mer": "3",
+                "lsd": "6",
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "10",
+                "ac_estimated": 40.0,
+                "is_lsd": true,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 2.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": []
+    }
+  }
+}

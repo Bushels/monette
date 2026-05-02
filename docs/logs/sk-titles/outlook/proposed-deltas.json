@@ -1,0 +1,1507 @@
+{
+  "branch": "feat/sk-titles-2026-01-18",
+  "snapshot_date": "2026-01-18",
+  "generated_by": "scripts/build_deltas_from_audit.py",
+  "scope": [
+    "outlook"
+  ],
+  "anchor_truth_rule": "CSV (ISC title export, snapshot 2026-01-18) is the truth for MFL title. Records currently on map but absent from CSV are kept (FLAG), never deleted.",
+  "properties": {
+    "outlook": {
+      "add": [],
+      "keep": [
+        {
+          "ac": 140.18,
+          "assessment": 218700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.975866,
+                  51.467677
+                ],
+                [
+                  -106.964249,
+                  51.467677
+                ],
+                [
+                  -106.964249,
+                  51.474914
+                ],
+                [
+                  -106.975866,
+                  51.474914
+                ],
+                [
+                  -106.975866,
+                  51.467677
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-18-29-7-W3",
+          "owner": null,
+          "parcel_no": 145747200,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "L",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-18-29-7-W3 Ext 8 As described on Certificate of Title 69S19503, description 8.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-18-29-7-W3",
+                "parcel_no": "145747200",
+                "title_number": "157477359",
+                "title_text": "NW 18-29-07-3  Ext 8 As described on Certificate of Title 69S19503, description 8.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "NW",
+                "sec": "18",
+                "twp": "29",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "8",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 146.32,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.975712,
+                  51.460441
+                ],
+                [
+                  -106.964096,
+                  51.460441
+                ],
+                [
+                  -106.964096,
+                  51.467677
+                ],
+                [
+                  -106.975712,
+                  51.467677
+                ],
+                [
+                  -106.975712,
+                  51.460441
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-18-29-7-W3",
+          "owner": null,
+          "parcel_no": 119822058,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "L",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-18-29-7-W3 Ext 2 As described on Certificate of Title 00MW11585 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-18-29-7-W3",
+                "parcel_no": "119822058",
+                "title_number": "157477348",
+                "title_text": "SW 18-29-07-3  Ext 2 As described on Certificate of Title 00MW11585 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "SW",
+                "sec": "18",
+                "twp": "29",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              },
+              {
+                "loc": "SW-18-29-7-W3",
+                "parcel_no": "119808962",
+                "title_number": "157477360",
+                "title_text": "SW 18-29-07-3  Ext 1 As described on Certificate of Title 00MW11585 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "SW",
+                "sec": "18",
+                "twp": "29",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.62,
+          "assessment": 101800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.977573,
+                  51.54728
+                ],
+                [
+                  -106.965935,
+                  51.54728
+                ],
+                [
+                  -106.965935,
+                  51.554517
+                ],
+                [
+                  -106.977573,
+                  51.554517
+                ],
+                [
+                  -106.977573,
+                  51.54728
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-18-30-7-W3",
+          "owner": null,
+          "parcel_no": 119583816,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "O",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 18-30-07-3  Ext 0 As described on Certificate of Title 96S56944.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-18-30-7-W3",
+                "parcel_no": "119583816",
+                "title_number": "154673095",
+                "title_text": "SW 18-30-07-3  Ext 0 As described on Certificate of Title 96S56944.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "SW",
+                "sec": "18",
+                "twp": "30",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 142.73000000000002,
+          "assessment": "included",
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.897108,
+                  51.597936
+                ],
+                [
+                  -106.885457,
+                  51.597936
+                ],
+                [
+                  -106.885457,
+                  51.605173
+                ],
+                [
+                  -106.897108,
+                  51.605173
+                ],
+                [
+                  -106.897108,
+                  51.597936
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-34-30-7-W3",
+          "owner": null,
+          "parcel_no": 119583007,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "J",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 34-30-07-3  Ext 1 As described on Certificate of Title 88S20852 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NE-34-30-7-W3",
+                "parcel_no": "119583007",
+                "title_number": "150527370",
+                "title_text": "NE 34-30-07-3  Ext 1 As described on Certificate of Title 88S20852 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "NE",
+                "sec": "34",
+                "twp": "30",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              },
+              {
+                "loc": "NE-34-30-7-W3",
+                "parcel_no": "119720606",
+                "title_number": "150527392",
+                "title_text": "NE 34-30-07-3  Ext 2 As described on Certificate of Title 88S20852 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "NE",
+                "sec": "34",
+                "twp": "30",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 146.23,
+          "assessment": 284200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.885457,
+                  51.597936
+                ],
+                [
+                  -106.873806,
+                  51.597936
+                ],
+                [
+                  -106.873806,
+                  51.605173
+                ],
+                [
+                  -106.885457,
+                  51.605173
+                ],
+                [
+                  -106.885457,
+                  51.597936
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-35-30-7-W3",
+          "owner": null,
+          "parcel_no": 119581601,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "K",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 35-30-07-3  Ext 0 As described on Certificate of Title 88S20852.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-35-30-7-W3",
+                "parcel_no": "119581601",
+                "title_number": "150527369",
+                "title_text": "NW 35-30-07-3  Ext 0 As described on Certificate of Title 88S20852.",
+                "rm": "RM OF RUDY NO. 284",
+                "qtr": "NW",
+                "sec": "35",
+                "twp": "30",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 3.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 157.45,
+          "assessment": 229800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.910501,
+                  51.684775
+                ],
+                [
+                  -106.898828,
+                  51.684775
+                ],
+                [
+                  -106.898828,
+                  51.692012
+                ],
+                [
+                  -106.910501,
+                  51.692012
+                ],
+                [
+                  -106.910501,
+                  51.684775
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-34-31-7-W3",
+          "owner": null,
+          "parcel_no": 119522741,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-34-31-7-W3 As described on Certificate of Title 85S25039 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-34-31-7-W3",
+                "parcel_no": "119443844",
+                "title_number": "156369628",
+                "title_text": "NW 34-31-07-3  Ext 1 As described on Certificate of Title 85S25039 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "NW",
+                "sec": "34",
+                "twp": "31",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "1",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              },
+              {
+                "loc": "NW-34-31-7-W3",
+                "parcel_no": "119522741",
+                "title_number": "156369639",
+                "title_text": "NW 34-31-07-3  Ext 2 As described on Certificate of Title 85S25039 which describes this parcel and other parcel(s) with the same land description tied to this one.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "NW",
+                "sec": "34",
+                "twp": "31",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "2",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.36,
+          "assessment": 196500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.898684,
+                  51.677539
+                ],
+                [
+                  -106.887013,
+                  51.677539
+                ],
+                [
+                  -106.887013,
+                  51.684775
+                ],
+                [
+                  -106.898684,
+                  51.684775
+                ],
+                [
+                  -106.898684,
+                  51.677539
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-34-31-7-W3",
+          "owner": null,
+          "parcel_no": 119443833,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-34-31-7-W3 As described on Certificate of Title 97S39227A.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-34-31-7-W3",
+                "parcel_no": "119443833",
+                "title_number": "156369673",
+                "title_text": "SE 34-31-07-3  Ext 0 As described on Certificate of Title 97S39227A.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "SE",
+                "sec": "34",
+                "twp": "31",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 159.61,
+          "assessment": 182700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.887155,
+                  51.684775
+                ],
+                [
+                  -106.875482,
+                  51.684775
+                ],
+                [
+                  -106.875482,
+                  51.692012
+                ],
+                [
+                  -106.887155,
+                  51.692012
+                ],
+                [
+                  -106.887155,
+                  51.684775
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-35-31-7-W3",
+          "owner": null,
+          "parcel_no": 119443877,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NW-35-31-7-W3 As described on Certificate of Title 79S16122.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "NW-35-31-7-W3",
+                "parcel_no": "119443877",
+                "title_number": "156369640",
+                "title_text": "NW 35-31-07-3  Ext 0 As described on Certificate of Title 79S16122.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "NW",
+                "sec": "35",
+                "twp": "31",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 161.75,
+          "assessment": 205400,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.898972,
+                  51.692012
+                ],
+                [
+                  -106.887297,
+                  51.692012
+                ],
+                [
+                  -106.887297,
+                  51.699248
+                ],
+                [
+                  -106.898972,
+                  51.699248
+                ],
+                [
+                  -106.898972,
+                  51.692012
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-3-32-7-W3",
+          "owner": null,
+          "parcel_no": 119442416,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-3-32-7-W3 As described on Certificate of Title 81S43620.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SE-3-32-7-W3",
+                "parcel_no": "119442416",
+                "title_number": "156369662",
+                "title_text": "SE 03-32-07-3  Ext 0 As described on Certificate of Title 81S43620.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "SE",
+                "sec": "3",
+                "twp": "32",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        },
+        {
+          "ac": 160.6,
+          "assessment": 239000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.910646,
+                  51.692012
+                ],
+                [
+                  -106.898972,
+                  51.692012
+                ],
+                [
+                  -106.898972,
+                  51.699248
+                ],
+                [
+                  -106.910646,
+                  51.699248
+                ],
+                [
+                  -106.910646,
+                  51.692012
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-3-32-7-W3",
+          "owner": null,
+          "parcel_no": 119442427,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SW-3-32-7-W3 As described on Certificate of Title 92S10946.",
+          "reconciliation": {
+            "bucket": "KEEP",
+            "action": "keep_under_outlook_and_mark_mfl_titled_verified",
+            "status": "mfl_titled_verified_at_snapshot",
+            "snapshot_date": "2026-01-18",
+            "csv_matches": [
+              {
+                "loc": "SW-3-32-7-W3",
+                "parcel_no": "119442427",
+                "title_number": "156369729",
+                "title_text": "SW 03-32-07-3  Ext 0 As described on Certificate of Title 92S10946.",
+                "rm": "RM OF MONTROSE NO. 315",
+                "qtr": "SW",
+                "sec": "3",
+                "twp": "32",
+                "rng": "7",
+                "mer": "3",
+                "lsd": null,
+                "lot": null,
+                "block": null,
+                "plan": null,
+                "ext": "0",
+                "ac_estimated": 160.0,
+                "is_lsd": false,
+                "is_town_lot": false,
+                "is_planned_parcel": false,
+                "csv_source": "Monette - file 1.csv"
+              }
+            ]
+          }
+        }
+      ],
+      "flag": [
+        {
+          "ac": 160,
+          "assessment": 150700,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.897394,
+                  51.612409
+                ],
+                [
+                  -106.885739,
+                  51.612409
+                ],
+                [
+                  -106.885739,
+                  51.619646
+                ],
+                [
+                  -106.897394,
+                  51.619646
+                ],
+                [
+                  -106.897394,
+                  51.612409
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-03-31-07-W3",
+          "owner": null,
+          "parcel_no": 119444845,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 03-31-07-3 Ext 0 As described on Certificate of Title 99MW18013.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rudy_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.7,
+          "assessment": 221200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.898828,
+                  51.684775
+                ],
+                [
+                  -106.887155,
+                  51.684775
+                ],
+                [
+                  -106.887155,
+                  51.692012
+                ],
+                [
+                  -106.898828,
+                  51.692012
+                ],
+                [
+                  -106.898828,
+                  51.684775
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-34-31-7-W3",
+          "owner": null,
+          "parcel_no": 119443855,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NE-34-31-7-W3 As described on Certificate of Title 82S45665.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "montrose_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 159.13,
+          "assessment": 156600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.875482,
+                  51.684775
+                ],
+                [
+                  -106.863809,
+                  51.684775
+                ],
+                [
+                  -106.863809,
+                  51.692012
+                ],
+                [
+                  -106.875482,
+                  51.692012
+                ],
+                [
+                  -106.875482,
+                  51.684775
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-35-31-7-W3",
+          "owner": null,
+          "parcel_no": 119443888,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "O",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 35-31-07-3  Ext 0 As described on Certificate of Title 79S16122.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "montrose_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.85,
+          "assessment": 211200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.687614,
+                  51.612409
+                ],
+                [
+                  -106.675959,
+                  51.612409
+                ],
+                [
+                  -106.675959,
+                  51.619646
+                ],
+                [
+                  -106.687614,
+                  51.619646
+                ],
+                [
+                  -106.687614,
+                  51.612409
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-6-31-5-W3",
+          "owner": null,
+          "parcel_no": 117602513,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 06-31-05-3  Ext 0 As described on Certificate of Title 01MW07058.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.47,
+          "assessment": 233300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.664517,
+                  51.626882
+                ],
+                [
+                  -106.652858,
+                  51.626882
+                ],
+                [
+                  -106.652858,
+                  51.634119
+                ],
+                [
+                  -106.664517,
+                  51.634119
+                ],
+                [
+                  -106.664517,
+                  51.626882
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NE-8-31-5-W3",
+          "owner": null,
+          "parcel_no": 117602535,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NE 08-31-05-3  Ext 0 As described on Certificate of Title 02MW03865.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.75,
+          "assessment": 208800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.699268,
+                  51.612409
+                ],
+                [
+                  -106.687614,
+                  51.612409
+                ],
+                [
+                  -106.687614,
+                  51.619646
+                ],
+                [
+                  -106.699268,
+                  51.619646
+                ],
+                [
+                  -106.699268,
+                  51.612409
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "NW-6-31-5-W3",
+          "owner": null,
+          "parcel_no": 117627745,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "NW 06-31-05-3  Ext 0 As described on Certificate of Title 01MW07058.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.8,
+          "assessment": 121800,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.965935,
+                  51.54728
+                ],
+                [
+                  -106.954297,
+                  51.54728
+                ],
+                [
+                  -106.954297,
+                  51.554517
+                ],
+                [
+                  -106.965935,
+                  51.554517
+                ],
+                [
+                  -106.965935,
+                  51.54728
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-18-30-7-W3",
+          "owner": null,
+          "parcel_no": 119583805,
+          "property_card": null,
+          "rm": "RM OF RUDY NO. 284",
+          "soil": "L",
+          "source": null,
+          "tax_year": null,
+          "title": "SE-18-30-7-W3 Ext 0 As described on Certificate of Title 65S15376A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rudy_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.25,
+          "assessment": 181600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.875342,
+                  51.677539
+                ],
+                [
+                  -106.86367,
+                  51.677539
+                ],
+                [
+                  -106.86367,
+                  51.684775
+                ],
+                [
+                  -106.875342,
+                  51.684775
+                ],
+                [
+                  -106.875342,
+                  51.677539
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-35-31-7-W3",
+          "owner": null,
+          "parcel_no": 119443866,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "O",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 35-31-07-3  Ext 0 As described on Certificate of Title 79S16122.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "montrose_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.75,
+          "assessment": 233000,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.687504,
+                  51.605173
+                ],
+                [
+                  -106.675851,
+                  51.605173
+                ],
+                [
+                  -106.675851,
+                  51.612409
+                ],
+                [
+                  -106.687504,
+                  51.612409
+                ],
+                [
+                  -106.687504,
+                  51.605173
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-6-31-5-W3",
+          "owner": null,
+          "parcel_no": 117627723,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "L",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 06-31-05-3  Ext 0 As described on Certificate of Title 01MW07058A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 151.67,
+          "assessment": 21600,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.664411,
+                  51.619646
+                ],
+                [
+                  -106.652754,
+                  51.619646
+                ],
+                [
+                  -106.652754,
+                  51.626882
+                ],
+                [
+                  -106.664411,
+                  51.626882
+                ],
+                [
+                  -106.664411,
+                  51.619646
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SE-8-31-5-W3",
+          "owner": null,
+          "parcel_no": 145841665,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SE 08-31-05-3  Ext 1 As shown on Plan 101289517",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.78,
+          "assessment": 161100,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.887297,
+                  51.692012
+                ],
+                [
+                  -106.875622,
+                  51.692012
+                ],
+                [
+                  -106.875622,
+                  51.699248
+                ],
+                [
+                  -106.887297,
+                  51.699248
+                ],
+                [
+                  -106.887297,
+                  51.692012
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-2-32-7-W3",
+          "owner": null,
+          "parcel_no": 119442393,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "P",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 02-32-07-3  Ext 0 As described on Certificate of Title 79S16122A.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "montrose_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 160.47,
+          "assessment": 199200,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.887013,
+                  51.677539
+                ],
+                [
+                  -106.875342,
+                  51.677539
+                ],
+                [
+                  -106.875342,
+                  51.684775
+                ],
+                [
+                  -106.887013,
+                  51.684775
+                ],
+                [
+                  -106.887013,
+                  51.677539
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-35-31-7-W3",
+          "owner": null,
+          "parcel_no": 119449378,
+          "property_card": null,
+          "rm": "RM OF MONTROSE NO. 315",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 35-31-07-3  Ext 0 As described on Certificate of Title 79S16122.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "montrose_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 157.69,
+          "assessment": 182500,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.699157,
+                  51.605173
+                ],
+                [
+                  -106.687504,
+                  51.605173
+                ],
+                [
+                  -106.687504,
+                  51.612409
+                ],
+                [
+                  -106.699157,
+                  51.612409
+                ],
+                [
+                  -106.699157,
+                  51.605173
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-6-31-5-W3",
+          "owner": null,
+          "parcel_no": 117627734,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 06-31-05-3  Ext 0 As described on Certificate of Title 01MW07058.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        },
+        {
+          "ac": 161.26,
+          "assessment": 222300,
+          "crop": null,
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                  -106.676067,
+                  51.619646
+                ],
+                [
+                  -106.664411,
+                  51.619646
+                ],
+                [
+                  -106.664411,
+                  51.626882
+                ],
+                [
+                  -106.676067,
+                  51.626882
+                ],
+                [
+                  -106.676067,
+                  51.619646
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "gis_ac": null,
+          "loc": "SW-8-31-5-W3",
+          "owner": null,
+          "parcel_no": 117627790,
+          "property_card": null,
+          "rm": "RM OF ROSEDALE NO. 283",
+          "soil": "M",
+          "source": null,
+          "tax_year": null,
+          "title": "SW 08-31-05-3  Ext 0 As described on Certificate of Title 02MW03865.",
+          "reconciliation": {
+            "bucket": "FLAG",
+            "action": "keep_under_outlook_but_no_csv_match_at_snapshot",
+            "status": "title_status_unresolved_under_csv_snapshot",
+            "snapshot_date": "2026-01-18",
+            "flag_subtype": "rosedale_not_in_mfl_csv",
+            "follow_up_note": "Record kept on map (anchor-truth principle). Pull title history or check whether held by a different Monette entity, leased back, or sold pre-2026-01-18."
+          }
+        }
+      ],
+      "remove": [],
+      "reassign_out": [],
+      "reassign_in": []
+    }
+  }
+}
