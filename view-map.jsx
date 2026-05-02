@@ -697,7 +697,15 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         geometryStatus: pointOnly ? "point-only" : "synthetic",
       };
 
-      if (Number.isFinite(property.lng) && Number.isFinite(property.lat)) {
+      // hideMapMarker: opt out of on-map circle + label rendering. Used for
+      // properties whose polygons aggregate under a parent rollup (e.g.,
+      // Montana sub-properties whose parcels live under quarters['montana']).
+      // The redundant point markers were obscuring the parcel polygons.
+      if (
+        Number.isFinite(property.lng) &&
+        Number.isFinite(property.lat) &&
+        !property.hideMapMarker
+      ) {
         const center = [property.lng, property.lat];
         pointFeatures.push({
           type: "Feature",
@@ -752,16 +760,18 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       },
     });
 
-    labelFeatures.push({
-      type: "Feature",
-      geometry: { type: "Point", coordinates: center },
-      properties: {
-        id: property.id,
-        name: property.name,
-        acres_label: `${fmt(property.titled || 0)} ac`,
-        titled: property.titled || 0,
-      },
-    });
+    if (!property.hideMapMarker) {
+      labelFeatures.push({
+        type: "Feature",
+        geometry: { type: "Point", coordinates: center },
+        properties: {
+          id: property.id,
+          name: property.name,
+          acres_label: `${fmt(property.titled || 0)} ac`,
+          titled: property.titled || 0,
+        },
+      });
+    }
 
     coverageByProperty[property.id] = {
       hasRealGeometry: true,
