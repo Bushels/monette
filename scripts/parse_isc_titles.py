@@ -45,7 +45,7 @@ RM_TO_PROPERTY = {
     "RM OF SWIFT CURRENT NO. 137": ("swift-current", "high",   "Stewart Valley townships T13 — currently swift-current has 0 parcels"),
     "RM OF SLIDING HILLS NO. 273": ("kamsack",       "high",   ""),
     "RM OF LAC PELLETIER NO. 107": ("wymark",        "high",   ""),
-    "VILLAGE OF NEVILLE":          ("__neville__",   "low",    "town lots — anchor TBD"),
+    "VILLAGE OF NEVILLE":          ("vanguard",      "low",    "town lots in Plan N3619; folded into vanguard via Phase 3 anchor decision (closest property anchor, ~17km NE)"),
     "RM OF EDENWOLD NO. 158":      ("regina-south",  "low",    "T16-R18-W2M directly N of Lajord — likely same block"),
     "RM OF COTE NO. 271":          ("kamsack",       "high",   ""),
     "RM OF PADDOCKWOOD NO. 520":   ("prince-albert", "high",   ""),

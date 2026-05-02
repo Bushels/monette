@@ -1,8 +1,8 @@
 # Audit — `vanguard`
 
-- CSV title rows for this property: **65**
-- Current map records (quarters-data.js): **92**
-- ADD: 0  ·  KEEP 65 title rows / 64 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
+- CSV title rows for this property: **81**
+- Current map records (quarters-data.js): **108**
+- ADD: 0  ·  KEEP 81 title rows / 80 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 
@@ -40,8 +40,20 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 ## KEEP — confirmed MFL-titled (in both CSV and current map)
 
 - `SW-26-10-10-W3`  · pn `150859761`  · RM OF WHISKA CREEK NO. 106  · ac 159.39  · soil F  ← CSV title `143051958` ext 1
+- `BLK-B-PLAN-101658124`  · pn `150833482`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `140206384` ext 11
 - `NW-10-11-10-W3`  · pn `143316402`  · RM OF WHISKA CREEK NO. 106  · ac 88.48  · soil H  ← CSV title `142895919` ext 0
 - `NE-31-11-12-W3`  · pn `151170656`  · RM OF WHISKA CREEK NO. 106  · ac 34.11  · soil J  ← CSV title `143042352` ext 29
+- `LOT-1-BLK-13-PLAN-N3619`  · pn `143320395`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055597` ext 0
+- `LOT-1-BLK-14-PLAN-N3619`  · pn `143320373`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055665` ext 0
+- `LOT-1-BLK-15-PLAN-N3619`  · pn `143320351`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055856` ext 0
+- `LOT-10-BLK-15-PLAN-N3619`  · pn `152579548`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `157789805` ext 0
+- `LOT-11-BLK-15-PLAN-N3619`  · pn `152579560`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `157789827` ext 0
+- `LOT-12-BLK-15-PLAN-N3619`  · pn `143320340`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055812` ext 0
+- `SE-6-12-12-W3`  · pn `143320384`  · RM OF WHISKA CREEK NO. 106  · ac 87.55000000000001  · soil G  ← CSV title `148055621` ext 0
+- `LOT-2-BLK-14-PLAN-N3619`  · pn `143320362`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055687` ext 0
+- `LOT-2-BLK-15-PLAN-N3619`  · pn `143320328`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055744` ext 0
+- `LOT-8-BLK-15-PLAN-N3619`  · pn `143320317`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055799` ext 0
+- `LOT-9-BLK-15-PLAN-N3619`  · pn `152579526`  · VILLAGE OF NEVILLE  · ac None  · soil None  ← CSV title `148055867` ext 0
 - `SW-26-10-10-W3`  · pn `150859761`  · RM OF WHISKA CREEK NO. 106  · ac 159.39  · soil F  ← CSV title `143051947` ext 2
 - `SW-28-10-10-W3`  · pn `141927969`  · RM OF WHISKA CREEK NO. 106  · ac 157.98  · soil E  ← CSV title `143051969` ext 0
 - `SE-34-10-10-W3`  · pn `141969785`  · RM OF WHISKA CREEK NO. 106  · ac 159.62  · soil F  ← CSV title `143051970` ext 0
@@ -77,17 +89,5 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `NE-27-11-10-W3`  · pn `143310732`  · RM OF WHISKA CREEK NO. 106  · ac 160.08  · soil J  ← CSV title `143051868` ext 0
 - `SE-27-11-10-W3`  · pn `143310710`  · RM OF WHISKA CREEK NO. 106  · ac 159.08  · soil H  ← CSV title `143051857` ext 0
 - `NE-3-11-10-W3`  · pn `143309943`  · RM OF WHISKA CREEK NO. 106  · ac 160.48  · soil G  ← CSV title `143265630` ext 0
-- `NW-3-11-10-W3`  · pn `151391044`  · RM OF WHISKA CREEK NO. 106  · ac 149.92  · soil F  ← CSV title `143265652` ext 1
-- `SE-3-11-10-W3`  · pn `143309932`  · RM OF WHISKA CREEK NO. 106  · ac 162.01  · soil F  ← CSV title `143265663` ext 0
-- `SW-3-11-10-W3`  · pn `143316165`  · RM OF WHISKA CREEK NO. 106  · ac 160.66  · soil E  ← CSV title `143265674` ext 0
-- `NE-4-11-10-W3`  · pn `143316198`  · RM OF WHISKA CREEK NO. 106  · ac 158.56  · soil F  ← CSV title `142895863` ext 0
-- `SE-4-11-10-W3`  · pn `143316187`  · RM OF WHISKA CREEK NO. 106  · ac 153.92  · soil F  ← CSV title `143265685` ext 0
-- `SW-4-11-10-W3`  · pn `143309954`  · RM OF WHISKA CREEK NO. 106  · ac 161.75  · soil F  ← CSV title `142895807` ext 0
-- `SW-6-11-10-W3`  · pn `143310024`  · RM OF WHISKA CREEK NO. 106  · ac 161.31  · soil E  ← CSV title `149258100` ext 0
-- `SE-8-11-10-W3`  · pn `143310091`  · RM OF WHISKA CREEK NO. 106  · ac 159.55  · soil E  ← CSV title `142037221` ext 0
-- `SE-9-11-10-W3`  · pn `143316200`  · RM OF WHISKA CREEK NO. 106  · ac 158.41  · soil G  ← CSV title `142037210` ext 0
-- `SE-1-11-11-W3`  · pn `143311395`  · RM OF WHISKA CREEK NO. 106  · ac 161.4  · soil E  ← CSV title `149258098` ext 0
-- `NE-18-11-12-W3`  · pn `143312138`  · RM OF WHISKA CREEK NO. 106  · ac 159.98  · soil H  ← CSV title `142037445` ext 0
-- `NE-19-11-12-W3`  · pn `203186651`  · RM OF WHISKA CREEK NO. 106  · ac 148.68  · soil G  ← CSV title `147853031` ext 1
-- ... (15 more, omitted from narrative)
+- ... (31 more, omitted from narrative)
 
