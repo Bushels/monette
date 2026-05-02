@@ -1,8 +1,8 @@
 # Audit — `swift-current`
 
 - CSV title rows for this property: **31**
-- Current map records (quarters-data.js): **30**
-- ADD: 0  ·  KEEP 31 title rows / 30 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
+- Current map records (quarters-data.js): **28**
+- ADD: 0  ·  KEEP 31 title rows / 28 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 
@@ -28,9 +28,9 @@ _Note: title rows ≠ map features. One legal location can have multiple CSV tit
 - `LSD-9-14-13-14-W3`  · pn `150402934`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209244` ext 55
 - `NW-18-13-14-W3`  · pn `144530658`  · RM OF SWIFT CURRENT NO. 137  · ac 163.57  · soil J  ← CSV title `151209154` ext 0
 - `SW-18-13-14-W3`  · pn `144530647`  · RM OF SWIFT CURRENT NO. 137  · ac 162.32  · soil J  ← CSV title `151209198` ext 0
-- `LSD-10-24-13-14-W3`  · pn `147557975`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209378` ext 9
+- `LSD-10-24-13-14-W3`  · pn `147557931`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209378` ext 9
 - `LSD-10-24-13-14-W3`  · pn `147557931`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209389` ext 2
-- `LSD-15-24-13-14-W3`  · pn `147557997`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209390` ext 10
+- `LSD-15-24-13-14-W3`  · pn `147557953`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209390` ext 10
 - `LSD-15-24-13-14-W3`  · pn `147557953`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209402` ext 3
 - `NE-24-13-14-W3`  · pn `147558033`  · RM OF SWIFT CURRENT NO. 137  · ac 158.65  · soil G  ← CSV title `151209413` ext 15
 - `LSD-9-24-13-14-W3`  · pn `147558011`  · RM OF SWIFT CURRENT NO. 137  · ac 40  · soil None  ← CSV title `151209356` ext 12

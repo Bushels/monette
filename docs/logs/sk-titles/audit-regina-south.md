@@ -1,8 +1,8 @@
 # Audit — `regina-south`
 
 - CSV title rows for this property: **126**
-- Current map records (quarters-data.js): **126**
-- ADD: 0  ·  KEEP 126 title rows / 126 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
+- Current map records (quarters-data.js): **120**
+- ADD: 0  ·  KEEP 126 title rows / 120 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 0
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 

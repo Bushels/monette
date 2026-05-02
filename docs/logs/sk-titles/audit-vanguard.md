@@ -1,8 +1,8 @@
 # Audit — `vanguard`
 
 - CSV title rows for this property: **81**
-- Current map records (quarters-data.js): **108**
-- ADD: 0  ·  KEEP 81 title rows / 80 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
+- Current map records (quarters-data.js): **107**
+- ADD: 0  ·  KEEP 81 title rows / 79 unique features  ·  REASSIGN-in 0 title rows / 0 unique features  ·  REASSIGN-out 0 features  ·  FLAG 28
 
 _Note: title rows ≠ map features. One legal location can have multiple CSV title rows._
 
