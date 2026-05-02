@@ -1,43 +1,38 @@
 # PROJECT_STATE.md
 
 ## Last verified commit (this branch)
-330a86a feat(sk-titles): Wave C complete — ponteix, vanguard, regina-south, hafford
-(plus Wave E pending commit for __neville__'s 14 ADDs)
+da15e92 feat(sk-titles): Phase 4 — polygon computation + cache-bust
 
 ## Active task
-**SK Titles Update from 2026-01-18 ISC snapshot.** WIP on branch `feat/sk-titles-2026-01-18`. 10 commits in. **Phase 2 (per-area reconciliation) complete** — every one of the 559 titled-to-MFL parcels accounted for; final audit shows `unmatched: 0`.
+**SK Titles Update from 2026-01-18 ISC snapshot.** Branch `feat/sk-titles-2026-01-18`, 13 commits ahead of main. **Phases 0-4 complete.** Codex 5.5/xhigh final architectural review running in background.
 
 Plan doc (local): `docs/superpowers/specs/2026-05-01-sk-titles-update-plan.md`
 Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
 Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
+Codex final-review prompt: `docs/logs/sk-titles/codex-final-review-prompt.md`
 
-Done so far:
-- Phase 0: parser + audit + per-property diffs (577888c)
-- Codex 5.5/xhigh worked example: Wymark + Swift Current (5380074)
-- Audit script: reassign_out + title-rows-vs-features (60e8d49)
-- apply_sk_titles_deltas.py + Wymark+SC applied (c571923)
-- Wave A: prince-albert + raymore + regina-south reassign (b1b784a)
-- Wave B: outlook + kamsack + calderbank+morse (8766c61)
-- Wave C: ponteix + vanguard + regina-south + hafford (330a86a)
-- Wave E: __neville__ town lots (pending commit)
+Final state:
+- 559/559 CSV parcels reconciled (unmatched: 0)
+- All 14 SK properties carry mflTitleSnapshot block in data.js
+- 156 polygons computed for ADDs (128 quarters, 21 LSDs, 10 town-lot placeholders, 2 leftover null planned-parcels)
+- index.html cache-bust bumped: data.js v=36, quarters-data.js v=2
 
-Net effect on map: 176 new MFL-titled records added across 5 properties; 19 records reassigned across property boundaries; every record in the 14 SK property buckets + __neville__ now carries reconciliation metadata (KEEP/FLAG/ADD/REASSIGN with snapshot_date 2026-01-18).
+## Phase status
+- Phase 0 ✅: parser + audit + per-property diffs (577888c)
+- Phase 1 ✅: RM-to-property crosswalk
+- Phase 2 ✅: Wave A-E per-area reconciliation across 12 properties + worked example (b1b784a, 8766c61, 330a86a, ac86232)
+- Phase 3 ✅: __neville__ folded into vanguard, data.js totals reconciled, hafford narrative surfaced (9f1a2da)
+- Phase 4 ✅: DLS polygons + cache-bust (da15e92)
+- Phase 5 🟡: Codex review running; pending Vercel preview + merge
 
-156 records have geometry: null pending Phase 4 (LSD/town-lot/quarter polygon computation): regina-south 125 + kamsack 4 + calderbank 3 + neville 14 ADDs + 10 already-resolved ADDs.
-
-## Remaining work
-- Phase 3: Knowledge layer pass — neville anchor decision, data.js property-totals updates, hafford rented-back narrative copy
-- Phase 4: Pipeline rebuild — compute polygons for the 156 ADDs, cache-bust index.html
-- Phase 5: Codex final review (full-branch architectural pass) + Vercel preview + browser smoke test + merge to main
-
-## Other branches in flight (not currently active)
-- `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline.
+## Other branches in flight
+- `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline (separate workstream)
 
 ## Known blockers
-None active. Pre-existing layout bug in main's index.html (the `useTalliesVersion is not defined` ReferenceError + 2-column grid stale build) is independent of this branch and surfaces in the local preview when run from G:.
+None on this branch. Pre-existing main-branch layout bug (`useTalliesVersion is not defined`) is independent and not blocking SK Titles merge.
 
 ## Next action
-Wave E commit + decide whether to proceed to Phase 3+4+5 or hand back for user review of the 10-commit branch and the methodology log.
+Wait for Codex final review to complete. If GREENLIGHT-FOR-MERGE: Vercel preview + browser smoke test + merge to main. If BLOCKER or NEEDS-FIXES: address Codex's findings, re-run audit, then retry merge.
 
 ## Other branches in flight (not currently active)
 - `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.

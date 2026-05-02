@@ -1,7 +1,7 @@
 # ISC vs quarters-data.js — Audit Summary
 
 **Snapshot date:** 2026-01-18
-**Generated:** 2026-05-02T00:52:29.738011Z
+**Generated:** 2026-05-02T01:04:43.799815Z
 
 Title-row counts and unique-map-feature counts are NOT 1:1.
 One legal location can have multiple CSV title rows (extension variants);
