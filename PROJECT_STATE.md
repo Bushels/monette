@@ -1,24 +1,32 @@
 # PROJECT_STATE.md
 
 ## Last verified commit (main)
-194dd32 Merge feat/atlas-hide-property-markers — UX polish over SK Titles work
-(includes fdd806c Merge feat/sk-titles-2026-01-18 — SK Titles Update)
+(pending — about to commit farmland-wide marker hide)
+Previous: 58634f9 fix(sk-titles): close Codex post-merge audit follow-up — vanguard runtime-key dedup
 
 ## Active task
-**No active feature task.** SK Titles Update + atlas-hide-property-markers shipped to main and pushed to origin (Bushels/monette).
+**No active feature task.** SK Titles Update + atlas-hide-property-markers + Codex post-merge audit follow-up + farmland-wide marker hide all shipped to main and pushed to origin (Bushels/monette).
 
 ## SK Titles shipped state (on main)
 - 559/559 CSV parcels reconciled (unmatched: 0)
-- 1,418 records across 14 SK property buckets carry mflTitleSnapshot metadata
+- 1,410 records across 14 SK property buckets carry mflTitleSnapshot metadata
 - swift-current 0 → 28 records, regina-south 0 → 120 records (geometryStatus: "polygons")
+- vanguard 93 → 105 records (Neville town lots folded in, 3 runtime-key collisions resolved across 2 sessions)
 - 159 polygons computed via DLS quarter math + new LSD math + Plan N3619 placeholders
 - hafford rented-back narrative surfaced (2 of 158 quarters MFL-titled)
-- 5 Montana sub-properties given hideMapMarker:true (UX polish)
-- Cache-bust: data.js v=37, quarters-data.js v=2
+- 24 farmland/farm-area properties carry `hideMapMarker:true` (atlas dot cleanup, 2026-05-02)
+- 3 facilities keep their dots: outlook-seeds, lethbridge-pea-protein, tonopah
+- Sold-marker layer untouched (red dots stay for sold-hafford-phase-2, sold-havre, sold-regina-i)
+- Cache-bust: data.js v=39, quarters-data.js v=3
 
-Codex final review record: `docs/logs/sk-titles/codex-final-review.md`
-Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
-Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
+## Audit invariant (Codex recommendation 2026-05-02 round-3)
+`scripts/audit_isc_vs_quarters.py` now asserts `property_id:loc` uniqueness on every run. Currently: PASS (0 duplicate runtime keys across 1,410 records). Future title-export waves can't merge with renderer-key collisions undetected.
+
+## Records of work
+- Codex final review: `docs/logs/sk-titles/codex-final-review.md` (round-2)
+- Codex post-merge audit: `docs/logs/sk-titles/codex-post-merge-audit.md` (round-3)
+- Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
+- Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
 
 ## Other branches in flight (not active)
 - `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.

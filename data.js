@@ -378,6 +378,7 @@ window.MONETTE_DATA = {
 
   properties: [
     { id:"admiral", name:"Admiral", province:"SK", region:"Southwest SK", lat:49.43, lng:-108.03,
+      hideMapMarker:true,
       rms:["RM of Bone Creek No. 108"],
       parcels:15, titled:2385, cultivated:2242, waste:143, assessment:4391100, owned:2385, rented:0,
       mflTitleSnapshot:{
@@ -405,6 +406,7 @@ window.MONETTE_DATA = {
       },
       notes:"All durum in '25. Single RM, tight block." },
     { id:"calderbank", name:"Calderbank", internalName:"Enfield", province:"SK", region:"Central SK", lat:50.28, lng:-106.78,
+      hideMapMarker:true,
       rms:["RM of Morse No. 165","RM of Enfield No. 194"],
       parcels:113, titled:17128, cultivated:14919, waste:2209, assessment:21052500, owned:8500, rented:8628,
       mflTitleSnapshot:{
@@ -424,6 +426,7 @@ window.MONETTE_DATA = {
 
     { id:"cabri-bank", name:"Cabri Bank", province:"SK", region:"South-West SK",
       lat:50.62, lng:-108.45,
+      hideMapMarker:true,
       rms:["RM of Riverside No. 168","RM of Lacadena No. 228"],
       parcels:0, titled:17126, cultivated:0, waste:0, assessment:0,
       owned:17126, rented:215,
@@ -445,6 +448,7 @@ window.MONETTE_DATA = {
       notes:"Court-file asset added from the Property Summary master holdings doc. Not yet in any per-property XLSX/PDF in our possession; awaiting tender package or ISC pull for quarter-level mapping. 17,349 farmed ac per Monette Property Summary." },
     { id:"rosetown", name:"Rosetown", province:"SK", region:"West-Central SK",
       lat:51.55, lng:-107.99,
+      hideMapMarker:true,
       rms:["RM of St. Andrews No. 287","RM of Marriott No. 317","RM of Pleasant Valley No. 288"],
       parcels:0, titled:16530, cultivated:0, waste:0, assessment:0,
       owned:16530, rented:6727,
@@ -465,6 +469,7 @@ window.MONETTE_DATA = {
       operator:"Monette",
       notes:"Court-file asset added from the Property Summary master holdings doc. Not yet in any per-property XLSX/PDF in our possession; awaiting tender package or ISC pull for quarter-level mapping. 23,357 farmed ac per Monette Property Summary." },
     { id:"hafford", name:"Hafford", internalName:"North Battleford", province:"SK", region:"West-Central SK", lat:52.74, lng:-107.37,
+      hideMapMarker:true,
       affidavitOwnedAcres:2554,
       affidavitOwnedAcresSource:"Darrel Monette Affidavit Exhibit D ¶89-90 — sworn 2026-04-17. Owned acres only (Monette Farms Ltd.); excludes leased ground.",
       affidavitOwnedAcresNote:"Court-grounded ownership figure: 2,554 ac. The 46,466 ac figure on the public site is from Monette's Land Tender Information Package and represents the Hafford OPERATING FOOTPRINT (owned + leased + custom-farmed Simmons land). The CCAA Phase 2 sale of 2,553 ac for $29M ($11,358/ac) liquidated essentially the entire Monette-owned position at Hafford. The Walter Farms 'bought ALL 46,466 ac' rumor is NOT supported by court documents — court only confirms the 2,553-ac owned-portion sale. Whether Walter Farms also acquired the leased acreage requires landlord-by-landlord verification. Public site framing is layered: tender footprint vs. owned footprint vs. court-confirmed transaction.",
@@ -549,6 +554,7 @@ window.MONETTE_DATA = {
       ],
       headline:true },
     { id:"kamsack", name:"Kamsack", internalName:"Sliding Hills", province:"SK", region:"East-Central SK", lat:51.56, lng:-101.89,
+      hideMapMarker:true,
       rms:["RM of Cote No. 271","RM of Sliding Hills No. 273","RM of St. Philips No. 301"],
       parcels:81, titled:11377, cultivated:10090, waste:1287, assessment:26541300, owned:7800, rented:3577,
       mflTitleSnapshot:{
@@ -577,6 +583,7 @@ window.MONETTE_DATA = {
       },
       notes:"Heavy canola rotation. Black-soil belt." },
     { id:"outlook", name:"Outlook", internalName:"Montrose & Ruby", province:"SK", region:"Central SK — Irrigation", lat:51.50, lng:-107.06,
+      hideMapMarker:true,
       rms:["RM of Rudy No. 284","RM of Montrose No. 315","RM of Rosedale No. 283"],
       parcels:24, titled:3607, cultivated:3474, waste:133, assessment:4508500, owned:2200, rented:1407,
       mflTitleSnapshot:{
@@ -605,6 +612,7 @@ window.MONETTE_DATA = {
       },
       notes:"Irrigated vegetable ground — high interest.", headline:true },
     { id:"ponteix", name:"Ponteix", province:"SK", region:"Southwest SK", lat:49.77, lng:-107.43,
+      hideMapMarker:true,
       rms:["RM of Auvergne No. 076","RM of Pinto Creek No. 075","RM of Wise Creek No. 077"],
       parcels:130, titled:20651, cultivated:20021, waste:630, assessment:39269500, owned:12500, rented:8151,
       mflTitleSnapshot:{
@@ -632,6 +640,7 @@ window.MONETTE_DATA = {
       },
       notes:"Largest by assessment. Canola → durum rotation." },
     { id:"prince-albert", name:"Prince Albert", internalName:"Paddockwood", province:"SK", region:"North-Central SK", lat:53.20, lng:-105.75,
+      hideMapMarker:true,
       rms:["RM of Garden River No. 490","RM of Paddockwood No. 520"],
       parcels:20, titled:3020, cultivated:2695, waste:325, assessment:5338395, owned:1820, rented:1200,
       mflTitleSnapshot:{
@@ -660,6 +669,7 @@ window.MONETTE_DATA = {
       },
       notes:"Meath Park block. Titled footprint is 3,020 ac, but source reports operated acreage is closer to ~20,000+ (?) — combine fleet reportedly 5 → 6 units in 2026. Operated estimate UNVERIFIED; title vs. custom-farm split not yet reconciled.", headline:true },
     { id:"raymore", name:"Raymore", internalName:"Mount Hope", province:"SK", region:"East-Central SK", lat:51.39, lng:-104.64,
+      hideMapMarker:true,
       rms:["RM of Longlaketon No. 219","RM of Last Mountain Valley No. 250","RM of Mount Hope No. 279"],
       parcels:121, titled:19094, cultivated:16968, waste:2126, assessment:34183800, owned:11600, rented:7494,
       mflTitleSnapshot:{
@@ -677,6 +687,7 @@ window.MONETTE_DATA = {
       crops2024:[["Wheat",9672],["Canola",6809],["Peas",2275]],
       notes:"Diverse rotation; heavy pea acres." },
     { id:"vanguard", name:"Vanguard", province:"SK", region:"Southwest SK", lat:49.92, lng:-107.24,
+      hideMapMarker:true,
       rms:["RM of Whiska Creek No. 106","RM of Glen Bain No. 105"],
       parcels:105, titled:14358, cultivated:13851, waste:506, assessment:32448000, owned:9900, rented:4458,
       mflTitleSnapshot:{
@@ -706,6 +717,7 @@ window.MONETTE_DATA = {
       },
       notes:"Community watch list — reports of changed signage.", headline:true },
     { id:"wymark", name:"Wymark", province:"SK", region:"Southwest SK", lat:50.11, lng:-107.63,
+      hideMapMarker:true,
       rms:["RM of Lac Pelletier No. 107","RM of Coulee No. 136","RM of Swift Current No. 137","RM of Excelsior No. 166"],
       parcels:85, titled:14943.03, cultivated:14409, waste:534, assessment:27120200, owned:14458.03, rented:7007.97, soldAc:485,
       mflTitleSnapshot:{
@@ -843,6 +855,7 @@ window.MONETTE_DATA = {
       publicNotes:"Wymark starts from the January Acre Sheet baseline of 21,951 farmed ac. The later Wymark sale/title package identifies 14,943.03 ac titled to Monette entities; the remaining ~7,008 ac is treated as rented/unmapped until lease-quarter locations are identified. CCAA Phase 2 result for Wymark (Waldeck) is court-documented at 485 ac / $1.78M (affidavit ¶158); Carefoot Acres is a community-intel buyer rumor for the 3 Waldeck pieces, and the per-piece breakdown of the 485 ac is not in the affidavit.",
       notes:"Neville village parcels included. CCAA Phase 2 disposed 485 ac at Wymark (Waldeck) for $1.78M ($3,670/ac) per court affidavit ¶158 — Carefoot Acres rumored to be the buyer of the 3 pieces (community intel 2026-04-26, buyer not court-confirmed)." },
     { id:"eddystone", name:"Eddystone", province:"MB", region:"Interlake MB", lat:51.13, lng:-99.47,
+      hideMapMarker:true,
       rms:["Municipality of Alonsa","Municipality of McCreary"],
       parcels:167, titled:26632, cultivated:18400, waste:3572, assessment:28900000, owned:10114, rented:16518,
       soils:[["E",9200],["F",6800],["G",3100],["J",1800]],
@@ -872,6 +885,7 @@ window.MONETTE_DATA = {
       operator:"Monette (custom-farming ~16,500 ac of multi-family non-MFL land)",
       notes:"Manitoba Interlake block, 26,632 ac across 167 unique quarters (178 title lines). Only 10,114 ac (38%) held by Monette Farms Ltd.; the remaining 16,518 ac (62%) is non-MFL third-party land anonymized in source as '3rd Party Vendor'. Multiple landlord families indicated by yard names (Huber, Hammel, Regan, Finney, Bretecher). All 10 named building complexes sit on non-MFL land per the buildings sheet header. Cultivated/waste/assessment figures reflect the earlier scope and are not yet reconciled to the full 26,632 ac.", headline:true },
     { id:"the-pas", name:"The Pas", province:"MB", region:"Northern MB", lat:53.82, lng:-101.25,
+      hideMapMarker:true,
       rms:["Rural Municipality of Kelsey"],
       parcels:147, titled:28589, cultivated:24100, waste:4489, assessment:38200000, owned:28257, rented:332,
       soils:[["E",11000],["F",8400],["G",5200],["D",2100]],
@@ -889,6 +903,7 @@ window.MONETTE_DATA = {
       },
       notes:"Largest single block in Manitoba. 97% owned.", headline:true },
     { id:"airdrie", name:"Airdrie / Soderglen", province:"AB", region:"Balzac / Airdrie, AB", lat:51.2917, lng:-114.0144,
+      hideMapMarker:true,
       rms:["Rocky View County (Balzac)"],
       parcels:0, titled:7000, cultivated:0, waste:0, assessment:0, owned:160, rented:6840,
       soils:[], crops2025:[], crops2024:[],
@@ -907,6 +922,7 @@ window.MONETTE_DATA = {
       operator:"Monette (custom-farms the full Soderglen block; owns only SW-5-28-1-W5)",
       notes:"Airdrie / Soderglen block in Rocky View County, AB — 28.5 km² (~7,000 ac) ranch between Calgary and Airdrie. Soderglen owner Stan Grad passed 2023-07-29; the ranch went to market in August 2023. Monette purchased one 160-ac quarter (SW-5-28-1-W5) on 2024-04-12 for $20.144M with a $16.967M vendor-take-back mortgage and a $1/yr life-tenancy for Jane E. Grad. Per user intel (2026), Monette custom-farms the balance of Soderglen — presumed rented, pending Monitor schedule. A 160-ac Janet Dunn 66 2/3% JV also sits within this block per the Darrel Monette affidavit.", headline:true },
     { id:"swift-current", name:"Swift Current", province:"SK", region:"Southwest SK", lat:50.2851, lng:-107.7972,
+      hideMapMarker:true,
       rms:["Swift Current area"],
       parcels:28, titled:49775, cultivated:0, waste:0, assessment:0, owned:49775, rented:0,
       mflTitleSnapshot:{
@@ -924,6 +940,7 @@ window.MONETTE_DATA = {
       geometryStatus:"polygons", locationPrecision:"parcel", tags:["court-file","origin","mfl-csv-2026-01-18"],
       notes:"Court-file Swift Current block and family-origin asset. As of 2026-01-18 ISC snapshot, 28 MFL-titled parcels are mapped in Stewart Valley townships T13/R13-R14/W3 — combination of records reassigned in from wymark (the older Wymark sale-package XLSX had absorbed them) plus net-new LSD title rows. The 49,775-ac court-file claim is broader than the title-anchor subset; balance presumed in non-MFL Monette entities or leased land outside the ISC title-export scope.", headline:true },
     { id:"regina-south", name:"Regina South", province:"SK", region:"Regina, SK", lat:50.215, lng:-104.618,
+      hideMapMarker:true,
       rms:["Regina South area"],
       parcels:120, titled:32056, cultivated:0, waste:0, assessment:0, owned:32056, rented:0,
       mflTitleSnapshot:{
@@ -998,6 +1015,7 @@ window.MONETTE_DATA = {
       geometryStatus:"point-only", locationPrecision:"regional", tags:["court-file","seed-processing","needs-geometry"],
       notes:"Court-file seed manufacturing plant: 2 acres with a roughly 160,000 sq ft building. Point-only because this is a facility, not a quarter-section block." },
     { id:"bc-ranches", name:"BC Ranches", province:"BC", region:"Kamloops, BC", lat:50.6745, lng:-120.3273,
+      hideMapMarker:true,
       rms:["Kamloops area"],
       parcels:0, titled:44966, cultivated:0, waste:0, assessment:0, owned:44966, rented:0,
       soils:[], crops2025:[["Cattle / Produce",44966]], crops2024:[],
@@ -1005,6 +1023,7 @@ window.MONETTE_DATA = {
       geometryStatus:"point-only", locationPrecision:"regional", tags:["court-file","bc-ranches","blue-goose","ritchie-bros","needs-geometry"],
       notes:"Court-file BC Ranches asset. The land is tied to 1.2 million acres of grazing licences and the failed Ritchie Bros tender. Point-only until ranch polygons are sourced.", headline:true },
     { id:"goats-peak", name:"Goat's Peak Vineyard", province:"BC", region:"Cache Creek, BC", lat:50.8100, lng:-121.3250,
+      hideMapMarker:true,
       rms:["Cache Creek area"],
       parcels:0, titled:60, cultivated:0, waste:0, assessment:0, owned:60, rented:0,
       soils:[], crops2025:[["Vineyard",60]], crops2024:[],
@@ -1014,6 +1033,7 @@ window.MONETTE_DATA = {
       residualEquipmentValueSource:"Helkaa Declaration ¶21",
       notes:"Court-file Goat's Peak Winery real property. The winery is defunct but still carries real property, barrels, equipment, and vineyard assets. Helkaa Declaration ¶21 sworn that ~$3M of property, wine barrels, and other equipment remains in Goat's Peak Winery's possession at the Cache Creek site." },
     { id:"aguila", name:"Aguila Farm", province:"AZ", region:"Aguila, AZ", lat:33.9428, lng:-113.1741,
+      hideMapMarker:true,
       rms:["Aguila area"],
       parcels:23, titled:3134, cultivated:0, waste:0, assessment:0, owned:930, rented:2213,
       soils:[], crops2025:[["Produce",3134]], crops2024:[],
@@ -1030,6 +1050,7 @@ window.MONETTE_DATA = {
       },
       notes:"Court-file Arizona produce farm in the Aguila/Harquahala plain (Sec 24-25 T7N R9W + Sec 28-33 T7N R8W, Gila & Salt River Meridian). 23 parcels totalling 3,143 ac mapped 2026-04-27 — 930 ac fee-owned across 17 parcels and 2,213 ac across 6 AZ State Trust Land lease parcels. AZ Auditor General Report 24-101 flags the LLC as foreign-owned alongside Asarco LLC and Fondomonte Arizona LLC (Saudi alfalfa). Cross-validated to within 9 ac of Helkaa Decl. ¶58(e) sworn figure (3,134 ac). Community intel 2026-04-27 ties this farm and Tonopah Seeds Facility to the Brent & Clayton Wolfe family — same Wolfes who sold Monette the Regina-area 'Wolfe yard' (Regina South). See Regina South drawer for provenance." },
     { id:"genoa", name:"Genoa Farm", province:"CO", region:"Genoa, CO", lat:39.2767, lng:-103.4988,
+      hideMapMarker:true,
       rms:["Genoa area"],
       parcels:1, titled:4079, cultivated:0, waste:0, assessment:0, owned:4079, rented:0,
       soils:[], crops2025:[["Grain",4079]], crops2024:[],
