@@ -1,8 +1,7 @@
 # PROJECT_STATE.md
 
 ## Last verified commit (main)
-(pending — about to commit farmland-wide marker hide)
-Previous: 58634f9 fix(sk-titles): close Codex post-merge audit follow-up — vanguard runtime-key dedup
+6de2e24 feat(atlas): farmland-wide hideMapMarker — only facilities show map dots
 
 ## Active task
 **No active feature task.** SK Titles Update + atlas-hide-property-markers + Codex post-merge audit follow-up + farmland-wide marker hide all shipped to main and pushed to origin (Bushels/monette).
