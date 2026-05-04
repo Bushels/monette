@@ -68,6 +68,13 @@ docs/*
 # Exception: tracked methodology logs (seeding calibration, GEE QC, etc.).
 !docs/logs/
 !docs/logs/**
+# Exception: durable references (literature curation, satellite-stack docs, etc.).
+!docs/references/
+!docs/references/**
+# Exception: tracked Codex-as-architect specs and decision records.
+!docs/superpowers/
+!docs/superpowers/specs/
+!docs/superpowers/specs/**
 dossiers/
 _refs/
 *.pdf

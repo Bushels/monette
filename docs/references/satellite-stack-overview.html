@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Monette Satellite Stack — Overview</title>
+<style>
+  :root {
+    --bg: #fafaf8;
+    --card-bg: #ffffff;
+    --ink: #1a1a1a;
+    --muted: #5a5a5a;
+    --line: #e5e3df;
+    --accent: #0f4c5c;
+    --high: #2d7a3e;
+    --medhigh: #2563a8;
+    --med: #b87a14;
+    --low: #a83d2a;
+    --eval: #6b3fa0;
+    --rej: #7a7a7a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 32px 40px 80px;
+    line-height: 1.5;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 6px;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 4px;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 18px;
+    margin: 36px 0 16px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--accent);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  h2 .count { color: var(--muted); font-weight: normal; font-size: 14px; text-transform: none; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--high);
+    border-radius: 6px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .card.medhigh { border-left-color: var(--medhigh); }
+  .card.med { border-left-color: var(--med); }
+  .card.eval { border-left-color: var(--eval); }
+  .card.rej { border-left-color: var(--rej); opacity: 0.85; }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0;
+  }
+  .card-sub {
+    font-family: "JetBrains Mono", "Consolas", "Courier New", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin: 2px 0 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .badge.high { background: var(--high); }
+  .badge.medhigh { background: var(--medhigh); }
+  .badge.med { background: var(--med); }
+  .badge.eval { background: var(--eval); }
+  .badge.rej { background: var(--rej); }
+  .field {
+    margin: 10px 0;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .field-label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .field-value { color: var(--ink); }
+  .caveats {
+    background: #faf6e8;
+    border-left: 2px solid var(--med);
+    padding: 6px 10px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    border-radius: 0 3px 3px 0;
+  }
+  .refresh {
+    display: inline-block;
+    background: #f0f0ed;
+    color: var(--ink);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 12px 0 24px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 11px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media print {
+    body { background: white; padding: 20px; }
+    .card { break-inside: avoid; }
+    h2 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Monette Satellite Stack</h1>
+<p class="subtitle">What we use, what each measurement tells us, how confident we are, and how often Google Earth Engine refreshes it</p>
+<p class="meta">Generated 2026-05-04 · Branch <code>feat/seeding-calibration</code> · Pipeline at <code>scripts/gee_pipeline/pipeline.py</code></p>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot" style="background:var(--high)"></span>HIGH confidence</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--medhigh)"></span>MEDIUM-HIGH</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--med)"></span>MEDIUM</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--eval)"></span>UNDER EVALUATION (v1.5)</div>
+  <div class="legend-item"><span class="legend-dot" style="background:var(--rej)"></span>REJECTED</div>
+</div>
+
+<h2>Currently in production <span class="count">— 9 datasets, 4 sensor families</span></h2>
+
+<div class="grid">
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-1 — VH polarization (PRIMARY)</p>
+        <p class="card-sub">COPERNICUS/S1_GRD_FLOAT · IW · descending</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">C-band SAR (5.6 cm wavelength), cross-polarization (vertical transmit, horizontal receive). Volume-scattering sensitivity to vegetation and standing residue.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Primary seeding signal. We compute ΔVH = 10·log₁₀(T1<sub>median</sub> / T0<sub>median</sub>) per parcel. <strong>+1.5 dB → seeded; -1.5 dB → not seeded; in-between → null.</strong> Validated in May 1 PA + Raymore smokes.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~6 days @ SK latitude</span> (S1A + S1C constellation, descending pass)
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> 14-day rolling T1 median; orbit-coverage gaps for territories spanning &gt;3° latitude (orbit pinning dropped in v1).</div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-1 — VV polarization (mask)</p>
+        <p class="card-sub">COPERNICUS/S1_GRD_FLOAT · IW · descending</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">C-band SAR co-polarization (vertical transmit, vertical receive). Surface-roughness sensitivity.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Used in the common valid-pixel mask alongside VH (per Codex Bucket A round 2 fix). NOT used as a primary seeding signal in v1. v1.1 backlog: derive VH/VV ratio as no-till-vs-tillage discriminator.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~6 days</span> (paired acquisition with VH)
+    </div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-2 — SCL (snow flag)</p>
+        <p class="card-sub">COPERNICUS/S2_SR_HARMONIZED · band SCL · class 11</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Scene Classification Layer at 20m. Class 11 = snow (per ESA SCL definition).</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Per-pixel snow detection within parcel AOI. If snow_pct ≥ 5% at the latest SAR scene date → veto with reason <code>snow_or_freeze_risk</code>. Validated in today's smoke (Raymore SW-7 cleared, others vetoed).</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~3-5 days @ SK latitude</span> (5-day equator nominal, faster polewards)
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> Small bboxes can hit zero S2 scenes in cloudy windows → ERA5 fallback fires. ±3-day lookup window per scene.</div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-2 — NDVI</p>
+        <p class="card-sub">COPERNICUS/S2_SR_HARMONIZED · (B8 - B4) / (B8 + B4)</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Normalized Difference Vegetation Index. Near-infrared (B8, 842 nm) vs Red (B4, 665 nm). Single-best scene picker, NOT median composite (Codex Bucket B design call).</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Vegetation greenness. Parcel-mean NDVI &gt; 0.25 gates the tillage indices off (field is too vegetated for residue indices to be physically meaningful).</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~3-5 days</span> (same as SCL)
+    </div>
+  </div>
+
+  <div class="card medhigh">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-2 — NDTI (Tillage Index)</p>
+        <p class="card-sub">COPERNICUS/S2_SR_HARMONIZED · (B11 - B12) / (B11 + B12)</p>
+      </div>
+      <span class="badge medhigh">Med-High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Normalized Difference Tillage Index. SWIR1 (B11, 1610 nm) vs SWIR2 (B12, 2190 nm). Exploits cellulose/lignin absorption features in 2100-2300 nm range.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">High NDTI = residue cover preserved (consistent with no-till seeding). Low NDTI = bare soil exposed (consistent with weed-control tillage). Used in optical-features schema for operator review; NOT yet in the decision rule.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~3-5 days</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> Crop-and-season specific. Soil moisture variation can confound. Doc recommends complementing with narrow-band SINDRI (deferred).</div>
+  </div>
+
+  <div class="card med">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-2 — BSI (Bare Soil Index)</p>
+        <p class="card-sub">COPERNICUS/S2_SR_HARMONIZED · ((B11+B4)-(B8+B2)) / ((B11+B4)+(B8+B2))</p>
+      </div>
+      <span class="badge med">Med</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Bare Soil Index combining SWIR1, Red, NIR, Blue. Higher = more bare soil exposed.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Auxiliary signal for cropland verification. Less commonly used than NDVI/NDTI; included in optical schema for completeness.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">~3-5 days</span>
+    </div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">ERA5-Land — Air temperature</p>
+        <p class="card-sub">ECMWF/ERA5_LAND/DAILY_AGGR · temperature_2m</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Daily mean 2m air temperature in Kelvin. ECMWF reanalysis at ~9 km grid.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Temperature must exceed 273.15 K (0°C) at the SAR scene date for ground to be unfrozen. Below threshold → veto with <code>snow_or_freeze_risk</code>. v1.1 backlog: also accumulate Growing Degree Days as agronomic gate.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">Daily, ~5-9 day publication lag</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> Late-window scenes silently lose ERA5 contribution if scene date falls within publication lag. Pipeline guards via <code>era5_size().gt(0)</code> check.</div>
+  </div>
+
+  <div class="card med">
+    <div class="card-header">
+      <div>
+        <p class="card-title">ERA5-Land — 24h precipitation</p>
+        <p class="card-sub">ECMWF/ERA5_LAND/DAILY_AGGR · total_precipitation_sum</p>
+      </div>
+      <span class="badge med">Med</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Daily total precipitation in metres (we ×1000 → mm). ECMWF reanalysis at ~9 km grid.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Max precipitation across all S1 contributing scene dates &gt; 5 mm/24h → wet-soil veto (false-positive risk in SAR backscatter). Per Codex Bucket B design call: max-across-S1-contributing, NOT mean-across-window.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">Daily, ~5-9 day publication lag</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> 9 km grid smooths over local convective storms. Negative artifact clamped to 0.</div>
+  </div>
+
+  <div class="card med">
+    <div class="card-header">
+      <div>
+        <p class="card-title">ERA5-Land — Snow cover (fallback)</p>
+        <p class="card-sub">ECMWF/ERA5_LAND/DAILY_AGGR · snow_cover</p>
+      </div>
+      <span class="badge med">Med</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Snow cover fraction (0-1) at ~9 km grid. Used as fallback when Sentinel-2 SCL has no scenes in the ±3-day window.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Coarse snow signal. Single 5% threshold applies to both S2 SCL and ERA5 fraction.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">Daily, ~5-9 day publication lag</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> 9 km grid is too coarse for parcel-scale truth. Used only when S2 unavailable. In winter prairies it stays at ~68% even where roads/south-facing slopes are bare.</div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">USDA CDL 2025 — US cropland</p>
+        <p class="card-sub">USDA/NASS/CDL/2025 · 30m raster</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Per-pixel crop-class classification at 30m, USDA NASS official annual product. Classes mapped to applicability via <code>applicability.py</code>.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Cropland coverage % per parcel; per-pixel crop class drives applicability (perennial → no seeding event detectable; winter wheat → out-of-season in spring).</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">Annual, ~6-8 month lag</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> CDL 2025 only fully published in spring 2026. For early-season runs we may fall back to CDL 2024.</div>
+  </div>
+
+  <div class="card high">
+    <div class="card-header">
+      <div>
+        <p class="card-title">AAFC ACI 2024 — Canadian cropland</p>
+        <p class="card-sub">AAFC/ACI/2024 · 30m raster</p>
+      </div>
+      <span class="badge high">High</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Annual Crop Inventory at 30m. Agriculture and Agri-Food Canada official product covering Canadian cropland.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it tells us</span>
+      <span class="field-value">Same role as CDL but for SK/MB/AB properties. Cropland coverage + applicability per parcel.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">Annual, similar lag to CDL</span>
+    </div>
+    <div class="caveats"><strong>Caveats:</strong> AAFC ACI 2025 not yet in GEE catalog as of run date; 2024 used conservatively.</div>
+  </div>
+
+</div>
+
+<h2>Under evaluation (v1.5 scope) <span class="count">— 3 candidates</span></h2>
+
+<div class="grid">
+
+  <div class="card eval">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Sentinel-1 SLC → InSAR Coherence</p>
+        <p class="card-sub">External via SNAP / openEO · NOT GEE-native</p>
+      </div>
+      <span class="badge eval">v1.5</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Phase coherence between consecutive SAR acquisitions. Detects millimeter-scale physical disturbance — exactly the spatial scale of a no-till drill press wheel.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it would tell us</span>
+      <span class="field-value">Direct detection of the physical seeding event independent of bulk surface roughness. Chen et al. 2025 IEEE: RMSE 5.59 days (dual-orbit Ontario corn). Codex 2026-05-01 review: <strong>Option D — confidence booster only, not primary signal in v1</strong>.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">N/A — GEE doesn't ingest S1 SLC</span> Phase information lost in pyramiding.
+    </div>
+    <div class="caveats"><strong>Status:</strong> Only path is external SNAP/openEO processing (e.g., Copernicus openEO <code>sentinel1_sar_coherence</code> launched April 2026), with parcel statistics ingested back. Effort: 2-4 day spike + 1-2 weeks rollout after local labels accrue. <a href="../superpowers/specs/2026-05-01-ccd-vs-intensity-dvh-codex-response.md">Full Codex review</a>.</div>
+  </div>
+
+  <div class="card eval">
+    <div class="card-header">
+      <div>
+        <p class="card-title">RADARSAT Constellation Mission (RCM)</p>
+        <p class="card-sub">CSA · 3-satellite C-band SAR with compact polarimetry</p>
+      </div>
+      <span class="badge eval">v1.5</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">C-band SAR with circular-polarization transmit, dual-linear receive. Enables m-chi decomposition into volume / surface / double-bounce scattering components.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it would tell us</span>
+      <span class="field-value">V/S scattering ratio differentiates no-till seeding (stable V/S) from weed-control tillage (V/S drops). Canadian-specific advantage: 4-day revisit vs S1's 6-day.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">N/A — not in GEE catalog</span> Requires CSA data access agreement.
+    </div>
+    <div class="caveats"><strong>Status:</strong> Requires data ingestion infrastructure + non-trivial m-chi decomposition. Effort: 1-2 weeks. Strong Canadian-specific value but defer until CCD shadow-spike clarifies whether RCM is needed.</div>
+  </div>
+
+  <div class="card eval">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Copernicus DEM → Topographic Wetness Index</p>
+        <p class="card-sub">COPERNICUS/DEM/GLO30 · 30m DEM</p>
+      </div>
+      <span class="badge eval">v1.5</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Spectrum / Measurement</span>
+      <span class="field-value">Global digital elevation model at 30m. TWI = ln(catchment_area / tan(slope)) — identifies depressional zones where water accumulates.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">What it would tell us</span>
+      <span class="field-value">Static slough mask for Prairie Pothole Region properties. Combined with dynamic SAR-based slough detection (specular open water + double-bounce flooded vegetation), generates per-parcel arable-zone mask that excludes slough geometry.</span>
+    </div>
+    <div class="field">
+      <span class="field-label">GEE refresh</span>
+      <span class="refresh">DEM static; SAR slough detection 6 days</span>
+    </div>
+    <div class="caveats"><strong>Status:</strong> Most relevant for Eddystone, Kamsack, Manitoba parkland properties. Not blocking current SK properties. Effort: 2-3 days. Defer until northern SK/MB baseline-blocked properties unblock (mid-May).</div>
+  </div>
+
+</div>
+
+<h2>Rejected <span class="count">— 4 reasons</span></h2>
+
+<div class="grid">
+
+  <div class="card rej">
+    <div class="card-header">
+      <div>
+        <p class="card-title">PlanetScope (Planet Labs)</p>
+        <p class="card-sub">Commercial · ~3m daily Blue/Green/Red/NIR</p>
+      </div>
+      <span class="badge rej">Rejected</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Why rejected</span>
+      <span class="field-value">Commercial pricing material for ~250k acres across 14 properties. Free Sentinel-1 + Sentinel-2 sufficient for "is parcel seeded yes/no" use case at the cadence we need. PlanetScope solves a problem (in-season management decisions at 3m daily) we don't have.</span>
+    </div>
+  </div>
+
+  <div class="card rej">
+    <div class="card-header">
+      <div>
+        <p class="card-title">U-Net / SAM2 boundary delineation</p>
+        <p class="card-sub">Learned segmentation on optical imagery</p>
+      </div>
+      <span class="badge rej">Rejected</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Why rejected</span>
+      <span class="field-value">We have authoritative cadastral data (DLS quarter sections in Canada, PLSS sections in the US). Title boundaries are legally definitive — learned boundaries from imagery would be less accurate, not more. Useful for crowd-sourced or unknown-owner mapping; not relevant for CCAA-creditor tracking.</span>
+    </div>
+  </div>
+
+  <div class="card rej">
+    <div class="card-header">
+      <div>
+        <p class="card-title">Random Forest / XGBoost as primary classifier</p>
+        <p class="card-sub">ML decision rule over multi-sensor features</p>
+      </div>
+      <span class="badge rej">Rejected v1</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Why rejected (for v1)</span>
+      <span class="field-value">No ground-truth seeded labels yet. 533 active parcels too small for robust RF/XGBoost training without overfitting (cited studies used thousands of labeled fields). Rule-based decision logic is interpretable and auditable — important for CCAA monitoring. Reconsider for v1.5+ once vote-label loop accrues 50-100+ labels.</span>
+    </div>
+  </div>
+
+  <div class="card rej">
+    <div class="card-header">
+      <div>
+        <p class="card-title">75-85% zonal threshold AS PRIMARY rule</p>
+        <p class="card-sub">% of pixels above ΔVH threshold replaces parcel mean</p>
+      </div>
+      <span class="badge rej">Rejected as primary</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Why rejected as primary</span>
+      <span class="field-value">Could mask legitimate partial-seeding situations. If a farmer hasn't seeded headlands yet, we want to surface that as <code>partial_signal</code> not silently classify the whole parcel. <strong>Adopted as a SECONDARY signal</strong> (see v1.1 backlog) where per-pixel distribution complements the mean reduction.</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p><strong>Cross-references:</strong> Pipeline implementation: <code>scripts/gee_pipeline/pipeline.py</code> · Decision rule: <code>scripts/gee_pipeline/decision_rule.py</code> · QC predicates: <code>scripts/gee_pipeline/qc.py</code> · Methodology log: <code>docs/logs/seeding-calibration.md</code> · Curated literature: <a href="satellite-imagery-seeding-detection-2026-05-04.md">satellite-imagery-seeding-detection-2026-05-04.md</a> · CCD pressure-test: <a href="../superpowers/specs/2026-05-01-ccd-vs-intensity-dvh-codex-response.md">Codex response 2026-05-01</a></p>
+  <p>Confidence levels are operational judgment — not formal statistical confidence intervals. They reflect how reliably each signal has performed in our smoke validations, weighted against the documented gotchas (rolling window slide, ERA5 publication lag, S1 orbit-coverage gaps, etc.). Re-assess after each new property's full rerun.</p>
+</footer>
+
+</body>
+</html>
