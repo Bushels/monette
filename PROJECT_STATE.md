@@ -28,12 +28,10 @@
 - Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
 
 ## Other branches in flight (not active)
-- `feat/seeding-calibration` (commit `2632275`, 12 files mid-iteration) — GEE seeding-calibration pipeline. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
+- `feat/seeding-calibration` (commit `f7f7e05`) — GEE seeding-calibration pipeline. The 12 mid-iteration files remain WIP; on top of that, 2026-05-04 added the v1.1 Backlog (4 quick-win items) and the CCD vs intensity dvh Codex pressure-test resolution (Option D — confidence booster only, shadow-only spike first). To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
 
 ## Known blockers
 None active.
 
 ## Next action
 None pending. `feat/seeding-calibration` is the next workstream when user is ready.
-
-Optional housekeeping: local feature branches `feat/sk-titles-2026-01-18` + `feat/atlas-hide-property-markers` can be deleted (both merged into main). Run `git branch -d feat/sk-titles-2026-01-18 feat/atlas-hide-property-markers` when ready.
