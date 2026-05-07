@@ -68,11 +68,13 @@ docs/*
 # Exception: tracked methodology logs (seeding calibration, GEE QC, etc.).
 !docs/logs/
 !docs/logs/**
-# but skip large machine-generated audit JSON (regenerates from scripts).
-docs/logs/sk-titles/audit.json
-# Backup files made before applying SK-titles deltas — safety net during this
-# branch's work. Branch commits provide the real history.
-quarters-data.js.bak.*
+# Exception: durable references (literature curation, satellite-stack docs, etc.).
+!docs/references/
+!docs/references/**
+# Exception: tracked Codex-as-architect specs and decision records.
+!docs/superpowers/
+!docs/superpowers/specs/
+!docs/superpowers/specs/**
 dossiers/
 _refs/
 *.pdf

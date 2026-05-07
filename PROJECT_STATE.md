@@ -4,7 +4,7 @@
 6de2e24 feat(atlas): farmland-wide hideMapMarker — only facilities show map dots
 
 ## Active task
-**No active feature task.** SK Titles Update + atlas-hide-property-markers + Codex post-merge audit follow-up + farmland-wide marker hide all shipped to main and pushed to origin (Bushels/monette).
+**No active feature task.** SK Titles Update + atlas-hide-property-markers + Codex post-merge audit follow-up + farmland-wide marker hide + **Montana May 6 seeding rerun (+5,467 confidently-seeded ac, Codex-audited)** all shipped to main and pushed to origin (Bushels/monette).
 
 ## SK Titles shipped state (on main)
 - 559/559 CSV parcels reconciled (unmatched: 0)
@@ -28,7 +28,7 @@
 - Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
 
 ## Other branches in flight (not active)
-- `feat/seeding-calibration` (commit `f7f7e05`) — GEE seeding-calibration pipeline. The 12 mid-iteration files remain WIP; on top of that, 2026-05-04 added the v1.1 Backlog (4 quick-win items) and the CCD vs intensity dvh Codex pressure-test resolution (Option D — confidence booster only, shadow-only spike first). To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
+- `feat/seeding-calibration` (commit `ee4755a`) — GEE seeding-calibration pipeline. The 12 mid-iteration UI files remain WIP. Beyond that, 2026-05-04 added the v1.1 Backlog (now 5 quick-win items) and the CCD vs intensity dvh Codex pressure-test resolution (Option D — confidence booster only, shadow-only spike first). 2026-05-06 added the Montana full rerun + Codex independent audit. 2026-05-07 added the PA + Raymore re-smoke (no new SAR scene yet over SK). The data + reference + decision-record files have been brought to main as of this commit; the WIP UI files stay on the branch. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
 
 ## Known blockers
 None active.
