@@ -36,6 +36,20 @@ Public rule: show only seeded acres, status, and confidence. Keep method details
 - Decision: do not run a full PA or Raymore today. The May 1 served `imagery-data.js` already reflects the gate-aware Apr 30 rebuild and a fresh full-run on the same SAR scene would produce near-identical public output. Re-smoke both properties around May 3-4 once a new descending IW scene arrives.
 - Smoke pattern proven economical: 6 GEE calls saved a ~250-parcel rerun cycle (PA 20 + Raymore 122 + dependent rebuild) that would have produced no substantive dashboard change. Smoke is now the explicit "is it worth running the full rebuild?" gate.
 
+## 2026-05-06 Montana Full Rerun + Codex Independent Audit
+
+- The May 1 + May 6 Sentinel-1 descending IW scenes both arrived at Big Horn County. Pre-rerun smoke on 3 representative MT parcels (strongest-historical seeded, spring_wheat, borderline-confidence-null) all came back clean: no snow vetoes, strong-seeded calls held, borderline correctly stayed null at confidence 44.
+- Full property rerun executed via `python scripts/build_imagery_data_js.py --property-id montana --run-date 2026-05-06 --merge-existing`. 220/220 MT parcels processed; other 13 properties' data preserved.
+- Net delta: seeded=True went from 83 parcels / ~20,841 ac to 93 parcels / 26,308 ac. **+10 parcels, +5,467 ac of newly-confident seeded calls.** Zero regressions (no parcel went True -> False or True -> null). Active-null bucket shrank from 30 to 20 parcels (the 10 that gained seeded=True).
+- Final acreage rollup matches cadastral baseline within 0.1%: 51,741 ac total across the 220 owned parcels (vs 51,712 ac cadastral GIS / 51,529 ac assessed).
+- Latest observation date: 107 parcels at 2026-05-06 (today's pass), 113 parcels at 2026-05-01. Fresh data on every parcel.
+- Independent audit via Codex (gpt-5.5/medium + web search) on 6 stratified-random parcels: **21 PASS / 3 FLAG / 0 FAIL across 24 checks.** Geometry independently verified against BLM PLSS CadNSDI and Census Geocoder (6/6 PASS). Acreage sanity 6/6 PASS. Seeded-call sanity 6/6 PASS. The 3 FLAGs are all crop-label provenance (point-CDL vs polygon-modal-CDL methodology difference). Codex verdict: "yes-with-caveats — geometry and broad seeded/null/perennial handling trusted; per-parcel crop labels need tighter provenance audit." Full report at `docs/superpowers/specs/2026-05-06-montana-parcel-audit-codex-response.md`.
+- Acreage interpretation note for creditor-facing surfaces: 26,308 ac is the *spring-detected-seeded* total. Adding the 13,755 ac of out-of-season winter wheat (correctly excluded from spring detection but operationally still seeded last fall) brings the total Montana production footprint to roughly 40,063 ac. The 6,727 ac of perennial pasture/alfalfa is also actively producing land. The 4,570 ac active-null + 380 ac insufficient_baseline are the only acreage where we genuinely cannot make a confident call as of today.
+
+### Open follow-up from Codex audit (added to v1.1 backlog as item 5)
+
+5. **Polygon-pct CDL provenance.** Current `prior_crop` is just the polygon-modal CDL class. Codex audit found 3 cases where centroid-pixel CDL disagreed with our modal label — e.g. one parcel labelled `prior_crop=unknown applicability=active` had centroid CDL = Winter Wheat, which would imply applicability should be `out-of-season`. Fix: expose top-3 CDL classes with percent coverage in the schema (`cdl_top3: [{class:"winter_wheat", pct:0.42}, ...]`), then decide applicability when ANY single class crosses a percent threshold (not only when it strictly dominates).
+
 ## v1.1 Backlog (added 2026-05-01 from satellite-imagery research review)
 
 Source: `docs/references/satellite-imagery-seeding-detection-2026-05-04.md`. Each item is independently shippable and improves the gating/decision quality without changing the SAR backbone. Tackle in any order; each is one Codex-as-architect + Claude-implement + smoke session (~half-day).

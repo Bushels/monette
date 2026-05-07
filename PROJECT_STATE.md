@@ -4,7 +4,7 @@
 2632275 wip(seeding-calibration): mid-iteration GEE pipeline + UI changes
 
 ## Active task
-GEE seeding-calibration pipeline — per-property smoke-test then full-run cadence with `--merge-existing` to avoid wiping `imagery-data.js`. **Status as of 2026-05-01: smoke validation complete for PA + Raymore; awaiting next S1 descending IW pass (~May 2-4) before next action.** Working files:
+GEE seeding-calibration pipeline — per-property smoke-test then full-run cadence with `--merge-existing` to avoid wiping `imagery-data.js`. **Status as of 2026-05-06: Montana full rerun shipped (+5,467 ac, +10 confident seeded parcels) with Codex independent audit GREEN-YELLOW (21 PASS / 3 FLAG geography+applicability+seeded-call all PASS, FLAGs are crop-label provenance only). PA + Raymore awaiting next S1 descending IW pass.** Working files:
 - scripts/gee_pipeline/decision_rule.py
 - scripts/gee_pipeline/pipeline.py
 - scripts/gee_pipeline/qc.py
@@ -17,8 +17,9 @@ GEE seeding-calibration pipeline — per-property smoke-test then full-run caden
 (Cleared 2026-05-01: a "dvh_db magnitude inflation" blocker was opened during the May 1 smoke and immediately retracted after `git diff 516d482 2632275 -- scripts/gee_pipeline/pipeline.py` + `git blame` confirmed the SAR computation block is unchanged. The dvh delta is the documented rolling-14-day T1 median composite slide — see methodology log entry for 2026-05-01.)
 
 ## Next action
-1. Wait for next Sentinel-1 descending IW pass over PA/Raymore (~2026-05-02 to 2026-05-04). Re-smoke both properties once a new SAR scene becomes available — direct test of whether the snow/freeze gate clears at the new observation date.
-2. After (1), decide on the next full property rerun candidate. Current best candidates by latitude (most-likely-thawed first): Raymore southern-tier parcels (T26-27), then PA, then northern Raymore.
+1. Decide whether to deploy the May 6 Montana rerun (`vercel --prod`) or hold for another cycle. The new `public/imagery-data.js` reflects fresh May 1/6 SAR scenes, +5,467 ac confidently seeded, and Codex-audit-validated geometry.
+2. Re-smoke PA + Raymore now that the May 6 SAR scene is confirmed reaching MT — same scene should be available for SK at this point. If smoke shows clean signal, full rerun those next.
+3. v1.1 backlog item 5 (polygon-pct CDL provenance) is the most actionable response to Codex's FLAGs — expose top-3 CDL classes per parcel so applicability can detect winter-wheat-dominant polygons that currently fall through to `unknown`.
 
 ## v1.1 Backlog (added 2026-05-01 from research review)
 
@@ -28,6 +29,7 @@ Independent, shippable items distilled from `docs/references/satellite-imagery-s
 2. **Forward NDVI emergence validation** — retroactive confirmation via predicted-emergence NDVI inflection
 3. **VH/VV ratio as no-till discriminator** — tiebreaker to flag tillage-not-seeding cases
 4. **Zonal percentage threshold as secondary signal** — adds robustness for partially-seeded fields
+5. **Polygon-pct CDL provenance** — expose top-3 CDL classes per parcel + percentages (added 2026-05-06 from Codex Montana audit). Current `prior_crop` is just the modal class; this misses winter-wheat-dominant polygons that fall through to `unknown` and get applicability=active when they should be out-of-season. New schema: `cdl_top3: [{class, pct}, {class, pct}, {class, pct}]`. Updated applicability rule: any single CDL class >= threshold (e.g. 30%) drives applicability if it implies a non-active state.
 
 Each item: half-day Codex-as-architect → implement → smoke session.
 

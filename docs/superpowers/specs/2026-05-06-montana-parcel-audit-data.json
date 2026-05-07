@@ -1,0 +1,140 @@
+[
+  {
+    "parcel_key": "montana:T02S-R31E-S05-22082805404010000",
+    "stratum": "seeded_true",
+    "loc": "T02S-R31E-S05-22082805404010000",
+    "twp": 2,
+    "twp_dir": "S",
+    "rng": 31,
+    "rng_dir": "E",
+    "sec": 5,
+    "computed_centroid": [
+      45.68015,
+      -107.91452
+    ],
+    "computed_area_ac": 162.3,
+    "cropland_coverage": 0.912,
+    "polygon_quality": "high",
+    "prior_crop": "unknown",
+    "applicability": "active",
+    "seeded_call": true,
+    "confidence": 100,
+    "dvh_db": 2.142,
+    "last_obs_date": "2026-04-26"
+  },
+  {
+    "parcel_key": "montana:T01N-R33E-S29-22104029201010000",
+    "stratum": "spring_wheat",
+    "loc": "T01N-R33E-S29-22104029201010000",
+    "twp": 1,
+    "twp_dir": "N",
+    "rng": 33,
+    "rng_dir": "E",
+    "sec": 29,
+    "computed_centroid": [
+      45.80425,
+      -107.64565
+    ],
+    "computed_area_ac": 400.3,
+    "cropland_coverage": 0.606,
+    "polygon_quality": "high",
+    "prior_crop": "spring_wheat",
+    "applicability": "active",
+    "seeded_call": true,
+    "confidence": 100,
+    "dvh_db": 4.375,
+    "last_obs_date": "2026-04-26"
+  },
+  {
+    "parcel_key": "montana:T01S-R31E-S19-22093219301010000",
+    "stratum": "borderline_null",
+    "loc": "T01S-R31E-S19-22093219301010000",
+    "twp": 1,
+    "twp_dir": "S",
+    "rng": 31,
+    "rng_dir": "E",
+    "sec": 19,
+    "computed_centroid": [
+      45.72815,
+      -107.93688
+    ],
+    "computed_area_ac": 462.9,
+    "cropland_coverage": 0.593,
+    "polygon_quality": "high",
+    "prior_crop": "unknown",
+    "applicability": "active",
+    "seeded_call": null,
+    "confidence": 49,
+    "dvh_db": 1.165,
+    "last_obs_date": "2026-04-26"
+  },
+  {
+    "parcel_key": "montana:T01S-R31E-S20-22093220101010000",
+    "stratum": "winter_wheat",
+    "loc": "T01S-R31E-S20-22093220101010000",
+    "twp": 1,
+    "twp_dir": "S",
+    "rng": 31,
+    "rng_dir": "E",
+    "sec": 20,
+    "computed_centroid": [
+      45.73083,
+      -107.9098
+    ],
+    "computed_area_ac": 321.4,
+    "cropland_coverage": 0.962,
+    "polygon_quality": "high",
+    "prior_crop": "winter_wheat",
+    "applicability": "out-of-season",
+    "seeded_call": null,
+    "confidence": 0,
+    "dvh_db": null,
+    "last_obs_date": "2026-04-28"
+  },
+  {
+    "parcel_key": "montana:T02S-R30E-S15-22082715202010000",
+    "stratum": "pasture_perennial",
+    "loc": "T02S-R30E-S15-22082715202010000",
+    "twp": 2,
+    "twp_dir": "S",
+    "rng": 30,
+    "rng_dir": "E",
+    "sec": 15,
+    "computed_centroid": [
+      45.65934,
+      -108.00425
+    ],
+    "computed_area_ac": 40.1,
+    "cropland_coverage": 0.0,
+    "polygon_quality": "low",
+    "prior_crop": "pasture_grass",
+    "applicability": "perennial",
+    "seeded_call": null,
+    "confidence": 0,
+    "dvh_db": null,
+    "last_obs_date": "2026-04-28"
+  },
+  {
+    "parcel_key": "montana:T01S-R33E-S25-22093425404010000",
+    "stratum": "low_pq",
+    "loc": "T01S-R33E-S25-22093425404010000",
+    "twp": 1,
+    "twp_dir": "S",
+    "rng": 33,
+    "rng_dir": "E",
+    "sec": 25,
+    "computed_centroid": [
+      45.71016,
+      -107.58118
+    ],
+    "computed_area_ac": 38.6,
+    "cropland_coverage": 0.034,
+    "polygon_quality": "low",
+    "prior_crop": "pasture_grass",
+    "applicability": "perennial",
+    "seeded_call": null,
+    "confidence": 0,
+    "dvh_db": null,
+    "last_obs_date": "2026-04-28"
+  }
+]
