@@ -50,6 +50,14 @@ Public rule: show only seeded acres, status, and confidence. Keep method details
 
 5. **Polygon-pct CDL provenance.** Current `prior_crop` is just the polygon-modal CDL class. Codex audit found 3 cases where centroid-pixel CDL disagreed with our modal label — e.g. one parcel labelled `prior_crop=unknown applicability=active` had centroid CDL = Winter Wheat, which would imply applicability should be `out-of-season`. Fix: expose top-3 CDL classes with percent coverage in the schema (`cdl_top3: [{class:"winter_wheat", pct:0.42}, ...]`), then decide applicability when ANY single class crosses a percent threshold (not only when it strictly dominates).
 
+## 2026-05-07 SK Re-smoke (PA + Raymore) — No New Scene Yet
+
+- 6-parcel re-smoke (3 PA + 3 Raymore, same parcels as 2026-05-01) via `scripts/gee_pipeline/_sk_resmoke_2026_05_07.py`. All 6 still vetoed for `snow_or_freeze_risk`.
+- Critical finding: **`last_obs=2026-04-26` for all 6 parcels** — no new Sentinel-1 descending IW scene has reached PA or Raymore in 11 days. Montana got a May 6 scene, but SK at higher latitude (51-53°N) is on a different ground-track schedule. 11 days without a descending pass is unusual but within Sentinel-1 normal variability.
+- The rolling-14-day window has *shrunk* on these parcels: Apr 20 has dropped out and no new scene replaced it. The median composite is now effectively N=1 (Apr 26 only). This makes per-parcel dvh values more sensitive to single-scene noise, visible as wider swings vs the May 1 measurements (e.g., SW-7-26-20-W2 dvh -2.81 -> -4.34, NE-34-29-21-W2 dvh 3.91 -> 1.04).
+- Specific case worth noting: SW-7-26-20-W2 was the only Raymore parcel that cleared the snow gate on May 1. Today the same parcel is vetoed for snow_or_freeze_risk on the same Apr 26 scene. The veto check is per-parcel local-AOI at the latest scene date; with median sensitivity now coming from a single scene, marginal QC results can flip. Working as designed; just an edge case worth logging.
+- Decision: **do not run full PA or Raymore reruns today.** Smoke saved a 142-parcel rerun cycle. Re-smoke when GEE shows a fresher SAR scene over SK (next descending IW pass expected within 48-72 hours).
+
 ## v1.1 Backlog (added 2026-05-01 from satellite-imagery research review)
 
 Source: `docs/references/satellite-imagery-seeding-detection-2026-05-04.md`. Each item is independently shippable and improves the gating/decision quality without changing the SAR backbone. Tackle in any order; each is one Codex-as-architect + Claude-implement + smoke session (~half-day).

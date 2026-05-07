@@ -18,7 +18,7 @@ GEE seeding-calibration pipeline — per-property smoke-test then full-run caden
 
 ## Next action
 1. Decide whether to deploy the May 6 Montana rerun (`vercel --prod`) or hold for another cycle. The new `public/imagery-data.js` reflects fresh May 1/6 SAR scenes, +5,467 ac confidently seeded, and Codex-audit-validated geometry.
-2. Re-smoke PA + Raymore now that the May 6 SAR scene is confirmed reaching MT — same scene should be available for SK at this point. If smoke shows clean signal, full rerun those next.
+2. **PA + Raymore re-smoke 2026-05-07: no new SAR scene yet** (still keyed off Apr 26 — 11 days stale at SK latitude vs MT got a May 6 pass). Skip full SK reruns until a fresher descending IW scene arrives, expected within 48-72 hours. Re-smoke at that point.
 3. v1.1 backlog item 5 (polygon-pct CDL provenance) is the most actionable response to Codex's FLAGs — expose top-3 CDL classes per parcel so applicability can detect winter-wheat-dominant polygons that currently fall through to `unknown`.
 
 ## v1.1 Backlog (added 2026-05-01 from research review)
