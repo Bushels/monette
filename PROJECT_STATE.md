@@ -45,12 +45,17 @@ provisional), browser-verified; eddystone/raymore/the-pas intentionally 0 on map
 4. **raymore has no quarter-owners table** (122 parcels) — same consequence.
 
 ## Next action
-1. Optional: adversarial Codex review of the sispByProperty tiering for accuracy
-   before wider promotion (data is litigation-adjacent/public).
-2. Re-check FTI SISP page ~July 6 for the named BC broker + BC listings.
-3. Uncommitted working-tree changes on C: (data.js, components.jsx, quarter-panel.jsx,
-   property-drawer.jsx, view-map.jsx, index.html, build/*). NOT pushed to GitHub
-   (deploy is Vercel-from-C:, not git). Commit/push only if asked.
+1. DONE 2026-07-02: Codex review (2 rounds, gpt-5.5/xhigh) → GREENLIGHT after
+   evidence-gate fix. Committed + pushed as 99b3fb1 (snow-watcher landing) +
+   e5a9939 (SISP layer) on feat/seeding-calibration.
+2. Re-check FTI SISP page ~July 6 for the named BC broker + BC listings;
+   upgrade bc-ranches/goats-peak to `listed` when live.
+3. Fix the eddystone quarter-owners table (blocker #3) so its parcels can
+   carry evidence-backed pills + SISP outlines; source a raymore owner table.
+4. Branch hygiene (separate pass): main is 65 files behind feat/seeding-
+   calibration; production content lives on feat. Merge feat → main when ready.
+5. Remaining untracked strays pending their own land/shelve/delete decisions:
+   dust_aod_map.py + dust_goes_animation.py, docs/logs/sk-titles/, 2 docs plans.
 
 ## Parked (prior task — GEE seeding calibration, May 2026)
 GEE per-property seeding pipeline (scripts/gee_pipeline/*, imagery-data.js) — last
