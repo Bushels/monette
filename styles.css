@@ -3544,7 +3544,9 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   bottom: 70px;
   left: 12px;
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
+  max-width: calc(100% - 110px); /* leave room for the bottom-right home btn */
   z-index: 4;
   pointer-events: all;
 }
@@ -3573,6 +3575,25 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   background: rgba(58, 140, 42, 0.22);
   color: #a8e090;
   border-color: rgba(58, 140, 42, 0.55);
+}
+
+/* Snow overlay toggle uses BLUE active-state to visually distinguish it
+   from the green mode pills — snow is an overlay (orthogonal toggle), not
+   a mutually-exclusive mode. */
+.atlas-snow-toggle.is-active {
+  background: rgba(91, 155, 213, 0.22);
+  color: #aad5ff;
+  border-color: rgba(91, 155, 213, 0.55);
+}
+
+.atlas-pill-divider {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  color: rgba(247, 243, 234, 0.22);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  user-select: none;
 }
 
 /* Low-QC swatch for the seeding-mode legend */

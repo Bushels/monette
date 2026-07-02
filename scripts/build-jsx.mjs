@@ -78,6 +78,14 @@ const staticAssets = [
 // They're copied verbatim from /dossiers into /public/dossiers.
 const dossiersDir = path.join(root, "dossiers");
 
+// Snow Watcher artifacts live in out/snow_maps/ (gitignored, source of
+// truth, populated by scripts/snow_map.py). They get re-staged into
+// public/snow/ on every build so the wipe-then-repopulate flow doesn't
+// lose them. Python writes dual paths for fast iteration; the build is
+// the authoritative copy from out/.
+const snowSrcDir = path.join(root, "out", "snow_maps");
+const snowDestDir = path.join(deployRootDir, "snow");
+
 // Clean both build dirs before rebuilding so deleted source files (e.g.,
 // view-editorial.jsx removed in 4263315) can't leave stale compiled
 // artifacts behind. Previously only public/ was cleaned; build/ accumulated
@@ -155,6 +163,22 @@ try {
 } catch (err) {
   if (err && err.code === "ENOENT") {
     console.warn("no /dossiers directory; skipping dossier copy");
+  } else {
+    throw err;
+  }
+}
+
+// Snow Watcher: copy out/snow_maps/ -> public/snow/ verbatim so the
+// build always carries the latest available snapshots into public/.
+// scripts/snow_map.py writes here as its source of truth (and also
+// mirrors directly into public/ for fast local iteration). The build
+// is the authoritative repopulation step after the public/ wipe.
+try {
+  await cp(snowSrcDir, snowDestDir, { recursive: true });
+  console.log(`copied snow_maps -> ${path.relative(root, snowDestDir)}`);
+} catch (err) {
+  if (err && err.code === "ENOENT") {
+    console.warn("no /out/snow_maps directory; skipping snow copy (run scripts/snow_map.py)");
   } else {
     throw err;
   }
