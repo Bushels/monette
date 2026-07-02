@@ -1,44 +1,58 @@
 # PROJECT_STATE.md
 
-## Last verified commit (feat/seeding-calibration)
-2632275 wip(seeding-calibration): mid-iteration GEE pipeline + UI changes
-
 ## Active task
-GEE seeding-calibration pipeline — per-property smoke-test then full-run cadence with `--merge-existing` to avoid wiping `imagery-data.js`. **Status as of 2026-05-06: Montana full rerun shipped (+5,467 ac, +10 confident seeded parcels) with Codex independent audit GREEN-YELLOW (21 PASS / 3 FLAG geography+applicability+seeded-call all PASS, FLAGs are crop-label provenance only). PA + Raymore awaiting next S1 descending IW pass.** Working files:
-- scripts/gee_pipeline/decision_rule.py
-- scripts/gee_pipeline/pipeline.py
-- scripts/gee_pipeline/qc.py
-- imagery-data.js, components.jsx, property-drawer.jsx, quarter-panel.jsx, view-map.jsx, styles.css
-- docs/logs/seeding-calibration.md (methodology log, now tracked)
+**DONE (2026-07-02): Official SISP "for sale" layer.** Added the FTI Consulting SISP
+land-sale listings to the public atlas as an authoritative for-sale overlay.
+Built + browser-verified + deployed to production (`vercel --prod`, custom domain
+https://monette.buperac.com). The dormant Layer-2 listing overlay is now data-driven.
+
+Shape: `window.MONETTE_DATA.sisp` (global: monitor, milestones, appraisals, broker
+roster) + `window.MONETTE_DATA.sispByProperty` (per-id map, 30 entries) in data.js.
+`seedQuarter()` lights `listed-for-sale` on OWNED quarters of listed/likely props
+(confirmed=solid pill, likely=provisional dashed pill). New always-on gold map
+outline layer `monette-parcel-forsale-outline` (view-map.jsx). Per-property SISP
+detail block in property-drawer.jsx (broker, price, links, bid deadline, source).
+
+Tiers: 15 `listed` (confirmed) · 11 `likely` · 2 `retained` (AB) · 1 `excluded`
+(Regina) · 1 `unknown` (Outlook Seeds). US (Premier MT $96M portfolio + camps,
+Clark CO Genoa $9.34M, Southwest AZ Aguila $22M + Tonopah $10M) are public listings
+with prices; SK/MB are broker-direct/data-room-gated (Hammond lead + Sutton-Harrison
+Eddystone + Royal LePage The Pas). Sources: FTI SISP page + Teaser + Monitor Second
+Report + engaged brokers.
+
+**Codex review round 1 (gpt-5.5/xhigh) → BLOCKER, fixed same day:** per-parcel
+"for sale" outlines now require SOURCE-BACKED tenure (owner-table hit or real
+parcel `q.owner` field); dominant-inference / hash-fallback / synthetic parcels
+never light. Also: `q.owner` ownership branch (MT 220 parcels now pill correctly),
+genoa 7,051-vs-4,079 divergence disclosed, hafford `residual` banner, href scheme
+guard, defensive date parse. "For sale" count: 809 quarters (365 solid + 444
+provisional), browser-verified; eddystone/raymore/the-pas intentionally 0 on map
+(notes in their SISP blocks). Redeployed to production post-fix.
 
 ## Known blockers
-1. **Northern SK/MB baseline window calendar-blocked** until ERA5 publishes through ~May 21. Extending the SK/MB baseline window into the late-spring thaw is the only path to unblock Hafford/Kamsack/Wymark/Eddystone/Admiral. No code action available before mid-May.
-
-(Cleared 2026-05-01: a "dvh_db magnitude inflation" blocker was opened during the May 1 smoke and immediately retracted after `git diff 516d482 2632275 -- scripts/gee_pipeline/pipeline.py` + `git blame` confirmed the SAR computation block is unchanged. The dvh delta is the documented rolling-14-day T1 median composite slide — see methodology log entry for 2026-05-01.)
+1. **swift-current + the-pas** are confirmed-listed but have NO real quarter
+   geometry (the-pas is synthetic samples), so they show the drawer SISP block but
+   don't paint on the map (known parcel-pipeline gap, pre-existing).
+2. **BC broker not yet named** (FTI page "Coming Soon", listings slated ~week of
+   July 6, 2026). `bc-ranches` + `goats-peak` are `likely` until BC goes live —
+   re-check the FTI SISP page after ~July 6 and upgrade to `listed`.
+3. **eddystone quarter-owners table is broken** (pre-existing, surfaced by the
+   Codex review): keys don't match parcel loc format AND only Monette rows were
+   loaded (totals show a single owner despite ~62% third-party acres) — so every
+   parcel falls through to dominant-owner inference. Ownership pills there are
+   inference, not evidence, and no SISP outlines can light. Fix = rebuild
+   quarter-owners.js eddystone map from the XLSX with matching loc keys.
+4. **raymore has no quarter-owners table** (122 parcels) — same consequence.
 
 ## Next action
-1. Decide whether to deploy the May 6 Montana rerun (`vercel --prod`) or hold for another cycle. The new `public/imagery-data.js` reflects fresh May 1/6 SAR scenes, +5,467 ac confidently seeded, and Codex-audit-validated geometry.
-2. **PA + Raymore re-smoke 2026-05-07: no new SAR scene yet** (still keyed off Apr 26 — 11 days stale at SK latitude vs MT got a May 6 pass). Skip full SK reruns until a fresher descending IW scene arrives, expected within 48-72 hours. Re-smoke at that point.
-3. v1.1 backlog item 5 (polygon-pct CDL provenance) is the most actionable response to Codex's FLAGs — expose top-3 CDL classes per parcel so applicability can detect winter-wheat-dominant polygons that currently fall through to `unknown`.
+1. Optional: adversarial Codex review of the sispByProperty tiering for accuracy
+   before wider promotion (data is litigation-adjacent/public).
+2. Re-check FTI SISP page ~July 6 for the named BC broker + BC listings.
+3. Uncommitted working-tree changes on C: (data.js, components.jsx, quarter-panel.jsx,
+   property-drawer.jsx, view-map.jsx, index.html, build/*). NOT pushed to GitHub
+   (deploy is Vercel-from-C:, not git). Commit/push only if asked.
 
-## v1.1 Backlog (added 2026-05-01 from research review)
-
-Independent, shippable items distilled from `docs/references/satellite-imagery-seeding-detection-2026-05-04.md`. See `docs/logs/seeding-calibration.md` "v1.1 Backlog" section for full descriptions. Order is suggestion-only — each is independently shippable.
-
-1. **GDD agronomic gating** — suspend pipeline until thermal threshold met (uses ERA5 already in pipeline)
-2. **Forward NDVI emergence validation** — retroactive confirmation via predicted-emergence NDVI inflection
-3. **VH/VV ratio as no-till discriminator** — tiebreaker to flag tillage-not-seeding cases
-4. **Zonal percentage threshold as secondary signal** — adds robustness for partially-seeded fields
-5. **Polygon-pct CDL provenance** — expose top-3 CDL classes per parcel + percentages (added 2026-05-06 from Codex Montana audit). Current `prior_crop` is just the modal class; this misses winter-wheat-dominant polygons that fall through to `unknown` and get applicability=active when they should be out-of-season. New schema: `cdl_top3: [{class, pct}, {class, pct}, {class, pct}]`. Updated applicability rule: any single CDL class >= threshold (e.g. 30%) drives applicability if it implies a non-active state.
-
-Each item: half-day Codex-as-architect → implement → smoke session.
-
-## v1.5 Scope (deferred)
-
-1. **InSAR Coherent Change Detection (CCD) — Codex pressure-test resolved 2026-05-01:** **Option D recommended (confidence booster only)**, with a **shadow-only feasibility spike first**. Critical finding: GEE does not natively support Sentinel-1 SLC ingestion (phase info lost in pyramiding) — the only viable path is external SNAP/openEO processing (e.g., the new April 2026 Copernicus openEO `sentinel1_sar_coherence` process) with results ingested back as parcel-level diagnostics. ΔVH stays primary; coherence may only upgrade confidence on agreement; disagreement forces null. Concrete first step: 2-property coherence diagnostic for PA + Raymore, plus Hafford/Eddystone as snow/freeze stress tests. NO labels = no production decision impact. Full spec: `docs/superpowers/specs/2026-05-01-ccd-vs-intensity-dvh-pressure-test.md`. Codex response: `2026-05-01-ccd-vs-intensity-dvh-codex-response.md` (Codex `019df43a-a124-7e03-9828-aa9ddf231fd9`, `gpt-5.5/xhigh` + web search). Effort estimate: 5-11 days for shadow-only spike; 1-2 weeks more for production rollout after local labels accrue.
-2. **RCM (RADARSAT Constellation Mission) integration** — Canadian 4-day SAR with compact polarimetry; requires CSA data access + non-trivial m-chi decomposition.
-3. **Topographic Wetness Index slough masking** — DEM-based intra-field wetland masking for Prairie Pothole Region properties (Eddystone, Kamsack).
-
-## Smoke artifacts (gitignored, transient)
-- scripts/gee_pipeline/_pa_smoke_2026_05_01.py + `_pa_smoke_2026_05_01_results.json`
-- scripts/gee_pipeline/_raymore_smoke_2026_05_01.py + `_raymore_smoke_2026_05_01_results.json`
+## Parked (prior task — GEE seeding calibration, May 2026)
+GEE per-property seeding pipeline (scripts/gee_pipeline/*, imagery-data.js) — last
+active commit 2632275 on `feat/seeding-calibration`. Northern SK/MB baseline window
+was ERA5-calendar-blocked pending ~May 21 publish. See docs/logs/seeding-calibration.md.

@@ -281,6 +281,11 @@ function seedQuarter(propId, q, i) {
     else if (dominant && /raptor/i.test(dominant))  ownership = "rented-monette";
     else if (dominant)                               ownership = "rented-monette";
     else                                             ownership = "unknown";
+  } else if (q.owner) {
+    // Real parcel record with an owner field (US cadastral / AZ-CO pipelines
+    // embed record owners per parcel). Trust it over the synthetic fallback —
+    // e.g. all 220 Montana parcels are titled to MONETTE FARMS USA INC.
+    ownership = /monette/i.test(String(q.owner)) ? "owned-monette" : "rented-monette";
   } else {
     const rng = (propId + q.loc).split("").reduce((a, c) => a + c.charCodeAt(0), 0);
     const fallback = ["owned-monette", "owned-monette", "owned-monette", "owned-monette", "rented-monette"];
@@ -305,10 +310,36 @@ function seedQuarter(propId, q, i) {
     ownership = "sold";
     provisional = true;
   }
+
+  // Official SISP listing overlay: a property flagged "listed" or "likely" in
+  // sispByProperty lights its OWNED quarters as "listed-for-sale". Confirmed
+  // ("listed") renders a solid pill; in-scope-but-unconfirmed ("likely") renders
+  // a provisional dashed pill.
+  //
+  // A per-parcel "for sale" claim is public and litigation-adjacent, so it
+  // requires SOURCE-BACKED tenure for the specific quarter: a quarter-owners
+  // table hit or a real parcel owner field (cadastral/broker record). Quarters
+  // whose ownership came from statistical inference (dominant-owner fill-in or
+  // the synthetic hash fallback) and synthesized sample parcels never light —
+  // the property-level claim lives in the drawer's SISP block instead.
+  // (Codex review 2026-07-02, BLOCKER #1.)
+  let listing = "not-listed";
+  let listingProvisional = false;
+  const sispMeta = (window.MONETTE_DATA && window.MONETTE_DATA.sispByProperty || {})[propId];
+  if (sispMeta && (sispMeta.status === "listed" || sispMeta.status === "likely") &&
+      ownership === "owned-monette" && !q.isSample) {
+    const evidenceBacked = cat === "monette" || /monette/i.test(String(q.owner || ""));
+    if (evidenceBacked) {
+      listing = "listed-for-sale";
+      listingProvisional = sispMeta.status === "likely";
+    }
+  }
+
   return {
     ownership,
     provisional,
-    listing: "not-listed",
+    listing,
+    listingProvisional,
   };
 }
 
@@ -400,15 +431,25 @@ function OwnershipPill({ kind, compact, provisional }) {
   );
 }
 
-function ListingPill({ kind }) {
+function ListingPill({ kind, provisional }) {
   if (kind === "not-listed") return null;
   const m = LIST[kind];
+  const isSale = kind === "listed-for-sale";
+  const label = isSale
+    ? (provisional ? "In SISP scope" : "Listed for sale · SISP")
+    : m.label;
+  const title = isSale
+    ? (provisional
+        ? "Owned land inside the FTI SISP offering — specific package/listing not yet public"
+        : "Officially for sale via the court-supervised FTI SISP")
+    : m.label;
   return (
-    <span style={{
+    <span title={title} style={{
       display: "inline-flex", alignItems: "center", gap: 5, fontFamily: '"JetBrains Mono", monospace',
-      fontSize: 9, padding: "3px 6px", border: `1px dashed ${m.color}`, color: m.color,
+      fontSize: 9, padding: "3px 6px", border: `1px ${provisional ? "dashed" : "solid"} ${m.color}`, color: m.color,
       letterSpacing: "0.06em", textTransform: "uppercase",
-    }}>◎ {m.label}</span>
+      fontStyle: provisional ? "italic" : "normal",
+    }}>◎ {provisional ? "? " : ""}{label}</span>
   );
 }
 

@@ -1213,6 +1213,93 @@ window.MONETTE_DATA.season = {
   harvested:  { yes:"Harvested",   no:"Unharvested", color:"#b48638" },
 };
 
+// ------- OFFICIAL SISP (Sale and Investment Solicitation Process) -------
+// Court-supervised sale of the Monette Group under CCAA, monitored by FTI
+// Consulting. Land is offered "as is, where is", in whole or in part, brokered
+// by JURISDICTION. Two pools: Restricted Land (SK+MB) and Unrestricted Land
+// (BC/AB/MT/CO/AZ). US parcels are publicly listed with prices; SK/MB packages
+// are broker-direct / data-room-gated (no public MLS). Source of truth:
+// FTI SISP page + June 2026 Teaser + Monitor's Second Report + engaged brokers.
+window.MONETTE_DATA.sisp = {
+  monitor: "FTI Consulting Canada Inc.",
+  hub: "https://cfcanada.fticonsulting.com/MonetteFarms/",
+  sispPage: "https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm",
+  teaser: "https://cfcanada.fticonsulting.com/MonetteFarms/docs/Monette%20Farms%20Ltd.%20-%20SISP%20Teaser.pdf",
+  commencement: "2026-06-29",
+  bindingBidDeadline: "2026-10-15",
+  closing: "2026-11-30",
+  appraisalTotalCAD: 1040000000,
+  restricted:   { region:"SK & MB",              ownedAcres:177000, appraisalCAD:725000000 },
+  unrestricted: { region:"BC, AB, MT, CO, AZ",   ownedAcres:107000, appraisalCAD:325000000 },
+  brokers: [
+    { region:"Saskatchewan & Manitoba (lead)", name:"Hammond Realty", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", url:"https://www.hammondrealty.ca/" },
+    { region:"Eddystone, MB",  name:"Sutton-Harrison Realty",          contact:"Neil Fraser · 204-573-5137",   url:"https://www.suttonharrison.com/" },
+    { region:"The Pas, MB",    name:"Royal LePage Martin-Liberty",     contact:"Scott Tibble · 204-734-0210",   url:"https://www.royallepage.ca/en/office/saskatchewan/moosomin/royal-lepage-martin-liberty-sask-realty/10276/" },
+    { region:"Montana",        name:"Premier Land Company",            contact:"Bryan Anderson · 406-259-2544", url:"https://www.premierlandcompany.com/properties/" },
+    { region:"Colorado",       name:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025",     url:"https://www.clarklandbrokers.com/property-listings" },
+    { region:"Arizona",        name:"Southwest Land Associates",       contact:"Luke Schlosser · 602-980-3222", url:"http://southwestlandassociates.com/listing_summary.html" },
+    { region:"British Columbia", name:"Broker pending",                contact:"Listings slated week of July 6, 2026", url:"https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm" },
+  ],
+  note: "Land-asset inquiries require no NDA (buyers contact the engaged brokers directly). Whole-company / data-room access requires an NDA via the Monitor.",
+};
+
+// Per-property SISP listing overlay, keyed by property id. `status`:
+//   listed   — confirmed on-sale (public broker listing OR named per-property
+//              broker assignment OR named as a marketed region in June coverage)
+//   likely   — owned land inside SISP scope, no confirmed public listing yet
+//   retained — explicitly kept (Alberta land) / OpCo-retained facility
+//   excluded — explicitly excluded from the offering (Regina area)
+//   unknown  — ambiguous (facility that may sell with land, via OpCo bid, or stay)
+// seedQuarter() lights the "listed-for-sale" overlay on owned quarters where
+// status is listed (solid pill) or likely (dashed/provisional pill).
+window.MONETTE_DATA.sispByProperty = {
+  // ----- Montana (Premier Land Company) — public listings with prices -----
+  "montana":            { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Monette Portfolio — 5 integrated Montana assets", price:"$96,000,000 USD", deededAc:53756, totalAc:97192, listingUrl:"https://www.premierlandcompany.com/ranch/monette-portfolio/", confidence:"high", note:"Umbrella listing — sold as one enterprise or as individual camps. Page copy names 'the Monette Farms Portfolio'.", source:"Premier Land Company listing + FTI SISP page" },
+  "mt-fly-creek":       { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Fly Creek Farm", price:"$38,000,000 USD", deededAc:32756, totalAc:39724, listingUrl:"https://www.premierlandcompany.com/ranch/fly-creek-farm/", confidence:"high", source:"Premier Land Company listing" },
+  "mt-st-xavier-camp4": { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Camp 4 Farm (St. Xavier)", price:"$27,500,000 USD", deededAc:11455, totalAc:38202, listingUrl:"https://www.premierlandcompany.com/ranch/camp-4-farm/", confidence:"high", note:"Large leased share (mostly Crow Reservation-area leases).", source:"Premier Land Company listing" },
+  "mt-nieden-camp1":    { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Camp 1 Farm", price:"$17,000,000 USD", deededAc:8060, totalAc:17781, listingUrl:"https://www.premierlandcompany.com/ranch/camp-1-farm-2/", confidence:"high", note:"Premier labels it 'Camp 1 Farm' (Nieden/Niessen is Monette's internal name).", source:"Premier Land Company listing" },
+  "mt-ragland":         { status:"likely", tier:"likely", broker:"Premier Land Company", package:"Rolls into the $96M Montana Portfolio (deeded remainder)", confidence:"low", note:"No standalone Premier listing; internal camp name. Likely one of the 2 unlisted deeded pieces (incl. Hardin Rail Site) inside the umbrella.", source:"Premier portfolio arithmetic" },
+  "mt-ragland-camp1":   { status:"likely", tier:"likely", broker:"Premier Land Company", package:"Rolls into the $96M Montana Portfolio (deeded remainder)", confidence:"low", note:"No standalone Premier listing; internal camp name.", source:"Premier portfolio arithmetic" },
+
+  // ----- Colorado (Clark & Associates) — public listing -----
+  "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025", package:"Lincoln County Organic Farm (near Genoa)", price:"$9,342,575 USD", deededAc:7051, cultivatedAc:5890, listingUrl:"https://www.clarklandbrokers.com/property-listings/lincoln-co.-o", confidence:"high", note:"Certified-organic dryland; ~5,890 organic crop ac + ~1,100 native grass. Monette linkage via court + press (no Monette branding on listing face). ACREAGE NOTE: Clark markets 7,051 total deeded ac while Helkaa ¶58(e) swears 4,079 Monette-owned ac (720 ac parcel-mapped here) — the listing likely includes Cypress View Land JV/partnership ground beyond the sworn Monette footprint; treat the broker figure as the offering scope, not sworn Monette ownership.", source:"Clark & Associates listing + DTN + FTI SISP + Helkaa Decl. ¶58(e)" },
+
+  // ----- Arizona (Southwest Land Associates) — public listings -----
+  "aguila":             { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Aguila Arizona Farm", price:"$22,000,000 USD", deededAc:930, stateLeaseAc:2213, totalAc:3143, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Brochure parcel map labels multiple parcels 'MONETTE FARMS'. 930 deeded ac + 2,213 AZ state-lease ac.", source:"Southwest Land Associates brochure + DTN + FTI SISP" },
+  "tonopah":            { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Tonopah Produce Cooler & Seed Processing Facility", price:"$10,000,000 USD", totalAc:23.31, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Operational companion to the Aguila farm — the one facility explicitly marketed as a standalone brokered listing.", source:"Southwest Land Associates brochure + FTI SISP" },
+
+  // ----- Manitoba (per-property broker assignments on the FTI page) -----
+  "eddystone":          { status:"listed", tier:"confirmed", broker:"Sutton-Harrison Realty", contact:"Neil Fraser · 204-573-5137", package:"MB Restricted Land — Eddystone package", price:null, ownedAc:10114, confidence:"high", note:"Broker-direct, no public MLS. ~62% of the Eddystone block is third-party-owned; the Monette-owned portion is what's offered. Quarter-level tenure is not yet parcel-matched, so no individual quarters carry a for-sale outline on the map.", source:"FTI SISP page (broker assignment) + Monitor Second Report" },
+  "the-pas":            { status:"listed", tier:"confirmed", broker:"Royal LePage Martin-Liberty", contact:"Scott Tibble · 204-734-0210", package:"MB Restricted Land — The Pas package", price:null, confidence:"high", note:"Broker-direct, no public MLS.", source:"FTI SISP page (broker assignment) + Manitoba Co-operator" },
+
+  // ----- Saskatchewan (Hammond Realty lead) — confirmed marketed regions -----
+  "swift-current":      { status:"listed", tier:"confirmed", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Swift Current (Monette home base)", price:null, confidence:"high", note:"Named as a marketed SK region in June 2026 'goes live' coverage; sold as bundled farm packages, data-room-gated (no public MLS).", source:"FTI SISP page + The Western Producer + Monitor Second Report" },
+  "hafford":            { status:"listed", tier:"confirmed", residual:true, broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Hafford region (residual)", price:null, confidence:"high", note:"Region is in the SISP marketing, but the Monette-owned Hafford quarters largely sold via the May 1, 2026 Sale Approval & Vesting Order ($29.8M). Mapped quarters show as sold-rented-back; only a residual remains on-sale.", source:"FTI SISP page + The Western Producer + Court Orders" },
+  "kamsack":            { status:"listed", tier:"confirmed", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Kamsack region", price:null, confidence:"high", note:"Named as a marketed SK region in June 2026 coverage + Monitor Second Report. Data-room-gated (no public MLS).", source:"FTI SISP page + The Western Producer + Monitor Second Report" },
+  "outlook":            { status:"listed", tier:"confirmed", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Outlook irrigation region", price:null, confidence:"high", note:"Named as a marketed SK region in June 2026 coverage. Separate Outlook Seeds Plant is a distinct facility asset.", source:"FTI SISP page + The Western Producer + Monitor Second Report" },
+  "prince-albert":      { status:"listed", tier:"confirmed", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Prince Albert / Paddockwood region", price:null, confidence:"high", note:"Named as a marketed SK region in June 2026 coverage + Monitor Second Report.", source:"FTI SISP page + The Western Producer + Monitor Second Report" },
+  "raymore":            { status:"listed", tier:"confirmed", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Raymore / Mount Hope region", price:null, confidence:"high", note:"Named as a marketed SK region in June 2026 coverage + Monitor Second Report. Quarter-level tenure is not yet parcel-matched for Raymore, so no individual quarters carry a for-sale outline on the map.", source:"FTI SISP page + The Western Producer + Monitor Second Report" },
+
+  // ----- Saskatchewan — in-scope, no confirmed public listing yet (likely) -----
+  "admiral":            { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"medium", note:"Owned SK land inside SISP scope; named in the winter 2025-26 pre-SISP 10-location offering. Not individually confirmed in June court docs.", source:"FTI SISP page + winter 2025-26 offering" },
+  "calderbank":         { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"medium", note:"Named in the winter 2025-26 10-location offering; in SISP scope.", source:"FTI SISP page + winter 2025-26 offering" },
+  "ponteix":            { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"medium", note:"Named in the winter 2025-26 10-location offering; in SISP scope.", source:"FTI SISP page + winter 2025-26 offering" },
+  "vanguard":           { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"medium", note:"Named in the winter 2025-26 10-location offering; in SISP scope.", source:"FTI SISP page + winter 2025-26 offering" },
+  "wymark":             { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"medium", note:"Named in the winter 2025-26 offering; note part of the Wymark/Waldeck footprint already sold separately.", source:"FTI SISP page + winter 2025-26 offering" },
+  "cabri-bank":         { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"low", note:"SW SK owned land inside SISP scope; not individually named in any public source.", source:"FTI SISP page (inferred scope)" },
+  "rosetown":           { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"low", note:"West-Central SK owned land inside SISP scope; not individually named in any public source.", source:"FTI SISP page (inferred scope)" },
+
+  // ----- British Columbia — in scope, broker not yet engaged (likely) -----
+  "bc-ranches":         { status:"likely", tier:"likely", broker:"BC broker pending", package:"Unrestricted Land — BC interior ranch package", confidence:"medium", note:"BC 'Unrestricted Land'; broker was 'Coming Soon' at the July 2 capture, listings slated week of July 6, 2026. ~45,000-ac / 12-ranch BC package was marketed via Ritchie Bros in Dec 2025 (outcome unknown).", source:"FTI SISP page + The Western Producer" },
+  "goats-peak":         { status:"likely", tier:"likely", broker:"BC broker pending", package:"Unrestricted Land — BC (Cache Creek)", confidence:"low", note:"BC owned asset inside the Unrestricted Land pool; not individually confirmed. BC listings pending.", source:"FTI SISP page (inferred scope)" },
+
+  // ----- Retained / excluded / ambiguous — NOT flagged for sale -----
+  "airdrie":            { status:"retained", tier:"retained", broker:null, package:"Alberta land — RETAINED", confidence:"high", note:"Darrel Monette retains his Alberta land; excluded from the $30M desk-application land protocol. Monette owns only ~160 fee ac at Airdrie (VTB under the Grad life-tenancy); the ~7,000-ac Soderglen balance is rented.", source:"The Western Producer (counsel David Kemp) + Monitor Second Report" },
+  "lethbridge-pea-protein": { status:"retained", tier:"retained", broker:null, package:"Alberta OpCo facility", confidence:"low", note:"Alberta processing facility; not marketed by the engaged land brokers. Could still transfer via a whole-business/OpCo bid.", source:"SISP Teaser (OpCo pillars) + AB retention" },
+  "regina-south":       { status:"excluded", tier:"excluded", broker:null, package:"Regina area — EXCLUDED from the offering", confidence:"medium", note:"Regina-area land reportedly excluded from the SISP offering, though still farmed per the Monitor's seeding table.", source:"The Western Producer + farms.com + SaskToday" },
+  "outlook-seeds":      { status:"unknown", tier:"unknown", broker:null, package:"Seed-processing facility (OpCo pillar)", confidence:"low", note:"OpCo asset, not a brokered land package. Unclear whether it sells with the Outlook land, via a whole-business bid, or is retained.", source:"SISP Teaser (OpCo pillars)" },
+};
+
 window.MONETTE_DATA.headlines = [
   { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $30.78M Sale Programme (2 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M). CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
   { id: 9, text: "Hafford court-grounded: affidavit Exhibit D ¶89 shows only 2,554 ac OWNED at 'North Battleford (Hafford)' — the 46,466 figure on tender docs was the operating footprint (incl. leased Simmons ground). The $29M / 2,553 ac sale liquidated essentially all Monette-owned Hafford land. 'Walter Farms bought all 46,466 ac' rumor not court-supported.", author: "Ledger", when: "0d" },

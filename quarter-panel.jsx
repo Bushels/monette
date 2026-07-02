@@ -125,7 +125,7 @@ function QuarterDetail({ propId, q, i, onClose }) {
       )}
       <div className="qd-status-row" style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
         <OwnershipPill kind={st.ownership} provisional={st.provisional} />
-        {st.listing && st.listing !== "not-listed" && <ListingPill kind={st.listing} />}
+        {st.listing && st.listing !== "not-listed" && <ListingPill kind={st.listing} provisional={st.listingProvisional} />}
       </div>
 
       <div className={`qd-satellite-row${isLowQc ? " is-low-qc" : ""}`}>

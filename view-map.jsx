@@ -99,6 +99,33 @@ function seedingFillColor(applicability, seeded, confidence) {
 
 const PARCEL_SEEDING_FILL_LAYER = "monette-parcel-seeding-fill";
 const PARCEL_SEEDING_OUTLINE_LAYER = "monette-parcel-seeding-outline-lowqc";
+// Always-on gold outline marking SISP "listed-for-sale" quarters. Sits above
+// the fill in both atlas modes (seeding + land-status) as a for-sale overlay.
+const PARCEL_FORSALE_OUTLINE_LAYER = "monette-parcel-forsale-outline";
+
+// ─── Snow overlay (synoptic prairie snow extent) ──────────────────────────
+// Backed by /snow/manifest.json + /snow/{date}/prairie-snow.png produced by
+// scripts/snow_map.py — MODIS C6.1 NDSI snow cover composited over a 5-day
+// look-back, water masked via JRC Global Surface Water. Overlay is placed
+// BELOW PROPERTY_FILL_LAYER so parcel colors and labels stay readable;
+// raster-opacity 0.55 lets the basemap and snow raster blend through.
+// Snapshot URL changes when the user picks a different date from the
+// Snow Watcher (currently latest-only; date picker = future iteration).
+const SNOW_OVERLAY_SOURCE = "monette-snow-overlay";
+const SNOW_OVERLAY_LAYER = "monette-snow-overlay-raster";
+const SNOW_MANIFEST_URL = "/snow/manifest.json";
+const SNOW_OVERLAY_KEY = "monette.atlas.snow.v1";
+// Synoptic 500m product is meaningless above zoom ~8 (one MODIS pixel
+// covers many parcels). Cap the layer so it auto-hides on close inspection.
+const SNOW_OVERLAY_MAX_ZOOM = 9;
+
+function defaultSnowOverlay() {
+  try {
+    return localStorage.getItem(SNOW_OVERLAY_KEY) === "1";
+  } catch (e) {
+    return false;
+  }
+}
 
 function imageryKey(propId, loc) {
   return `${propId}:${loc}`;
@@ -552,6 +579,7 @@ function buildQuarterStateIndex() {
       index[imageryKey(propId, q.loc)] = {
         ownership: st.ownership,
         listing: st.listing,
+        listingProvisional: !!st.listingProvisional,
         seeded: false,
         harvested: false,
         sprayCount: 0,
@@ -636,6 +664,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
     const st = quarterStateIndex[lookupKey] || {
       ownership: "unknown",
       listing: "not-listed",
+      listingProvisional: false,
       seeded: false,
       harvested: false,
       sprayCount: 0,
@@ -728,6 +757,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         ownership_status: st.ownership,
         ownership_label: (OWN[st.ownership] || OWN.unknown).label,
         listing_status: st.listing,
+        listing_provisional: st.listingProvisional ? 1 : 0,
         status_color: st.statusColor,
         map_fill_color: st.mapColor || mapOwnershipColor(st.ownership),
         seeded: st.seeded ? 1 : 0,
@@ -1062,6 +1092,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const [mapError, setMapError] = useState(null);
   const [ownershipFocus, setOwnershipFocus] = useState("all");
   const [atlasMode, setAtlasMode] = useState(defaultAtlasMode);
+  const [snowOverlayEnabled, setSnowOverlayEnabled] = useState(defaultSnowOverlay);
+  const [snowManifest, setSnowManifest] = useState(null);
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -1070,6 +1102,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const selectedQuarterRef = useRef(selQLoc);
   const ownershipFocusRef = useRef(ownershipFocus);
   const atlasModeRef = useRef(atlasMode);
+  // snowManifestRef keeps installAtlasLayers (which fires on map load /
+  // style.load / idle) able to read the latest manifest snapshot without
+  // re-binding to React state. Mirrors the mapDataRef pattern above.
+  const snowManifestRef = useRef(null);
+  // snowOverlayEnabledRef avoids stale-closure when installAtlasLayers reads
+  // the toggle from the on-mount-captured `reattach`. Mirrors atlasModeRef.
+  const snowOverlayEnabledRef = useRef(snowOverlayEnabled);
   const soldPopupRef = useRef(null);
   const operatorRelationshipPopupRef = useRef(null);
   const rumoredQuarterPopupRef = useRef(null);
@@ -1113,6 +1152,46 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     atlasModeRef.current = atlasMode;
     try { localStorage.setItem(ATLAS_MODE_KEY, atlasMode); } catch (e) {}
   }, [atlasMode]);
+
+  // Load /snow/manifest.json once on mount. Silent on 404 (the snow viewer
+  // is opt-in; missing manifest just means the toggle never appears).
+  useEffect(() => {
+    let alive = true;
+    fetch(SNOW_MANIFEST_URL, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((m) => { if (alive && m && m.dates) setSnowManifest(m); })
+      .catch(() => { /* manifest absent; toggle stays hidden */ });
+    return () => { alive = false; };
+  }, []);
+
+  // Mirror manifest into the ref AND retrigger installAtlasLayers so the
+  // raster source/layer get added (or refreshed) once the manifest arrives.
+  useEffect(() => {
+    snowManifestRef.current = snowManifest;
+    const map = mapRef.current;
+    if (map && mapDataRef.current && map.isStyleLoaded && map.isStyleLoaded()) {
+      try { installAtlasLayers(map, mapDataRef.current); } catch (e) {
+        console.warn("snow overlay install:", e);
+      }
+    }
+  }, [snowManifest]);
+
+  // Persist toggle + sync layer visibility + keep ref synced. Layer may not
+  // exist yet on first render (manifest still loading); the install path
+  // handles initial state once it does.
+  useEffect(() => {
+    snowOverlayEnabledRef.current = snowOverlayEnabled;
+    try {
+      localStorage.setItem(SNOW_OVERLAY_KEY, snowOverlayEnabled ? "1" : "0");
+    } catch (e) {}
+    const map = mapRef.current;
+    if (!map || !map.getLayer || !map.getLayer(SNOW_OVERLAY_LAYER)) return;
+    map.setLayoutProperty(
+      SNOW_OVERLAY_LAYER,
+      "visibility",
+      snowOverlayEnabled ? "visible" : "none"
+    );
+  }, [snowOverlayEnabled]);
   const currentStyle = window.MAPBOX_STYLE_STATUS;
   const routeToSelection = (propId, qloc) => {
     if (!onSwitchView) return;
@@ -1493,6 +1572,35 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           ],
           "line-dasharray": [3, 2],
           "line-opacity": 0.75,
+        },
+      });
+    }
+
+    // Official SISP "for sale" overlay — a gold outline on listed-for-sale
+    // quarters, always visible in both atlas modes. Confirmed listings draw
+    // heavier/opaque; "likely" (in-scope, unconfirmed) draw thinner/faint.
+    if (!map.getLayer(PARCEL_FORSALE_OUTLINE_LAYER)) {
+      map.addLayer({
+        id: PARCEL_FORSALE_OUTLINE_LAYER,
+        type: "line",
+        source: PARCEL_SOURCE,
+        filter: ["==", ["get", "listing_status"], "listed-for-sale"],
+        paint: {
+          "line-color": "#b48638", // LIST["listed-for-sale"].color — gold
+          // zoom-interpolate must be top-level; the confirmed/likely (thinner)
+          // distinction lives in each stop's per-feature case output.
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            7, ["case", ["==", ["get", "listing_provisional"], 1], 1.0, 1.6],
+            9, ["case", ["==", ["get", "listing_provisional"], 1], 1.7, 2.6],
+            11, ["case", ["==", ["get", "listing_provisional"], 1], 2.3, 3.6],
+          ],
+          "line-dasharray": [2, 1.5],
+          "line-opacity": [
+            "case",
+            ["==", ["get", "listing_provisional"], 1], 0.5,
+            0.9,
+          ],
         },
       });
     }
@@ -2024,6 +2132,71 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       });
     }
 
+    // Snow overlay: idempotent. Pulls latest snapshot from manifest ref,
+    // adds image source + raster layer BELOW PROPERTY_FILL_LAYER so parcel
+    // fills remain readable above. Visibility honors snowOverlayEnabledRef
+    // (synced from React state). Auto-hides above SNOW_OVERLAY_MAX_ZOOM
+    // because the 500m MODIS pixel is meaningless at parcel zoom levels.
+    const snowMan = snowManifestRef.current;
+    const snowDates = snowMan && snowMan.dates
+      ? Object.keys(snowMan.dates).sort().reverse()
+      : [];
+    if (snowDates.length) {
+      const latest = snowDates[0];
+      const entry = snowMan.dates[latest];
+      const prairie = entry && entry.pr;
+      if (prairie && prairie.bounds) {
+        const b = prairie.bounds;
+        const url = `/snow/${latest}/prairie-snow.png`;
+        // Mapbox image source coordinates expect [TL, TR, BR, BL] in lng/lat.
+        const corners = [
+          [b.west, b.north],
+          [b.east, b.north],
+          [b.east, b.south],
+          [b.west, b.south],
+        ];
+        try {
+          if (!map.getSource(SNOW_OVERLAY_SOURCE)) {
+            map.addSource(SNOW_OVERLAY_SOURCE, {
+              type: "image",
+              url,
+              coordinates: corners,
+            });
+          } else {
+            const src = map.getSource(SNOW_OVERLAY_SOURCE);
+            // updateImage() has been on ImageSource since mapbox-gl 1.10
+            // (early 2020). Always call it when the source already exists —
+            // the previous `src.url !== url` guard was buggy (ImageSource has
+            // no public `.url` field, so the check was always truthy and we
+            // re-uploaded every reattach). Codex ab24cb625ed84faa0 WARN.
+            if (typeof src.updateImage === "function") {
+              src.updateImage({ url, coordinates: corners });
+            }
+          }
+          if (!map.getLayer(SNOW_OVERLAY_LAYER)) {
+            const beforeId = map.getLayer(PROPERTY_FILL_LAYER)
+              ? PROPERTY_FILL_LAYER
+              : undefined;
+            map.addLayer({
+              id: SNOW_OVERLAY_LAYER,
+              type: "raster",
+              source: SNOW_OVERLAY_SOURCE,
+              maxzoom: SNOW_OVERLAY_MAX_ZOOM,
+              layout: {
+                visibility: snowOverlayEnabledRef.current ? "visible" : "none",
+              },
+              // 0.75 = snow reads strongly on bare-ground areas while parcel
+              // fills (green owned / red sold) still bleed through where they
+              // overlap. At >= 0.85 parcels disappear under the raster.
+              paint: { "raster-opacity": 0.75 },
+            }, beforeId);
+          }
+        } catch (err) {
+          console.warn("snow overlay setup:", err);
+        }
+      }
+    }
+
     syncMapPresentation(map);
   };
 
@@ -2432,6 +2605,26 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   {m.label}
                 </button>
               ))}
+              {snowManifest && (() => {
+                const dates = Object.keys(snowManifest.dates || {}).sort().reverse();
+                const latest = dates[0] || null;
+                if (!latest) return null;
+                return (
+                  <>
+                    <span className="atlas-pill-divider" aria-hidden="true">|</span>
+                    <button
+                      key="snow-overlay"
+                      type="button"
+                      title={`Toggle prairie snow overlay (latest: ${latest}). Auto-hides above zoom ${SNOW_OVERLAY_MAX_ZOOM}.`}
+                      className={`atlas-mode-pill atlas-snow-toggle${snowOverlayEnabled ? " is-active" : ""}`}
+                      aria-pressed={snowOverlayEnabled}
+                      onClick={() => setSnowOverlayEnabled((v) => !v)}
+                    >
+                      {snowOverlayEnabled ? `Snow · ${latest.slice(5)}` : "Snow"}
+                    </button>
+                  </>
+                );
+              })()}
             </div>
 
             {sel && !hasSelectedGeometry && (
@@ -2491,6 +2684,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   </div>
                 </>
               )}
+              <div className="atlas-legend-row">
+                <span className="atlas-swatch" style={{ background: "transparent", border: "1.5px dashed #b48638" }} />
+                <span>Gold outline = officially for sale via the FTI SISP (faint = in scope, listing pending).</span>
+              </div>
             </div>
           </details>
         </div>
@@ -2749,6 +2946,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   </div>
                 </>
               )}
+              <div className="atlas-legend-row">
+                <span className="atlas-swatch" style={{ background: "transparent", border: "1.5px dashed #b48638" }} />
+                <span>Gold outline = officially for sale via the FTI SISP (faint = in SISP scope, listing pending)</span>
+              </div>
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-outline" style={{ borderColor: "#f1d284" }} />
                 <span>Gold halo = selected property</span>
