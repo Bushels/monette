@@ -176,6 +176,28 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     }, 0),
     [imageryRows, prop?.id, quarters]
   );
+  const seedingAcreSummary = useMemo(
+    () => quarters.reduce((acc, q) => {
+      const row = imageryRows[`${prop?.id}:${q.loc}`];
+      if (!row || row.status !== "ok") return acc;
+      const acres = Number(q.ac || q.titled_ac || 0);
+      const ac = Number.isFinite(acres) && acres > 0 ? acres : 0;
+      acc.totalAc += ac;
+      if (row.polygon_quality === "low") acc.lowQcAc += ac;
+      if (row.seeding_applicability === "active") {
+        acc.activeAc += ac;
+        if (row.seeding_seeded === true) {
+          acc.seededAc += ac;
+        } else {
+          acc.noCallAc += ac;
+        }
+      } else {
+        acc.noCallAc += ac;
+      }
+      return acc;
+    }, { totalAc: 0, activeAc: 0, seededAc: 0, noCallAc: 0, lowQcAc: 0 }),
+    [imageryRows, prop?.id, quarters]
+  );
 
   if (!prop) return null;
   const { rollup } = rollupProperty(prop.id);
@@ -213,6 +235,32 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
   const unmappedAc = propertySummary && propertySummary.unmappedAc ? propertySummary.unmappedAc : 0;
   const operatorRelationships = (D.operatorRelationships || [])
     .filter((relationship) => relationship.linkedPropertyId === prop.id);
+  // Official SISP listing overlay for this property (see data.js sispByProperty).
+  const sispMeta = (D.sispByProperty || {})[prop.id] || null;
+  const sispGlobal = D.sisp || null;
+  // Only ever render http(s) links — guards future hand-entered data against
+  // javascript:/data: schemes sneaking into an href (Codex review WARN #4).
+  const safeHref = (u) => (/^https?:\/\//i.test(String(u || "")) ? u : null);
+  const fmtSispDate = (iso) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if (!m) return "";
+    const mo = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(m[2]) - 1];
+    return mo ? `${mo} ${Number(m[3])}, ${m[1]}` : "";
+  };
+  const sispAcres = sispMeta ? [
+    sispMeta.listingAc != null ? `${fmt(sispMeta.listingAc)} broker-listed` : null,
+    sispMeta.deededAc != null ? `${fmt(sispMeta.deededAc)} deeded` : null,
+    sispMeta.stateLeaseAc != null ? `${fmt(sispMeta.stateLeaseAc)} state-lease` : null,
+    sispMeta.totalAc != null ? `${fmt(sispMeta.totalAc)} total` : null,
+    sispMeta.ownedAc != null ? `${fmt(sispMeta.ownedAc)} Monette-owned` : null,
+  ].filter(Boolean).join(" · ") : "";
+  const sispListingHref = sispMeta ? safeHref(sispMeta.listingUrl) : null;
+  const sispListings = sispMeta && Array.isArray(sispMeta.listings)
+    ? sispMeta.listings
+        .map((listing) => ({ ...listing, href: safeHref(listing.listingUrl) }))
+        .filter((listing) => listing.href)
+    : [];
+  const sispPageHref = sispGlobal ? safeHref(sispGlobal.sispPage) : null;
   return (
     <div onClick={onClose} className="drawer-scrim" style={{ position: "fixed", inset: 0, background: "rgba(19,17,14,0.55)", zIndex: 50, display: "flex", justifyContent: "flex-end" }}>
       <div ref={scrollContainerRef} onClick={(e) => e.stopPropagation()} className="scroll property-drawer" style={{
@@ -231,6 +279,51 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             <button onClick={onClose} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--ink)", background: "transparent", cursor: "pointer" }}>Close ✕</button>
           </div>
         </div>
+
+        {/* Official SISP for-sale status */}
+        {sispMeta && (sispMeta.status === "listed" || sispMeta.status === "likely") && (
+          <div className="pd-sisp" style={{ padding: "16px 28px", borderBottom: "1px solid var(--rule)", background: "rgba(180,134,56,0.10)", borderLeft: "3px solid #b48638" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+              <span className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "#8a6a2a" }}>
+                {sispMeta.residual
+                  ? "◎ Region in the SISP offering · mapped quarters already sold"
+                  : sispMeta.status === "listed" ? "◎ Officially for sale · FTI SISP" : "◎ In the SISP offering · listing pending"}
+              </span>
+              {sispMeta.price && <span className="serif" style={{ fontSize: 24, lineHeight: 1, color: "#8a6a2a" }}>{sispMeta.price}</span>}
+            </div>
+            {sispMeta.package && <div className="serif" style={{ fontSize: 17, marginTop: 6, lineHeight: 1.2 }}>{sispMeta.package}</div>}
+            <div className="mono" style={{ marginTop: 8, fontSize: 11, color: "var(--ink-2)", lineHeight: 1.6 }}>
+              {sispMeta.broker && <div><span style={{ color: "var(--mute)" }}>Broker</span> {sispMeta.broker}{sispMeta.contact ? ` · ${sispMeta.contact}` : ""}</div>}
+              {sispAcres && <div><span style={{ color: "var(--mute)" }}>Acres</span> {sispAcres}</div>}
+              {sispGlobal && <div><span style={{ color: "var(--mute)" }}>Binding bids due</span> {fmtSispDate(sispGlobal.bindingBidDeadline)} · <span style={{ color: "var(--mute)" }}>closes</span> {fmtSispDate(sispGlobal.closing)}</div>}
+            </div>
+            {sispMeta.note && <div className="mono" style={{ marginTop: 8, fontSize: 10, color: "var(--mute)", lineHeight: 1.5 }}>{sispMeta.note}</div>}
+            {sispListings.length > 0 && (
+              <div style={{ display: "grid", gap: 6, marginTop: 10 }}>
+                {sispListings.map((listing) => (
+                  <a key={listing.listingUrl} href={listing.href} target="_blank" rel="noreferrer" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, padding: "7px 9px", border: "1px solid rgba(180,134,56,0.32)", color: "var(--ink)", textDecoration: "none", background: "rgba(255,255,255,0.35)" }}>
+                    <span className="serif" style={{ fontSize: 14 }}>{listing.name}</span>
+                    <span className="mono" style={{ fontSize: 9, color: "#8a6a2a", textAlign: "right", whiteSpace: "nowrap" }}>{listing.price}{listing.listingAc != null ? ` · ${fmt(listing.listingAc)} ac` : ""} →</span>
+                  </a>
+                ))}
+              </div>
+            )}
+            <div style={{ display: "flex", gap: 14, marginTop: 10, flexWrap: "wrap" }}>
+              {sispListingHref && <a href={sispListingHref} target="_blank" rel="noreferrer" style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: "#8a6a2a", textDecoration: "underline" }}>View broker listing →</a>}
+              {sispPageHref && <a href={sispPageHref} target="_blank" rel="noreferrer" style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: "var(--mute)", textDecoration: "underline" }}>FTI SISP page →</a>}
+            </div>
+            {sispMeta.source && <div className="mono" style={{ marginTop: 8, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
+          </div>
+        )}
+        {sispMeta && (sispMeta.status === "retained" || sispMeta.status === "excluded" || sispMeta.status === "unknown") && (
+          <div className="pd-sisp" style={{ padding: "12px 28px", borderBottom: "1px solid var(--rule)", background: "rgba(138,122,90,0.08)" }}>
+            <span className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>
+              {sispMeta.status === "retained" ? "Retained — not in the SISP sale" : sispMeta.status === "excluded" ? "Excluded from the SISP offering" : "SISP sale status unclear"}
+            </span>
+            {sispMeta.note && <div className="mono" style={{ marginTop: 6, fontSize: 10, color: "var(--ink-2)", lineHeight: 1.5 }}>{sispMeta.note}</div>}
+            {sispMeta.source && <div className="mono" style={{ marginTop: 6, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
+          </div>
+        )}
 
         {/* Rollup */}
         <div className="pd-rollup" style={{ padding: "16px 28px", background: "var(--paper-2)", borderBottom: "1px solid var(--rule)" }}>
@@ -326,12 +419,20 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             fontSize: 10,
             color: "var(--ink-2)",
           }}>
-            <span style={{ color: "var(--mute)" }}>Vegetation vigor</span>
+            <span style={{ color: "var(--mute)" }}>GEE seeding records</span>
             <span>
               {imageryOkCount
                 ? `${imageryOkCount} parcels`
                 : imageryStore.note || "Pending generated imagery build"}
             </span>
+            <span style={{ color: "var(--mute)" }}>Likely seeded acres</span>
+            <span style={{ color: "#4e6a30" }}>{fmtAc(seedingAcreSummary.seededAc)}</span>
+            <span style={{ color: "var(--mute)" }}>No confident call acres</span>
+            <span>{fmtAc(seedingAcreSummary.noCallAc)}</span>
+            <span style={{ color: "var(--mute)" }}>GEE-read acres</span>
+            <span>{fmtAc(seedingAcreSummary.totalAc)}</span>
+            <span style={{ color: "var(--mute)" }}>Active GEE-read acres</span>
+            <span>{fmtAc(seedingAcreSummary.activeAc)}</span>
             <span style={{ color: "var(--mute)" }}>Imagery window</span>
             <span>
               {imageryStore.window_days
@@ -340,6 +441,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             </span>
             <span style={{ color: "var(--mute)" }}>No clear imagery</span>
             <span>{imageryMissingCount || 0}</span>
+            <span style={{ color: "var(--mute)" }}>Low-QC acres</span>
+            <span>{fmtAc(seedingAcreSummary.lowQcAc)}</span>
           </div>
         </div>
 

@@ -1,37 +1,55 @@
 # PROJECT_STATE.md
 
-## Last verified commit (main)
-6de2e24 feat(atlas): farmland-wide hideMapMarker — only facilities show map dots
+## Last verified lineages before production merge
+- `main`: `ef564d4` — Montana May 6 rerun, Codex audit, and research references.
+- `feat/seeding-calibration`: `327da86` — current Hammond asking prices and Atlas sales UX.
 
 ## Active task
-**No active feature task.** SK Titles Update + atlas-hide-property-markers + Codex post-merge audit follow-up + farmland-wide marker hide + **Montana May 6 seeding rerun (+5,467 confidently-seeded ac, Codex-audited)** all shipped to main and pushed to origin (Bushels/monette).
+**DONE (2026-07-14): Full `feat/seeding-calibration` integration into `main`.**
+The complete feature lineage is merged into the production branch, including the
+GEE seeding-calibration work, snow watcher, official SISP layer, evidence-gated
+for-sale outlines, and the current Hammond Realty public asking-price refresh.
 
-## SK Titles shipped state (on main)
-- 559/559 CSV parcels reconciled (unmatched: 0)
-- 1,410 records across 14 SK property buckets carry mflTitleSnapshot metadata
-- swift-current 0 → 28 records, regina-south 0 → 120 records (geometryStatus: "polygons")
-- vanguard 93 → 105 records (Neville town lots folded in, 3 runtime-key collisions resolved across 2 sessions)
-- 159 polygons computed via DLS quarter math + new LSD math + Plan N3619 placeholders
-- hafford rented-back narrative surfaced (2 of 158 quarters MFL-titled)
-- 24 farmland/farm-area properties carry `hideMapMarker:true` (atlas dot cleanup, 2026-05-02)
-- 3 facilities keep their dots: outlook-seeds, lethbridge-pea-protein, tonopah
-- Sold-marker layer untouched (red dots stay for sold-hafford-phase-2, sold-havre, sold-regina-i)
-- Cache-bust: data.js v=39, quarters-data.js v=3
+## Current public Atlas state
+- Atlas is the homepage. The retired Register route redirects to `#map`.
+- Hovering a publicly priced property shows its asking price; clicking opens the
+  full package breakdown and broker links.
+- The top navigation and Atlas toolbar derive their sales totals from the same
+  per-property records used by the map and drawer.
+- Hammond inventory checked 2026-07-14: 18 farmland packages, 132,019.08 broker-
+  listed acres, and $773,851,040 CAD total asking price.
+- The separate $10,000,000 Swift Current processing-facility listing is not
+  attached to the atlas's 49,775-acre Swift Current land rollup.
+- Public binding-bid deadline: 2026-10-15; target closing: 2026-11-30.
 
-## Audit invariant (Codex recommendation 2026-05-02 round-3)
-`scripts/audit_isc_vs_quarters.py` now asserts `property_id:loc` uniqueness on every run. Currently: PASS (0 duplicate runtime keys across 1,410 records). Future title-export waves can't merge with renderer-key collisions undetected.
+## SK Titles shipped state
+- 559/559 CSV parcels reconciled (unmatched: 0).
+- 1,410 records across 14 SK property buckets carry `mflTitleSnapshot` metadata.
+- Swift Current has 28 records; Regina South has 120 records.
+- 159 polygons are computed through DLS quarter math, LSD math, and Plan N3619
+  placeholders.
+- The runtime audit asserts `property_id:loc` uniqueness across all 1,410 rows.
+- Farmland-wide marker cleanup remains in place; facility and sold-asset markers
+  remain visible.
 
-## Records of work
-- Codex final review: `docs/logs/sk-titles/codex-final-review.md` (round-2)
-- Codex post-merge audit: `docs/logs/sk-titles/codex-post-merge-audit.md` (round-3)
-- Methodology log (tracked): `docs/logs/sk-titles-2026-01-18.md`
-- Methodology playbook (memory): `~/.claude/projects/G--My-Drive-Agriculture-Monette/memory/sk_titles_methodology.md`
+## SISP evidence rules
+- Solid gold outlines require a confirmed listing and source-backed parcel tenure.
+- Provisional outlines identify likely in-scope land without a public asking price.
+- Dominant-owner inference, hash fallbacks, and synthetic parcels do not receive a
+  confirmed for-sale outline.
+- Broker acreage and atlas file acreage remain separate wherever they differ.
 
-## Other branches in flight (not active)
-- `feat/seeding-calibration` (commit `ee4755a`) — GEE seeding-calibration pipeline. The 12 mid-iteration UI files remain WIP. Beyond that, 2026-05-04 added the v1.1 Backlog (now 5 quick-win items) and the CCD vs intensity dvh Codex pressure-test resolution (Option D — confidence booster only, shadow-only spike first). 2026-05-06 added the Montana full rerun + Codex independent audit. 2026-05-07 added the PA + Raymore re-smoke (no new SAR scene yet over SK). The data + reference + decision-record files have been brought to main as of this commit; the WIP UI files stay on the branch. To resume: `git checkout feat/seeding-calibration` and follow `docs/logs/seeding-calibration.md`.
+## Known data gaps
+1. Eddystone's quarter-owner keys do not match parcel locations and the source
+   table is incomplete; its parcels cannot carry evidence-backed SISP outlines.
+2. Raymore has no quarter-owner table, so its public package prices are shown at
+   property level without quarter-specific sale outlines.
+3. Several point-only or synthetic properties still need defensible parcel geometry.
 
-## Known blockers
-None active.
+## Working-tree exclusions
+The existing untracked SK-title log directory, two planning documents, and two dust
+visualization scripts were not included in this production merge.
 
 ## Next action
-None pending. `feat/seeding-calibration` is the next workstream when user is ready.
+Confirm the production deployment from `main` and visually smoke-test the public
+domain after the host finishes building.

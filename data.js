@@ -1362,6 +1362,111 @@ window.MONETTE_DATA.season = {
   harvested:  { yes:"Harvested",   no:"Unharvested", color:"#b48638" },
 };
 
+// ------- OFFICIAL SISP (Sale and Investment Solicitation Process) -------
+// Court-supervised sale of the Monette Group under CCAA, monitored by FTI
+// Consulting. Land is offered "as is, where is", in whole or in part, brokered
+// by JURISDICTION. Two pools: Restricted Land (SK+MB) and Unrestricted Land
+// (BC/AB/MT/CO/AZ). US parcels are publicly listed with prices; SK/MB packages
+// are broker-direct / data-room-gated (no public MLS). Source of truth:
+// FTI SISP page + June 2026 Teaser + Monitor's Second Report + engaged brokers.
+window.MONETTE_DATA.sisp = {
+  monitor: "FTI Consulting Canada Inc.",
+  hub: "https://cfcanada.fticonsulting.com/MonetteFarms/",
+  sispPage: "https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm",
+  teaser: "https://cfcanada.fticonsulting.com/MonetteFarms/docs/Monette%20Farms%20Ltd.%20-%20SISP%20Teaser.pdf",
+  commencement: "2026-06-29",
+  bindingBidDeadline: "2026-10-15",
+  closing: "2026-11-30",
+  appraisalTotalCAD: 1040000000,
+  restricted:   { region:"SK & MB",              ownedAcres:177000, appraisalCAD:725000000 },
+  unrestricted: { region:"BC, AB, MT, CO, AZ",   ownedAcres:107000, appraisalCAD:325000000 },
+  brokers: [
+    { region:"Saskatchewan & Manitoba (lead)", name:"Hammond Realty", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", url:"https://www.hammondrealty.ca/monette-farms" },
+    { region:"Eddystone, MB",  name:"Sutton-Harrison Realty",          contact:"Neil Fraser · 204-573-5137",   url:"https://www.suttonharrison.com/" },
+    { region:"The Pas, MB",    name:"Royal LePage Martin-Liberty",     contact:"Scott Tibble · 204-734-0210",   url:"https://www.royallepage.ca/en/office/saskatchewan/moosomin/royal-lepage-martin-liberty-sask-realty/10276/" },
+    { region:"Montana",        name:"Premier Land Company",            contact:"Bryan Anderson · 406-259-2544", url:"https://www.premierlandcompany.com/properties/" },
+    { region:"Colorado",       name:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025",     url:"https://www.clarklandbrokers.com/property-listings" },
+    { region:"Arizona",        name:"Southwest Land Associates",       contact:"Luke Schlosser · 602-980-3222", url:"http://southwestlandassociates.com/listing_summary.html" },
+    { region:"British Columbia", name:"Broker pending",                contact:"Listings slated week of July 6, 2026", url:"https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm" },
+  ],
+  note: "Land-asset inquiries require no NDA (buyers contact the engaged brokers directly). Hammond Realty launched public Saskatchewan package listings and asking prices on June 29, 2026. Whole-company / data-room access requires an NDA via the Monitor.",
+};
+
+// Per-property SISP listing overlay, keyed by property id. `status`:
+//   listed   — confirmed on-sale (public broker listing OR named per-property
+//              broker assignment OR named as a marketed region in June coverage)
+//   likely   — owned land inside SISP scope, no confirmed public listing yet
+//   retained — explicitly kept (Alberta land) / OpCo-retained facility
+//   excluded — explicitly excluded from the offering (Regina area)
+//   unknown  — ambiguous (facility that may sell with land, via OpCo bid, or stay)
+// seedQuarter() lights the "listed-for-sale" overlay on owned quarters where
+// status is listed (solid pill) or likely (dashed/provisional pill).
+window.MONETTE_DATA.sispByProperty = {
+  // ----- Montana (Premier Land Company) — public listings with prices -----
+  "montana":            { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Monette Portfolio — 5 integrated Montana assets", price:"$96,000,000 USD", deededAc:53756, totalAc:97192, listingUrl:"https://www.premierlandcompany.com/ranch/monette-portfolio/", confidence:"high", note:"Umbrella listing — sold as one enterprise or as individual camps. Page copy names 'the Monette Farms Portfolio'.", source:"Premier Land Company listing + FTI SISP page" },
+  "mt-fly-creek":       { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Fly Creek Farm", price:"$38,000,000 USD", deededAc:32756, totalAc:39724, listingUrl:"https://www.premierlandcompany.com/ranch/fly-creek-farm/", confidence:"high", source:"Premier Land Company listing" },
+  "mt-st-xavier-camp4": { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Camp 4 Farm (St. Xavier)", price:"$27,500,000 USD", deededAc:11455, totalAc:38202, listingUrl:"https://www.premierlandcompany.com/ranch/camp-4-farm/", confidence:"high", note:"Large leased share (mostly Crow Reservation-area leases).", source:"Premier Land Company listing" },
+  "mt-nieden-camp1":    { status:"listed", tier:"confirmed", broker:"Premier Land Company", contact:"Bryan Anderson · 406-259-2544", package:"Camp 1 Farm", price:"$17,000,000 USD", deededAc:8060, totalAc:17781, listingUrl:"https://www.premierlandcompany.com/ranch/camp-1-farm-2/", confidence:"high", note:"Premier labels it 'Camp 1 Farm' (Nieden/Niessen is Monette's internal name).", source:"Premier Land Company listing" },
+  "mt-ragland":         { status:"likely", tier:"likely", broker:"Premier Land Company", package:"Rolls into the $96M Montana Portfolio (deeded remainder)", confidence:"low", note:"No standalone Premier listing; internal camp name. Likely one of the 2 unlisted deeded pieces (incl. Hardin Rail Site) inside the umbrella.", source:"Premier portfolio arithmetic" },
+  "mt-ragland-camp1":   { status:"likely", tier:"likely", broker:"Premier Land Company", package:"Rolls into the $96M Montana Portfolio (deeded remainder)", confidence:"low", note:"No standalone Premier listing; internal camp name.", source:"Premier portfolio arithmetic" },
+
+  // ----- Colorado (Clark & Associates) — public listing -----
+  "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025", package:"Lincoln County Organic Farm (near Genoa)", price:"$9,342,575 USD", deededAc:7051, cultivatedAc:5890, listingUrl:"https://www.clarklandbrokers.com/property-listings/lincoln-co.-o", confidence:"high", note:"Certified-organic dryland; ~5,890 organic crop ac + ~1,100 native grass. Monette linkage via court + press (no Monette branding on listing face). ACREAGE NOTE: Clark markets 7,051 total deeded ac while Helkaa ¶58(e) swears 4,079 Monette-owned ac (720 ac parcel-mapped here) — the listing likely includes Cypress View Land JV/partnership ground beyond the sworn Monette footprint; treat the broker figure as the offering scope, not sworn Monette ownership.", source:"Clark & Associates listing + DTN + FTI SISP + Helkaa Decl. ¶58(e)" },
+
+  // ----- Arizona (Southwest Land Associates) — public listings -----
+  "aguila":             { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Aguila Arizona Farm", price:"$22,000,000 USD", deededAc:930, stateLeaseAc:2213, totalAc:3143, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Brochure parcel map labels multiple parcels 'MONETTE FARMS'. 930 deeded ac + 2,213 AZ state-lease ac.", source:"Southwest Land Associates brochure + DTN + FTI SISP" },
+  "tonopah":            { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Tonopah Produce Cooler & Seed Processing Facility", price:"$10,000,000 USD", totalAc:23.31, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Operational companion to the Aguila farm — the one facility explicitly marketed as a standalone brokered listing.", source:"Southwest Land Associates brochure + FTI SISP" },
+
+  // ----- Manitoba (per-property broker assignments on the FTI page) -----
+  "eddystone":          { status:"listed", tier:"confirmed", broker:"Sutton-Harrison Realty", contact:"Neil Fraser · 204-573-5137", package:"MB Restricted Land — Eddystone package", price:null, ownedAc:10114, confidence:"high", note:"Broker-direct, no public MLS. ~62% of the Eddystone block is third-party-owned; the Monette-owned portion is what's offered. Quarter-level tenure is not yet parcel-matched, so no individual quarters carry a for-sale outline on the map.", source:"FTI SISP page (broker assignment) + Monitor Second Report" },
+  "the-pas":            { status:"listed", tier:"confirmed", broker:"Royal LePage Martin-Liberty", contact:"Scott Tibble · 204-734-0210", package:"MB Restricted Land — The Pas package", price:null, confidence:"high", note:"Broker-direct, no public MLS.", source:"FTI SISP page (broker assignment) + Manitoba Co-operator" },
+
+  // ----- Saskatchewan (Hammond Realty) — public asking prices checked 2026-07-14 -----
+  // Hammond's public inventory has 18 farmland packages plus one 8.58-acre
+  // Swift Current seed-processing facility. The facility price is not attached
+  // to the atlas's 49,775-acre Swift Current land rollup.
+  "swift-current":      { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Swift Current (Monette home base)", price:null, confidence:"medium", note:"Hammond currently lists the 8.58-acre Swift Current Seed Processing Facility for $10,000,000, but not a 49,775-acre land package matching this atlas rollup. No facility price is applied to the land record.", source:"Hammond Realty Monette Farms listings, checked 2026-07-14 + FTI SISP page" },
+  "hafford":            { status:"listed", tier:"confirmed", residual:true, broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Hafford region (residual)", price:null, confidence:"high", note:"Region is in the SISP marketing, but the Monette-owned Hafford quarters largely sold via the May 1, 2026 Sale Approval & Vesting Order ($29.8M). Mapped quarters show as sold-rented-back; only a residual remains on-sale.", source:"FTI SISP page + The Western Producer + Court Orders" },
+  "kamsack":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Kamsack 11,339 acres Grain Farmland", price:"$76,000,000 CAD", listingAc:11339, pricePerAcCAD:6703, listingUrl:"https://www.hammondrealty.ca/listings/kamsack-11364-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"Current Hammond title acres differ from the atlas file acres; the asking price and listing acreage are shown as broker-published, not substituted into the holdings record.", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "outlook":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Outlook 1,851 acres Grain Farmland", price:"$56,000,000 CAD", listingAc:1852.35, pricePerAcCAD:30232, listingUrl:"https://www.hammondrealty.ca/listings/outlook-1851-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"The broker's title displays 1,851 acres while its detail card reports 1,852.35 title acres; this atlas preserves the more precise card value.", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "prince-albert":      { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Prince Albert 3,010 acres Grain Farmland", price:"$17,600,000 CAD", listingAc:3010.33, pricePerAcCAD:5847, listingUrl:"https://www.hammondrealty.ca/listings/prince-albert-3010-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "raymore":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Raymore — 3 public sale packages", price:"$70,500,000 CAD total", listingAc:16529, listingUrl:"https://www.hammondrealty.ca/monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"Aggregate of the three current Hammond asking prices. Quarter-level tenure is not yet parcel-matched, so no individual quarters carry for-sale outlines on the map.", source:"Hammond Realty Monette Farms listings, checked 2026-07-14", listings:[
+    { name:"Raymore Centre", price:"$21,217,000 CAD", listingAc:4954.5, pricePerAcCAD:4282, listingUrl:"https://www.hammondrealty.ca/listings/raymore-centre-4954-acres-grain-farmland-monette-farms" },
+    { name:"Raymore North", price:"$17,700,000 CAD", listingAc:3813.9, pricePerAcCAD:4641, listingUrl:"https://www.hammondrealty.ca/listings/raymore-north-3814-acres-grain-farmland--yard-monette-farms" },
+    { name:"Raymore South Block", price:"$31,583,000 CAD", listingAc:7760.6, pricePerAcCAD:4070, listingUrl:"https://www.hammondrealty.ca/listings/raymore-south-7761-acres-grain-farmland-monette-farms" },
+  ] },
+
+  "admiral":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Admiral 2,385 acres Grain Farmland", price:"$11,990,000 CAD", listingAc:2385.45, pricePerAcCAD:5026, listingUrl:"https://www.hammondrealty.ca/listings/admiral-2385-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "calderbank":         { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Calderbank — 5 public sale packages", price:"$41,015,000 CAD total", listingAc:17449.1, listingUrl:"https://www.hammondrealty.ca/monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"Aggregate of the five current Hammond asking prices. Broker listing acres are 321.1 acres above the atlas file total, so the two figures remain visibly separate.", source:"Hammond Realty Monette Farms listings, checked 2026-07-14", listings:[
+    { name:"South Calderbank", price:"$9,765,000 CAD", listingAc:4099.6, pricePerAcCAD:2382, listingUrl:"https://www.hammondrealty.ca/listings/south-calderbank-4100-acres-grain-farmland" },
+    { name:"Calderbank / Glenn Kerr", price:"$6,050,000 CAD", listingAc:2542.1, pricePerAcCAD:2380, listingUrl:"https://www.hammondrealty.ca/listings/calderbank--glenn-kerr-2542-acres-grain-farmland-monette-farms" },
+    { name:"Calderbank / Aquadell", price:"$5,800,000 CAD", listingAc:2225.1, pricePerAcCAD:2607, listingUrl:"https://www.hammondrealty.ca/listings/calderbank--aquadell-2225-acres-grain-farmland-monette-farms" },
+    { name:"Calderbank / Shooter Hill", price:"$18,100,000 CAD", listingAc:7474.5, pricePerAcCAD:2422, listingUrl:"https://www.hammondrealty.ca/listings/calderbank--shooter-hill-7474-acres-grain-farmland-monette-farms" },
+    { name:"Calderbank / North Cattle Ridge", price:"$1,300,000 CAD", listingAc:1107.8, pricePerAcCAD:1174, listingUrl:"https://www.hammondrealty.ca/listings/calderbank--north-cattle-ridge-1108-acres-pastureland-monette-farms" },
+  ] },
+  "ponteix":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Ponteix 19,696 acres Grain Farmland", price:"$74,800,000 CAD", listingAc:19696.86, pricePerAcCAD:3798, listingUrl:"https://www.hammondrealty.ca/listings/ponteix-19696-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "vanguard":           { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Vanguard 14,538 acres Grain Farmland", price:"$80,235,000 CAD", listingAc:14538.2, pricePerAcCAD:5519, listingUrl:"https://www.hammondrealty.ca/listings/vanguard-14538-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+  "wymark":             { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Wymark 12,834 acres Grain Farmland", price:"$81,000,000 CAD", listingAc:12834.5, pricePerAcCAD:6311, listingUrl:"https://www.hammondrealty.ca/listings/wymark-13015-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"The broker URL retains an older 13,015-acre slug; the current public title and detail card report 12,834 / 12,834.5 acres.", source:"Hammond Realty Monette Farms listing, checked 2026-07-14" },
+
+  // ----- Saskatchewan — in-scope, no exact Hammond land-package match -----
+  "cabri-bank":         { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"low", note:"SW SK owned land inside SISP scope; not individually named in any public source.", source:"FTI SISP page (inferred scope)" },
+  "rosetown":           { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — bundled farm package", confidence:"low", note:"West-Central SK owned land inside SISP scope; not individually named in any public source.", source:"FTI SISP page (inferred scope)" },
+
+  // ----- British Columbia — in scope, broker not yet engaged (likely) -----
+  "bc-ranches":         { status:"likely", tier:"likely", broker:"BC broker pending", package:"Unrestricted Land — BC interior ranch package", confidence:"medium", note:"BC 'Unrestricted Land'; broker was 'Coming Soon' at the July 2 capture, listings slated week of July 6, 2026. ~45,000-ac / 12-ranch BC package was marketed via Ritchie Bros in Dec 2025 (outcome unknown).", source:"FTI SISP page + The Western Producer" },
+  "goats-peak":         { status:"likely", tier:"likely", broker:"BC broker pending", package:"Unrestricted Land — BC (Cache Creek)", confidence:"low", note:"BC owned asset inside the Unrestricted Land pool; not individually confirmed. BC listings pending.", source:"FTI SISP page (inferred scope)" },
+
+  // ----- Retained / excluded / ambiguous — NOT flagged for sale -----
+  "airdrie":            { status:"retained", tier:"retained", broker:null, package:"Alberta land — RETAINED", confidence:"high", note:"Darrel Monette retains his Alberta land; excluded from the $30M desk-application land protocol. Monette owns only ~160 fee ac at Airdrie (VTB under the Grad life-tenancy); the ~7,000-ac Soderglen balance is rented.", source:"The Western Producer (counsel David Kemp) + Monitor Second Report" },
+  "lethbridge-pea-protein": { status:"retained", tier:"retained", broker:null, package:"Alberta OpCo facility", confidence:"low", note:"Alberta processing facility; not marketed by the engaged land brokers. Could still transfer via a whole-business/OpCo bid.", source:"SISP Teaser (OpCo pillars) + AB retention" },
+  "regina-south":       { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Regina area — 3 public sale packages", price:"$264,711,040 CAD total", listingAc:32384.29, listingUrl:"https://www.hammondrealty.ca/monette-farms", confidence:"high", sourceCheckedAt:"2026-07-14", note:"Current Hammond listings supersede the earlier report that Regina-area land was excluded. Aggregate asking price covers Regina South West, West of Gray, and North East; broker listing acres are 328.29 acres above the atlas file total.", source:"Hammond Realty Monette Farms listings, checked 2026-07-14", listings:[
+    { name:"Regina South West", price:"$12,672,000 CAD", listingAc:1582.99, pricePerAcCAD:8005, listingUrl:"https://www.hammondrealty.ca/listings/regina-south-west-1583-acres-grain-farmland-monette-farms" },
+    { name:"Regina West of Gray", price:"$121,494,960 CAD", listingAc:14734.3, pricePerAcCAD:8246, listingUrl:"https://www.hammondrealty.ca/listings/regina-west-of-gray-14734-acres-grain-farmland-monette-farms" },
+    { name:"Regina North East", price:"$130,544,080 CAD", listingAc:16067, pricePerAcCAD:8125, listingUrl:"https://www.hammondrealty.ca/listings/regina-north-east-16067-acres-grain-farmland-monette-farms" },
+  ] },
+  "outlook-seeds":      { status:"unknown", tier:"unknown", broker:null, package:"Seed-processing facility (OpCo pillar)", confidence:"low", note:"OpCo asset, not a brokered land package. Unclear whether it sells with the Outlook land, via a whole-business bid, or is retained.", source:"SISP Teaser (OpCo pillars)" },
+};
+
 window.MONETTE_DATA.headlines = [
   { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $30.78M Sale Programme (2 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M). CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
   { id: 9, text: "Hafford court-grounded: affidavit Exhibit D ¶89 shows only 2,554 ac OWNED at 'North Battleford (Hafford)' — the 46,466 figure on tender docs was the operating footprint (incl. leased Simmons ground). The $29M / 2,553 ac sale liquidated essentially all Monette-owned Hafford land. 'Walter Farms bought all 46,466 ac' rumor not court-supported.", author: "Ledger", when: "0d" },

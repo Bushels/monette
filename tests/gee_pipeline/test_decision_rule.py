@@ -25,6 +25,15 @@ def test_strong_positive_active_returns_true():
     assert decide_seeded(applicability="active", mean_dvh_db=1.7, confidence=78) is True
 
 
+def test_active_veto_withholds_even_strong_positive_signal():
+    assert decide_seeded(
+        applicability="active",
+        mean_dvh_db=2.4,
+        confidence=100,
+        veto_reason="snow_or_freeze_risk",
+    ) is None
+
+
 def test_strong_negative_active_returns_false():
     assert decide_seeded(applicability="active", mean_dvh_db=-1.7, confidence=78) is False
 

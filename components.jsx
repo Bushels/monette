@@ -11,8 +11,100 @@ const OWN = D.ownership, LIST = D.listing, SEA = D.season;
 
 const fmt = (n) => (n || 0).toLocaleString("en-CA");
 const fmtM = (n) => n >= 1000000 ? "$" + (n / 1000000).toFixed(1) + "M" : "$" + fmt(n);
+const fmtAc = (n) => `${Math.round(n || 0).toLocaleString("en-CA")} ac`;
 const now = () => new Date().toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 const ACTION_KEYS = new Set(["Enter", " "]);
+
+function parseAskingPriceCAD(value) {
+  const match = /\$([\d,]+)/.exec(String(value || ""));
+  return match ? Number(match[1].replace(/,/g, "")) : 0;
+}
+
+// Current public Hammond inventory only. This intentionally excludes the
+// separately listed Swift Current processing facility and non-SK brokers.
+// All top-level sale figures derive from the same per-property records used by
+// the drawer, so navigation copy cannot drift away from the map data.
+function getHammondSaleSummary() {
+  const listings = Object.values(D.sispByProperty || {}).filter((meta) =>
+    meta && meta.status === "listed" && meta.broker === "Hammond Realty" &&
+    meta.sourceCheckedAt && meta.price
+  );
+  return listings.reduce((summary, meta) => {
+    summary.listingCount += Array.isArray(meta.listings) ? meta.listings.length : 1;
+    summary.totalAskingCAD += parseAskingPriceCAD(meta.price);
+    summary.listingAcres += Number(meta.listingAc || 0);
+    if (!summary.checkedAt || meta.sourceCheckedAt > summary.checkedAt) {
+      summary.checkedAt = meta.sourceCheckedAt;
+    }
+    return summary;
+  }, {
+    listingCount: 0,
+    totalAskingCAD: 0,
+    listingAcres: 0,
+    checkedAt: null,
+  });
+}
+
+function fmtAskingCompact(value) {
+  const millions = Number(value || 0) / 1000000;
+  return `$${millions.toLocaleString("en-CA", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}
+
+function fmtSatelliteNumber(value, digits = 3, suffix = "") {
+  if (value == null || value === "") return null;
+  const n = Number(value);
+  if (!Number.isFinite(n)) return null;
+  return `${n.toFixed(digits)}${suffix ? ` ${suffix}` : ""}`;
+}
+
+function seedingCallText(applicability, seeded, confidence, vetoReason) {
+  if (!applicability) return "No satellite data";
+  if (vetoReason === "snow_or_freeze_risk") return "Snow/freeze risk - confidence withheld";
+  if (applicability === "insufficient_baseline") return "Insufficient baseline - SAR pending";
+  if (applicability === "out-of-season") return "Out of season";
+  if (applicability === "perennial") return "Perennial crop - seeding n/a";
+  if (seeded === true) return `Likely seeded${confidence ? ` (${confidence}% confidence)` : ""}`;
+  if (seeded === false) return `Likely not seeded${confidence ? ` (${confidence}% confidence)` : ""}`;
+  return "No confident seeded call";
+}
+
+function seedingEvidenceAsset(imgRow) {
+  if (!imgRow) return null;
+  const seeding = imgRow.seeding || {};
+  const evidence = imgRow.evidence || imgRow.evidence_asset || seeding.evidence || seeding.evidence_asset || {};
+  const imageUrl = evidence.image_url
+    || evidence.imageUrl
+    || evidence.thumbnail_url
+    || evidence.thumbnailUrl
+    || imgRow.evidence_image_url
+    || imgRow.evidence_thumbnail_url
+    || null;
+  const tileUrl = evidence.tile_url || evidence.tileUrl || imgRow.evidence_tile_url || null;
+  if (!imageUrl && !tileUrl) return null;
+  return {
+    imageUrl,
+    tileUrl,
+    label: evidence.label || evidence.asset_label || "GEE parcel evidence",
+    sourceScene: evidence.source_scene || evidence.scene_date || (seeding.optical && seeding.optical.source_scene) || null,
+  };
+}
+
+function seedingEvidenceRows(imgRow) {
+  if (!imgRow) return [];
+  const confidence = Number(imgRow.seeding_confidence || 0);
+  const vetoReason = imgRow.seeding_veto_reason || (imgRow.seeding && imgRow.seeding.veto_reason) || null;
+  const confidenceLabel = confidence >= 80
+    ? "High"
+    : confidence >= 50
+      ? "Medium"
+      : confidence > 0
+        ? "Low"
+        : "Not available";
+  return [
+    ["Call", seedingCallText(imgRow.seeding_applicability, imgRow.seeding_seeded, imgRow.seeding_confidence || 0, vetoReason)],
+    ["Confidence", vetoReason === "snow_or_freeze_risk" ? "Withheld" : (confidence > 0 ? `${confidenceLabel} (${confidence}%)` : confidenceLabel)],
+  ].filter((row) => row[1] != null && row[1] !== "");
+}
 
 function onActionKey(e, fn) {
   if (!ACTION_KEYS.has(e.key)) return;
@@ -224,6 +316,11 @@ function seedQuarter(propId, q, i) {
     else if (dominant && /raptor/i.test(dominant))  ownership = "rented-monette";
     else if (dominant)                               ownership = "rented-monette";
     else                                             ownership = "unknown";
+  } else if (q.owner) {
+    // Real parcel record with an owner field (US cadastral / AZ-CO pipelines
+    // embed record owners per parcel). Trust it over the synthetic fallback —
+    // e.g. all 220 Montana parcels are titled to MONETTE FARMS USA INC.
+    ownership = /monette/i.test(String(q.owner)) ? "owned-monette" : "rented-monette";
   } else {
     const rng = (propId + q.loc).split("").reduce((a, c) => a + c.charCodeAt(0), 0);
     const fallback = ["owned-monette", "owned-monette", "owned-monette", "owned-monette", "rented-monette"];
@@ -248,10 +345,36 @@ function seedQuarter(propId, q, i) {
     ownership = "sold";
     provisional = true;
   }
+
+  // Official SISP listing overlay: a property flagged "listed" or "likely" in
+  // sispByProperty lights its OWNED quarters as "listed-for-sale". Confirmed
+  // ("listed") renders a solid pill; in-scope-but-unconfirmed ("likely") renders
+  // a provisional dashed pill.
+  //
+  // A per-parcel "for sale" claim is public and litigation-adjacent, so it
+  // requires SOURCE-BACKED tenure for the specific quarter: a quarter-owners
+  // table hit or a real parcel owner field (cadastral/broker record). Quarters
+  // whose ownership came from statistical inference (dominant-owner fill-in or
+  // the synthetic hash fallback) and synthesized sample parcels never light —
+  // the property-level claim lives in the drawer's SISP block instead.
+  // (Codex review 2026-07-02, BLOCKER #1.)
+  let listing = "not-listed";
+  let listingProvisional = false;
+  const sispMeta = (window.MONETTE_DATA && window.MONETTE_DATA.sispByProperty || {})[propId];
+  if (sispMeta && (sispMeta.status === "listed" || sispMeta.status === "likely") &&
+      ownership === "owned-monette" && !q.isSample) {
+    const evidenceBacked = cat === "monette" || /monette/i.test(String(q.owner || ""));
+    if (evidenceBacked) {
+      listing = "listed-for-sale";
+      listingProvisional = sispMeta.status === "likely";
+    }
+  }
+
   return {
     ownership,
     provisional,
-    listing: "not-listed",
+    listing,
+    listingProvisional,
   };
 }
 
@@ -343,15 +466,25 @@ function OwnershipPill({ kind, compact, provisional }) {
   );
 }
 
-function ListingPill({ kind }) {
+function ListingPill({ kind, provisional }) {
   if (kind === "not-listed") return null;
   const m = LIST[kind];
+  const isSale = kind === "listed-for-sale";
+  const label = isSale
+    ? (provisional ? "In SISP scope" : "Listed for sale · SISP")
+    : m.label;
+  const title = isSale
+    ? (provisional
+        ? "Owned land inside the FTI SISP offering — specific package/listing not yet public"
+        : "Officially for sale via the court-supervised FTI SISP")
+    : m.label;
   return (
-    <span style={{
+    <span title={title} style={{
       display: "inline-flex", alignItems: "center", gap: 5, fontFamily: '"JetBrains Mono", monospace',
-      fontSize: 9, padding: "3px 6px", border: `1px dashed ${m.color}`, color: m.color,
+      fontSize: 9, padding: "3px 6px", border: `1px ${provisional ? "dashed" : "solid"} ${m.color}`, color: m.color,
       letterSpacing: "0.06em", textTransform: "uppercase",
-    }}>◎ {m.label}</span>
+      fontStyle: provisional ? "italic" : "normal",
+    }}>◎ {provisional ? "? " : ""}{label}</span>
   );
 }
 
@@ -846,6 +979,8 @@ Object.assign(window, {
   PORTFOLIO,
   fmt,
   fmtM,
+  getHammondSaleSummary,
+  fmtAskingCompact,
   now,
   onActionKey,
   currentMonetteUrl,

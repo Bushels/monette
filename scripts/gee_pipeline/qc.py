@@ -19,6 +19,7 @@ from __future__ import annotations
 SNOW_THRESHOLD_PCT = 5.0
 FREEZE_THRESHOLD_KELVIN = 273.15
 PRECIP_THRESHOLD_MM = 5.0
+ACTIVE_SEED_VETO_REASON = "snow_or_freeze_risk"
 
 
 def is_snow_free(snow_pct: float) -> bool:
@@ -45,3 +46,46 @@ def qualifies_for_baseline(
         and is_unfrozen(temp_2m_kelvin)
         and is_dry_24h(precip_mm)
     )
+
+
+def active_seed_veto(
+    *,
+    latest_snow_pct: float | None,
+    local_area_snow_pct: float | None = None,
+    latest_temp_2m_kelvin: float | None,
+    latest_precip_mm: float | None = None,
+) -> dict:
+    """Return the public-safe active-read veto state for seeding calls.
+
+    This is stricter than the confidence penalty. If the latest active SAR
+    observation is snowy or frozen, the model may still see a radar change, but
+    the public seeded call is withheld because field operations are not
+    physically credible under those conditions.
+    """
+    parcel_snow_risk = (
+        latest_snow_pct is not None
+        and not is_snow_free(latest_snow_pct)
+    )
+    local_area_snow_risk = (
+        local_area_snow_pct is not None
+        and not is_snow_free(local_area_snow_pct)
+    )
+    snow_risk = parcel_snow_risk or local_area_snow_risk
+    freeze_risk = (
+        latest_temp_2m_kelvin is not None
+        and not is_unfrozen(latest_temp_2m_kelvin)
+    )
+    wet_soil_risk = (
+        latest_precip_mm is not None
+        and not is_dry_24h(latest_precip_mm)
+    )
+    vetoed = snow_risk or freeze_risk
+    return {
+        "vetoed": vetoed,
+        "reason": ACTIVE_SEED_VETO_REASON if vetoed else None,
+        "snow_risk": snow_risk,
+        "parcel_snow_risk": parcel_snow_risk,
+        "local_area_snow_risk": local_area_snow_risk,
+        "freeze_risk": freeze_risk,
+        "wet_soil_risk": wet_soil_risk,
+    }

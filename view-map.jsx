@@ -36,6 +36,9 @@ const PROPERTY_LABEL_LAYER = "monette-property-labels";
 const SELECTED_PARCEL_FILL_LAYER = "monette-selected-parcel-fill";
 const SELECTED_PARCEL_OUTLINE_LAYER = "monette-selected-parcel-outline";
 const SELECTED_PARCEL_SEASON_LAYER = "monette-selected-parcel-season-labels";
+const SELECTED_QUARTER_EVIDENCE_FILL_LAYER = "monette-selected-quarter-evidence-fill";
+const SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER = "monette-selected-quarter-evidence-outline";
+const EMPTY_PARCEL_FILTER = ["==", ["get", "loc"], "__none__"];
 
 // ─── Atlas display modes ───────────────────────────────────────────────────
 // Two modes: "seeding" (SAR change-detection per parcel) and "land-status"
@@ -47,11 +50,21 @@ const SELECTED_PARCEL_SEASON_LAYER = "monette-selected-parcel-season-labels";
 // "land-status" outside that window. Vigor (NDVI) was dropped as a public
 // mode in the homepage redesign 2026-04-29; ndvi_mean stays in the producer
 // pipeline as model evidence and may return as a Seeding overlay in v1.5.
-const ATLAS_MODE_KEY = "monette.atlas.mode";
+const ATLAS_MODE_KEY = "monette.atlas.mode.v2";
 
 const ATLAS_MODES = [
-  { key: "seeding",     label: "Seeding",     description: "SAR change-detection seeding status (2026 season, active Apr–Jun)." },
-  { key: "land-status", label: "Land Status", description: "Ownership status fill — green owned, blue rented, red sold." },
+  {
+    key: "seeding",
+    label: "Seeding Progress",
+    heading: "Seeding progress map",
+    description: "GEE-backed seeding read: green is likely seeded; grey is unseeded or not confident enough to call.",
+  },
+  {
+    key: "land-status",
+    label: "Land Status",
+    heading: "Land status map",
+    description: "Ownership status fill: green owned, blue rented, red sold or sale-leaseback.",
+  },
 ];
 
 function defaultAtlasMode() {
@@ -62,19 +75,10 @@ function defaultAtlasMode() {
   return (mo >= 4 && mo <= 6) ? "seeding" : "land-status";
 }
 
-// Seeding fill color by applicability + seeded status:
-//   active + seeded=true  → green confirmation
-//   active + seeded=false → red not-yet
-//   active + seeded=null  → amber indeterminate
-//   out-of-season / perennial → gray-blue
-//   insufficient_baseline  → medium gray
-//   anything else          → dark gray
-// Codex bwgf1888o post-review fix: previous implementation was flat-color per
-// state regardless of confidence. The spec calls for a confidence-modulated
-// ramp so a 100% seeded parcel reads bolder than a 60% seeded parcel. We
-// linear-interpolate between a "pale" and "bold" color per state, keyed on
-// seeding_confidence (0..100 → 0..1, floored at 0.25 so even very-low
-// confidence calls remain visible rather than near-transparent).
+// Seeding mode is intentionally binary on the public map: green means the
+// GEE/SAR read cleared the seeded threshold; grey means unseeded, uncertain,
+// out-of-season, or not enough baseline. Confidence still modulates the green
+// strength and remains visible in the drawer.
 function _lerpRgb(low, high, t) {
   const r = Math.round(low[0] + (high[0] - low[0]) * t);
   const g = Math.round(low[1] + (high[1] - low[1]) * t);
@@ -85,20 +89,52 @@ function _lerpRgb(low, high, t) {
 function seedingFillColor(applicability, seeded, confidence) {
   if (applicability === "active") {
     const t = Math.max(0.25, Math.min(1, (confidence || 0) / 100));
-    if (seeded === true)  return _lerpRgb([200, 220, 195], [58, 140, 42], t);   // pale-green → bold-green
-    if (seeded === false) return _lerpRgb([220, 195, 190], [192, 57, 43], t);   // pale-red   → bold-red
-    return _lerpRgb([225, 215, 190], [200, 168, 75], t);                         // pale-amber → bold-amber
+    if (seeded === true) return _lerpRgb([174, 205, 165], [58, 140, 42], t);
+    return "#686868";
   }
-  if (applicability === "out-of-season" || applicability === "perennial") return "#5a7a8a";
-  if (applicability === "insufficient_baseline") return "#7a7a7a";
-  return "#4a4a4a";
+  if (applicability === "insufficient_baseline") return "#5f5f5f";
+  if (applicability === "out-of-season" || applicability === "perennial") return "#555d5f";
+  return "#4f4f4f";
 }
 
 const PARCEL_SEEDING_FILL_LAYER = "monette-parcel-seeding-fill";
 const PARCEL_SEEDING_OUTLINE_LAYER = "monette-parcel-seeding-outline-lowqc";
+// Always-on gold outline marking SISP "listed-for-sale" quarters. Sits above
+// the fill in both atlas modes (seeding + land-status) as a for-sale overlay.
+const PARCEL_FORSALE_OUTLINE_LAYER = "monette-parcel-forsale-outline";
+
+// ─── Snow overlay (synoptic prairie snow extent) ──────────────────────────
+// Backed by /snow/manifest.json + /snow/{date}/prairie-snow.png produced by
+// scripts/snow_map.py — MODIS C6.1 NDSI snow cover composited over a 5-day
+// look-back, water masked via JRC Global Surface Water. Overlay is placed
+// BELOW PROPERTY_FILL_LAYER so parcel colors and labels stay readable;
+// raster-opacity 0.55 lets the basemap and snow raster blend through.
+// Snapshot URL changes when the user picks a different date from the
+// Snow Watcher (currently latest-only; date picker = future iteration).
+const SNOW_OVERLAY_SOURCE = "monette-snow-overlay";
+const SNOW_OVERLAY_LAYER = "monette-snow-overlay-raster";
+const SNOW_MANIFEST_URL = "/snow/manifest.json";
+const SNOW_OVERLAY_KEY = "monette.atlas.snow.v1";
+// Synoptic 500m product is meaningless above zoom ~8 (one MODIS pixel
+// covers many parcels). Cap the layer so it auto-hides on close inspection.
+const SNOW_OVERLAY_MAX_ZOOM = 9;
+
+function defaultSnowOverlay() {
+  try {
+    return localStorage.getItem(SNOW_OVERLAY_KEY) === "1";
+  } catch (e) {
+    return false;
+  }
+}
 
 function imageryKey(propId, loc) {
   return `${propId}:${loc}`;
+}
+
+function parcelTitledAcres(props) {
+  const raw = props && (props.titled_ac ?? props.title_acres ?? props.acres ?? props.ac);
+  const n = Number(raw);
+  return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
 function makeBounds() {
@@ -226,6 +262,30 @@ function CurrentLandStatusBar({ status, compact }) {
   );
 }
 
+function SeedingProgressBar({ summary }) {
+  const activeAc = summary && summary.activeAc ? summary.activeAc : 0;
+  const seededAc = summary && summary.seededAc ? summary.seededAc : 0;
+  const pct = activeAc > 0 ? Math.max(0, Math.min(100, Math.round((seededAc / activeAc) * 100))) : 0;
+  return (
+    <div className="atlas-property-seeding" aria-label={`Seeding progress ${pct}%`}>
+      <div className="atlas-property-seeding-head mono">
+        <span>Seeding progress</span>
+        <strong>{activeAc > 0 ? `${pct}%` : "No active read"}</strong>
+      </div>
+      <div className="atlas-property-seeding-track">
+        <span
+          className="atlas-property-seeding-fill"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <div className="atlas-property-seeding-meta mono">
+        <span>{fmtAc(seededAc)} seeded</span>
+        <span>{fmtAc(activeAc)} active read</span>
+      </div>
+    </div>
+  );
+}
+
 const OWNERSHIP_FOCUS_OPTIONS = [
   { key: "all", label: "All" },
   { key: "owned-monette", label: "Monette owned" },
@@ -273,6 +333,29 @@ function escapePopupHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function propertySalePopupHtml(property, saleMeta) {
+  const packageCount = Array.isArray(saleMeta.listings) ? saleMeta.listings.length : 1;
+  const rows = [
+    ["Asking", saleMeta.price],
+    [packageCount > 1 ? "Packages" : "Listing", packageCount > 1 ? `${packageCount} public packages` : "1 public package"],
+    ["Broker acres", saleMeta.listingAc != null ? `${fmt(saleMeta.listingAc)} ac` : null],
+    ["$/acre", saleMeta.pricePerAcCAD != null ? `$${fmt(saleMeta.pricePerAcCAD)}/ac` : null],
+  ].filter(([, value]) => value != null && value !== "");
+  return `
+    <div class="atlas-sale-popup atlas-asking-popup">
+      <div class="atlas-sale-popup-kicker">Hammond Realty asking price</div>
+      <div class="atlas-sale-popup-title">${escapePopupHtml(property.name)}</div>
+      ${rows.map(([label, value], index) => `
+        <div class="atlas-sale-popup-row${index === 0 ? " atlas-sale-popup-row-price" : ""}">
+          <span>${escapePopupHtml(label)}</span>
+          <strong>${escapePopupHtml(value)}</strong>
+        </div>
+      `).join("")}
+      <p>Click for the full listing breakdown and broker links.</p>
+    </div>
+  `;
 }
 
 function feedlotProposalPopupHtml(props) {
@@ -432,6 +515,40 @@ function soldAssetPopupHtml(props) {
   `;
 }
 
+function seedingConfidenceLabel(confidence, vetoReason) {
+  if (vetoReason === "snow_or_freeze_risk") return "Withheld (snow/freeze risk)";
+  const pct = Number(confidence || 0);
+  if (pct >= 80) return `High (${pct}%)`;
+  if (pct >= 50) return `Medium (${pct}%)`;
+  if (pct > 0) return `Low (${pct}%)`;
+  return "Not available";
+}
+
+function seedingParcelPopupHtml(props) {
+  const loc = props.loc || "Selected parcel";
+  const confidence = Number(props.seeding_confidence || 0);
+  const vetoReason = props.seeding_veto_reason || null;
+  const rows = [
+    ["Parcel", loc],
+    ["Acres", fmtAc(Number(props.seeding_acres || props.titled_ac || props.title_acres || 0))],
+    ["Call", seedingCallText(props.seeding_applicability, props.seeding_seeded, confidence, vetoReason)],
+    ["Confidence", seedingConfidenceLabel(confidence, vetoReason)],
+  ];
+
+  return `
+    <div class="atlas-sale-popup atlas-seeding-popup">
+      <div class="atlas-sale-popup-kicker">Seeding confidence</div>
+      <div class="atlas-sale-popup-title">${escapePopupHtml(loc)}</div>
+      ${rows.map(([label, value]) => `
+        <div class="atlas-sale-popup-row">
+          <span>${escapePopupHtml(label)}</span>
+          <strong>${escapePopupHtml(value)}</strong>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
 function operatorRelationshipPopupHtml(props) {
   const isWatchlist = props.confidence === "watchlist";
   const rows = [
@@ -485,6 +602,7 @@ function buildQuarterStateIndex() {
       index[imageryKey(propId, q.loc)] = {
         ownership: st.ownership,
         listing: st.listing,
+        listingProvisional: !!st.listingProvisional,
         seeded: false,
         harvested: false,
         sprayCount: 0,
@@ -569,6 +687,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
     const st = quarterStateIndex[lookupKey] || {
       ownership: "unknown",
       listing: "not-listed",
+      listingProvisional: false,
       seeded: false,
       harvested: false,
       sprayCount: 0,
@@ -582,9 +701,24 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       parcelCount: 0,
       imageryCount: 0,
       missingImageryCount: 0,
+      seedingTotal: 0,
+      seedingActive: 0,
+      seedingSeeded: 0,
+      seedingUnseeded: 0,
+      seedingUncertain: 0,
+      seedingUnavailable: 0,
+      seedingLowQc: 0,
+      seedingTotalAc: 0,
+      seedingActiveAc: 0,
+      seedingSeededAc: 0,
+      seedingUnseededAc: 0,
+      seedingUncertainAc: 0,
+      seedingUnavailableAc: 0,
+      seedingLowQcAc: 0,
       imageFrom: null,
       imageTo: null,
     };
+    const parcelAcres = parcelTitledAcres(props);
 
     if (feature.geometry.type === "Polygon") {
       group.polygons.push(feature.geometry.coordinates);
@@ -606,6 +740,32 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       group.missingImageryCount += 1;
     }
 
+    if (imagery && imagery.status === "ok") {
+      group.seedingTotal += 1;
+      group.seedingTotalAc += parcelAcres;
+      if (imagery.polygon_quality === "low") {
+        group.seedingLowQc += 1;
+        group.seedingLowQcAc += parcelAcres;
+      }
+      if (imagery.seeding_applicability === "active") {
+        group.seedingActive += 1;
+        group.seedingActiveAc += parcelAcres;
+        if (imagery.seeding_seeded === true) {
+          group.seedingSeeded += 1;
+          group.seedingSeededAc += parcelAcres;
+        } else if (imagery.seeding_seeded === false) {
+          group.seedingUnseeded += 1;
+          group.seedingUnseededAc += parcelAcres;
+        } else {
+          group.seedingUncertain += 1;
+          group.seedingUncertainAc += parcelAcres;
+        }
+      } else {
+        group.seedingUnavailable += 1;
+        group.seedingUnavailableAc += parcelAcres;
+      }
+    }
+
     byProperty[propId] = group;
 
     const rumoredSold = rumoredSoldLookup[`${propId}:${loc}`] || null;
@@ -620,6 +780,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         ownership_status: st.ownership,
         ownership_label: (OWN[st.ownership] || OWN.unknown).label,
         listing_status: st.listing,
+        listing_provisional: st.listingProvisional ? 1 : 0,
         status_color: st.statusColor,
         map_fill_color: st.mapColor || mapOwnershipColor(st.ownership),
         seeded: st.seeded ? 1 : 0,
@@ -634,6 +795,9 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         seeding_applicability: imagery ? (imagery.seeding_applicability || null) : null,
         seeding_seeded: imagery ? (imagery.seeding_seeded != null ? imagery.seeding_seeded : null) : null,
         seeding_confidence: imagery ? (imagery.seeding_confidence || 0) : 0,
+        seeding_confidence_withheld: imagery ? (imagery.seeding_confidence_withheld ? 1 : 0) : 0,
+        seeding_veto_reason: imagery ? (imagery.seeding_veto_reason || null) : null,
+        seeding_acres: parcelAcres,
         seeding_fill_color: imagery
           ? seedingFillColor(imagery.seeding_applicability, imagery.seeding_seeded, imagery.seeding_confidence)
           : "#4a4a4a",
@@ -692,6 +856,22 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         totalParcels: property.parcels || 0,
         imageryParcels: 0,
         missingImageryParcels: 0,
+        seedingSummary: {
+          total: 0,
+          active: 0,
+          seeded: 0,
+          unseeded: 0,
+          uncertain: 0,
+          unavailable: 0,
+          lowQc: 0,
+          totalAc: 0,
+          activeAc: 0,
+          seededAc: 0,
+          unseededAc: 0,
+          uncertainAc: 0,
+          unavailableAc: 0,
+          lowQcAc: 0,
+        },
         imageFrom: null,
         imageTo: null,
         geometryStatus: pointOnly ? "point-only" : "synthetic",
@@ -779,11 +959,61 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       totalParcels: property.parcels || 0,
       imageryParcels: group.imageryCount,
       missingImageryParcels: group.missingImageryCount,
+      seedingSummary: {
+        total: group.seedingTotal,
+        active: group.seedingActive,
+        seeded: group.seedingSeeded,
+        unseeded: group.seedingUnseeded,
+        uncertain: group.seedingUncertain,
+        unavailable: group.seedingUnavailable,
+        lowQc: group.seedingLowQc,
+        totalAc: group.seedingTotalAc,
+        activeAc: group.seedingActiveAc,
+        seededAc: group.seedingSeededAc,
+        unseededAc: group.seedingUnseededAc,
+        uncertainAc: group.seedingUncertainAc,
+        unavailableAc: group.seedingUnavailableAc,
+        lowQcAc: group.seedingLowQcAc,
+      },
       imageFrom: group.imageFrom,
       imageTo: group.imageTo,
       geometryStatus: property.geometryStatus || "parcel-mapped",
       bounds: group.bounds,
     };
+  });
+
+  const seedingSummary = Object.values(coverageByProperty).reduce((acc, coverage) => {
+    const s = coverage && coverage.seedingSummary ? coverage.seedingSummary : {};
+    acc.total += s.total || 0;
+    acc.active += s.active || 0;
+    acc.seeded += s.seeded || 0;
+    acc.unseeded += s.unseeded || 0;
+    acc.uncertain += s.uncertain || 0;
+    acc.unavailable += s.unavailable || 0;
+    acc.lowQc += s.lowQc || 0;
+    acc.totalAc += s.totalAc || 0;
+    acc.activeAc += s.activeAc || 0;
+    acc.seededAc += s.seededAc || 0;
+    acc.unseededAc += s.unseededAc || 0;
+    acc.uncertainAc += s.uncertainAc || 0;
+    acc.unavailableAc += s.unavailableAc || 0;
+    acc.lowQcAc += s.lowQcAc || 0;
+    return acc;
+  }, {
+    total: 0,
+    active: 0,
+    seeded: 0,
+    unseeded: 0,
+    uncertain: 0,
+    unavailable: 0,
+    lowQc: 0,
+    totalAc: 0,
+    activeAc: 0,
+    seededAc: 0,
+    unseededAc: 0,
+    uncertainAc: 0,
+    unavailableAc: 0,
+    lowQcAc: 0,
   });
 
   const soldFeatures = (D.soldProperties || [])
@@ -844,6 +1074,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
     soldGeojson: { type: "FeatureCollection", features: soldFeatures },
     operatorRelationshipGeojson: { type: "FeatureCollection", features: operatorRelationshipFeatures },
     coverageByProperty,
+    seedingSummary,
     mappedPropertyCount: propertyFeatures.length,
     pointPropertyCount: pointFeatures.length,
     soldAssetCount: soldFeatures.length,
@@ -894,17 +1125,29 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const [mapError, setMapError] = useState(null);
   const [ownershipFocus, setOwnershipFocus] = useState("all");
   const [atlasMode, setAtlasMode] = useState(defaultAtlasMode);
+  const [snowOverlayEnabled, setSnowOverlayEnabled] = useState(defaultSnowOverlay);
+  const [snowManifest, setSnowManifest] = useState(null);
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const mapDataRef = useRef(null);
   const selectionRef = useRef(sel);
+  const selectedQuarterRef = useRef(selQLoc);
   const ownershipFocusRef = useRef(ownershipFocus);
   const atlasModeRef = useRef(atlasMode);
+  // snowManifestRef keeps installAtlasLayers (which fires on map load /
+  // style.load / idle) able to read the latest manifest snapshot without
+  // re-binding to React state. Mirrors the mapDataRef pattern above.
+  const snowManifestRef = useRef(null);
+  // snowOverlayEnabledRef avoids stale-closure when installAtlasLayers reads
+  // the toggle from the on-mount-captured `reattach`. Mirrors atlasModeRef.
+  const snowOverlayEnabledRef = useRef(snowOverlayEnabled);
   const soldPopupRef = useRef(null);
   const operatorRelationshipPopupRef = useRef(null);
   const rumoredQuarterPopupRef = useRef(null);
   const feedlotProposalPopupRef = useRef(null);
+  const seedingPopupRef = useRef(null);
+  const propertySalePopupRef = useRef(null);
   const pendingFocusRef = useRef(null);
 
   const rollups = useMemo(() => {
@@ -934,12 +1177,55 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     selectionRef.current = sel;
   }, [sel]);
   useEffect(() => {
+    selectedQuarterRef.current = selQLoc;
+  }, [selQLoc]);
+  useEffect(() => {
     ownershipFocusRef.current = ownershipFocus;
   }, [ownershipFocus]);
   useEffect(() => {
     atlasModeRef.current = atlasMode;
     try { localStorage.setItem(ATLAS_MODE_KEY, atlasMode); } catch (e) {}
   }, [atlasMode]);
+
+  // Load /snow/manifest.json once on mount. Silent on 404 (the snow viewer
+  // is opt-in; missing manifest just means the toggle never appears).
+  useEffect(() => {
+    let alive = true;
+    fetch(SNOW_MANIFEST_URL, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((m) => { if (alive && m && m.dates) setSnowManifest(m); })
+      .catch(() => { /* manifest absent; toggle stays hidden */ });
+    return () => { alive = false; };
+  }, []);
+
+  // Mirror manifest into the ref AND retrigger installAtlasLayers so the
+  // raster source/layer get added (or refreshed) once the manifest arrives.
+  useEffect(() => {
+    snowManifestRef.current = snowManifest;
+    const map = mapRef.current;
+    if (map && mapDataRef.current && map.isStyleLoaded && map.isStyleLoaded()) {
+      try { installAtlasLayers(map, mapDataRef.current); } catch (e) {
+        console.warn("snow overlay install:", e);
+      }
+    }
+  }, [snowManifest]);
+
+  // Persist toggle + sync layer visibility + keep ref synced. Layer may not
+  // exist yet on first render (manifest still loading); the install path
+  // handles initial state once it does.
+  useEffect(() => {
+    snowOverlayEnabledRef.current = snowOverlayEnabled;
+    try {
+      localStorage.setItem(SNOW_OVERLAY_KEY, snowOverlayEnabled ? "1" : "0");
+    } catch (e) {}
+    const map = mapRef.current;
+    if (!map || !map.getLayer || !map.getLayer(SNOW_OVERLAY_LAYER)) return;
+    map.setLayoutProperty(
+      SNOW_OVERLAY_LAYER,
+      "visibility",
+      snowOverlayEnabled ? "visible" : "none"
+    );
+  }, [snowOverlayEnabled]);
   const currentStyle = window.MAPBOX_STYLE_STATUS;
   const routeToSelection = (propId, qloc) => {
     if (!onSwitchView) return;
@@ -1000,15 +1286,26 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     const selId = selectionRef.current && selectionRef.current.id
       ? selectionRef.current.id
       : null;
+    const selectedQuarterLoc = selectedQuarterRef.current || null;
     const propertyFilter = selId
       ? ["==", ["get", "id"], selId]
       : EMPTY_PROP_FILTER;
+    const mode = atlasModeRef.current || "land-status";
+    const isSeedingMode = mode === "seeding";
+    const isLandStatusMode = mode === "land-status";
+    if (!isSeedingMode && seedingPopupRef.current) {
+      seedingPopupRef.current.remove();
+      seedingPopupRef.current = null;
+    }
     const focusKey = ownershipFocusRef.current || "all";
-    const focusActive = focusKey !== "all";
+    const focusActive = isLandStatusMode && focusKey !== "all";
     const focusMatch = focusKey === "sold"
       ? ["in", ["get", "ownership_status"], ["literal", ["sold", "sold-rented-back"]]]
       : ["==", ["get", "ownership_status"], focusKey];
     const selectedParcelMatch = ["==", ["get", "property_id"], selId || ""];
+    const selectedQuarterMatch = selId && selectedQuarterLoc
+      ? ["all", ["==", ["get", "property_id"], selId], ["==", ["get", "loc"], selectedQuarterLoc]]
+      : EMPTY_PARCEL_FILTER;
     const selectedFocusedParcelMatch = selId
       ? ["all", selectedParcelMatch, focusMatch]
       : focusMatch;
@@ -1047,43 +1344,44 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       map.setPaintProperty(
         PROPERTY_FILL_LAYER,
         "fill-opacity",
-        selId
-          ? ["case", ["==", ["get", "id"], selId], 0.04, 0.025]
-          : 0.055
+        isSeedingMode
+          ? (selId ? ["case", ["==", ["get", "id"], selId], 0.012, 0.006] : 0.008)
+          : (selId
+            ? ["case", ["==", ["get", "id"], selId], 0.04, 0.025]
+            : 0.055)
       );
     }
 
     if (map.getLayer(PROPERTY_POINT_LAYER)) {
+      map.setFilter(
+        PROPERTY_POINT_LAYER,
+        selId
+          ? ["all", ["==", ["get", "id"], selId], ["==", ["get", "geometry_status"], "point-only"]]
+          : EMPTY_PROP_FILTER
+      );
       map.setPaintProperty(
         PROPERTY_POINT_LAYER,
         "circle-opacity",
-        selId
-          ? ["case", ["==", ["get", "id"], selId], 1, 0.46]
-          : 0.92
+        selId ? 0.82 : 0
       );
       map.setPaintProperty(
         PROPERTY_POINT_LAYER,
         "circle-stroke-width",
-        selId
-          ? ["case", ["==", ["get", "id"], selId], 3.4, 1.4]
-          : 1.8
+        2.8
       );
       map.setPaintProperty(
         PROPERTY_POINT_LAYER,
         "circle-stroke-color",
-        selId
-          ? [
-            "case",
-            ["==", ["get", "id"], selId], "#f1d284",
-            ["==", ["get", "geometry_status"], "point-only"], "#f1d284",
-            "rgba(247,243,234,0.92)",
-          ]
-          : [
-            "case",
-            ["==", ["get", "geometry_status"], "point-only"], "#f1d284",
-            "rgba(247,243,234,0.92)",
-          ]
+        "#f1d284"
       );
+    }
+
+    if (map.getLayer(SOLD_ASSET_LAYER)) {
+      map.setLayoutProperty(SOLD_ASSET_LAYER, "visibility", "none");
+    }
+
+    if (map.getLayer(OPERATOR_RELATIONSHIP_LAYER)) {
+      map.setLayoutProperty(OPERATOR_RELATIONSHIP_LAYER, "visibility", "none");
     }
 
     if (map.getLayer(PROPERTY_OUTLINE_LAYER)) {
@@ -1109,7 +1407,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       map.setPaintProperty(
         SELECTED_PARCEL_FILL_LAYER,
         "fill-opacity",
-        parcelFillOpacity
+        isSeedingMode ? 0.01 : parcelFillOpacity
       );
     }
 
@@ -1117,8 +1415,35 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       map.setFilter(SELECTED_PARCEL_OUTLINE_LAYER, ALL_PARCELS_FILTER);
       map.setPaintProperty(
         SELECTED_PARCEL_OUTLINE_LAYER,
+        "line-color",
+        isSeedingMode ? "rgba(247,243,234,0.34)" : ["get", "map_fill_color"]
+      );
+      map.setPaintProperty(
+        SELECTED_PARCEL_OUTLINE_LAYER,
         "line-opacity",
-        parcelLineOpacity
+        isSeedingMode ? (selId ? ["case", selectedParcelMatch, 0.46, 0.22] : 0.24) : parcelLineOpacity
+      );
+    }
+
+    if (map.getLayer(SELECTED_QUARTER_EVIDENCE_FILL_LAYER)) {
+      map.setFilter(SELECTED_QUARTER_EVIDENCE_FILL_LAYER, selectedQuarterMatch);
+      map.setPaintProperty(
+        SELECTED_QUARTER_EVIDENCE_FILL_LAYER,
+        "fill-opacity",
+        isSeedingMode && selectedQuarterLoc ? [
+          "case",
+          ["==", ["get", "seeding_seeded"], true], 0.24,
+          0.14,
+        ] : 0
+      );
+    }
+
+    if (map.getLayer(SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER)) {
+      map.setFilter(SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER, selectedQuarterMatch);
+      map.setPaintProperty(
+        SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER,
+        "line-opacity",
+        isSeedingMode && selectedQuarterLoc ? 0.92 : 0
       );
     }
 
@@ -1127,22 +1452,24 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       map.setPaintProperty(
         SELECTED_PARCEL_SEASON_LAYER,
         "text-opacity",
-        parcelSeasonOpacity
+        isSeedingMode ? 0 : parcelSeasonOpacity
       );
     }
 
     // Atlas mode: toggle the seeding-fill layer on top of the land-status fill.
     // Vigor (NDVI) was dropped as a public mode in the homepage redesign;
     // the parcel default fill (map_fill_color) is the land-status palette.
-    const mode = atlasModeRef.current || "land-status";
-    const isSeedingMode = mode === "seeding";
-
     if (map.getLayer(PARCEL_SEEDING_FILL_LAYER)) {
       map.setLayoutProperty(PARCEL_SEEDING_FILL_LAYER, "visibility", isSeedingMode ? "visible" : "none");
     }
     if (map.getLayer(PARCEL_SEEDING_OUTLINE_LAYER)) {
       map.setLayoutProperty(PARCEL_SEEDING_OUTLINE_LAYER, "visibility", isSeedingMode ? "visible" : "none");
     }
+    [SOLD_ASSET_LAYER, SOLD_ASSET_LABEL_LAYER, OPERATOR_RELATIONSHIP_LAYER, OPERATOR_RELATIONSHIP_LABEL_LAYER].forEach((layerId) => {
+      if (map.getLayer(layerId)) {
+        map.setLayoutProperty(layerId, "visibility", "none");
+      }
+    });
   };
 
   const safeSyncMapPresentation = (map) => {
@@ -1249,7 +1576,11 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         layout: { visibility: "none" },
         paint: {
           "fill-color": ["get", "seeding_fill_color"],
-          "fill-opacity": 0.72,
+          "fill-opacity": [
+            "case",
+            ["==", ["get", "seeding_seeded"], true], 0.78,
+            0.50,
+          ],
         },
       });
     }
@@ -1275,6 +1606,71 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           ],
           "line-dasharray": [3, 2],
           "line-opacity": 0.75,
+        },
+      });
+    }
+
+    // Official SISP "for sale" overlay — a gold outline on listed-for-sale
+    // quarters, always visible in both atlas modes. Confirmed listings draw
+    // heavier/opaque; "likely" (in-scope, unconfirmed) draw thinner/faint.
+    if (!map.getLayer(PARCEL_FORSALE_OUTLINE_LAYER)) {
+      map.addLayer({
+        id: PARCEL_FORSALE_OUTLINE_LAYER,
+        type: "line",
+        source: PARCEL_SOURCE,
+        filter: ["==", ["get", "listing_status"], "listed-for-sale"],
+        paint: {
+          "line-color": "#b48638", // LIST["listed-for-sale"].color — gold
+          // zoom-interpolate must be top-level; the confirmed/likely (thinner)
+          // distinction lives in each stop's per-feature case output.
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            7, ["case", ["==", ["get", "listing_provisional"], 1], 1.0, 1.6],
+            9, ["case", ["==", ["get", "listing_provisional"], 1], 1.7, 2.6],
+            11, ["case", ["==", ["get", "listing_provisional"], 1], 2.3, 3.6],
+          ],
+          "line-dasharray": [2, 1.5],
+          "line-opacity": [
+            "case",
+            ["==", ["get", "listing_provisional"], 1], 0.5,
+            0.9,
+          ],
+        },
+      });
+    }
+
+    if (!map.getLayer(SELECTED_QUARTER_EVIDENCE_FILL_LAYER)) {
+      map.addLayer({
+        id: SELECTED_QUARTER_EVIDENCE_FILL_LAYER,
+        type: "fill",
+        source: PARCEL_SOURCE,
+        filter: EMPTY_PARCEL_FILTER,
+        paint: {
+          "fill-color": [
+            "case",
+            ["==", ["get", "seeding_seeded"], true], "#3a8c2a",
+            "#f1d284",
+          ],
+          "fill-opacity": 0,
+        },
+      });
+    }
+
+    if (!map.getLayer(SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER)) {
+      map.addLayer({
+        id: SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER,
+        type: "line",
+        source: PARCEL_SOURCE,
+        filter: EMPTY_PARCEL_FILTER,
+        paint: {
+          "line-color": "#f1d284",
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            7, 2.2,
+            9, 3.4,
+            11, 5,
+          ],
+          "line-opacity": 0,
         },
       });
     }
@@ -1331,6 +1727,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         id: PROPERTY_POINT_LAYER,
         type: "circle",
         source: PROPERTY_POINT_SOURCE,
+        filter: EMPTY_PROP_FILTER,
         paint: {
           "circle-color": ["get", "dominant_color"],
           "circle-opacity": 0.92,
@@ -1356,6 +1753,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         id: SOLD_ASSET_LAYER,
         type: "circle",
         source: SOLD_ASSET_SOURCE,
+        layout: { visibility: "none" },
         paint: {
           "circle-color": "#9a3a2a",
           "circle-opacity": 0.9,
@@ -1376,6 +1774,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         id: OPERATOR_RELATIONSHIP_LAYER,
         type: "circle",
         source: OPERATOR_RELATIONSHIP_SOURCE,
+        layout: { visibility: "none" },
         paint: {
           "circle-color": [
             "case",
@@ -1463,6 +1862,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         source: SOLD_ASSET_SOURCE,
         minzoom: 4.2,
         layout: {
+          "visibility": "none",
           "text-field": [
             "format",
             "SOLD ", { "font-scale": 0.72 },
@@ -1491,6 +1891,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         source: OPERATOR_RELATIONSHIP_SOURCE,
         minzoom: 4.8,
         layout: {
+          "visibility": "none",
           "text-field": [
             "format",
             ["get", "marker_label"], { "font-scale": 0.78 },
@@ -1555,6 +1956,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     moveMapLayerBefore(map, PROPERTY_SELECTED_LAYER, SELECTED_PARCEL_FILL_LAYER);
     moveMapLayerToTop(map, PARCEL_SEEDING_FILL_LAYER);
     moveMapLayerToTop(map, PARCEL_SEEDING_OUTLINE_LAYER);
+    moveMapLayerToTop(map, SELECTED_QUARTER_EVIDENCE_FILL_LAYER);
+    moveMapLayerToTop(map, SELECTED_QUARTER_EVIDENCE_OUTLINE_LAYER);
     moveMapLayerToTop(map, SELECTED_PARCEL_OUTLINE_LAYER);
     moveMapLayerToTop(map, SELECTED_PARCEL_SEASON_LAYER);
     moveMapLayerToTop(map, SOLD_ASSET_LAYER);
@@ -1564,6 +1967,55 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
 
     if (!map.__monetteAtlasHandlersInstalled) {
       map.__monetteAtlasHandlersInstalled = true;
+
+      const showPropertySalePopup = (property, lngLat) => {
+        const saleMeta = property && (D.sispByProperty || {})[property.id];
+        if (!saleMeta || saleMeta.status !== "listed" || !saleMeta.price) {
+          if (propertySalePopupRef.current) propertySalePopupRef.current.remove();
+          return;
+        }
+        if (!propertySalePopupRef.current) {
+          propertySalePopupRef.current = new window.mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: "atlas-sale-map-popup atlas-asking-map-popup",
+            offset: 14,
+          });
+        }
+        propertySalePopupRef.current
+          .setLngLat(lngLat)
+          .setHTML(propertySalePopupHtml(property, saleMeta))
+          .addTo(map);
+      };
+
+      const hidePropertySalePopup = () => {
+        if (propertySalePopupRef.current) propertySalePopupRef.current.remove();
+      };
+
+      map.on("mousemove", PARCEL_SEEDING_FILL_LAYER, (e) => {
+        if (atlasModeRef.current !== "seeding") return;
+        const feature = e.features && e.features[0];
+        if (!feature) return;
+        map.getCanvas().style.cursor = "help";
+        if (!seedingPopupRef.current) {
+          seedingPopupRef.current = new window.mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: "atlas-sale-map-popup atlas-seeding-map-popup",
+            offset: 14,
+          });
+        }
+        seedingPopupRef.current
+          .setLngLat(e.lngLat)
+          .setHTML(seedingParcelPopupHtml(feature.properties || {}))
+          .addTo(map);
+      });
+
+      map.on("mouseleave", PARCEL_SEEDING_FILL_LAYER, () => {
+        if (atlasModeRef.current !== "seeding") return;
+        map.getCanvas().style.cursor = "";
+        if (seedingPopupRef.current) seedingPopupRef.current.remove();
+      });
 
       map.on("mousemove", SELECTED_PARCEL_FILL_LAYER, (e) => {
         map.getCanvas().style.cursor = "pointer";
@@ -1627,16 +2079,17 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       });
 
       map.on("mousemove", PROPERTY_FILL_LAYER, (e) => {
-        if (selectionRef.current) return;
         const feature = e.features && e.features[0];
         if (!feature) return;
         const property = propertyById[feature.properties.id];
-        setHoverProperty(property || null);
+        if (!selectionRef.current) setHoverProperty(property || null);
+        showPropertySalePopup(property, e.lngLat);
         map.getCanvas().style.cursor = "pointer";
       });
 
       map.on("mouseleave", PROPERTY_FILL_LAYER, () => {
         if (!selectionRef.current) setHoverProperty(null);
+        hidePropertySalePopup();
         map.getCanvas().style.cursor = "";
       });
 
@@ -1649,22 +2102,23 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         if (!property) return;
         setSel(property);
         setSelQLoc(null);
-        setDrawerOpen(false);
+        setDrawerOpen(true);
         routeToSelection(property.id, null);
         focusProperty(property.id, 1000);
       });
 
       map.on("mousemove", PROPERTY_POINT_LAYER, (e) => {
-        if (selectionRef.current) return;
         const feature = e.features && e.features[0];
         if (!feature) return;
         const property = propertyById[feature.properties.id];
-        setHoverProperty(property || null);
+        if (!selectionRef.current) setHoverProperty(property || null);
+        showPropertySalePopup(property, e.lngLat);
         map.getCanvas().style.cursor = "pointer";
       });
 
       map.on("mouseleave", PROPERTY_POINT_LAYER, () => {
         if (!selectionRef.current) setHoverProperty(null);
+        hidePropertySalePopup();
         map.getCanvas().style.cursor = "";
       });
 
@@ -1675,7 +2129,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         if (!property) return;
         setSel(property);
         setSelQLoc(null);
-        setDrawerOpen(false);
+        setDrawerOpen(true);
         routeToSelection(property.id, null);
         focusProperty(property.id, 1000);
       });
@@ -1736,6 +2190,71 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         map.getCanvas().style.cursor = "";
         if (soldPopupRef.current) soldPopupRef.current.remove();
       });
+    }
+
+    // Snow overlay: idempotent. Pulls latest snapshot from manifest ref,
+    // adds image source + raster layer BELOW PROPERTY_FILL_LAYER so parcel
+    // fills remain readable above. Visibility honors snowOverlayEnabledRef
+    // (synced from React state). Auto-hides above SNOW_OVERLAY_MAX_ZOOM
+    // because the 500m MODIS pixel is meaningless at parcel zoom levels.
+    const snowMan = snowManifestRef.current;
+    const snowDates = snowMan && snowMan.dates
+      ? Object.keys(snowMan.dates).sort().reverse()
+      : [];
+    if (snowDates.length) {
+      const latest = snowDates[0];
+      const entry = snowMan.dates[latest];
+      const prairie = entry && entry.pr;
+      if (prairie && prairie.bounds) {
+        const b = prairie.bounds;
+        const url = `/snow/${latest}/prairie-snow.png`;
+        // Mapbox image source coordinates expect [TL, TR, BR, BL] in lng/lat.
+        const corners = [
+          [b.west, b.north],
+          [b.east, b.north],
+          [b.east, b.south],
+          [b.west, b.south],
+        ];
+        try {
+          if (!map.getSource(SNOW_OVERLAY_SOURCE)) {
+            map.addSource(SNOW_OVERLAY_SOURCE, {
+              type: "image",
+              url,
+              coordinates: corners,
+            });
+          } else {
+            const src = map.getSource(SNOW_OVERLAY_SOURCE);
+            // updateImage() has been on ImageSource since mapbox-gl 1.10
+            // (early 2020). Always call it when the source already exists —
+            // the previous `src.url !== url` guard was buggy (ImageSource has
+            // no public `.url` field, so the check was always truthy and we
+            // re-uploaded every reattach). Codex ab24cb625ed84faa0 WARN.
+            if (typeof src.updateImage === "function") {
+              src.updateImage({ url, coordinates: corners });
+            }
+          }
+          if (!map.getLayer(SNOW_OVERLAY_LAYER)) {
+            const beforeId = map.getLayer(PROPERTY_FILL_LAYER)
+              ? PROPERTY_FILL_LAYER
+              : undefined;
+            map.addLayer({
+              id: SNOW_OVERLAY_LAYER,
+              type: "raster",
+              source: SNOW_OVERLAY_SOURCE,
+              maxzoom: SNOW_OVERLAY_MAX_ZOOM,
+              layout: {
+                visibility: snowOverlayEnabledRef.current ? "visible" : "none",
+              },
+              // 0.75 = snow reads strongly on bare-ground areas while parcel
+              // fills (green owned / red sold) still bleed through where they
+              // overlap. At >= 0.85 parcels disappear under the raster.
+              paint: { "raster-opacity": 0.75 },
+            }, beforeId);
+          }
+        } catch (err) {
+          console.warn("snow overlay setup:", err);
+        }
+      }
     }
 
     syncMapPresentation(map);
@@ -1851,6 +2370,14 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         feedlotProposalPopupRef.current.remove();
         feedlotProposalPopupRef.current = null;
       }
+      if (seedingPopupRef.current) {
+        seedingPopupRef.current.remove();
+        seedingPopupRef.current = null;
+      }
+      if (propertySalePopupRef.current) {
+        propertySalePopupRef.current.remove();
+        propertySalePopupRef.current = null;
+      }
       map.remove();
       mapRef.current = null;
       delete window.MONETTE_MAP;
@@ -1908,7 +2435,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   useEffect(() => {
     const map = mapRef.current;
     if (map) safeSyncMapPresentation(map);
-  }, [mapData, sel, ownershipFocus, atlasMode]);
+  }, [mapData, sel, selQLoc, ownershipFocus, atlasMode]);
 
   useEffect(() => {
     if (!sel) {
@@ -1933,7 +2460,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     pendingFocusRef.current = { propId: property.id, duration: 900 };
     setSel(property);
     setSelQLoc(forcedQuarter || null);
-    setDrawerOpen(!!forcedQuarter);
+    const saleMeta = (D.sispByProperty || {})[property.id];
+    setDrawerOpen(!!forcedQuarter || !!(saleMeta && saleMeta.status === "listed"));
     focusProperty(property.id, 900);
   }, [forcedQuarter, forcedSelect, propertyById]);
 
@@ -1955,50 +2483,72 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const activeMode = ATLAS_MODES.find((m) => m.key === atlasMode) || ATLAS_MODES[0];
   const hoverOrSel = hoverProperty || sel;
   const coverageByProperty = mapData && mapData.coverageByProperty ? mapData.coverageByProperty : {};
-  const activeCoverage = hoverOrSel ? coverageByProperty[hoverOrSel.id] : null;
   const selectedCoverage = sel ? coverageByProperty[sel.id] : null;
   const hasSelectedGeometry = !!(selectedCoverage && selectedCoverage.hasRealGeometry);
   const portfolioMappedCount = mapData ? mapData.mappedPropertyCount : 0;
   const portfolioParcelCount = mapData ? mapData.mappedParcelCount : 0;
+  const portfolioSeedingSummary = mapData && mapData.seedingSummary ? mapData.seedingSummary : null;
+  const selectedSeedingSummary = selectedCoverage && selectedCoverage.seedingSummary ? selectedCoverage.seedingSummary : null;
+  const activeSeedingSummary = sel ? selectedSeedingSummary : portfolioSeedingSummary;
+  const selectedParcelImagery = sel && selQLoc
+    ? ((window.MONETTE_IMAGERY && window.MONETTE_IMAGERY.parcels) || {})[imageryKey(sel.id, selQLoc)] || null
+    : null;
+  const selectedQuarterRow = sel && selQLoc
+    ? ((Q && Q[sel.id]) || []).find((q) => q.loc === selQLoc)
+    : null;
+  const selectedParcelAcres = selectedQuarterRow && Number.isFinite(Number(selectedQuarterRow.ac))
+    ? Number(selectedQuarterRow.ac)
+    : 0;
+  const selectedParcelEvidenceRows = seedingEvidenceRows(selectedParcelImagery);
+  const selectedParcelSidebarRows = selectedParcelAcres
+    ? [["Parcel acres", fmtAc(selectedParcelAcres)], ...selectedParcelEvidenceRows]
+    : selectedParcelEvidenceRows;
   const operatorRelationships = D.operatorRelationships || [];
   const operatorRelationshipCount = mapData
     ? mapData.operatorRelationshipCount
     : operatorRelationships.length;
   const portfolioRollup = useMemo(() => aggregateRollups(rollups), [rollups]);
+  const publicSales = getHammondSaleSummary();
+  const selectedSaleMeta = sel ? (D.sispByProperty || {})[sel.id] || null : null;
+  const bindingBidLabel = D.sisp && D.sisp.bindingBidDeadline
+    ? new Date(`${D.sisp.bindingBidDeadline}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })
+    : null;
   const activeRollup = hoverOrSel ? rollups[hoverOrSel.id] : portfolioRollup;
   const activeLeadLabel = hoverOrSel ? propertyDisplayLabel(hoverOrSel, activeRollup) : dominantOwnershipLabel(activeRollup);
   const activeLeadColor = hoverOrSel ? propertyDisplayColor(hoverOrSel, activeRollup) : dominantOwnershipColor(activeRollup);
   const ownershipFocusInfo = ownershipFocusMeta(ownershipFocus);
-
-  // Codex bvqyinxv4 Q1 deep-link rule: bare #map shows the HomeHero stats
-  // band above the atlas; #map/{property} (forcedSelect non-null) suppresses
-  // the hero so shared property links land directly on the map.
-  const showHomeHero = !forcedSelect;
+  const pointOnlyProperties = mapData
+    ? D.properties.filter((property) => {
+      const coverage = coverageByProperty[property.id];
+      return coverage && coverage.pointOnly;
+    })
+    : [];
+  const selectProperty = (property, openDrawer = true) => {
+    if (!property) return;
+    setSel(property);
+    setSelQLoc(null);
+    setDrawerOpen(openDrawer);
+    routeToSelection(property.id, null);
+    focusProperty(property.id, 900);
+  };
 
   return (
     <div style={{ minHeight: "100%", background: "var(--night)", color: "var(--paper)", fontSize: 13 }}>
-      {showHomeHero && (
-        <HomeHero
-          onSwitchView={onSwitchView}
-          onOpenSubmit={onOpenHeadlineForm}
-        />
-      )}
       <div className="atlas-toolbar">
         <div>
-          <div className="serif atlas-toolbar-title">Monette Status Atlas</div>
+          <div className="serif atlas-toolbar-title">Monette Land Atlas</div>
           <div className="atlas-toolbar-subtitle mono">
-            Court-file assets, mapped parcel blocks, point-only gaps, and sold markers separated on purpose.
+            Two map views: seeding progress and land status.
           </div>
         </div>
         <div className="atlas-toolbar-status" aria-label="Portfolio status summary">
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-owned mono">Owned {portfolioRollup.owned}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-rented mono">Rented {portfolioRollup.rented}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-sold mono">Sold {portfolioRollup.sold}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">For sale {portfolioRollup.forSale}</span>
+          <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">{publicSales.listingCount} public listings</span>
+          <span className="atlas-toolbar-pill atlas-toolbar-pill-asking mono">{fmtAskingCompact(publicSales.totalAskingCAD)} asking</span>
+          {bindingBidLabel && <span className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono">Bids due {bindingBidLabel}</span>}
         </div>
       </div>
 
-      <div className="atlas-grid atlas-shell" style={{ display: "grid", gridTemplateColumns: "320px 1fr 360px" }}>
+      <div className="atlas-grid atlas-shell" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px" }}>
         <div className="scroll atlas-rail atlas-side" style={{ overflowY: "auto" }}>
           <div className="atlas-side-heading">Property status board</div>
           <div className="atlas-side-note">
@@ -2009,6 +2559,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
             const active = sel && sel.id === property.id;
             const rollup = rollups[property.id];
             const coverage = coverageByProperty[property.id];
+            const saleMeta = (D.sispByProperty || {})[property.id] || null;
+            const propertySeedingSummary = coverage && coverage.seedingSummary ? coverage.seedingSummary : null;
             return (
               <button
                 key={property.id}
@@ -2048,21 +2600,28 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   ) : (
                     <span className="atlas-chip atlas-chip-muted">Synthetic rows</span>
                   )}
-                </div>
-                <div className="atlas-property-bar">
-                  {property.currentLandStatus ? (
-                    <CurrentLandStatusBar status={property.currentLandStatus} compact />
-                  ) : (
-                    [
-                      ["owned", rollup.owned, OWN["owned-monette"].color],
-                      ["rented", rollup.rented, OWN["rented-monette"].color],
-                      ["sold", rollup.sold, OWN.sold.color],
-                      ["unknown", rollup.unknown, OWN.unknown.color],
-                    ].map(([key, value, color]) =>
-                      value ? <span key={key} style={{ width: `${(value / (rollup.total || 1)) * 100}%`, background: color }} /> : null
-                    )
+                  {saleMeta && saleMeta.status === "listed" && saleMeta.price && (
+                    <span className="atlas-chip atlas-chip-price">{saleMeta.price}</span>
                   )}
                 </div>
+                {atlasMode === "seeding" && propertySeedingSummary ? (
+                  <SeedingProgressBar summary={propertySeedingSummary} />
+                ) : (
+                  <div className="atlas-property-bar">
+                    {property.currentLandStatus ? (
+                      <CurrentLandStatusBar status={property.currentLandStatus} compact />
+                    ) : (
+                      [
+                        ["owned", rollup.owned, OWN["owned-monette"].color],
+                        ["rented", rollup.rented, OWN["rented-monette"].color],
+                        ["sold", rollup.sold, OWN.sold.color],
+                        ["unknown", rollup.unknown, OWN.unknown.color],
+                      ].map(([key, value, color]) =>
+                        value ? <span key={key} style={{ width: `${(value / (rollup.total || 1)) * 100}%`, background: color }} /> : null
+                      )
+                    )}
+                  </div>
+                )}
               </button>
             );
           })}
@@ -2096,12 +2655,6 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
               </div>
             )}
 
-            <div className="atlas-map-badge mono">
-              {mapData
-                ? `${D.properties.length} records · ${portfolioMappedCount} mapped · ${mapData.pointPropertyCount} point-only · ${operatorRelationshipCount} operator links · ${fmt(portfolioParcelCount)} rows`
-                : "Loading parcel geometry"}
-            </div>
-
             <div className="atlas-mode-pills mono" aria-label="Atlas display mode">
               {ATLAS_MODES.map((m) => (
                 <button
@@ -2114,223 +2667,33 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   {m.label}
                 </button>
               ))}
+              {snowManifest && (() => {
+                const dates = Object.keys(snowManifest.dates || {}).sort().reverse();
+                const latest = dates[0] || null;
+                if (!latest) return null;
+                return (
+                  <>
+                    <span className="atlas-pill-divider" aria-hidden="true">|</span>
+                    <button
+                      key="snow-overlay"
+                      type="button"
+                      title={`Toggle prairie snow overlay (latest: ${latest}). Auto-hides above zoom ${SNOW_OVERLAY_MAX_ZOOM}.`}
+                      className={`atlas-mode-pill atlas-snow-toggle${snowOverlayEnabled ? " is-active" : ""}`}
+                      aria-pressed={snowOverlayEnabled}
+                      onClick={() => setSnowOverlayEnabled((v) => !v)}
+                    >
+                      {snowOverlayEnabled ? `Snow · ${latest.slice(5)}` : "Snow"}
+                    </button>
+                  </>
+                );
+              })()}
             </div>
-
-            <div className={`atlas-map-legend-card${hoverOrSel ? " atlas-map-legend-card-offset" : ""}`} aria-label="Map legend">
-              <div className="mono atlas-map-legend-title">
-                {atlasMode === "seeding" ? "Seeding mode legend" : "Land status legend"}
-              </div>
-              {atlasMode === "seeding" ? (
-                <>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#3a8c2a" }} />
-                    <span>Confirmed seeded (SAR change-detection)</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#c0392b" }} />
-                    <span>Not yet seeded as of last obs date</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#c8a84b" }} />
-                    <span>Indeterminate — active window, no signal</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#5a7a8a" }} />
-                    <span>Out of season or perennial crop</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#7a7a7a" }} />
-                    <span>Insufficient baseline — SAR result pending</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch" style={{ background: "#e0c060", border: "1px dashed #e0c060" }} />
-                    <span>Dashed outline — low polygon quality flag</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-owned" />
-                    <span>Green hue - Monette-owned land</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-rented" />
-                    <span>Blue hue - Monette-rented land</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-sale-fill" />
-                    <span>Red hue - sold or sale-leaseback land</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-point" />
-                    <span>Point-only court-file asset - discuss evidence first</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-operator">OP</span>
-                    <span>Gold OP marker - partner-owned / co-managed relationship</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-sold" />
-                    <span>Red sold marker - completed sale, not active inventory</span>
-                  </div>
-                  <div className="atlas-map-legend-row">
-                    <span className="atlas-map-legend-swatch atlas-map-legend-selected" />
-                    <span>Gold ring - selected record</span>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {hoverOrSel && (
-              <div className="atlas-summary-card">
-                <div className="atlas-summary-ribbon mono">
-                  Public status view
-                </div>
-                <div className="atlas-summary-kicker mono">
-                  {hoverOrSel.province} · {hoverOrSel.region}
-                </div>
-                <div className="serif atlas-summary-title">{hoverOrSel.name}</div>
-                <div className="atlas-summary-lead mono" style={{ color: activeLeadColor }}>
-                  {activeLeadLabel}
-                </div>
-                <div className="atlas-summary-bar">
-                  {hoverOrSel.currentLandStatus
-                    ? <CurrentLandStatusBar status={hoverOrSel.currentLandStatus} />
-                    : <RollupBar rollup={activeRollup} />}
-                </div>
-                <div className="atlas-focus-control mono" aria-label="Ownership focus">
-                  <span>Focus</span>
-                  {OWNERSHIP_FOCUS_OPTIONS.map((option) => {
-                    const active = ownershipFocus === option.key;
-                    const meta = ownershipFocusMeta(option.key);
-                    return (
-                      <button
-                        key={option.key}
-                        type="button"
-                        className={active ? "is-active" : ""}
-                        style={active ? { borderColor: meta.color, color: meta.color } : null}
-                        onClick={() => setOwnershipFocus(option.key)}
-                      >
-                        {option.label}
-                      </button>
-                    );
-                  })}
-                </div>
-                {hoverOrSel.currentLandStatus && ownershipFocus === "rented-monette" && (
-                  <div className="atlas-focus-note mono">
-                    Rented acres in this block are assumed from the baseline and currently unmapped; no blue quarter shapes can be drawn until legal descriptions are identified.
-                  </div>
-                )}
-                <div className="atlas-summary-grid mono">
-                  <span>Titled</span>
-                  <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.titled)}</span>
-                  <span>Titles</span>
-                  <span style={{ textAlign: "right" }}>{hoverOrSel.parcels}</span>
-                  <span>Map shapes</span>
-                  <span style={{ textAlign: "right" }}>
-                    {activeCoverage && activeCoverage.hasRealGeometry
-                      ? fmt(activeCoverage.mappedParcels)
-                      : activeCoverage && activeCoverage.pointOnly
-                        ? "Point only"
-                        : "Synthetic"}
-                  </span>
-                  <span>Lead status</span>
-                  <span style={{ textAlign: "right", color: activeLeadColor }}>{activeLeadLabel}</span>
-                  <span>For sale</span>
-                  <span style={{ textAlign: "right" }}>{activeRollup ? activeRollup.forSale || 0 : 0}</span>
-                  {hoverOrSel.currentLandStatus && (
-                    <>
-                      <span style={{ gridColumn: "1 / -1", marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--mute)" }}>
-                        Current working status
-                      </span>
-                      <span>Monette-owned current</span>
-                      <span style={{ textAlign: "right", color: OWN["owned-monette"].color }}>{fmt(hoverOrSel.currentLandStatus.mappedOwnedAc || 0)}</span>
-                      {hoverOrSel.currentLandStatus.soldUnlocatedAc ? (
-                        <>
-                          <span>Sold dot / unlocated</span>
-                          <span style={{ textAlign: "right", color: OWN.sold.color }}>{fmt(hoverOrSel.currentLandStatus.soldUnlocatedAc)}</span>
-                        </>
-                      ) : null}
-                      <span>Assumed rented/unmapped</span>
-                      <span style={{ textAlign: "right", color: OWN["rented-monette"].color }}>{fmt(hoverOrSel.currentLandStatus.assumedRentedUnmappedAc || 0)}</span>
-                    </>
-                  )}
-                  {hoverOrSel.propertySummary && (
-                    <>
-                      <span style={{ gridColumn: "1 / -1", marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--mute)" }}>
-                        Monette Property Summary · {hoverOrSel.propertySummary.rmArea || ""}
-                      </span>
-                      <span>Farmed total</span>
-                      <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.propertySummary.farmedAc)}</span>
-                      <span>PS owned</span>
-                      <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.propertySummary.ownedAc)}</span>
-                      <span>PS rented</span>
-                      <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.propertySummary.rentedAc)}</span>
-                      {hoverOrSel.propertySummary.totalValue ? (
-                        <>
-                          <span>Total value</span>
-                          <span style={{ textAlign: "right" }}>${(hoverOrSel.propertySummary.totalValue / 1e6).toFixed(1)}M</span>
-                        </>
-                      ) : null}
-                      {hoverOrSel.propertySummary.unmappedAc ? (
-                        <>
-                          <span style={{ color: "#9a3a2a", fontWeight: 600 }}>Unmapped acres</span>
-                          <span style={{ textAlign: "right", color: "#9a3a2a", fontWeight: 600 }}>{fmt(hoverOrSel.propertySummary.unmappedAc)}</span>
-                        </>
-                      ) : null}
-                    </>
-                  )}
-                  {hoverOrSel.tender && (
-                    <>
-                      <span style={{ gridColumn: "1 / -1", marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--mute)" }}>
-                        Tender package · {hoverOrSel.tender.deadline || "deadline pending"}
-                      </span>
-                      <span>Tender owned</span>
-                      <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.tender.ownedAc)}</span>
-                      <span>Tender rented</span>
-                      <span style={{ textAlign: "right" }}>{fmt(hoverOrSel.tender.rentedAc)}</span>
-                      {hoverOrSel.tender.unmappedAc ? (
-                        <>
-                          <span style={{ color: "#b48638" }}>Unmapped rented</span>
-                          <span style={{ textAlign: "right", color: "#b48638" }}>{fmt(hoverOrSel.tender.unmappedAc)}</span>
-                        </>
-                      ) : null}
-                    </>
-                  )}
-                </div>
-                {hoverOrSel.propertySummary && hoverOrSel.propertySummary.note && (
-                  <div className="mono" style={{ marginTop: 10, fontSize: 10, lineHeight: 1.5, color: "var(--ink-2)", padding: "8px 10px", background: "rgba(78,106,48,0.08)", borderLeft: "2px solid #4e6a30" }}>
-                    {hoverOrSel.propertySummary.note}
-                  </div>
-                )}
-                {hoverOrSel.currentLandStatus && hoverOrSel.currentLandStatus.note && (
-                  <div className="mono" style={{ marginTop: 10, fontSize: 10, lineHeight: 1.5, color: "var(--ink-2)", padding: "8px 10px", background: "rgba(180,134,56,0.10)", borderLeft: "2px solid #b48638" }}>
-                    {hoverOrSel.currentLandStatus.note}
-                  </div>
-                )}
-                {hoverOrSel.tender && hoverOrSel.tender.note && (
-                  <div className="mono" style={{ marginTop: 10, fontSize: 10, lineHeight: 1.5, color: "var(--ink-2)", padding: "8px 10px", background: "rgba(180,134,56,0.10)", borderLeft: "2px solid #b48638" }}>
-                    {hoverOrSel.tender.note}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {!sel && (
-              <div className="atlas-map-note mono">
-                Select a land block to shift from portfolio scan to property status focus.
-              </div>
-            )}
 
             {sel && !hasSelectedGeometry && (
               <div className="atlas-map-note mono">
                 {sel.name} is not parcel-mapped yet. The marker is a court-file location cue, not a surveyed boundary.
               </div>
             )}
-
-            <div className="atlas-map-note atlas-map-note-right mono">
-              Hover sold red dots for buyer, phase, acres, and sale price notes.
-            </div>
 
             {mapError && (
               <div className="atlas-map-error mono">
@@ -2344,48 +2707,93 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           <details>
             <summary className="mono">Legend and trust note</summary>
             <div className="atlas-mobile-guide-body">
+              {atlasMode === "seeding" ? (
+                <>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: "#3a8c2a" }} />
+                    <span>Green parcels are likely seeded.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: "#686868" }} />
+                    <span>Grey parcels are unseeded, uncertain, or outside the active read.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch atlas-swatch-lowqc" />
+                    <span>Dashed outline means low polygon quality.</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["owned-monette"].color }} />
+                    <span>Green blocks are still Monette-owned.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["rented-monette"].color }} />
+                    <span>Blue blocks are still Monette-rented.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
+                    <span>Red blocks are sold or sale-leaseback.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
+                    <span>Tan quarter outlines are returned to landlord.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch atlas-swatch-point" />
+                    <span>Point-only assets stay in the property selector until geometry is verified.</span>
+                  </div>
+                </>
+              )}
               <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["owned-monette"].color }} />
-                <span>Green blocks are still Monette-owned.</span>
+                <span className="atlas-swatch" style={{ background: "transparent", border: "1.5px dashed #b48638" }} />
+                <span>Gold outline = officially for sale via the FTI SISP (faint = in scope, listing pending).</span>
               </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["rented-monette"].color }} />
-                <span>Blue blocks are still Monette-rented.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
-                <span>Red blocks are sold or sale-leaseback.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
-                <span>Tan quarter outlines are returned to landlord.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-point" />
-                <span>Open circles are court-file assets that need parcel evidence first.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-operator">OP</span>
-                <span>Gold OP markers are partner-owned or co-managed operator relationships.</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-sold-dot" />
-                <span>Red dots are known historical sales, not active inventory.</span>
-              </div>
-              <p>
-                This mobile atlas exposes quarter status only where mapped geometry exists.
-              </p>
             </div>
           </details>
         </div>
 
         <div className="atlas-feed atlas-side">
-          <div className="atlas-side-heading">Status guide</div>
+          <div className="atlas-side-heading">Map view</div>
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">{activeMode.heading}</div>
             <div className="atlas-side-note" style={{ marginTop: 6 }}>
-              {sel ? activeMode.description : "Start at the portfolio level, then drill into one property at a time. This screen is built to communicate pressure and disposition, not quarter-grade geometry."}
+              {activeMode.description}
             </div>
+          </div>
+
+          <div className="atlas-panel-block atlas-property-jump">
+            <label className="mono atlas-panel-kicker" htmlFor="atlas-property-jump">Jump to property</label>
+            <select
+              id="atlas-property-jump"
+              className="atlas-property-select mono"
+              value={sel ? sel.id : ""}
+              onChange={(event) => {
+                const property = propertyById[event.target.value];
+                if (property) selectProperty(property, true);
+              }}
+            >
+              <option value="">Portfolio overview</option>
+              {D.properties.map((property) => {
+                const coverage = coverageByProperty[property.id];
+                const suffix = coverage && coverage.hasRealGeometry
+                  ? ` - ${fmt(coverage.mappedParcels)} shapes`
+                  : coverage && coverage.pointOnly
+                    ? " - point-only"
+                    : " - synthetic";
+                return (
+                  <option key={property.id} value={property.id}>
+                    {property.name}{suffix}
+                  </option>
+                );
+              })}
+            </select>
+            {pointOnlyProperties.length > 0 && (
+              <div className="atlas-pointonly-note mono">
+                {pointOnlyProperties.length} point-only records are kept in this selector instead of pinned across the map.
+              </div>
+            )}
           </div>
 
           <div className="atlas-panel-block">
@@ -2393,8 +2801,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
             {sel ? (
               <>
                 <div className="serif atlas-panel-title">{sel.name}</div>
-                <div className="atlas-panel-lead mono" style={{ color: propertyDisplayColor(sel, rollups[sel.id]) }}>
-                  {propertyDisplayLabel(sel, rollups[sel.id])}
+                <div
+                  className="atlas-panel-lead mono"
+                  style={{ color: selectedSaleMeta && selectedSaleMeta.status === "listed" ? "#b48638" : propertyDisplayColor(sel, rollups[sel.id]) }}
+                >
+                  {selectedSaleMeta && selectedSaleMeta.status === "listed"
+                    ? "Officially for sale"
+                    : propertyDisplayLabel(sel, rollups[sel.id])}
                 </div>
                 <div className="atlas-panel-rollup">
                   {sel.currentLandStatus
@@ -2415,7 +2828,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                         : "Synthetic"}
                   </span>
                   <span>For sale</span>
-                  <span>{rollups[sel.id] ? rollups[sel.id].forSale || 0 : 0}</span>
+                  <span>
+                    {rollups[sel.id] && rollups[sel.id].forSale
+                      ? rollups[sel.id].forSale
+                      : selectedSaleMeta && selectedSaleMeta.status === "listed"
+                        ? `${Array.isArray(selectedSaleMeta.listings) ? selectedSaleMeta.listings.length : 1} pkg`
+                        : 0}
+                  </span>
                   <span>For rent</span>
                   <span>{rollups[sel.id] ? rollups[sel.id].forRent || 0 : 0}</span>
                   {sel.currentLandStatus && (
@@ -2458,35 +2877,91 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 </div>
               </>
             )}
-            <div className="atlas-panel-focus mono">
-              <span>Map focus: <strong style={{ color: ownershipFocusInfo.color }}>{ownershipFocusInfo.label}</strong></span>
-              <div>
-                {OWNERSHIP_FOCUS_OPTIONS.map((option) => {
-                  const active = ownershipFocus === option.key;
-                  const meta = ownershipFocusMeta(option.key);
-                  return (
-                    <button
-                      key={option.key}
-                      type="button"
-                      className={active ? "is-active" : ""}
-                      style={active ? { borderColor: meta.color, color: meta.color } : null}
-                      onClick={() => setOwnershipFocus(option.key)}
-                    >
-                      {option.label}
-                    </button>
-                  );
-                })}
+            {atlasMode === "seeding" && activeSeedingSummary && (
+              <div className="atlas-panel-stats mono atlas-seeding-stats">
+                <span>Likely seeded acres</span>
+                <span style={{ color: "#a8e090" }}>{fmtAc(activeSeedingSummary.seededAc || 0)}</span>
+                <span>No confident call acres</span>
+                <span>{fmtAc((activeSeedingSummary.unseededAc || 0) + (activeSeedingSummary.uncertainAc || 0) + (activeSeedingSummary.unavailableAc || 0))}</span>
+                <span>GEE-read acres</span>
+                <span>{fmtAc(activeSeedingSummary.totalAc || 0)}</span>
+                <span>Active GEE-read acres</span>
+                <span>{fmtAc(activeSeedingSummary.activeAc || 0)}</span>
+                <span>Likely seeded parcels</span>
+                <span style={{ color: "#a8e090" }}>{activeSeedingSummary.seeded || 0}</span>
+                <span>Low-QC acres</span>
+                <span>{fmtAc(activeSeedingSummary.lowQcAc || 0)}</span>
               </div>
-              {sel && sel.currentLandStatus && ownershipFocus === "rented-monette" && (
-                <em>Rented acres are unmapped here until LSDs / quarter descriptions are identified.</em>
-              )}
-            </div>
+            )}
+            {atlasMode === "seeding" && sel && selQLoc && (
+              <div className="atlas-selected-evidence">
+                <div className="atlas-selected-evidence-head">
+                  <div className="mono atlas-selected-evidence-kicker">Selected parcel read</div>
+                  <button
+                    type="button"
+                    className="atlas-selected-evidence-close"
+                    aria-label="Close selected parcel read"
+                    title="Close selected parcel read"
+                    onClick={() => {
+                      setSelQLoc(null);
+                      routeToSelection(sel.id, null);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+                <div className="atlas-selected-evidence-title">{selQLoc}</div>
+                <div className="atlas-side-note" style={{ marginTop: 5 }}>
+                  Public read is limited to status and confidence.
+                </div>
+                {selectedParcelSidebarRows.length > 0 ? (
+                  <div className="atlas-selected-evidence-grid mono">
+                    {selectedParcelSidebarRows.map(([label, value]) => (
+                      <React.Fragment key={label}>
+                        <span>{label}</span>
+                        <strong>{value}</strong>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="atlas-side-note" style={{ marginTop: 8 }}>
+                    No GEE parcel record is attached to this selected shape yet.
+                  </div>
+                )}
+              </div>
+            )}
+            {atlasMode === "land-status" && (
+              <div className="atlas-panel-focus mono">
+                <span>Map focus: <strong style={{ color: ownershipFocusInfo.color }}>{ownershipFocusInfo.label}</strong></span>
+                <div>
+                  {OWNERSHIP_FOCUS_OPTIONS.map((option) => {
+                    const active = ownershipFocus === option.key;
+                    const meta = ownershipFocusMeta(option.key);
+                    return (
+                      <button
+                        key={option.key}
+                        type="button"
+                        className={active ? "is-active" : ""}
+                        style={active ? { borderColor: meta.color, color: meta.color } : null}
+                        onClick={() => setOwnershipFocus(option.key)}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+                {sel && sel.currentLandStatus && ownershipFocus === "rented-monette" && (
+                  <em>Rented acres are unmapped here until LSDs / quarter descriptions are identified.</em>
+                )}
+              </div>
+            )}
           </div>
 
+          {atlasMode === "land-status" && (
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Operator relationships</div>
             <div className="atlas-side-note" style={{ marginTop: 6 }}>
-              Partner-owned or co-managed assets. These explain Monette operating reach but stay out of owned/rented acreage totals.
+              Partner-owned or co-managed assets. These stay in the list now instead of putting extra circles on the land map.
             </div>
             <div className="atlas-operator-list">
               {operatorRelationships.map((relationship) => (
@@ -2505,17 +2980,15 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
               ))}
             </div>
           </div>
+          )}
 
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Legend</div>
             <div className="atlas-legend-list">
               {atlasMode === "seeding" ? (
                 <>
-                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#3a8c2a" }} /><span>Confirmed seeded</span></div>
-                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#c0392b" }} /><span>Not yet seeded</span></div>
-                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#c8a84b" }} /><span>Indeterminate</span></div>
-                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#5a7a8a" }} /><span>Out of season / perennial</span></div>
-                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#7a7a7a" }} /><span>Insufficient baseline</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#3a8c2a" }} /><span>Likely seeded</span></div>
+                  <div className="atlas-legend-row"><span className="atlas-swatch" style={{ background: "#686868" }} /><span>Grey = unseeded or no confident call</span></div>
                   <div className="atlas-legend-row"><span className="atlas-swatch atlas-swatch-lowqc" /><span>Dashed = low polygon quality</span></div>
                 </>
               ) : (
@@ -2538,17 +3011,17 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   </div>
                 </>
               )}
+              {atlasMode === "land-status" && (
+                <>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch atlas-swatch-point" />
+                    <span>Selected point-only asset: approximate location only</span>
+                  </div>
+                </>
+              )}
               <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-point" />
-                <span>Point-only asset: no geometry yet</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-operator">OP</span>
-                <span>Operator relationship: partner land, not Monette acres</span>
-              </div>
-              <div className="atlas-legend-row">
-                <span className="atlas-swatch atlas-swatch-sold-dot" />
-                <span>Red dot: known historical sale</span>
+                <span className="atlas-swatch" style={{ background: "transparent", border: "1.5px dashed #b48638" }} />
+                <span>Gold outline = officially for sale via the FTI SISP (faint = in SISP scope, listing pending)</span>
               </div>
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-outline" style={{ borderColor: "#f1d284" }} />
@@ -2560,7 +3033,9 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           <div className="atlas-panel-block">
             <div className="mono atlas-panel-kicker">Trust note</div>
             <div className="atlas-side-note">
-              Quarter colors apply wherever mapped geometry exists. Satellite seeding status (Seeding mode) is derived from SAR change-detection and cropland masking — not community votes. Operator relationships are provenance markers only and do not change acreage totals.
+              {atlasMode === "seeding"
+                ? "Seeding status is a GEE-backed confidence read. Public output is limited to status, acres, and confidence."
+                : "Land status colors apply wherever mapped geometry exists. Operator relationships are provenance markers only and do not change acreage totals."}
             </div>
           </div>
         </div>

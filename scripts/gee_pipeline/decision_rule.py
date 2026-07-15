@@ -27,8 +27,12 @@ def decide_seeded(
     applicability: Applicability,
     mean_dvh_db: float,
     confidence: int,
+    veto_reason: str | None = None,
 ) -> Optional[bool]:
     """Return True (seeded), False (not seeded), or None (uncertain / n/a)."""
+    if veto_reason:
+        return None
+
     if applicability != "active":
         return None
 

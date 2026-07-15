@@ -33,10 +33,12 @@ from gee_pipeline.confidence import compute_confidence
 from gee_pipeline.decision_rule import decide_seeded
 from gee_pipeline.optical import compute_optical_features
 from gee_pipeline.auth import initialize, auth_source
+from gee_pipeline.qc import active_seed_veto
 
 GEE_PROJECT = "monette-494717"
 PARCEL_ASSET = f"projects/{GEE_PROJECT}/assets/monette/parcels_v1"
 T0_PARENT = f"projects/{GEE_PROJECT}/assets/monette/sar_baseline_2026"
+ACTIVE_LOCAL_SNOW_BUFFER_M = 5000
 
 # Per-territory cropland masks. CDL 2025 confirmed available in GEE (Task 0d).
 # AAFC ACI's latest may still be 2024; left at /2024 conservatively.
@@ -124,6 +126,104 @@ def _classify_crop(class_id: int, territory: str) -> str:
     if territory in {"sk", "mb"}:
         return ACI_CLASS_TO_NAME.get(class_id, "unknown")
     return CDL_CLASS_TO_NAME.get(class_id, "unknown")
+
+
+def _date_start(scene_date: ee.Date) -> ee.Date:
+    """Return midnight for the EE date's calendar day."""
+    return ee.Date.fromYMD(
+        scene_date.get("year"),
+        scene_date.get("month"),
+        scene_date.get("day"),
+    )
+
+
+def _active_snow_pct_for_date(eroded: ee.Geometry, day: ee.Date) -> Optional[float]:
+    """Return active-observation snow percentage, or None if unavailable."""
+    s2 = (
+        ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
+        .filterBounds(eroded)
+        .filterDate(day.advance(-3, "day"), day.advance(4, "day"))
+        .select("SCL")
+    )
+    if s2.size().getInfo() > 0:
+        snow_fraction_img = s2.map(lambda im: im.eq(11)).mean().rename("snow")
+        snow_fraction = snow_fraction_img.reduceRegion(
+            reducer=ee.Reducer.mean(),
+            geometry=eroded,
+            scale=20,
+            maxPixels=1e7,
+        ).getNumber("snow").getInfo()
+        if snow_fraction is not None:
+            return max(0.0, min(100.0, float(snow_fraction) * 100.0))
+
+    era5 = (
+        ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
+        .filterDate(day, day.advance(1, "day"))
+    )
+    if era5.size().getInfo() == 0:
+        return None
+    snow_fraction = era5.first().select("snow_cover").rename("snow").reduceRegion(
+        reducer=ee.Reducer.mean(),
+        geometry=eroded,
+        scale=1000,
+        maxPixels=1e8,
+    ).getNumber("snow").getInfo()
+    if snow_fraction is None:
+        return None
+    return max(0.0, min(100.0, float(snow_fraction) * 100.0))
+
+
+def _active_era5_for_date(
+    eroded: ee.Geometry,
+    day: ee.Date,
+) -> tuple[Optional[float], Optional[float]]:
+    """Return (temperature_2m_K, precip_mm) for the active observation day."""
+    era5 = (
+        ee.ImageCollection("ECMWF/ERA5_LAND/DAILY_AGGR")
+        .filterDate(day, day.advance(1, "day"))
+    )
+    if era5.size().getInfo() == 0:
+        return None, None
+    image = era5.first()
+    stats = (
+        image.select("temperature_2m").rename("temp_2m_K")
+        .addBands(image.select("total_precipitation_sum").multiply(1000.0).rename("precip_mm"))
+        .reduceRegion(
+            reducer=ee.Reducer.mean(),
+            geometry=eroded,
+            scale=1000,
+            maxPixels=1e8,
+        )
+        .getInfo() or {}
+    )
+    temp = stats.get("temp_2m_K")
+    precip = stats.get("precip_mm")
+    return (
+        float(temp) if temp is not None else None,
+        max(0.0, float(precip)) if precip is not None else None,
+    )
+
+
+def _active_veto_for_latest_scene(
+    eroded: ee.Geometry,
+    scene_dates_ms: list[int],
+) -> Optional[str]:
+    """Return a public-safe veto reason for the latest active SAR scene."""
+    if not scene_dates_ms:
+        return None
+    latest_scene_date = ee.Date(max(scene_dates_ms))
+    latest_day = _date_start(latest_scene_date)
+    latest_snow_pct = _active_snow_pct_for_date(eroded, latest_day)
+    local_area = eroded.centroid(maxError=20).buffer(ACTIVE_LOCAL_SNOW_BUFFER_M)
+    local_area_snow_pct = _active_snow_pct_for_date(local_area, latest_day)
+    latest_temp_k, latest_precip_mm = _active_era5_for_date(eroded, latest_day)
+    veto = active_seed_veto(
+        latest_snow_pct=latest_snow_pct,
+        local_area_snow_pct=local_area_snow_pct,
+        latest_temp_2m_kelvin=latest_temp_k,
+        latest_precip_mm=latest_precip_mm,
+    )
+    return veto["reason"]
 
 
 def run_single_parcel(
@@ -302,6 +402,8 @@ def run_single_parcel(
     else:
         last_obs_iso = run_date
 
+    active_veto_reason = _active_veto_for_latest_scene(eroded, scene_dates_ms)
+
     # Wet-soil precip: max 24h precip across all S1 acquisition dates.
     # ERA5-Land DAILY_AGGR total_precipitation_sum is in metres; multiply by 1000
     # to get mm. Clamp tiny negative ERA5 artifacts to 0. Skip scenes where
@@ -452,6 +554,7 @@ def run_single_parcel(
         dvv_db=mean_dvv_db_value,
         precip_mm_24h=max_precip_mm,
         last_obs_date=last_obs_iso,
+        active_veto_reason=active_veto_reason,
         optical_block=optical_block,
         ndvi_mean=ndvi_mean_val,
     )
@@ -471,6 +574,7 @@ def _build_record(
     optical_block: Optional[dict] = None,     # Bucket B commit 3 will populate
     ndvi_mean: Optional[float] = None,        # Bucket B commit 3 will populate
     last_obs_date: Optional[str] = None,      # defaults to run_date if None
+    active_veto_reason: Optional[str] = None,
 ) -> dict:
     """Compose the per-parcel imagery-data.js record."""
     polygon_quality = "high" if cropland_coverage >= 0.50 else "low"
@@ -497,6 +601,7 @@ def _build_record(
             applicability=applicability,
             mean_dvh_db=mean_dvh_db,
             confidence=confidence,
+            veto_reason=active_veto_reason,
         )
         # v1 shortcut: all active SAR baselines in this run were built from
         # the 2026 spring baseline window — they are "fresh". The "backfill"
@@ -515,11 +620,15 @@ def _build_record(
         "prior_crop": prior_crop,
         "seeding_seeded": seeded,
         "seeding_confidence": confidence,
+        "seeding_confidence_withheld": bool(active_veto_reason),
+        "seeding_veto_reason": active_veto_reason,
         "seeding_applicability": applicability,
         "seeding": {
             "seeded": seeded,
             "applicability": applicability,
             "confidence": confidence,
+            "confidence_withheld": bool(active_veto_reason),
+            "veto_reason": active_veto_reason,
             "dvh_db": round(mean_dvh_db, 3) if mean_dvh_db is not None else None,
             "dvv_db": round(dvv_db, 3) if dvv_db is not None else None,
             "n_pixels": n_pixels,

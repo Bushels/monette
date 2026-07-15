@@ -9,6 +9,7 @@ from scripts.gee_pipeline.qc import (
     is_unfrozen,
     is_dry_24h,
     qualifies_for_baseline,
+    active_seed_veto,
 )
 
 
@@ -65,3 +66,37 @@ def test_qualifies_for_baseline_snow_fails():
 
 def test_qualifies_for_baseline_wet_fails():
     assert qualifies_for_baseline(snow_pct=2.0, temp_2m_kelvin=275.0, precip_mm=10.0) is False
+
+
+def test_active_seed_veto_blocks_snow_or_freeze_risk():
+    veto = active_seed_veto(
+        latest_snow_pct=12.0,
+        latest_temp_2m_kelvin=272.5,
+        latest_precip_mm=1.0,
+    )
+
+    assert veto["vetoed"] is True
+    assert veto["reason"] == "snow_or_freeze_risk"
+
+
+def test_active_seed_veto_allows_clean_active_observation():
+    veto = active_seed_veto(
+        latest_snow_pct=1.0,
+        latest_temp_2m_kelvin=276.0,
+        latest_precip_mm=0.5,
+    )
+
+    assert veto["vetoed"] is False
+    assert veto["reason"] is None
+
+
+def test_active_seed_veto_blocks_local_area_snow_risk():
+    veto = active_seed_veto(
+        latest_snow_pct=1.0,
+        local_area_snow_pct=12.0,
+        latest_temp_2m_kelvin=None,
+        latest_precip_mm=None,
+    )
+
+    assert veto["vetoed"] is True
+    assert veto["reason"] == "snow_or_freeze_risk"
