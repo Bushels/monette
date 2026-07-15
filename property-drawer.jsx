@@ -253,6 +253,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     sispMeta.leasedAc != null ? `${fmt(sispMeta.leasedAc)} leased` : null,
     sispMeta.stateLeaseAc != null ? `${fmt(sispMeta.stateLeaseAc)} state-lease` : null,
     sispMeta.totalAc != null ? `${fmt(sispMeta.totalAc)} total` : null,
+    sispMeta.cultivatedAc != null ? `${fmt(sispMeta.cultivatedAc)} organic farm ground` : null,
+    sispMeta.nativeGrassAc != null ? `${fmt(sispMeta.nativeGrassAc)} native grass` : null,
     sispMeta.seededAc != null ? `${fmt(sispMeta.seededAc)} seeded` : null,
     sispMeta.ownedAc != null ? `${fmt(sispMeta.ownedAc)} Monette-owned` : null,
   ].filter(Boolean).join(" · ") : "";

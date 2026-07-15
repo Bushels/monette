@@ -1049,22 +1049,24 @@ window.MONETTE_DATA = {
         marketEntry:"Community intel 2026-04-27: Monette's Arizona market entry was reportedly opened by the Wolfe family (Brent & Clayton Wolfe), the same family that sold the Regina-area 'Wolfe yard' to Monette and from whom Daryl Monette personally acquired Northerly Oats. Aguila + Tonopah are downstream of that relationship per the tip; pending verification."
       },
       notes:"Court-file Arizona produce farm in the Aguila/Harquahala plain (Sec 24-25 T7N R9W + Sec 28-33 T7N R8W, Gila & Salt River Meridian). 23 parcels totalling 3,143 ac mapped 2026-04-27 — 930 ac fee-owned across 17 parcels and 2,213 ac across 6 AZ State Trust Land lease parcels. AZ Auditor General Report 24-101 flags the LLC as foreign-owned alongside Asarco LLC and Fondomonte Arizona LLC (Saudi alfalfa). Cross-validated to within 9 ac of Helkaa Decl. ¶58(e) sworn figure (3,134 ac). Community intel 2026-04-27 ties this farm and Tonopah Seeds Facility to the Brent & Clayton Wolfe family — same Wolfes who sold Monette the Regina-area 'Wolfe yard' (Regina South). See Regina South drawer for provenance." },
-    { id:"genoa", name:"Genoa Farm", province:"CO", region:"Genoa, CO", lat:39.2767, lng:-103.4988,
-      hideMapMarker:true,
-      rms:["Genoa area"],
-      parcels:1, titled:4079, cultivated:0, waste:0, assessment:0, owned:4079, rented:0,
-      soils:[], crops2025:[["Grain",4079]], crops2024:[],
-      segment:"Grain", legalOwner:"Monette USA", beneficialOwner:"Direct",
-      geometryStatus:"parcel-mapped", locationPrecision:"parcel-partial", tags:["court-file","colorado","verified-2026-04-27","cypressview-jv","partial-geometry"],
+    { id:"genoa", name:"Monette Farm & Ranch", province:"CO", region:"Genoa, Lincoln County, CO", lat:39.2767, lng:-103.4988,
+      rms:["Lincoln County"],
+      parcels:6, titled:4085, cultivated:3085, nativeGrassAc:1000, waste:0, assessment:0, owned:4085, rented:0,
+      soils:[], crops2025:[["Organic wheat",3085],["Native grass",1000]], crops2024:[],
+      segment:"Grain", legalOwner:"Monette Farms USA, Inc., a Montana corporation", beneficialOwner:"Direct",
+      geometryStatus:"public-assessor-plss-crosswalk", locationPrecision:"public-plss-boundary-with-derived-aliquots", tags:["court-file","colorado","verified-2026-07-15","cypressview-jv","full-account-geometry","listed-for-sale"],
       tenureBreakdown:{
-        feeOwnedAc:720, feeOwnedParcels:1,
-        verifiedSubset:"720 ac of the 4,079-ac Helkaa-sworn footprint located via public records (S/2 SW/4 Sec 18 + ALL Sec 19, T9S R54W, 6th P.M., Lincoln County parcel 258118300114, bought 2023-11-13 from Martin Paul/Mardelle, Recpt #359168). Remaining ~3,360 ac sworn but not yet matched to specific parcels.",
-        source:"Lincoln County Colorado Assessor AgSales 2023 PDF; cross-validated against Helkaa Decl. ¶58(e). Sec 19 polygon from BLM CadNSDI; Sec 18 S/2 SW/4 derived as aliquot."
+        feeOwnedAc:4085, feeOwnedParcels:6, mappedFeeOwnedAc:4085,
+        assessorOwner:"MONETTE FARMS USA, INC., A MONTANA CORPORATION",
+        assessorAccounts:["R008634","R008636","R008638","R008641","R008643","R008645"],
+        courtSwornAc:4079, courtToAssessorDeltaAc:6,
+        verifiedSubset:"All six current Lincoln County assessor accounts are crosswalked to their published PLSS legal descriptions. Assessed acreage totals 4,085 ac, exactly matching Clark's live offering; the older Helkaa sworn figure is 4,079 ac, a preserved 6 ac source-method difference.",
+        source:"Lincoln County Colorado EagleWeb 2026 owner/account records; BLM CadNSDI PLSS geometry; Clark & Associates live listing; Helkaa Decl. ¶58(e). Full sections use BLM boundaries. S2SW4 Sec 18 and NW4 Sec 4 are bbox-derived aliquots for portfolio display, not survey boundaries."
       },
       relationships:{
         partnership:"Operated as the Cypress View Land 'High Plains Farm, Colorado' jointly managed by Monette Farms (USA) with Ben & Leslie Palen, near the Colorado Power Pathway transmission line (per cypressviewland.com)."
       },
-      notes:"Court-file Colorado grain farm in eastern Lincoln County near Genoa, CO. 720 ac mapped 2026-04-27 from the 2023 deed (Lincoln Co AgSales PDF, Recpt #359168) — Sec 19 (640 ac, full section) + S/2 SW/4 Sec 18 (80 ac aliquot) of T9S R54W. Helkaa ¶58(e) swears 4,079 ac total, leaving ~3,360 ac unmapped — likely additional Lincoln Co or adjacent county purchases pre-2023 (Lincoln Co's public ag-sales archive only goes back to 2023). Town of Limon council had an active 'Monette Farms Water Agreement' on Old Business agenda Aug-Nov 2024. Operated jointly with Ben & Leslie Palen under the Cypress View Land partnership." },
+      notes:"Current 2026 Lincoln County assessor ownership search returns six accounts totaling 4,085 ac under Monette Farms USA, Inc., exactly matching Clark's Monette Farm & Ranch offering: 3,085 ac organic farm ground plus 1,000 ac native grass. The older Helkaa ¶58(e) figure is 4,079 ac; the 6 ac difference is disclosed rather than forced into agreement. All account legal descriptions are mapped from BLM PLSS sections; S2SW4 Sec 18 and NW4 Sec 4 are portfolio-scale bbox aliquots, not surveyed boundaries. Town of Limon council had an active 'Monette Farms Water Agreement' on Old Business agenda Aug-Nov 2024. Operated jointly with Ben & Leslie Palen under the Cypress View Land partnership." },
     { id:"lethbridge-pea-protein", name:"Lethbridge Pea Protein Facility", province:"AB", region:"Lethbridge, AB", lat:49.6956, lng:-112.8451,
       rms:["City of Lethbridge"],
       parcels:0, titled:0, cultivated:0, waste:0, assessment:0, owned:0, rented:0,
@@ -1444,7 +1446,7 @@ window.MONETTE_DATA.sispByProperty = {
   "mt-ragland-camp1":   { status:"excluded", tier:"excluded", confidence:"high", note:"The 737-acre court-file row is not the 7-acre Hardin rail site and is excluded from the current five-asset offering until a source-backed identity crosswalk exists.", source:"Court-file acreage compared with Premier live listing" },
 
   // ----- Colorado (Clark & Associates) — public listing -----
-  "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025", package:"Lincoln County Organic Farm (near Genoa)", price:"$9,342,575 USD", deededAc:7051, cultivatedAc:5890, listingUrl:"https://www.clarklandbrokers.com/property-listings/lincoln-co.-o", confidence:"high", note:"Certified-organic dryland; ~5,890 organic crop ac + ~1,100 native grass. Monette linkage via court + press (no Monette branding on listing face). ACREAGE NOTE: Clark markets 7,051 total deeded ac while Helkaa ¶58(e) swears 4,079 Monette-owned ac (720 ac parcel-mapped here) — the listing likely includes Cypress View Land JV/partnership ground beyond the sworn Monette footprint; treat the broker figure as the offering scope, not sworn Monette ownership.", source:"Clark & Associates listing + DTN + FTI SISP + Helkaa Decl. ¶58(e)" },
+  "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025 / 307-351-9556", package:"Monette Farm & Ranch", price:"$5,106,250 USD", deededAc:4085, totalAc:4085, cultivatedAc:3085, nativeGrassAc:1000, listingUrl:"https://www.clarklandbrokers.com/property-listings/monette-farm-%26-ranch-", confidence:"high", sourceCheckedAt:"2026-07-15", note:"Current Clark offering: 4,085± total acres, including about 3,085 acres of organic farm ground and 1,000 acres of native grass. Lincoln County's six current assessor accounts under Monette Farms USA, Inc. total exactly 4,085 assessed acres and are fully crosswalked here. Helkaa ¶58(e) reports 4,079 acres; the 6-acre difference is retained as a source-method delta.", source:"Clark & Associates live listing + Lincoln County CO EagleWeb 2026 owner/account records + BLM CadNSDI + Helkaa Decl. ¶58(e)" },
 
   // ----- Arizona (Southwest Land Associates) — public listings -----
   "aguila":             { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Aguila Arizona Farm", price:"$22,000,000 USD", deededAc:930, stateLeaseAc:2213, totalAc:3143, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Brochure parcel map labels multiple parcels 'MONETTE FARMS'. 930 deeded ac + 2,213 AZ state-lease ac.", source:"Southwest Land Associates brochure + DTN + FTI SISP" },

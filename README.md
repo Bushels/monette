@@ -134,6 +134,12 @@ The five assets in Premier Land Company's current Monette Portfolio offering are
 
 The public offering is a `$96,000,000` umbrella portfolio with published figures of `53,751` deeded, `38,441` leased, `92,193` total, and `63,049` seeded acres. Premier's visible rows contain a `1–2 ac` arithmetic discrepancy: deeded plus leased is `92,192`, while the five child total cells sum to `92,191`. The Atlas preserves the source values and shows the delta rather than inventing a reconciliation. The umbrella stays separate from its five children so acres and asking price are not double-counted. DNRC polygons are assigned only to Fly Creek, Camp 4, Camp 1, and Pivot; the rail site remains an approximate point, leased boundaries are not fabricated, and the unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering. Run `npm run validate:montana` before deployment.
 
+## Colorado portfolio mapping
+
+[Clark & Associates' Monette Farm & Ranch listing](https://www.clarklandbrokers.com/property-listings/monette-farm-%26-ranch-) is the current public offering source: `$5,106,250 USD` for `4,085±` acres near Genoa, split between about `3,085` acres of organic farm ground and `1,000` acres of native grass. The listing controls marketing name, price, and land-use presentation; it does not control parcel geometry.
+
+The current Lincoln County EagleWeb owner search returns six accounts under `MONETTE FARMS USA, INC., A MONTANA CORPORATION`, totaling exactly `4,085` assessed acres. Those assessor legal descriptions control the ownership crosswalk, and BLM CadNSDI PLSS sections supply the map geometry. Full sections use the public BLM polygons. `S2SW4 Sec 18` and `NW4 Sec 4` are derived from their section bounding boxes for portfolio-scale display and are explicitly labelled as non-survey boundaries. The older Helkaa declaration reports `4,079` Colorado acres, so the Atlas preserves a `6 ac` source-method difference rather than forcing the figures to match. Run `npm run refresh:colorado` and `npm run validate:colorado` before deployment.
+
 ## Swapping the Mapbox token
 
 Edit `config.js`. The current token is a public `pk.*` and is safe to ship in
@@ -143,6 +149,8 @@ the browser if URL restrictions are enforced in the Mapbox dashboard.
 
 - `python scripts/build_quarters_geojson.py` - rebuilds `quarters.geojson` from the XLSX source plus any calibration overrides
 - `npm run refresh:montana` - replaces only the Montana parcel slice from the public cadastral owner query, then rebuilds `quarters-data.js`
+- `npm run refresh:colorado` - replaces only the six Lincoln County Colorado account features from BLM PLSS geometry, then rebuilds `quarters-data.js`
+- `npm run validate:colorado` - checks the Clark offering, six-account assessor crosswalk, 4,085-acre total, and court-source delta
 - `python scripts/build_creditors_data.py` - rebuilds `creditors-data.js` from the FTI creditor-listing PDF
 - `python scripts/build_imagery_data_js.py` - rebuilds `imagery-data.js`
 - `python scripts/build_quarters_data_js.py` - rebuilds `quarters-data.js`

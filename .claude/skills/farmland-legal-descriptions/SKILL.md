@@ -152,6 +152,36 @@ Apply these rules when integrating the listing into the Monette atlas:
 - Reconcile children to Premier's displayed values and expose the `1–2 ac` published arithmetic delta.
 - Validate property IDs, acreage double-counting, popup/drawer copy, and the `montana` parent rollup before deployment.
 
+## Monette Colorado / Genoa integration
+
+Use four explicit evidence lanes for Monette Farm & Ranch. Checked 2026-07-15:
+
+1. **Clark & Associates live listing** — current public name, `$5,106,250 USD` asking price, `4,085± ac` total, `3,085 ac` organic farm ground, and `1,000 ac` native grass.
+2. **Lincoln County Colorado EagleWeb** — current owner identity, account numbers, assessed acreage, and legal descriptions.
+3. **BLM CadNSDI PLSS** — public section geometry for the assessor legal-description crosswalk.
+4. **Helkaa declaration ¶58(e)** — older court-file acreage and restructuring context, not current assessor geometry.
+
+Current assessor account gate:
+
+| Account | Parcel | Legal summary | Assessed ac |
+|---|---|---|---:|
+| R008634 | 2581-311-00-112 | All Sec 31, T9S R54W | 638 |
+| R008636 | 2581-183-00-114 | S2SW4 Sec 18 + All Sec 19, T9S R54W | 721 |
+| R008638 | 2581-281-00-116 | All Sec 28 + All Sec 33, T9S R54W | 1,280 |
+| R008641 | 2797-042-00-112 | NW4 Sec 4, T10S R54W | 163 |
+| R008643 | 2797-061-00-114 | All Sec 6, T10S R54W | 640 |
+| R008645 | 2581-301-00-119 | All Sec 30, T9S R54W | 643 |
+| **Total** | **6 accounts** |  | **4,085** |
+
+Implementation rules:
+
+- Store one GeoJSON feature per assessor account. Use `MultiPolygon` when one account spans multiple legal pieces so the UI count remains six accounts rather than eight shapes.
+- Use assessed acres for each account's `titled_ac`; keep nominal PLSS acres separate as `gis_ac`.
+- Use BLM polygons for full sections. The current source supports two derived aliquots: `S2SW4 Sec 18` and `NW4 Sec 4`. Mark both as bounding-box derivations suitable for portfolio display, not survey boundaries.
+- Preserve the older Helkaa `4,079 ac` figure beside the assessor/Clark `4,085 ac` figure and expose the `6 ac` source-method delta.
+- Never infer extra Cypress View or partnership acreage when the current assessor account total already reconciles exactly to the current offering.
+- Run `npm run refresh:colorado` and `npm run validate:colorado` before deployment.
+
 ## Red River Parish Lots (Manitoba) — NOT resolvable by math
 
 Parcels in The Pas, Selkirk, and the old Red River Settlement use a **narrow river-lot survey** from 1835. Format: `RL70-PQ-4734`. These are long, thin strips running perpendicular to a river, irregular in size and orientation. **There is no township/range math that produces them.** You need GIS data (shapefiles from the provincial cadastre) or a fallback to property-center markers.

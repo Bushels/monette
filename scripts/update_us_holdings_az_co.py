@@ -1,17 +1,14 @@
-"""
-Refresh Aguila (Maricopa County, AZ) + Genoa (Lincoln County, CO) parcel slices
-in quarters.geojson, mirroring the Montana cadastral update pattern.
+"""Refresh Monette's Arizona and Colorado parcel slices in quarters.geojson.
 
-- AZ: 23 Maricopa parcels under MONETTE FARMS ARIZONA LLC, fetched from the
-  Maricopa County GIS public service. State-trust leases (LE# in owner string)
-  are tagged but kept under property_id='aguila' so they share a polygon group.
-- CO: Lincoln County parcel 258118300114 = S/2 SW/4 Sec 18 + ALL Sec 19,
-  T9S R54W, 6th P.M. Sourced from the BLM CadNSDI national PLSS service.
+- Arizona: 23 Maricopa parcels under MONETTE FARMS ARIZONA LLC.
+- Colorado: six 2026 Lincoln County assessor accounts under MONETTE FARMS
+  USA, INC., totaling 4,085 assessed acres. Assessor legal descriptions
+  control the crosswalk; BLM CadNSDI supplies PLSS section geometry.
 
-Run with:  python scripts/update_us_holdings_az_co.py
+Run with: python scripts/update_us_holdings_az_co.py [--only colorado|arizona]
 """
+import argparse
 import json
-import math
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -29,9 +26,8 @@ BLM_PLSS_URL = (
 )
 
 # All 23 Maricopa parcels held by MONETTE FARMS ARIZONA LLC
-# (verified 2026-04-27 via mcassessor.maricopa.gov owner search)
+# (verified 2026-04-27 via mcassessor.maricopa.gov owner search).
 AGUILA_PARCELS = {
-    # APN: (kind, lease_no_or_None, str_label, sqft)
     "50605024":  ("fee",   None,        "Sec 24 T7N R9W", 6_969_600),
     "50605025":  ("fee",   None,        "Sec 24 T7N R9W", 6_838_920),
     "50606041D": ("fee",   None,        "Sec 25 T7N R9W", 6_969_600),
@@ -59,6 +55,49 @@ AGUILA_PARCELS = {
 
 SQFT_PER_ACRE = 43_560.0
 
+# Current owner/account results from Lincoln County EagleWeb, checked 2026-07-15.
+# Assessed acres total 4,085, exactly matching Clark's live offering. The older
+# Helkaa declaration says 4,079 acres; data.js preserves that six-acre delta.
+GENOA_ACCOUNTS = [
+    {
+        "account_no": "R008634", "parcel_id": "2581-311-00-112",
+        "assessed_ac": 638.0, "nominal_ac": 640.0,
+        "legal": "ALL SEC. 31; T9S R54W OF THE 6TH P.M., LINCOLN COUNTY, COLORADO",
+        "twp": 9, "parts": [(31, "ALL")],
+    },
+    {
+        "account_no": "R008636", "parcel_id": "2581-183-00-114",
+        "assessed_ac": 721.0, "nominal_ac": 720.0,
+        "legal": "S2SW4 SEC. 18; ALL SEC. 19; T9S R54W OF THE 6TH P.M.",
+        "twp": 9, "parts": [(18, "S2SW4"), (19, "ALL")],
+        "situs_address": "52326 COUNTY HIGHWAY 109, GENOA",
+    },
+    {
+        "account_no": "R008638", "parcel_id": "2581-281-00-116",
+        "assessed_ac": 1280.0, "nominal_ac": 1280.0,
+        "legal": "ALL SEC. 28; ALL SEC. 33 T9S R54W OF THE 6TH P.M.",
+        "twp": 9, "parts": [(28, "ALL"), (33, "ALL")],
+    },
+    {
+        "account_no": "R008641", "parcel_id": "2797-042-00-112",
+        "assessed_ac": 163.0, "nominal_ac": 160.0,
+        "legal": "NW4 SEC. 4 T10S R54W OF THE 6TH P.M.",
+        "twp": 10, "parts": [(4, "NW4")],
+    },
+    {
+        "account_no": "R008643", "parcel_id": "2797-061-00-114",
+        "assessed_ac": 640.0, "nominal_ac": 640.0,
+        "legal": "ALL SEC. 6 T10S R54W OF THE 6TH P.M.",
+        "twp": 10, "parts": [(6, "ALL")],
+    },
+    {
+        "account_no": "R008645", "parcel_id": "2581-301-00-119",
+        "assessed_ac": 643.0, "nominal_ac": 640.0,
+        "legal": "ALL SEC. 30 T9S R54W OF THE 6TH P.M.",
+        "twp": 9, "parts": [(30, "ALL")],
+    },
+]
+
 
 def http_json(url: str, params: dict) -> dict:
     full = url + "?" + urllib.parse.urlencode(params)
@@ -69,18 +108,27 @@ def http_json(url: str, params: dict) -> dict:
 def round_geom(geom: dict, digits: int = 6) -> dict:
     if not geom:
         return geom
-    def r(v): return round(v, digits)
+
+    def rounded(value):
+        return round(value, digits)
+
     if geom["type"] == "Polygon":
         return {
             "type": "Polygon",
-            "coordinates": [[[r(x), r(y)] for x, y in ring] for ring in geom["coordinates"]],
+            "coordinates": [
+                [[rounded(x), rounded(y)] for x, y in ring]
+                for ring in geom["coordinates"]
+            ],
         }
     if geom["type"] == "MultiPolygon":
         return {
             "type": "MultiPolygon",
             "coordinates": [
-                [[[r(x), r(y)] for x, y in ring] for ring in poly]
-                for poly in geom["coordinates"]
+                [
+                    [[rounded(x), rounded(y)] for x, y in ring]
+                    for ring in polygon
+                ]
+                for polygon in geom["coordinates"]
             ],
         }
     return geom
@@ -88,7 +136,7 @@ def round_geom(geom: dict, digits: int = 6) -> dict:
 
 def fetch_aguila_features() -> list:
     apns = list(AGUILA_PARCELS.keys())
-    where = "APN IN (" + ",".join("'" + a + "'" for a in apns) + ")"
+    where = "APN IN (" + ",".join("'" + apn + "'" for apn in apns) + ")"
     data = http_json(MARICOPA_URL, {
         "where": where,
         "outFields": "APN,APNDash,PropertyFullStreetAddress",
@@ -96,160 +144,241 @@ def fetch_aguila_features() -> list:
         "outSR": "4326",
         "f": "geojson",
     })
-    feats = data.get("features", [])
-    if len(feats) != len(apns):
+    features = data.get("features", [])
+    if len(features) != len(apns):
         raise RuntimeError(
-            f"Maricopa returned {len(feats)} polygons; expected {len(apns)}"
+            f"Maricopa returned {len(features)} polygons; expected {len(apns)}"
         )
 
     out = []
-    for f in feats:
-        apn = f["properties"]["APN"]
+    for feature in features:
+        apn = feature["properties"]["APN"]
         kind, lease_no, str_label, sqft = AGUILA_PARCELS[apn]
-        ac = sqft / SQFT_PER_ACRE
-        # Parse "Sec 30 T7N R8W"
-        sec_str, twp_str, rng_str = str_label.split()[1], str_label.split()[2], str_label.split()[3]
-        twp_num = int(twp_str[1:-1]); twp_dir = twp_str[-1]
-        rng_num = int(rng_str[1:-1]); rng_dir = rng_str[-1]
-        loc = f"T{twp_num:02d}{twp_dir}-R{rng_num:02d}{rng_dir}-S{int(sec_str):02d}-{apn}"
+        acres = sqft / SQFT_PER_ACRE
+        parts = str_label.split()
+        section_number = int(parts[1])
+        township_number, township_direction = int(parts[2][1:-1]), parts[2][-1]
+        range_number, range_direction = int(parts[3][1:-1]), parts[3][-1]
+        loc = (
+            f"T{township_number:02d}{township_direction}-"
+            f"R{range_number:02d}{range_direction}-S{section_number:02d}-{apn}"
+        )
         owner = "MONETTE FARMS ARIZONA LLC"
         if lease_no:
             owner += f" LE # {lease_no}"
-        situs = f["properties"].get("PropertyFullStreetAddress")
         out.append({
             "type": "Feature",
-            "geometry": round_geom(f["geometry"]),
+            "geometry": round_geom(feature["geometry"]),
             "properties": {
                 "property_id": "aguila",
                 "loc": loc,
-                "loc_raw": f"Sec {int(sec_str)}, T{twp_num} {twp_dir}, R{rng_num} {rng_dir}",
+                "loc_raw": (
+                    f"Sec {section_number}, T{township_number} {township_direction}, "
+                    f"R{range_number} {range_direction}"
+                ),
                 "qtr": None,
-                "sec": int(sec_str),
-                "twp": twp_num,
-                "rng": rng_num,
-                "meridian": "AZ-GSRM",  # Gila and Salt River Meridian
-                "twp_dir": twp_dir,
-                "rng_dir": rng_dir,
-                "titled_ac": round(ac, 2),
-                "gis_ac": round(ac, 2),
+                "sec": section_number,
+                "twp": township_number,
+                "rng": range_number,
+                "meridian": "AZ-GSRM",
+                "twp_dir": township_direction,
+                "rng_dir": range_direction,
+                "titled_ac": round(acres, 2),
+                "gis_ac": round(acres, 2),
                 "county": "Maricopa",
-                "parcel_id": f["properties"]["APNDash"],
-                "tenure": kind,  # 'fee' or 'lease'
+                "parcel_id": feature["properties"]["APNDash"],
+                "tenure": kind,
                 "lease_no": lease_no,
-                "situs_address": situs,
+                "situs_address": feature["properties"].get("PropertyFullStreetAddress"),
                 "owner": owner,
-                "title": f"APN {f['properties']['APNDash']}, {str_label}",
+                "title": f"APN {feature['properties']['APNDash']}, {str_label}",
                 "title_count": 1,
-                "source": "Maricopa County GIS Parcel service, owner='MONETTE FARMS ARIZONA LLC'",
+                "source": (
+                    "Maricopa County GIS Parcel service, "
+                    "owner='MONETTE FARMS ARIZONA LLC'"
+                ),
             },
         })
     return out
 
 
-def fetch_genoa_features() -> list:
-    """Pull Sec 18 + Sec 19 of T9S R54W in CO (6th P.M.) from BLM PLSS,
-    and derive the S/2 SW/4 aliquot of Sec 18 from its bounding box.
-    Parcel = S/2 SW/4 Sec 18 + ALL Sec 19 (Lincoln Co parcel 258118300114)."""
+def fetch_plss_sections(plssid: str, section_numbers: list[int]) -> dict[int, dict]:
+    # CadNSDI stores single-digit section numbers with a leading zero.
+    section_sql = ",".join(f"'{number:02d}'" for number in section_numbers)
     data = http_json(BLM_PLSS_URL, {
-        "where": "PLSSID='CO060090S0540W0' AND (FRSTDIVNO='18' OR FRSTDIVNO='19')",
+        "where": f"PLSSID='{plssid}' AND FRSTDIVNO IN ({section_sql})",
         "outFields": "PLSSID,FRSTDIVID,FRSTDIVNO,FRSTDIVLAB",
         "returnGeometry": "true",
         "outSR": "4326",
         "f": "geojson",
     })
-    secs = {f["properties"]["FRSTDIVNO"]: f for f in data.get("features", [])}
-    if "18" not in secs or "19" not in secs:
-        raise RuntimeError(f"BLM returned only sections: {list(secs)}")
+    sections = {
+        int(feature["properties"]["FRSTDIVNO"]): feature
+        for feature in data.get("features", [])
+    }
+    missing = set(section_numbers) - set(sections)
+    if missing:
+        raise RuntimeError(f"BLM {plssid} query missing sections: {sorted(missing)}")
+    return sections
 
-    out = []
-    # Section 19 — full polygon (640 ac)
-    s19 = secs["19"]
-    out.append({
-        "type": "Feature",
-        "geometry": round_geom(s19["geometry"]),
-        "properties": {
-            "property_id": "genoa",
-            "loc": "T09S-R54W-S19-258118300114",
-            "loc_raw": "Sec 19, T9 S, R54 W",
-            "qtr": None,
-            "sec": 19,
-            "twp": 9,
-            "rng": 54,
-            "meridian": "6th-PM",
-            "twp_dir": "S",
-            "rng_dir": "W",
-            "titled_ac": 640.0,
-            "gis_ac": 640.0,
-            "county": "Lincoln",
-            "parcel_id": "258118300114",
-            "tenure": "fee",
-            "owner": "MONETTE FARMS USA, INC.",
-            "title": "ALL Sec 19, T9S R54W (per Lincoln Co AgSales 2023, Recpt #359168)",
-            "title_count": 1,
-            "source": "BLM CadNSDI PLSS section polygon + Lincoln Co Assessor 2023 ag-sales record",
-        },
-    })
 
-    # Section 18 — derive S/2 SW/4 aliquot (80 ac) from Sec 18's bbox
-    s18_geom = s18 = secs["18"]["geometry"]
-    coords = s18["coordinates"][0] if s18["type"] == "Polygon" else s18["coordinates"][0][0]
-    xs = [c[0] for c in coords]
-    ys = [c[1] for c in coords]
+def polygons_from_geometry(geometry: dict) -> list:
+    if geometry["type"] == "Polygon":
+        return [geometry["coordinates"]]
+    if geometry["type"] == "MultiPolygon":
+        return geometry["coordinates"]
+    raise RuntimeError(f"Unsupported PLSS geometry: {geometry['type']}")
+
+
+def derive_bbox_aliquot(section_geometry: dict, aliquot: str) -> dict:
+    """Derive the two assessor aliquots needed for portfolio-scale display."""
+    polygons = polygons_from_geometry(section_geometry)
+    coords = [point for polygon in polygons for ring in polygon for point in ring]
+    xs = [point[0] for point in coords]
+    ys = [point[1] for point in coords]
     minx, maxx = min(xs), max(xs)
     miny, maxy = min(ys), max(ys)
-    # SW quarter: lng in [minx, mid_x], lat in [miny, mid_y]
     midx = (minx + maxx) / 2.0
     midy = (miny + maxy) / 2.0
-    # S/2 of SW/4: lng [minx, midx], lat [miny, (miny+midy)/2]
-    s2sw4_y_top = (miny + midy) / 2.0
-    aliquot_ring = [
-        [minx, miny], [midx, miny], [midx, s2sw4_y_top],
-        [minx, s2sw4_y_top], [minx, miny],
+    if aliquot == "S2SW4":
+        bounds = (minx, miny, midx, (miny + midy) / 2.0)
+    elif aliquot == "NW4":
+        bounds = (minx, midy, midx, maxy)
+    else:
+        raise RuntimeError(f"Unsupported aliquot: {aliquot}")
+    west, south, east, north = bounds
+    ring = [
+        [west, south], [east, south], [east, north],
+        [west, north], [west, south],
     ]
-    out.append({
-        "type": "Feature",
-        "geometry": round_geom({"type": "Polygon", "coordinates": [aliquot_ring]}),
-        "properties": {
+    return {"type": "Polygon", "coordinates": [ring]}
+
+
+def fetch_genoa_features() -> list:
+    """Build the six current Lincoln County accounts from assessor legal rows."""
+    sections = {}
+    sections.update({
+        (9, number): feature
+        for number, feature in fetch_plss_sections(
+            "CO060090S0540W0", [18, 19, 28, 30, 31, 33]
+        ).items()
+    })
+    sections.update({
+        (10, number): feature
+        for number, feature in fetch_plss_sections(
+            "CO060100S0540W0", [4, 6]
+        ).items()
+    })
+
+    out = []
+    for account in GENOA_ACCOUNTS:
+        polygons = []
+        derived_parts = []
+        for section_number, aliquot in account["parts"]:
+            section_geometry = sections[(account["twp"], section_number)]["geometry"]
+            if aliquot == "ALL":
+                polygons.extend(polygons_from_geometry(section_geometry))
+            else:
+                derived = derive_bbox_aliquot(section_geometry, aliquot)
+                polygons.extend(polygons_from_geometry(derived))
+                derived_parts.append(f"{aliquot} Sec {section_number}")
+
+        geometry = (
+            {"type": "Polygon", "coordinates": polygons[0]}
+            if len(polygons) == 1
+            else {"type": "MultiPolygon", "coordinates": polygons}
+        )
+        properties = {
             "property_id": "genoa",
-            "loc": "T09S-R54W-S18-S2SW4-258118300114",
-            "loc_raw": "S/2 SW/4 Sec 18, T9 S, R54 W",
-            "qtr": "S2SW",
-            "sec": 18,
-            "twp": 9,
+            "loc": f"CO-LINCOLN-{account['account_no']}",
+            "loc_raw": account["legal"],
+            "qtr": (
+                account["parts"][0][1]
+                if len(account["parts"]) == 1 and account["parts"][0][1] != "ALL"
+                else None
+            ),
+            "sec": account["parts"][0][0] if len(account["parts"]) == 1 else None,
+            "twp": account["twp"],
             "rng": 54,
             "meridian": "6th-PM",
             "twp_dir": "S",
             "rng_dir": "W",
-            "titled_ac": 80.0,
-            "gis_ac": 80.0,
+            "titled_ac": account["assessed_ac"],
+            "gis_ac": account["nominal_ac"],
             "county": "Lincoln",
-            "parcel_id": "258118300114",
+            "parcel_id": account["parcel_id"],
+            "account_no": account["account_no"],
             "tenure": "fee",
-            "owner": "MONETTE FARMS USA, INC.",
-            "title": "S/2 SW/4 Sec 18, T9S R54W (per Lincoln Co AgSales 2023, Recpt #359168)",
+            "owner": "MONETTE FARMS USA, INC., A MONTANA CORPORATION",
+            "title": account["legal"],
             "title_count": 1,
-            "source": "BLM CadNSDI PLSS section + aliquot derivation (S/2 SW/4)",
-            "geometry_note": "S2SW4 aliquot derived from section bbox; not a survey-accurate boundary.",
-        },
-    })
+            "source": (
+                "Lincoln County CO EagleWeb 2026 owner/account record + "
+                "BLM CadNSDI PLSS geometry"
+            ),
+            "source_checked_at": "2026-07-15",
+            "legal_parts": [
+                f"{aliquot} Sec {section}" for section, aliquot in account["parts"]
+            ],
+        }
+        if account.get("situs_address"):
+            properties["situs_address"] = account["situs_address"]
+        if derived_parts:
+            properties["geometry_note"] = (
+                f"{', '.join(derived_parts)} derived from the BLM section bounding box; "
+                "portfolio-scale display only, not a survey-accurate boundary."
+            )
+        out.append({
+            "type": "Feature",
+            "geometry": round_geom(geometry),
+            "properties": properties,
+        })
+
+    assessed_total = sum(feature["properties"]["titled_ac"] for feature in out)
+    if len(out) != 6 or assessed_total != 4085.0:
+        raise RuntimeError(
+            f"Colorado account gate failed: {len(out)} accounts / "
+            f"{assessed_total} assessed acres"
+        )
     return out
 
 
 def main() -> None:
-    fc = json.load(GEOJSON_PATH.open(encoding="utf-8"))
-    other = [f for f in fc["features"] if f["properties"].get("property_id") not in ("aguila", "genoa")]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--only", choices=("arizona", "colorado"))
+    args = parser.parse_args()
 
-    aguila = fetch_aguila_features()
-    genoa = fetch_genoa_features()
+    feature_collection = json.load(GEOJSON_PATH.open(encoding="utf-8"))
+    replace_ids = (
+        {"aguila", "genoa"}
+        if args.only is None
+        else {"aguila" if args.only == "arizona" else "genoa"}
+    )
+    other = [
+        feature for feature in feature_collection["features"]
+        if feature["properties"].get("property_id") not in replace_ids
+    ]
+    refreshed = []
+    if "aguila" in replace_ids:
+        aguila = fetch_aguila_features()
+        refreshed.extend(aguila)
+        az_acres = sum(feature["properties"]["titled_ac"] for feature in aguila)
+        print(
+            f"Replaced AZ slice: {len(aguila)} parcels, {az_acres:,.2f} ac "
+            "(Aguila/Maricopa)"
+        )
+    if "genoa" in replace_ids:
+        genoa = fetch_genoa_features()
+        refreshed.extend(genoa)
+        co_acres = sum(feature["properties"]["titled_ac"] for feature in genoa)
+        print(
+            f"Replaced CO slice: {len(genoa)} accounts, {co_acres:,.2f} ac "
+            "(Genoa/Lincoln)"
+        )
 
-    fc["features"] = other + aguila + genoa
-    GEOJSON_PATH.write_text(json.dumps(fc) + "\n", encoding="utf-8")
-
-    az_ac = sum(f["properties"]["titled_ac"] for f in aguila)
-    co_ac = sum(f["properties"]["titled_ac"] for f in genoa)
-    print(f"Replaced AZ slice: {len(aguila)} parcels, {az_ac:,.2f} ac (Aguila/Maricopa)")
-    print(f"Replaced CO slice: {len(genoa)} parcels, {co_ac:,.2f} ac (Genoa/Lincoln)")
-    print(f"Total features in quarters.geojson: {len(fc['features'])}")
+    feature_collection["features"] = other + refreshed
+    GEOJSON_PATH.write_text(json.dumps(feature_collection) + "\n", encoding="utf-8")
+    print(f"Total features in quarters.geojson: {len(feature_collection['features'])}")
 
 
 if __name__ == "__main__":

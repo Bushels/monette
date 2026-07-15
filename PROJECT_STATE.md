@@ -5,11 +5,12 @@
 - Vercel production deployment: `HiEREkUo8JaiyRaojg3s1FqMVow2` at `https://monette.buperac.com`.
 
 ## Active task
-**IMPLEMENTED + VERIFIED LOCALLY (2026-07-15): Montana portfolio mapping; deployment not yet performed.**
-The active map data now separates Premier's five public packages from the Montana
-umbrella, assigns source-backed DNRC/DOR polygons to Fly Creek, Camp 4, Camp 1,
-and Pivot, and leaves the 7-acre Hardin rail site as an approximate point. The
-unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering.
+**IMPLEMENTED + VERIFIED LOCALLY (2026-07-15): Montana and Colorado portfolio mapping; deployment not yet performed.**
+The active map data separates Premier's five public packages from the Montana
+umbrella and now maps Clark's current Monette Farm & Ranch offering to all six
+current Lincoln County Colorado assessor accounts. Montana retains source-backed
+DNRC/DOR geometry; Colorado uses assessor legal descriptions plus BLM PLSS
+geometry. Unproven leased or partnership boundaries are not fabricated.
 
 ## Current public Atlas state
 - Atlas is the homepage. The retired Register route redirects to `#map`.
@@ -64,7 +65,20 @@ visualization scripts were not included in this production merge.
 - `npm run validate:montana` is the deployment gate for IDs, acreage arithmetic,
   parent/child separation, polygon assignment, and the point-only rail rule.
 
+## Colorado portfolio mapped state
+- Clark live check on 2026-07-15: `$5,106,250 USD`, `4,085±` total acres,
+  `3,085` organic farm-ground acres, and `1,000` native-grass acres.
+- Lincoln County EagleWeb returns six current accounts under `MONETTE FARMS USA,
+  INC., A MONTANA CORPORATION`, totaling exactly `4,085` assessed acres.
+- BLM CadNSDI geometry covers all six account legal descriptions. Two account
+  features are multi-part. `S2SW4 Sec 18` and `NW4 Sec 4` are bbox-derived
+  aliquots labelled as portfolio-scale, non-survey boundaries.
+- Helkaa ¶58(e) reports `4,079` acres. Preserve the `6 ac` source-method delta;
+  do not force the court and current assessor/broker figures to match.
+- `npm run validate:colorado` checks the offering, account set, acreage, runtime
+  MultiPolygon payload, source dates, and discrepancy disclosure.
+
 ## Next ship gate
-The production build, Montana validator, and browser QA pass. Push `main` and
-deploy the Montana map change; production remains at the last verified state
-above until that happens.
+The production build, Montana validator, Colorado validator, and browser QA pass.
+Push `main` and deploy the combined Montana/Colorado map changes; production
+remains at the last verified state above until that happens.

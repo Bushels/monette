@@ -13,7 +13,7 @@ Field map (source → output):
   properties.loc/soil/assessment/rm/parcel_no/title → same name
   public-source fields such as owner, tax_year, source, and property_card are
   preserved when present so parcel rows can explain their provenance.
-  geometry               → slimmed Polygon (6-dp rounded) or None
+  geometry               → slimmed Polygon/MultiPolygon (6-dp rounded) or None
 """
 from __future__ import annotations
 import json
@@ -28,16 +28,20 @@ def round_coord(c, ndigits=6):
     return round(c, ndigits)
 
 def slim_geometry(geom):
-    if not geom or geom.get("type") != "Polygon":
+    if not geom or geom.get("type") not in {"Polygon", "MultiPolygon"}:
         return None
-    coords = geom["coordinates"]
-    return {
-        "type": "Polygon",
-        "coordinates": [
+
+    def slim_polygon(coords):
+        return [
             [[round_coord(x), round_coord(y)] for x, y in ring]
             for ring in coords
-        ],
-    }
+        ]
+
+    if geom["type"] == "Polygon":
+        coordinates = slim_polygon(geom["coordinates"])
+    else:
+        coordinates = [slim_polygon(polygon) for polygon in geom["coordinates"]]
+    return {"type": geom["type"], "coordinates": coordinates}
 
 def main():
     data = json.loads(GEOJSON.read_text(encoding="utf-8"))
