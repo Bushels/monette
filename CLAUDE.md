@@ -18,4 +18,6 @@ Never write to G:/My Drive/Agriculture/Monette/ (raw data mirror, non-git).
 Default model: claude-opus-4-7
 
 ## Skills
-- .claude/skills/farmland-legal-descriptions/ — DLS/PLSS prairie quarter-section parsing (Monette-specific, local only).
+- .claude/skills/farmland-legal-descriptions/ — DLS/PLSS parcel parsing plus the
+  Monette Montana source hierarchy, Premier package crosswalk, and acreage
+  double-counting gates (Monette-specific, local only).

@@ -1,11 +1,11 @@
 # PROJECT_STATE.md
 
-## Last verified lineages before production merge
-- `main`: `ef564d4` — Montana May 6 rerun, Codex audit, and research references.
-- `feat/seeding-calibration`: `327da86` — current Hammond asking prices and Atlas sales UX.
+## Last verified production state
+- `main`: `41add24` — current Hammond prices, price-on-hover Atlas UX, homepage routing, and retired Register navigation.
+- Vercel production deployment: `HiEREkUo8JaiyRaojg3s1FqMVow2` at `https://monette.buperac.com`.
 
 ## Active task
-**DONE (2026-07-14): Full `feat/seeding-calibration` integration into `main`.**
+**DONE (2026-07-15): Full `feat/seeding-calibration` integration and production deployment from `main`.**
 The complete feature lineage is merged into the production branch, including the
 GEE seeding-calibration work, snow watcher, official SISP layer, evidence-gated
 for-sale outlines, and the current Hammond Realty public asking-price refresh.
@@ -50,6 +50,21 @@ for-sale outlines, and the current Hammond Realty public asking-price refresh.
 The existing untracked SK-title log directory, two planning documents, and two dust
 visualization scripts were not included in this production merge.
 
-## Next action
-Confirm the production deployment from `main` and visually smoke-test the public
-domain after the host finishes building.
+## Next session: Montana portfolio integration
+Use Premier Land Company's current Monette Portfolio page as the public offering
+source: `$96,000,000`, `53,756` deeded acres, `43,436` leased acres, and `97,192`
+total acres across Fly Creek Farm, Camp 4 Farm, Camp 1 Farm, The Pivot Farm, and
+the Hardin Infrastructure & Rail Site.
+
+Integration gates:
+1. Read this file, `README.md`, the Montana audit references, and
+   `.claude/skills/farmland-legal-descriptions/SKILL.md` before editing data.
+2. Treat DNRC/DOR cadastral records as the deeded ownership and geometry source;
+   treat Premier as the current package-name, acreage, and asking-price source.
+3. Prove the package-to-property-ID crosswalk. Do not assume `mt-ragland` or
+   `mt-ragland-camp1` equals The Pivot Farm or the Hardin site.
+4. Keep the `$96,000,000` umbrella offering separate from its five children and
+   exclude the parent from additive acreage and price rollups.
+5. Do not fabricate leased-land geometry from marketing acreage totals.
+6. Reconcile deeded, leased, and total acres; then validate IDs, map hover prices,
+   property drawers, and portfolio rollups before committing or deploying.

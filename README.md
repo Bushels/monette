@@ -17,7 +17,7 @@ default path.
 - `build/` - generated browser-safe JS files used by local static serving. Rebuilt by `npm run build`.
 - `public/` - generated Vercel deploy artifact. Rebuilt by `npm run build`.
 - `config.js` - runtime config (Mapbox public token, map styles, home view, Agnonymous discussion URL).
-- `data.js` - 24 property records, portfolio court-file totals, point-only geometry flags, operator relationships, and sold-asset markers.
+- `data.js` - 30 property records, portfolio court-file totals, point-only geometry flags, operator relationships, sold-asset markers, and public SISP asking-price metadata.
 - `creditors-data.js` - generated searchable creditor rows from the FTI creditor listing posted April 24, 2026, with country, province/state, industry, and PDF-total reconciliation fields.
 - `imagery-data.js` - generated parcel-imagery payload kept for drawer/plumbing work; not exposed as a public atlas mode right now.
 - `quarters-data.js` - generated real parcel geometry loaded from `quarters.geojson`.
@@ -42,7 +42,9 @@ default path.
 
 Use `docs/Land/Acre Sheet.jpg` as the baseline land inventory. It is the Monette Property Summary and should be treated as the January 2026 starting point for farmed, owned, rented, building replacement value, comp high $/ac, and total land/building value.
 
-Montana exception: use the Montana DNRC/DOR public cadastral owner query as the original title/geometry source of truth for the Big Horn County Montana map. As of the 2026-04-26 pull, `MONETTE FARMS USA INC` returns `220` TaxYear 2026 parcels totaling `51,528.893` assessed acres / `51,711.930` GIS acres. The Acre Sheet's `77,727` farmed acres remains a January 2026 operational/farmed-acre reconciliation overlay, leaving `26,198` acres to identify as rented, differently titled, or otherwise unreconciled. See `docs/2026-04-26-montana-cadastral-source-of-truth.md`.
+Montana exception: use the Montana DNRC/DOR public cadastral owner query as the original title/geometry source of truth for the Big Horn County Montana map. As of the 2026-04-26 pull, `MONETTE FARMS USA INC` returns `220` TaxYear 2026 parcels totaling `51,528.893` assessed acres / `51,711.930` GIS acres. The Acre Sheet's `77,727` farmed acres remains a January 2026 operational/farmed-acre reconciliation overlay, leaving `26,198` acres to identify as rented, differently titled, or otherwise unreconciled.
+
+The [Premier Land Company Monette Portfolio](https://www.premierlandcompany.com/ranch/monette-portfolio/) is the current public **offering** source, not the title-geometry source. It markets five integrated assets for `$96,000,000 USD`: `53,756` deeded acres, `43,436` leased acres, and `97,192` total acres. Keep the umbrella listing separate from child assets and do not map leased acreage without source geometry. The exact next-session reconciliation rules live in `.claude/skills/farmland-legal-descriptions/SKILL.md` and `PROJECT_STATE.md`.
 
 The per-property PDFs and XLSX files in `docs/Land/` are overlays: they show what Monette put for sale, provide quarter/title/geometry detail where available, and help identify later dispositions. Do not use those sale packages to overwrite the baseline unless the app clearly labels the change as a post-baseline sale, vote, or reviewed update.
 
@@ -61,22 +63,23 @@ Wymark working rule: start from the Acre Sheet baseline of `21,951` farmed acres
 
 ## Reference docs
 
-- `docs/2026-04-23-audit-remediation-log.md` - what was fixed after the launch audit, why it changed, and what still needs follow-up.
-- `docs/2026-04-23-map-handoff.md` - current atlas state, route/build contract, verification notes, and the paste-ready next-session prompt.
-- `docs/2026-04-23-dossier-roadmap-handoff.md` - current dossier strategy, critique, public queue rule, and audit-qualification next steps.
-- `docs/research/_dossier-Q-audit-qualifications-queue.md` - queued research memo for the Blue Goose and livestock audit qualifications.
-- `docs/plans/2026-04-22-farmer-friendly-map-build-brief.md` - original atlas build brief, updated with implementation status and remaining work.
+- `PROJECT_STATE.md` - current deployed state, blockers, and next-session objective.
+- `docs/logs/seeding-calibration.md` - GEE seeding-calibration history and operating notes.
+- `docs/superpowers/specs/2026-05-06-montana-parcel-audit-spec.md` - Montana cadastral/parcel audit contract.
+- `docs/superpowers/specs/2026-05-06-montana-parcel-audit-data.json` - Montana audit evidence snapshot.
+- `.claude/skills/farmland-legal-descriptions/SKILL.md` - DLS/PLSS parsing and Montana portfolio integration gates.
 
 ## Route contract
 
-- `/#editorial` - The Monette Ledger
-- `/#dossiers` - Dossier roadmap. Publicly shows released dossiers plus the next three upcoming pieces only.
+- `/` or `/#map` - Atlas homepage
 - `/#dossier/<slug>` - Single dossier reader or scheduled placeholder.
-- `/#list` - Asset register
 - `/#creditors` - Searchable creditor database, defaulting to the top 20 listed balances and filterable by country, province/state, industry, debtor, claim type, and currency
-- `/#map` - Status atlas
+- `/#structure` - Corporate structure view
+- `/#stack` - Debt stack view
 - `/#map/<property>` - open a property in the atlas
 - `/#map/<property>/<quarter>` - open a property and quarter directly
+
+Retired `/#list`, `/#editorial`, and `/#dossiers` links redirect to `/#map`.
 
 ## Homepage vote feed
 
@@ -98,13 +101,13 @@ Agnonymous is the public discussion surface: correction threads, banter, request
 
 Quarter-level votes only appear where the property has parcel rows in `quarters.js`. Mapped properties let visitors open a quarter row and vote ownership, listing, or season status.
 
-Point-only assets such as Regina South do not have quarter rows yet, so the drawer does not show a `Sold` vote button. Those files now show three evidence CTAs instead: `Report sold / returned`, `Report listing`, and `Submit parcel evidence`. These open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as public ticker items, parcel rows, or status updates.
+Point-only assets do not have quarter rows yet, so the drawer does not show a `Sold` vote button. The current point-only set includes Alberta and British Columbia facilities or ranches plus Montana child assets whose public package names still need to be reconciled to cadastral records. Those files show three evidence CTAs instead: `Report sold / returned`, `Report listing`, and `Submit parcel evidence`. These open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as public ticker items, parcel rows, or status updates.
 
 The atlas has both a floating map legend and a right-panel legend. Use it to distinguish mapped land blocks, point-only court-file assets, historical sold markers, and the selected-property gold ring.
 
 ## Homepage shell
 
-The homepage is the satellite-driven Atlas at `/#map`. The previous editorial lead-story format (and the Stewart Valley sold marker that anchored it) was retired in the 2026-04-29 redesign — bare `/#map` shows the hero stats band above the atlas; `/#map/{property}` deep-links suppress the hero so shared property links land directly on the map. `/#editorial` and `/#dossiers` silently redirect to `/#map`; individual `#dossier/<slug>` reader URLs are preserved.
+The homepage opens directly on the satellite-driven Atlas at `/` or `/#map`, with the current sales toolbar above the map. The former editorial hero and non-functional Register shell are retired. `/#list`, `/#editorial`, and `/#dossiers` redirect to `/#map`; individual `#dossier/<slug>` reader URLs are preserved, and `/#map/{property}` opens the selected property directly.
 
 ## Coverage model
 
@@ -112,12 +115,24 @@ The app now separates four things that should not be blended:
 
 - January 2026 baseline Property Summary: `392,940` farmed acres, `213,889` owned acres, `183,712` rented acres, and `$1.059B` total land/building value from `docs/Land/Acre Sheet.jpg`.
 - Court-file portfolio totals: `400,000+` farmed footprint, about `274,000` owned acres, about `218,000` leased acres, and `274,744` owned acres in the extracted real-property roster.
-- Public property records: `24` records in `data.js`, including court-file assets that were missing from the first mapped ledger.
-- Community geometry/voting rows: `1,259` current quarter rows, of which `1,235` are generated real-geometry rows and `24` are The Pas synthetic fallback rows.
-- Point-only assets: Airdrie, Swift Current, Regina South, Outlook Seeds Plant, BC Ranches, Goat's Peak Vineyard, Aguila, Genoa, and Tonopah are visible on the map as location markers only until parcel boundaries are sourced.
+- Public property records: `30` records in `data.js`, including court-file assets and current public sales metadata.
+- Community geometry/voting rows: generated from `quarters-data.js`; synthetic records remain explicitly labelled and are not treated as confirmed SISP outlines.
+- Point-only assets: records without source-backed parcel geometry remain visible as location markers until their legal descriptions or cadastral boundaries are reconciled.
 - Operator relationships: CypressView/D&R partner-managed or jointly managed assets are visible as gold `OP` markers. They explain Monette's management network and current creditor exposure, but they do not change portfolio acreage totals.
 
-Register row acres are source-specific and may overlap sale-file blocks. Do not treat their sum as the audited court-file owned acreage total.
+Property-file and broker acres are source-specific and may overlap other sale-file blocks. Do not treat their sum as the audited court-file owned acreage total.
+
+## Next Montana portfolio session
+
+Start with the five assets in Premier Land Company's current Monette Portfolio offering, then reconcile each marketing package to DNRC/DOR cadastral ownership before changing map geometry:
+
+1. Fly Creek Farm — `32,756` deeded + `6,968` leased = `39,724` total acres.
+2. Camp 4 Farm — `11,455` deeded + `26,747` leased = `38,202` total acres.
+3. Camp 1 Farm — `8,060` deeded + `9,721` leased = `17,781` total acres.
+4. The Pivot Farm — `1,473` deeded acres.
+5. Hardin Infrastructure & Rail Site — `12` deeded acres.
+
+The public offering is a `$96,000,000` umbrella portfolio with `53,756` deeded, `43,436` leased, and `97,192` total acres. Keep that umbrella record separate from its five children so the Atlas does not double-count acres or asking price. Do not assume the existing `mt-ragland` or `mt-ragland-camp1` records are The Pivot Farm or the Hardin site without a source-backed identity crosswalk, and do not draw leased boundaries from marketing totals alone. The detailed source hierarchy and validation gate live in `.claude/skills/farmland-legal-descriptions/SKILL.md` and `PROJECT_STATE.md`.
 
 ## Swapping the Mapbox token
 

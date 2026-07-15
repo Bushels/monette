@@ -115,6 +115,36 @@ PLSS assessor data often includes **aliquot** descriptors:
 
 One section can appear multiple times in the source (once per aliquot owned). For mapping at section granularity, **dedupe by (twp, rng, sec)** and sum the acres. For aliquot-level precision, parse the aliquot string and subdivide — that's more work and usually unnecessary for overview zoom levels.
 
+## Monette Montana portfolio integration
+
+Use three separate evidence lanes. Do not let one source silently replace another:
+
+1. **Montana DNRC/DOR cadastral owner query** — deeded title identity and parcel geometry.
+2. **Premier Land Company portfolio listing** — current public offering names, asking price, and deeded/leased/total acreage presentation.
+3. **Monette court and Acre Sheet records** — historical ownership, farmed acreage, entity, and restructuring context.
+
+The Premier listing checked 2026-07-15 presents one `$96,000,000 USD` umbrella offering with five assets:
+
+| Public package | Deeded ac | Leased ac | Total ac |
+|---|---:|---:|---:|
+| Fly Creek Farm | 32,756 | 6,968 | 39,724 |
+| Camp 4 Farm | 11,455 | 26,747 | 38,202 |
+| Camp 1 Farm | 8,060 | 9,721 | 17,781 |
+| The Pivot Farm | 1,473 | 0 | 1,473 |
+| Hardin Infrastructure & Rail Site | 12 | 0 | 12 |
+| **Portfolio** | **53,756** | **43,436** | **97,192** |
+
+Apply these rules when integrating the listing into the Monette atlas:
+
+- Keep the `montana` umbrella record separate from child assets; never add both the umbrella and child acreage into portfolio totals.
+- Treat the `$96M` figure as a portfolio ask unless Premier publishes standalone prices.
+- Do not rename `mt-ragland` or `mt-ragland-camp1` to Pivot Farm or the Hardin rail site without parcel, address, legal-description, or broker-resource evidence proving the crosswalk.
+- Map deeded land from cadastral polygons. Do not fabricate leased-land boundaries from the broker acreage table.
+- Preserve `deeded`, `leased`, `seeded`, `farmed`, and `atlas file` acres as distinct fields whenever their definitions differ.
+- Run `npm run refresh:montana` only after preserving the current Montana slice and confirming the cadastral query still returns the expected owner/entity.
+- Reconcile child totals to `53,756 deeded + 43,436 leased = 97,192 total` before changing public copy.
+- Validate property IDs, acreage double-counting, popup/drawer copy, and the `montana` parent rollup before deployment.
+
 ## Red River Parish Lots (Manitoba) — NOT resolvable by math
 
 Parcels in The Pas, Selkirk, and the old Red River Settlement use a **narrow river-lot survey** from 1835. Format: `RL70-PQ-4734`. These are long, thin strips running perpendicular to a river, irregular in size and orientation. **There is no township/range math that produces them.** You need GIS data (shapefiles from the provincial cadastre) or a fallback to property-center markers.
