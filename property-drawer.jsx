@@ -250,8 +250,10 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
   const sispAcres = sispMeta ? [
     sispMeta.listingAc != null ? `${fmt(sispMeta.listingAc)} broker-listed` : null,
     sispMeta.deededAc != null ? `${fmt(sispMeta.deededAc)} deeded` : null,
+    sispMeta.leasedAc != null ? `${fmt(sispMeta.leasedAc)} leased` : null,
     sispMeta.stateLeaseAc != null ? `${fmt(sispMeta.stateLeaseAc)} state-lease` : null,
     sispMeta.totalAc != null ? `${fmt(sispMeta.totalAc)} total` : null,
+    sispMeta.seededAc != null ? `${fmt(sispMeta.seededAc)} seeded` : null,
     sispMeta.ownedAc != null ? `${fmt(sispMeta.ownedAc)} Monette-owned` : null,
   ].filter(Boolean).join(" · ") : "";
   const sispListingHref = sispMeta ? safeHref(sispMeta.listingUrl) : null;
@@ -260,6 +262,16 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
         .map((listing) => ({ ...listing, href: safeHref(listing.listingUrl) }))
         .filter((listing) => listing.href)
     : [];
+  const aggregatorChildren = prop.aggregator && Array.isArray(prop.childPropertyIds)
+    ? prop.childPropertyIds
+        .map((id) => (D.properties || []).find((property) => property.id === id))
+        .filter(Boolean)
+    : [];
+  const aggregatorMappedRows = aggregatorChildren.reduce(
+    (total, property) => total + (((Q && Q[property.id]) || []).length),
+    0
+  );
+  const isCourtFileBacked = Array.isArray(prop.tags) && prop.tags.includes("court-file");
   const sispPageHref = sispGlobal ? safeHref(sispGlobal.sispPage) : null;
   return (
     <div onClick={onClose} className="drawer-scrim" style={{ position: "fixed", inset: 0, background: "rgba(19,17,14,0.55)", zIndex: 50, display: "flex", justifyContent: "flex-end" }}>
@@ -329,10 +341,14 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
         <div className="pd-rollup" style={{ padding: "16px 28px", background: "var(--paper-2)", borderBottom: "1px solid var(--rule)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8, gap: 8, flexWrap: "wrap" }}>
             <span style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>
-              {rollup.total ? `Status rollup · ${rollup.total} quarters shown` : "Property file · parcel rows needed"}
+              {prop.aggregator
+                ? `Portfolio rollup · ${aggregatorChildren.length} public packages`
+                : rollup.total ? `Status rollup · ${rollup.total} quarters shown` : "Property file · parcel rows needed"}
             </span>
             <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 10, color: "var(--mute)" }}>
-              {rollup.total ? "Click any quarter for satellite detail" : "Submit location evidence or field observations"}
+              {prop.aggregator
+                ? "Select a child package for parcel detail"
+                : rollup.total ? "Click any quarter for satellite detail" : "Submit location evidence or field observations"}
             </span>
           </div>
           {currentLandStatus && (
@@ -346,7 +362,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                   ["Current owned", currentLandStatus.mappedOwnedAc || 0, OWN["owned-monette"].color, "ac"],
                   ["Sold dot", currentLandStatus.soldUnlocatedAc || 0, OWN.sold.color, "ac"],
                   ["Rented/unmapped", currentLandStatus.assumedRentedUnmappedAc || 0, OWN["rented-monette"].color, "ac"],
-                  ["Mapped rows", rollup.total || 0, "var(--ink-2)", "quarters"],
+                  ["Mapped rows", prop.aggregator ? aggregatorMappedRows : (rollup.total || 0), "var(--ink-2)", "quarters"],
                 ].map(([l, v, c, unit]) => (
                   <div key={l}>
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -360,17 +376,19 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                 ))}
               </div>
               <div className="mono" style={{ marginTop: 9, fontSize: 10, lineHeight: 1.45, color: "var(--ink-2)" }}>
-                The rollup below counts mapped quarter rows only. Rented/unmapped acres stay out of the row list until LSDs or quarter descriptions are confirmed.
+                {prop.aggregator
+                  ? "Mapped rows live on the four cadastral child packages. The Hardin rail site stays point-only; rented marketing acres are not drawn."
+                  : "The rollup below counts mapped quarter rows only. Rented/unmapped acres stay out of the row list until LSDs or quarter descriptions are confirmed."}
               </div>
             </div>
           )}
-          {currentLandStatus && (
+          {currentLandStatus && !prop.aggregator && (
             <div className="mono" style={{ margin: "10px 0 6px", fontSize: 9, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--mute)" }}>
               Mapped row status rollup
             </div>
           )}
-          <RollupBar rollup={rollup} />
-          <div className="pd-rollup-grid" style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, fontSize: 11, fontFamily: '"JetBrains Mono", monospace' }}>
+          {!prop.aggregator && <RollupBar rollup={rollup} />}
+          {!prop.aggregator && <div className="pd-rollup-grid" style={{ marginTop: 10, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, fontSize: 11, fontFamily: '"JetBrains Mono", monospace' }}>
             {(() => {
               // For properties where the sold-and-rented-back transaction
               // dominates (currently Hafford), swap the "Owned" tile for a
@@ -396,10 +414,23 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
                 </div>
               </div>
             ))}
-          </div>
+          </div>}
+          {prop.aggregator && (
+            <div style={{ display: "grid", gap: 6, marginTop: 10 }}>
+              {aggregatorChildren.map((child) => {
+                const mappedRows = ((Q && Q[child.id]) || []).length;
+                return (
+                  <div key={child.id} className="mono" style={{ display: "flex", justifyContent: "space-between", gap: 12, fontSize: 10, padding: "6px 0", borderTop: "1px solid var(--rule)" }}>
+                    <span>{child.name}</span>
+                    <span style={{ color: "var(--mute)" }}>{mappedRows ? `${mappedRows} cadastral parcels` : "point-only"}</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        <div className="pd-imagery-summary" style={{
+        {!prop.aggregator && <div className="pd-imagery-summary" style={{
           padding: "14px 28px",
           borderBottom: "1px solid var(--rule)",
           background: "rgba(236,230,219,0.45)",
@@ -444,7 +475,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             <span style={{ color: "var(--mute)" }}>Low-QC acres</span>
             <span>{fmtAc(seedingAcreSummary.lowQcAc)}</span>
           </div>
-        </div>
+        </div>}
 
         {false && prop.id === "montana" && (
           <div className="pd-montana-banner" style={{
@@ -666,7 +697,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
           </div>
         )}
 
-        {!quarters.length && (
+        {!quarters.length && !prop.aggregator && (
           <div style={{
             margin: "18px 28px",
             padding: 18,
@@ -677,10 +708,12 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               Needs community geometry
             </div>
             <div className="serif" style={{ fontSize: 30, lineHeight: 1.05, marginTop: 8 }}>
-              Court-file asset, not parcel-mapped yet.
+              Point-only asset, not parcel-mapped yet.
             </div>
             <div style={{ marginTop: 10, fontSize: 13, lineHeight: 1.55, color: "var(--ink-2)" }}>
-              This record is backed by the court-file roster, but we do not yet have defensible quarter rows or parcel polygons. Until parcel mapping catches up, open a public evidence thread on Agnonymous so others can comment under it.
+              {isCourtFileBacked
+                ? "This record is backed by the court-file roster, but we do not yet have defensible quarter rows or parcel polygons. Until parcel mapping catches up, open a public evidence thread on Agnonymous so others can comment under it."
+                : "This record has public source evidence, but no defensible quarter rows or parcel polygons yet. Until parcel mapping catches up, open a public evidence thread on Agnonymous so others can comment under it."}
             </div>
             <div className="pd-point-only-explain">
               <div>

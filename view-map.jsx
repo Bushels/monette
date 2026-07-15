@@ -340,12 +340,19 @@ function propertySalePopupHtml(property, saleMeta) {
   const rows = [
     ["Asking", saleMeta.price],
     [packageCount > 1 ? "Packages" : "Listing", packageCount > 1 ? `${packageCount} public packages` : "1 public package"],
-    ["Broker acres", saleMeta.listingAc != null ? `${fmt(saleMeta.listingAc)} ac` : null],
+    ["Broker acres", saleMeta.listingAc != null
+      ? `${fmt(saleMeta.listingAc)} ac`
+      : saleMeta.totalAc != null
+        ? `${fmt(saleMeta.totalAc)} total`
+        : null],
+    ["Deeded / leased", saleMeta.deededAc != null
+      ? `${fmt(saleMeta.deededAc)} / ${fmt(saleMeta.leasedAc || 0)} ac`
+      : null],
     ["$/acre", saleMeta.pricePerAcCAD != null ? `$${fmt(saleMeta.pricePerAcCAD)}/ac` : null],
   ].filter(([, value]) => value != null && value !== "");
   return `
     <div class="atlas-sale-popup atlas-asking-popup">
-      <div class="atlas-sale-popup-kicker">Hammond Realty asking price</div>
+      <div class="atlas-sale-popup-kicker">${escapePopupHtml(saleMeta.broker || "Broker")} asking price</div>
       <div class="atlas-sale-popup-title">${escapePopupHtml(property.name)}</div>
       ${rows.map(([label, value], index) => `
         <div class="atlas-sale-popup-row${index === 0 ? " atlas-sale-popup-row-price" : ""}">
@@ -877,10 +884,9 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         geometryStatus: pointOnly ? "point-only" : "synthetic",
       };
 
-      // hideMapMarker: opt out of on-map circle + label rendering. Used for
-      // properties whose polygons aggregate under a parent rollup (e.g.,
-      // Montana sub-properties whose parcels live under quarters['montana']).
-      // The redundant point markers were obscuring the parcel polygons.
+      // hideMapMarker: opt out of on-map circle + label rendering for a
+      // deliberately suppressed point-only property. Parcel-mapped children
+      // are handled by the polygon branch below.
       if (
         Number.isFinite(property.lng) &&
         Number.isFinite(property.lat) &&
@@ -901,6 +907,7 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
             dominant_color: propertyDisplayColor(property, rollup),
             geometry_status: pointOnly ? "point-only" : "synthetic",
             location_precision: property.locationPrecision || "approximate",
+            show_map_marker: property.showMapMarker ? 1 : 0,
           },
         });
         labelFeatures.push({
@@ -1357,12 +1364,12 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         PROPERTY_POINT_LAYER,
         selId
           ? ["all", ["==", ["get", "id"], selId], ["==", ["get", "geometry_status"], "point-only"]]
-          : EMPTY_PROP_FILTER
+          : ["==", ["get", "show_map_marker"], 1]
       );
       map.setPaintProperty(
         PROPERTY_POINT_LAYER,
         "circle-opacity",
-        selId ? 0.82 : 0
+        0.82
       );
       map.setPaintProperty(
         PROPERTY_POINT_LAYER,
@@ -1727,7 +1734,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         id: PROPERTY_POINT_LAYER,
         type: "circle",
         source: PROPERTY_POINT_SOURCE,
-        filter: EMPTY_PROP_FILTER,
+        filter: ["==", ["get", "show_map_marker"], 1],
         paint: {
           "circle-color": ["get", "dominant_color"],
           "circle-opacity": 0.92,
@@ -2691,7 +2698,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
 
             {sel && !hasSelectedGeometry && (
               <div className="atlas-map-note mono">
-                {sel.name} is not parcel-mapped yet. The marker is a court-file location cue, not a surveyed boundary.
+                {sel.name} is not parcel-mapped yet. The marker is an approximate location cue, not a surveyed boundary.
               </div>
             )}
 

@@ -127,22 +127,29 @@ The Premier listing checked 2026-07-15 presents one `$96,000,000 USD` umbrella o
 
 | Public package | Deeded ac | Leased ac | Total ac |
 |---|---:|---:|---:|
-| Fly Creek Farm | 32,756 | 6,968 | 39,724 |
-| Camp 4 Farm | 11,455 | 26,747 | 38,202 |
-| Camp 1 Farm | 8,060 | 9,721 | 17,781 |
+| Fly Creek Farm | 32,756 | 6,454 | 39,210 |
+| Camp 4 Farm | 11,455 | 22,828 | 34,282 |
+| Camp 1 Farm | 8,060 | 9,159 | 17,219 |
 | The Pivot Farm | 1,473 | 0 | 1,473 |
-| Hardin Infrastructure & Rail Site | 12 | 0 | 12 |
-| **Portfolio** | **53,756** | **43,436** | **97,192** |
+| Hardin Infrastructure & Rail Site | 7 | 0 | 7 |
+| **Portfolio** | **53,751** | **38,441** | **92,193** |
+
+Premier's visible rows do not arithmetically close: deeded + leased = `92,192`,
+and the five child total cells sum to `92,191`, versus the published `92,193`
+portfolio total. Preserve those displayed values and record the `1–2 ac` source
+delta; do not silently alter a child or parent figure to make the table balance.
 
 Apply these rules when integrating the listing into the Monette atlas:
 
 - Keep the `montana` umbrella record separate from child assets; never add both the umbrella and child acreage into portfolio totals.
 - Treat the `$96M` figure as a portfolio ask unless Premier publishes standalone prices.
-- Do not rename `mt-ragland` or `mt-ragland-camp1` to Pivot Farm or the Hardin rail site without parcel, address, legal-description, or broker-resource evidence proving the crosswalk.
+- The `1,473 ac` Ragland court row crosswalks to `mt-pivot`: the acreage matches Premier exactly, and the distinct `T01N-R33E` owner-query cluster matches the separate Pivot block shown in the Camp 1 tender map.
+- Do not crosswalk the `737 ac` `mt-ragland-camp1` court row to the `7 ac` Hardin rail site. Keep it excluded from the current offering until title evidence identifies it.
+- Keep the Hardin rail site point-only and city-approximate until a parcel, address, legal description, or broker map proves its boundary.
 - Map deeded land from cadastral polygons. Do not fabricate leased-land boundaries from the broker acreage table.
 - Preserve `deeded`, `leased`, `seeded`, `farmed`, and `atlas file` acres as distinct fields whenever their definitions differ.
 - Run `npm run refresh:montana` only after preserving the current Montana slice and confirming the cadastral query still returns the expected owner/entity.
-- Reconcile child totals to `53,756 deeded + 43,436 leased = 97,192 total` before changing public copy.
+- Reconcile children to Premier's displayed values and expose the `1–2 ac` published arithmetic delta.
 - Validate property IDs, acreage double-counting, popup/drawer copy, and the `montana` parent rollup before deployment.
 
 ## Red River Parish Lots (Manitoba) — NOT resolvable by math

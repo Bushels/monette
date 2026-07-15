@@ -53,6 +53,21 @@ function buildLoc(attrs) {
   return `T${String(township.number).padStart(2, "0")}${township.direction}-R${String(range.number).padStart(2, "0")}${range.direction}-S${String(section).padStart(2, "0")}-${attrs.PARCELID}`;
 }
 
+// Premier's public packages follow four distinct PLSS clusters in the DNRC
+// owner-query slice. Keep this rule deterministic and reviewable: leased acres
+// remain marketing-only data and never receive inferred geometry here.
+function classifyMontanaProperty(township, range) {
+  if (!township || !range || range.direction !== "E") {
+    throw new Error("Montana parcel is missing a supported PLSS township/range");
+  }
+  if (township.direction === "N" && township.number === 1 && range.number === 33) {
+    return "mt-pivot";
+  }
+  if (range.number >= 33) return "mt-nieden-camp1";
+  if (township.direction === "S" && township.number >= 4) return "mt-st-xavier-camp4";
+  return "mt-fly-creek";
+}
+
 function convertFeature(feature) {
   const attrs = feature.attributes || feature.properties || {};
   const township = parseTownship(attrs.Township);
@@ -60,6 +75,7 @@ function convertFeature(feature) {
   const section = Number(attrs.Section);
   const totalAcres = Number(attrs.TotalAcres);
   const gisAcres = Number(attrs.GISAcres);
+  const propertyId = classifyMontanaProperty(township, range);
 
   return {
     type: "Feature",
@@ -69,7 +85,8 @@ function convertFeature(feature) {
         : feature.geometry
     ),
     properties: {
-      property_id: "montana",
+      property_id: propertyId,
+      parent_property_id: "montana",
       loc: buildLoc(attrs),
       loc_raw:
         township && range && Number.isFinite(section)
@@ -136,7 +153,10 @@ async function fetchMontanaFeatures() {
 async function main() {
   const existing = JSON.parse(fs.readFileSync(GEOJSON_PATH, "utf8"));
   const currentFeatures = Array.isArray(existing.features) ? existing.features : [];
-  const nonMontana = currentFeatures.filter((feature) => feature.properties?.property_id !== "montana");
+  const nonMontana = currentFeatures.filter((feature) => {
+    const properties = feature.properties || {};
+    return properties.property_id !== "montana" && properties.parent_property_id !== "montana";
+  });
   const montana = await fetchMontanaFeatures();
 
   const duplicateLocs = montana
@@ -144,6 +164,23 @@ async function main() {
     .filter((loc, index, all) => all.indexOf(loc) !== index);
   if (duplicateLocs.length) {
     throw new Error(`Duplicate Montana loc keys: ${[...new Set(duplicateLocs)].join(", ")}`);
+  }
+
+  const groups = new Map();
+  for (const feature of montana) {
+    const propertyId = feature.properties.property_id;
+    const current = groups.get(propertyId) || { parcels: 0, assessedAcres: 0, gisAcres: 0 };
+    current.parcels += 1;
+    current.assessedAcres += Number(feature.properties.titled_ac) || 0;
+    current.gisAcres += Number(feature.properties.gis_ac) || 0;
+    groups.set(propertyId, current);
+  }
+  const expectedGroups = ["mt-fly-creek", "mt-st-xavier-camp4", "mt-nieden-camp1", "mt-pivot"];
+  const missingGroups = expectedGroups.filter((propertyId) => !groups.has(propertyId));
+  if (missingGroups.length || groups.size !== expectedGroups.length) {
+    throw new Error(
+      `Unexpected Montana package groups. Missing: ${missingGroups.join(", ") || "none"}; found: ${[...groups.keys()].join(", ")}`
+    );
   }
 
   const next = {
@@ -157,6 +194,12 @@ async function main() {
   console.log(
     `Replaced Montana slice: ${montana.length} parcels, ${totalAcres.toFixed(3)} assessed acres, ${gisAcres.toFixed(3)} GIS acres`
   );
+  for (const propertyId of expectedGroups) {
+    const group = groups.get(propertyId);
+    console.log(
+      `  ${propertyId}: ${group.parcels} parcels, ${group.assessedAcres.toFixed(3)} assessed acres, ${group.gisAcres.toFixed(3)} GIS acres`
+    );
+  }
 }
 
 main().catch((error) => {

@@ -101,7 +101,7 @@ Agnonymous is the public discussion surface: correction threads, banter, request
 
 Quarter-level votes only appear where the property has parcel rows in `quarters.js`. Mapped properties let visitors open a quarter row and vote ownership, listing, or season status.
 
-Point-only assets do not have quarter rows yet, so the drawer does not show a `Sold` vote button. The current point-only set includes Alberta and British Columbia facilities or ranches plus Montana child assets whose public package names still need to be reconciled to cadastral records. Those files show three evidence CTAs instead: `Report sold / returned`, `Report listing`, and `Submit parcel evidence`. These open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as public ticker items, parcel rows, or status updates.
+Point-only assets do not have quarter rows yet, so the drawer does not show a `Sold` vote button. The current point-only set includes Alberta and British Columbia facilities or ranches plus Montana's 7-acre Hardin Infrastructure & Rail Site, whose exact parcel is not published. Those files show three evidence CTAs instead: `Report sold / returned`, `Report listing`, and `Submit parcel evidence`. These open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as public ticker items, parcel rows, or status updates.
 
 The atlas has both a floating map legend and a right-panel legend. Use it to distinguish mapped land blocks, point-only court-file assets, historical sold markers, and the selected-property gold ring.
 
@@ -115,24 +115,24 @@ The app now separates four things that should not be blended:
 
 - January 2026 baseline Property Summary: `392,940` farmed acres, `213,889` owned acres, `183,712` rented acres, and `$1.059B` total land/building value from `docs/Land/Acre Sheet.jpg`.
 - Court-file portfolio totals: `400,000+` farmed footprint, about `274,000` owned acres, about `218,000` leased acres, and `274,744` owned acres in the extracted real-property roster.
-- Public property records: `30` records in `data.js`, including court-file assets and current public sales metadata.
+- Public property records: `31` records in `data.js`, including court-file assets and current public sales metadata.
 - Community geometry/voting rows: generated from `quarters-data.js`; synthetic records remain explicitly labelled and are not treated as confirmed SISP outlines.
 - Point-only assets: records without source-backed parcel geometry remain visible as location markers until their legal descriptions or cadastral boundaries are reconciled.
 - Operator relationships: CypressView/D&R partner-managed or jointly managed assets are visible as gold `OP` markers. They explain Monette's management network and current creditor exposure, but they do not change portfolio acreage totals.
 
 Property-file and broker acres are source-specific and may overlap other sale-file blocks. Do not treat their sum as the audited court-file owned acreage total.
 
-## Next Montana portfolio session
+## Montana portfolio mapping
 
-Start with the five assets in Premier Land Company's current Monette Portfolio offering, then reconcile each marketing package to DNRC/DOR cadastral ownership before changing map geometry:
+The five assets in Premier Land Company's current Monette Portfolio offering are mapped with broker figures kept separate from DNRC/DOR cadastral geometry:
 
-1. Fly Creek Farm — `32,756` deeded + `6,968` leased = `39,724` total acres.
-2. Camp 4 Farm — `11,455` deeded + `26,747` leased = `38,202` total acres.
-3. Camp 1 Farm — `8,060` deeded + `9,721` leased = `17,781` total acres.
+1. Fly Creek Farm — `32,756` deeded + `6,454` leased = `39,210` total acres.
+2. Camp 4 Farm — `11,455` deeded + `22,828` leased = `34,282` published total acres.
+3. Camp 1 Farm — `8,060` deeded + `9,159` leased = `17,219` total acres.
 4. The Pivot Farm — `1,473` deeded acres.
-5. Hardin Infrastructure & Rail Site — `12` deeded acres.
+5. Hardin Infrastructure & Rail Site — `7` deeded acres.
 
-The public offering is a `$96,000,000` umbrella portfolio with `53,756` deeded, `43,436` leased, and `97,192` total acres. Keep that umbrella record separate from its five children so the Atlas does not double-count acres or asking price. Do not assume the existing `mt-ragland` or `mt-ragland-camp1` records are The Pivot Farm or the Hardin site without a source-backed identity crosswalk, and do not draw leased boundaries from marketing totals alone. The detailed source hierarchy and validation gate live in `.claude/skills/farmland-legal-descriptions/SKILL.md` and `PROJECT_STATE.md`.
+The public offering is a `$96,000,000` umbrella portfolio with published figures of `53,751` deeded, `38,441` leased, `92,193` total, and `63,049` seeded acres. Premier's visible rows contain a `1–2 ac` arithmetic discrepancy: deeded plus leased is `92,192`, while the five child total cells sum to `92,191`. The Atlas preserves the source values and shows the delta rather than inventing a reconciliation. The umbrella stays separate from its five children so acres and asking price are not double-counted. DNRC polygons are assigned only to Fly Creek, Camp 4, Camp 1, and Pivot; the rail site remains an approximate point, leased boundaries are not fabricated, and the unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering. Run `npm run validate:montana` before deployment.
 
 ## Swapping the Mapbox token
 

@@ -5,10 +5,11 @@
 - Vercel production deployment: `HiEREkUo8JaiyRaojg3s1FqMVow2` at `https://monette.buperac.com`.
 
 ## Active task
-**DONE (2026-07-15): Full `feat/seeding-calibration` integration and production deployment from `main`.**
-The complete feature lineage is merged into the production branch, including the
-GEE seeding-calibration work, snow watcher, official SISP layer, evidence-gated
-for-sale outlines, and the current Hammond Realty public asking-price refresh.
+**IMPLEMENTED + VERIFIED LOCALLY (2026-07-15): Montana portfolio mapping; deployment not yet performed.**
+The active map data now separates Premier's five public packages from the Montana
+umbrella, assigns source-backed DNRC/DOR polygons to Fly Creek, Camp 4, Camp 1,
+and Pivot, and leaves the 7-acre Hardin rail site as an approximate point. The
+unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering.
 
 ## Current public Atlas state
 - Atlas is the homepage. The retired Register route redirects to `#map`.
@@ -50,21 +51,20 @@ for-sale outlines, and the current Hammond Realty public asking-price refresh.
 The existing untracked SK-title log directory, two planning documents, and two dust
 visualization scripts were not included in this production merge.
 
-## Next session: Montana portfolio integration
-Use Premier Land Company's current Monette Portfolio page as the public offering
-source: `$96,000,000`, `53,756` deeded acres, `43,436` leased acres, and `97,192`
-total acres across Fly Creek Farm, Camp 4 Farm, Camp 1 Farm, The Pivot Farm, and
-the Hardin Infrastructure & Rail Site.
+## Montana portfolio mapped state
+- Premier live check on 2026-07-15: `$96,000,000`, `53,751` deeded, `38,441`
+  leased, `92,193` total, and `63,049` seeded acres.
+- Premier's own visible arithmetic is inconsistent: deeded + leased = `92,192`;
+  the five displayed child totals sum to `92,191`. Preserve the published cells
+  and expose the `1–2 ac` source delta.
+- DNRC owner-query geometry: 220 parcels / 51,528.893 assessed acres, grouped as
+  Fly Creek 95 / 32,557.384 ac; Camp 4 66 / 10,201.820 ac; Camp 1 56 /
+  7,982.248 ac; Pivot 3 / 787.441 ac.
+- No leased-land geometry is inferred from marketing totals.
+- `npm run validate:montana` is the deployment gate for IDs, acreage arithmetic,
+  parent/child separation, polygon assignment, and the point-only rail rule.
 
-Integration gates:
-1. Read this file, `README.md`, the Montana audit references, and
-   `.claude/skills/farmland-legal-descriptions/SKILL.md` before editing data.
-2. Treat DNRC/DOR cadastral records as the deeded ownership and geometry source;
-   treat Premier as the current package-name, acreage, and asking-price source.
-3. Prove the package-to-property-ID crosswalk. Do not assume `mt-ragland` or
-   `mt-ragland-camp1` equals The Pivot Farm or the Hardin site.
-4. Keep the `$96,000,000` umbrella offering separate from its five children and
-   exclude the parent from additive acreage and price rollups.
-5. Do not fabricate leased-land geometry from marketing acreage totals.
-6. Reconcile deeded, leased, and total acres; then validate IDs, map hover prices,
-   property drawers, and portfolio rollups before committing or deploying.
+## Next ship gate
+The production build, Montana validator, and browser QA pass. Push `main` and
+deploy the Montana map change; production remains at the last verified state
+above until that happens.
