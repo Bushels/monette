@@ -15,6 +15,41 @@ const fmtAc = (n) => `${Math.round(n || 0).toLocaleString("en-CA")} ac`;
 const now = () => new Date().toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 const ACTION_KEYS = new Set(["Enter", " "]);
 
+function parseAskingPriceCAD(value) {
+  const match = /\$([\d,]+)/.exec(String(value || ""));
+  return match ? Number(match[1].replace(/,/g, "")) : 0;
+}
+
+// Current public Hammond inventory only. This intentionally excludes the
+// separately listed Swift Current processing facility and non-SK brokers.
+// All top-level sale figures derive from the same per-property records used by
+// the drawer, so navigation copy cannot drift away from the map data.
+function getHammondSaleSummary() {
+  const listings = Object.values(D.sispByProperty || {}).filter((meta) =>
+    meta && meta.status === "listed" && meta.broker === "Hammond Realty" &&
+    meta.sourceCheckedAt && meta.price
+  );
+  return listings.reduce((summary, meta) => {
+    summary.listingCount += Array.isArray(meta.listings) ? meta.listings.length : 1;
+    summary.totalAskingCAD += parseAskingPriceCAD(meta.price);
+    summary.listingAcres += Number(meta.listingAc || 0);
+    if (!summary.checkedAt || meta.sourceCheckedAt > summary.checkedAt) {
+      summary.checkedAt = meta.sourceCheckedAt;
+    }
+    return summary;
+  }, {
+    listingCount: 0,
+    totalAskingCAD: 0,
+    listingAcres: 0,
+    checkedAt: null,
+  });
+}
+
+function fmtAskingCompact(value) {
+  const millions = Number(value || 0) / 1000000;
+  return `$${millions.toLocaleString("en-CA", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}
+
 function fmtSatelliteNumber(value, digits = 3, suffix = "") {
   if (value == null || value === "") return null;
   const n = Number(value);
@@ -944,6 +979,8 @@ Object.assign(window, {
   PORTFOLIO,
   fmt,
   fmtM,
+  getHammondSaleSummary,
+  fmtAskingCompact,
   now,
   onActionKey,
   currentMonetteUrl,

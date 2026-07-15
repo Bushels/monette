@@ -248,12 +248,18 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     return mo ? `${mo} ${Number(m[3])}, ${m[1]}` : "";
   };
   const sispAcres = sispMeta ? [
+    sispMeta.listingAc != null ? `${fmt(sispMeta.listingAc)} broker-listed` : null,
     sispMeta.deededAc != null ? `${fmt(sispMeta.deededAc)} deeded` : null,
     sispMeta.stateLeaseAc != null ? `${fmt(sispMeta.stateLeaseAc)} state-lease` : null,
     sispMeta.totalAc != null ? `${fmt(sispMeta.totalAc)} total` : null,
     sispMeta.ownedAc != null ? `${fmt(sispMeta.ownedAc)} Monette-owned` : null,
   ].filter(Boolean).join(" · ") : "";
   const sispListingHref = sispMeta ? safeHref(sispMeta.listingUrl) : null;
+  const sispListings = sispMeta && Array.isArray(sispMeta.listings)
+    ? sispMeta.listings
+        .map((listing) => ({ ...listing, href: safeHref(listing.listingUrl) }))
+        .filter((listing) => listing.href)
+    : [];
   const sispPageHref = sispGlobal ? safeHref(sispGlobal.sispPage) : null;
   return (
     <div onClick={onClose} className="drawer-scrim" style={{ position: "fixed", inset: 0, background: "rgba(19,17,14,0.55)", zIndex: 50, display: "flex", justifyContent: "flex-end" }}>
@@ -292,6 +298,16 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               {sispGlobal && <div><span style={{ color: "var(--mute)" }}>Binding bids due</span> {fmtSispDate(sispGlobal.bindingBidDeadline)} · <span style={{ color: "var(--mute)" }}>closes</span> {fmtSispDate(sispGlobal.closing)}</div>}
             </div>
             {sispMeta.note && <div className="mono" style={{ marginTop: 8, fontSize: 10, color: "var(--mute)", lineHeight: 1.5 }}>{sispMeta.note}</div>}
+            {sispListings.length > 0 && (
+              <div style={{ display: "grid", gap: 6, marginTop: 10 }}>
+                {sispListings.map((listing) => (
+                  <a key={listing.listingUrl} href={listing.href} target="_blank" rel="noreferrer" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 12, padding: "7px 9px", border: "1px solid rgba(180,134,56,0.32)", color: "var(--ink)", textDecoration: "none", background: "rgba(255,255,255,0.35)" }}>
+                    <span className="serif" style={{ fontSize: 14 }}>{listing.name}</span>
+                    <span className="mono" style={{ fontSize: 9, color: "#8a6a2a", textAlign: "right", whiteSpace: "nowrap" }}>{listing.price}{listing.listingAc != null ? ` · ${fmt(listing.listingAc)} ac` : ""} →</span>
+                  </a>
+                ))}
+              </div>
+            )}
             <div style={{ display: "flex", gap: 14, marginTop: 10, flexWrap: "wrap" }}>
               {sispListingHref && <a href={sispListingHref} target="_blank" rel="noreferrer" style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: "#8a6a2a", textDecoration: "underline" }}>View broker listing →</a>}
               {sispPageHref && <a href={sispPageHref} target="_blank" rel="noreferrer" style={{ fontSize: 11, fontFamily: '"JetBrains Mono", monospace', color: "var(--mute)", textDecoration: "underline" }}>FTI SISP page →</a>}

@@ -7,29 +7,27 @@
 //   #map/{property}        → Atlas focused on one property; hero suppressed
 //   #map/{property}/{loc}  → Atlas focused on a specific quarter; hero suppressed
 //   #dossier/{slug}        → A single dossier article (e.g. #dossier/insurance-tower)
-//   #list                  → Asset register
 //
-// Note: the editorial Ledger and dossiers index were removed in the homepage
-// redesign (2026-04-29). Both #editorial and #dossiers silently redirect to #map.
+// Note: the editorial Ledger, dossiers index, and Register view were removed
+// from the homepage. Their retired hashes silently redirect to #map.
 
 const VIEWS = [
-  { key: "list",      label: "Register",  Component: () => null /* filled below */ },
+  { key: "map",       label: "Atlas",     Component: () => null },
   { key: "creditors", label: "Creditors", Component: () => null },
   { key: "structure", label: "Structure", Component: () => null },
   { key: "stack",     label: "Debt",      Component: () => null },
-  { key: "map",       label: "Atlas",     Component: () => null },
 ];
 
 function parseHash() {
   const h = (window.location.hash || "#map").replace(/^#/, "");
   // Silently redirect retired routes to #map. The singular #dossier/<slug>
   // route is preserved so individual article links still work.
-  if (h === "dossiers" || h === "dossiers/" || h === "editorial" || h === "editorial/") {
+  if (h === "list" || h === "list/" || h === "dossiers" || h === "dossiers/" || h === "editorial" || h === "editorial/") {
     history.replaceState({}, "", "#map");
     return { view: "map", prop: null, quarter: null };
   }
   const [view, prop, quarter] = h.split("/");
-  const known = ["dossier", "list", "creditors", "structure", "stack", "map"];
+  const known = ["dossier", "creditors", "structure", "stack", "map"];
   return {
     view: known.includes(view) ? view : "map",
     prop: prop || null,
@@ -80,7 +78,6 @@ function App() {
   };
 
   const ViewComponent =
-    view === "list"     ? window.ListView :
     view === "creditors" ? window.CreditorsView :
     view === "structure" ? window.GroupStructureView :
     view === "stack"    ? window.DebtStackView :
@@ -94,13 +91,14 @@ function App() {
   const supportUrl = (typeof window.supportCustomAmountUrl === "function")
     ? window.supportCustomAmountUrl()
     : "https://paypal.me/buperac";
+  const publicSales = getHammondSaleSummary();
 
   return (
     <>
       <nav className="site-nav">
         <div className="brand">
           <span className="wordmark">The Monette Ledger</span>
-          <span className="tag">CCAA · DAY {D.day}</span>
+          <span className="tag">{publicSales.listingCount} LISTINGS · {fmtAskingCompact(publicSales.totalAskingCAD)} ASK</span>
         </div>
         <div className="tabs">
           {VIEWS.map((v) => (

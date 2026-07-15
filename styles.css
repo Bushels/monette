@@ -394,6 +394,16 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   border-color: rgba(241,210,132,0.34);
   background: rgba(180,134,56,0.2);
 }
+.atlas-toolbar-pill-asking {
+  color: #fff1bf;
+  border-color: rgba(241,210,132,0.52);
+  background: rgba(180,134,56,0.28);
+}
+.atlas-toolbar-pill-deadline {
+  color: #e6c8a8;
+  border-color: rgba(214,160,105,0.34);
+  background: rgba(154,88,42,0.18);
+}
 .atlas-grid { display: grid; }
 .atlas-side { position: relative; }
 .atlas-rail,
@@ -1182,6 +1192,22 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   color: #fff7d6;
   font-weight: 700;
   text-align: right;
+}
+.atlas-sale-popup-row-price {
+  grid-template-columns: 58px minmax(0, 1fr);
+  padding: 7px 0 8px;
+  border-bottom: 1px solid rgba(241,210,132,0.16);
+}
+.atlas-sale-popup-row-price strong {
+  color: #f1d284;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: 20px;
+  line-height: 1;
+}
+.atlas-chip-price {
+  color: #f1d284;
+  border-color: rgba(241,210,132,0.42);
+  background: rgba(180,134,56,0.16);
 }
 .atlas-sale-popup p {
   margin: 10px 0 0;

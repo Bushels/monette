@@ -335,6 +335,29 @@ function escapePopupHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
+function propertySalePopupHtml(property, saleMeta) {
+  const packageCount = Array.isArray(saleMeta.listings) ? saleMeta.listings.length : 1;
+  const rows = [
+    ["Asking", saleMeta.price],
+    [packageCount > 1 ? "Packages" : "Listing", packageCount > 1 ? `${packageCount} public packages` : "1 public package"],
+    ["Broker acres", saleMeta.listingAc != null ? `${fmt(saleMeta.listingAc)} ac` : null],
+    ["$/acre", saleMeta.pricePerAcCAD != null ? `$${fmt(saleMeta.pricePerAcCAD)}/ac` : null],
+  ].filter(([, value]) => value != null && value !== "");
+  return `
+    <div class="atlas-sale-popup atlas-asking-popup">
+      <div class="atlas-sale-popup-kicker">Hammond Realty asking price</div>
+      <div class="atlas-sale-popup-title">${escapePopupHtml(property.name)}</div>
+      ${rows.map(([label, value], index) => `
+        <div class="atlas-sale-popup-row${index === 0 ? " atlas-sale-popup-row-price" : ""}">
+          <span>${escapePopupHtml(label)}</span>
+          <strong>${escapePopupHtml(value)}</strong>
+        </div>
+      `).join("")}
+      <p>Click for the full listing breakdown and broker links.</p>
+    </div>
+  `;
+}
+
 function feedlotProposalPopupHtml(props) {
   const loc = props.loc || "";
   const anchor = props.feedlot_proposal_anchor || "";
@@ -1114,6 +1137,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
   const rumoredQuarterPopupRef = useRef(null);
   const feedlotProposalPopupRef = useRef(null);
   const seedingPopupRef = useRef(null);
+  const propertySalePopupRef = useRef(null);
   const pendingFocusRef = useRef(null);
 
   const rollups = useMemo(() => {
@@ -1934,6 +1958,30 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     if (!map.__monetteAtlasHandlersInstalled) {
       map.__monetteAtlasHandlersInstalled = true;
 
+      const showPropertySalePopup = (property, lngLat) => {
+        const saleMeta = property && (D.sispByProperty || {})[property.id];
+        if (!saleMeta || saleMeta.status !== "listed" || !saleMeta.price) {
+          if (propertySalePopupRef.current) propertySalePopupRef.current.remove();
+          return;
+        }
+        if (!propertySalePopupRef.current) {
+          propertySalePopupRef.current = new window.mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: "atlas-sale-map-popup atlas-asking-map-popup",
+            offset: 14,
+          });
+        }
+        propertySalePopupRef.current
+          .setLngLat(lngLat)
+          .setHTML(propertySalePopupHtml(property, saleMeta))
+          .addTo(map);
+      };
+
+      const hidePropertySalePopup = () => {
+        if (propertySalePopupRef.current) propertySalePopupRef.current.remove();
+      };
+
       map.on("mousemove", PARCEL_SEEDING_FILL_LAYER, (e) => {
         if (atlasModeRef.current !== "seeding") return;
         const feature = e.features && e.features[0];
@@ -2021,16 +2069,17 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       });
 
       map.on("mousemove", PROPERTY_FILL_LAYER, (e) => {
-        if (selectionRef.current) return;
         const feature = e.features && e.features[0];
         if (!feature) return;
         const property = propertyById[feature.properties.id];
-        setHoverProperty(property || null);
+        if (!selectionRef.current) setHoverProperty(property || null);
+        showPropertySalePopup(property, e.lngLat);
         map.getCanvas().style.cursor = "pointer";
       });
 
       map.on("mouseleave", PROPERTY_FILL_LAYER, () => {
         if (!selectionRef.current) setHoverProperty(null);
+        hidePropertySalePopup();
         map.getCanvas().style.cursor = "";
       });
 
@@ -2043,22 +2092,23 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         if (!property) return;
         setSel(property);
         setSelQLoc(null);
-        setDrawerOpen(false);
+        setDrawerOpen(true);
         routeToSelection(property.id, null);
         focusProperty(property.id, 1000);
       });
 
       map.on("mousemove", PROPERTY_POINT_LAYER, (e) => {
-        if (selectionRef.current) return;
         const feature = e.features && e.features[0];
         if (!feature) return;
         const property = propertyById[feature.properties.id];
-        setHoverProperty(property || null);
+        if (!selectionRef.current) setHoverProperty(property || null);
+        showPropertySalePopup(property, e.lngLat);
         map.getCanvas().style.cursor = "pointer";
       });
 
       map.on("mouseleave", PROPERTY_POINT_LAYER, () => {
         if (!selectionRef.current) setHoverProperty(null);
+        hidePropertySalePopup();
         map.getCanvas().style.cursor = "";
       });
 
@@ -2069,7 +2119,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         if (!property) return;
         setSel(property);
         setSelQLoc(null);
-        setDrawerOpen(false);
+        setDrawerOpen(true);
         routeToSelection(property.id, null);
         focusProperty(property.id, 1000);
       });
@@ -2314,6 +2364,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         seedingPopupRef.current.remove();
         seedingPopupRef.current = null;
       }
+      if (propertySalePopupRef.current) {
+        propertySalePopupRef.current.remove();
+        propertySalePopupRef.current = null;
+      }
       map.remove();
       mapRef.current = null;
       delete window.MONETTE_MAP;
@@ -2396,7 +2450,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     pendingFocusRef.current = { propId: property.id, duration: 900 };
     setSel(property);
     setSelQLoc(forcedQuarter || null);
-    setDrawerOpen(!!forcedQuarter);
+    const saleMeta = (D.sispByProperty || {})[property.id];
+    setDrawerOpen(!!forcedQuarter || !!(saleMeta && saleMeta.status === "listed"));
     focusProperty(property.id, 900);
   }, [forcedQuarter, forcedSelect, propertyById]);
 
@@ -2443,6 +2498,11 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     ? mapData.operatorRelationshipCount
     : operatorRelationships.length;
   const portfolioRollup = useMemo(() => aggregateRollups(rollups), [rollups]);
+  const publicSales = getHammondSaleSummary();
+  const selectedSaleMeta = sel ? (D.sispByProperty || {})[sel.id] || null : null;
+  const bindingBidLabel = D.sisp && D.sisp.bindingBidDeadline
+    ? new Date(`${D.sisp.bindingBidDeadline}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })
+    : null;
   const activeRollup = hoverOrSel ? rollups[hoverOrSel.id] : portfolioRollup;
   const activeLeadLabel = hoverOrSel ? propertyDisplayLabel(hoverOrSel, activeRollup) : dominantOwnershipLabel(activeRollup);
   const activeLeadColor = hoverOrSel ? propertyDisplayColor(hoverOrSel, activeRollup) : dominantOwnershipColor(activeRollup);
@@ -2462,19 +2522,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     focusProperty(property.id, 900);
   };
 
-  // Codex bvqyinxv4 Q1 deep-link rule: bare #map shows the HomeHero stats
-  // band above the atlas; #map/{property} (forcedSelect non-null) suppresses
-  // the hero so shared property links land directly on the map.
-  const showHomeHero = !forcedSelect;
-
   return (
     <div style={{ minHeight: "100%", background: "var(--night)", color: "var(--paper)", fontSize: 13 }}>
-      {showHomeHero && (
-        <HomeHero
-          onSwitchView={onSwitchView}
-          onOpenSubmit={onOpenHeadlineForm}
-        />
-      )}
       <div className="atlas-toolbar">
         <div>
           <div className="serif atlas-toolbar-title">Monette Land Atlas</div>
@@ -2483,10 +2532,9 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           </div>
         </div>
         <div className="atlas-toolbar-status" aria-label="Portfolio status summary">
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-owned mono">Owned {portfolioRollup.owned}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-rented mono">Rented {portfolioRollup.rented}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-sold mono">Sold {portfolioRollup.sold}</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">For sale {portfolioRollup.forSale}</span>
+          <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">{publicSales.listingCount} public listings</span>
+          <span className="atlas-toolbar-pill atlas-toolbar-pill-asking mono">{fmtAskingCompact(publicSales.totalAskingCAD)} asking</span>
+          {bindingBidLabel && <span className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono">Bids due {bindingBidLabel}</span>}
         </div>
       </div>
 
@@ -2501,6 +2549,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
             const active = sel && sel.id === property.id;
             const rollup = rollups[property.id];
             const coverage = coverageByProperty[property.id];
+            const saleMeta = (D.sispByProperty || {})[property.id] || null;
             const propertySeedingSummary = coverage && coverage.seedingSummary ? coverage.seedingSummary : null;
             return (
               <button
@@ -2540,6 +2589,9 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                     <span className="atlas-chip atlas-chip-muted">Point only</span>
                   ) : (
                     <span className="atlas-chip atlas-chip-muted">Synthetic rows</span>
+                  )}
+                  {saleMeta && saleMeta.status === "listed" && saleMeta.price && (
+                    <span className="atlas-chip atlas-chip-price">{saleMeta.price}</span>
                   )}
                 </div>
                 {atlasMode === "seeding" && propertySeedingSummary ? (
@@ -2739,8 +2791,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
             {sel ? (
               <>
                 <div className="serif atlas-panel-title">{sel.name}</div>
-                <div className="atlas-panel-lead mono" style={{ color: propertyDisplayColor(sel, rollups[sel.id]) }}>
-                  {propertyDisplayLabel(sel, rollups[sel.id])}
+                <div
+                  className="atlas-panel-lead mono"
+                  style={{ color: selectedSaleMeta && selectedSaleMeta.status === "listed" ? "#b48638" : propertyDisplayColor(sel, rollups[sel.id]) }}
+                >
+                  {selectedSaleMeta && selectedSaleMeta.status === "listed"
+                    ? "Officially for sale"
+                    : propertyDisplayLabel(sel, rollups[sel.id])}
                 </div>
                 <div className="atlas-panel-rollup">
                   {sel.currentLandStatus
@@ -2761,7 +2818,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                         : "Synthetic"}
                   </span>
                   <span>For sale</span>
-                  <span>{rollups[sel.id] ? rollups[sel.id].forSale || 0 : 0}</span>
+                  <span>
+                    {rollups[sel.id] && rollups[sel.id].forSale
+                      ? rollups[sel.id].forSale
+                      : selectedSaleMeta && selectedSaleMeta.status === "listed"
+                        ? `${Array.isArray(selectedSaleMeta.listings) ? selectedSaleMeta.listings.length : 1} pkg`
+                        : 0}
+                  </span>
                   <span>For rent</span>
                   <span>{rollups[sel.id] ? rollups[sel.id].forRent || 0 : 0}</span>
                   {sel.currentLandStatus && (
