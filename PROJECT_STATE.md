@@ -1,11 +1,12 @@
 # PROJECT_STATE.md
 
 ## Last verified production state
-- `main`: `41add24` — current Hammond prices, price-on-hover Atlas UX, homepage routing, and retired Register navigation.
-- Vercel production deployment: `HiEREkUo8JaiyRaojg3s1FqMVow2` at `https://monette.buperac.com`.
+- Map content commit: `b6d20c8` — complete Colorado holding, following Montana portfolio commit `59245cc`.
+- Vercel production deployment: `dpl_BEDZ2CQ2pdZ6VYQfercPzzRiZV2S` at `https://monette.buperac.com`.
+- Production verified 2026-07-15 against the public Colorado and Montana drawers; browser console warnings/errors: none.
 
 ## Active task
-**IMPLEMENTED + VERIFIED LOCALLY (2026-07-15): Montana and Colorado portfolio mapping; deployment not yet performed.**
+**SHIPPED + VERIFIED IN PRODUCTION (2026-07-15): Montana and Colorado portfolio mapping.**
 The active map data separates Premier's five public packages from the Montana
 umbrella and now maps Clark's current Monette Farm & Ranch offering to all six
 current Lincoln County Colorado assessor accounts. Montana retains source-backed
@@ -79,6 +80,7 @@ visualization scripts were not included in this production merge.
   MultiPolygon payload, source dates, and discrepancy disclosure.
 
 ## Next ship gate
-The production build, Montana validator, Colorado validator, and browser QA pass.
-Push `main` and deploy the combined Montana/Colorado map changes; production
-remains at the last verified state above until that happens.
+No Montana/Colorado deployment work remains. Both validators, the production
+build, Vercel deployment, public-domain drawer checks, parcel-count checks, and
+browser console checks pass. Preserve the evidence-lane rules above for the next
+listing or title refresh.
