@@ -15,6 +15,13 @@ const fmtAc = (n) => `${Math.round(n || 0).toLocaleString("en-CA")} ac`;
 const now = () => new Date().toLocaleString("en-CA", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
 const ACTION_KEYS = new Set(["Enter", " "]);
 
+function getCcaaDay() {
+  const today = new Date();
+  const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const filingUtc = Date.UTC(2026, 3, 21);
+  return Math.max(0, Math.floor((todayUtc - filingUtc) / 86400000));
+}
+
 function parseAskingPriceCAD(value) {
   const match = /\$([\d,]+)/.exec(String(value || ""));
   return match ? Number(match[1].replace(/,/g, "")) : 0;
@@ -572,7 +579,7 @@ function SiteFooter() {
     <footer className="site-footer">
       <div className="site-footer-inner">
         <div className="site-footer-brand">
-          The Monette Ledger · Independent reporting · CCAA Day {D.day}
+          The Monette Ledger · Independent reporting · CCAA Day {getCcaaDay()}
         </div>
         <nav className="site-footer-links" aria-label="Site footer">
           <a href={supportCustomAmountUrl()} target="_blank" rel="noopener noreferrer">
@@ -874,6 +881,48 @@ function SubmitHeadlineModal({ open, onClose, initialPropertyId, initialText = "
   );
 }
 
+function LatestCourtUpdatePanel({ compact = false }) {
+  const update = D.latestCourtUpdate || null;
+  if (!update || !Array.isArray(update.items) || update.items.length === 0) return null;
+  const renderItems = () => update.items.map((item) => (
+    <article key={item.title} className="home-court-update-card">
+      <div className="mono home-court-update-status">{item.status}</div>
+      <h3 className="serif">{item.title}</h3>
+      <p>{item.text}</p>
+      <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+        {item.sourceLabel} →
+      </a>
+    </article>
+  ));
+  const panel = (
+    <section className={`home-court-update${compact ? " is-compact court-update-desktop" : ""}`} aria-labelledby={compact ? "atlas-court-update-title" : "home-court-update-title"}>
+      <header className="home-court-update-head">
+        <div>
+          <div className="mono home-court-update-kicker">{update.label}</div>
+          <h2 id={compact ? "atlas-court-update-title" : "home-court-update-title"} className="serif">What changed in the latest filings</h2>
+        </div>
+        <time className="mono" dateTime={update.asOf}>Through Aug 19, 2026</time>
+      </header>
+      <div className="home-court-update-grid">
+        {renderItems()}
+      </div>
+    </section>
+  );
+  if (!compact) return panel;
+  return (
+    <>
+      {panel}
+      <details className="court-update-mobile">
+        <summary>
+          <span className="mono">Latest court-file update · Aug 19</span>
+          <strong className="serif">Aguila sale approved · closing pending <em>+2 updates</em></strong>
+        </summary>
+        <div className="home-court-update-grid">{renderItems()}</div>
+      </details>
+    </>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // HomeHero — top-of-page hero stats portion. Hoisted out of view-editorial.jsx
 // (which is now silent-redirected to #map per the satellite pivot). Renders
@@ -966,6 +1015,7 @@ function HomeHero({ onSwitchView, onOpenSubmit }) {
           </div>
         </div>
       </div>
+      <LatestCourtUpdatePanel />
     </section>
   );
 }
@@ -1003,5 +1053,6 @@ Object.assign(window, {
   SupportCard,
   SiteFooter,
   SubmitHeadlineModal,
+  LatestCourtUpdatePanel,
   HomeHero,
 });

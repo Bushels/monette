@@ -161,7 +161,7 @@ function GroupStructureView() {
 
     // Control & Ownership
     React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Control & ownership"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Control & ownership"),
       React.createElement("div", { className: "gs-control-grid" },
         control.map((p, i) => React.createElement(ControlPersonRow, { key: p.name + i, person: p }))
       )
@@ -169,7 +169,7 @@ function GroupStructureView() {
 
     // 5 TopCos
     React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "The five TopCos"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "The five TopCos"),
       React.createElement("div", { className: "gs-section-sub" },
         "Each parent corporation listed below is a Debtor in the CCAA Proceeding. Together with their subsidiaries they form the 17 Applicants."),
       React.createElement("div", { className: "gs-topco-grid" },
@@ -179,7 +179,7 @@ function GroupStructureView() {
 
     // Land-holding LPs
     lps.length ? React.createElement("section", { className: "gs-section gs-section-lps" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Land-holding limited partnerships"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Land-holding limited partnerships"),
       React.createElement("div", { className: "gs-section-sub" },
         "These three LPs hold beneficial title to substantially all of the Group’s Canadian Real Property — the primary collateral under the Senior Facilities Agreement. They are NOT Applicants in the CCAA but the Initial Order extends the automatic stay over them as Non-Debtor Stay Parties."),
       React.createElement("div", { className: "gs-lp-grid" },
@@ -189,7 +189,7 @@ function GroupStructureView() {
 
     // Officers
     officers.length ? React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Key officers"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Key officers"),
       React.createElement("div", { className: "gs-officer-grid" },
         officers.map((p, i) => React.createElement(ControlPersonRow, { key: p.name + i, person: p }))
       )
@@ -197,7 +197,7 @@ function GroupStructureView() {
 
     // Senior management
     senior.length ? React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Senior management (residence-based)"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Senior management (residence-based)"),
       React.createElement("div", { className: "gs-officer-grid" },
         senior.map((p, i) => React.createElement(ControlPersonRow, { key: p.role + i, person: p }))
       )
@@ -205,7 +205,7 @@ function GroupStructureView() {
 
     // Counterparties
     counterparties.length ? React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Notable counterparties"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Notable counterparties"),
       React.createElement("div", { className: "gs-officer-grid" },
         counterparties.map((c, i) => React.createElement("div", { key: c.name + i, className: "gs-control-person" },
           React.createElement("div", { className: "serif gs-control-name" }, c.name),
@@ -217,7 +217,7 @@ function GroupStructureView() {
 
     // Professional advisors + counsel
     (advisors || counsel) ? React.createElement("section", { className: "gs-section" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Professional advisors & counsel"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Professional advisors & counsel"),
       React.createElement("div", { className: "gs-advisor-grid" },
         advisors && advisors.monitor ? React.createElement("div", { className: "gs-advisor" },
           React.createElement("div", { className: "gs-advisor-role" }, "Monitor"),
@@ -260,7 +260,7 @@ function GroupStructureView() {
 
     // Court file footer
     COURT_FACTS && COURT_FACTS.canadianProceedings ? React.createElement("section", { className: "gs-section gs-court-footer" },
-      React.createElement("div", { className: "serif gs-section-title" }, "Court file"),
+      React.createElement("h2", { className: "serif gs-section-title" }, "Court file"),
       React.createElement("div", { className: "gs-court-grid" },
         React.createElement("div", null, React.createElement("strong", null, "CCAA: "), COURT_FACTS.canadianProceedings.court + " · file " + COURT_FACTS.canadianProceedings.caseFileNumber),
         React.createElement("div", null, React.createElement("strong", null, "Judge: "), COURT_FACTS.canadianProceedings.judge),

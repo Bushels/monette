@@ -965,7 +965,7 @@ window.MONETTE_DATA = {
           purchasedFrom:"Brent & Clayton Wolfe",
           purchasedFromOrigin:"Arizona, USA",
           relatedAcquisition:"Daryl Monette purchased 'Northerly Oats' from the Wolfe family",
-          marketImpact:"The Wolfe family relationship is reportedly what opened the Arizona market for Monette — connects this Regina-area yard to the Aguila Farm + Tonopah Seeds Facility entries on the court file.",
+          marketImpact:"The Wolfe family relationship is reportedly what opened the Arizona market for Monette — connects this Regina-area yard to the Aguila Farm + Arizona Produce Cooler & Seed Facility entries on the court file.",
           source:"Anonymous Farmer community submission via agnonymous.buperac.com — 2026-04-27",
           verificationQueue:[
             "ISC title pull on the yard parcel at 50.128861, -104.575833 — confirm transfer date + previous Wolfe ownership",
@@ -1006,7 +1006,7 @@ window.MONETTE_DATA = {
           ]
         }
       ],
-      notes:"Court-file Regina South asset. Regina I sale proceeds are part of the restructuring story. As of 2026-01-18 ISC snapshot, 120 MFL-titled parcels are mapped across RM Lajord 128, RM Bratt's Lake 129, RM Edenwold 158, and RM Longlaketon 219 — Lajord + Edenwold form a contiguous block south-then-north of Regina city. The 32,056-ac court-file claim is broader than the title-anchor subset; balance presumed in non-MFL Monette entities or leased ground. Three yard sites surfaced via community intel 2026-04-27, all within the 32,056-ac Regina South footprint: (1) the Monette 'Wolfe yard' at 50.128861, -104.575833 — purchased from Brent & Clayton Wolfe (Arizona-based), the family relationship that reportedly opened Monette's Arizona market entry (Aguila Farm + Tonopah Seeds Facility); Daryl Monette also separately acquired 'Northerly Oats' from the Wolfes. (2) The Monette 'Kambietz yard' at 50.296, -104.36725 — purchased from the Kambietz family once they finished building their replacement yard. (3) A Monette binyard at 50.2730556, -104.4356944 — satellite grain-bin storage site (~5 km southwest of the Kambietz yard, ~17 km northeast of the Wolfe yard); previous owner not yet known.", headline:true },
+      notes:"Court-file Regina South asset. Regina I sale proceeds are part of the restructuring story. As of 2026-01-18 ISC snapshot, 120 MFL-titled parcels are mapped across RM Lajord 128, RM Bratt's Lake 129, RM Edenwold 158, and RM Longlaketon 219 — Lajord + Edenwold form a contiguous block south-then-north of Regina city. The 32,056-ac court-file claim is broader than the title-anchor subset; balance presumed in non-MFL Monette entities or leased ground. Three yard sites surfaced via community intel 2026-04-27, all within the 32,056-ac Regina South footprint: (1) the Monette 'Wolfe yard' at 50.128861, -104.575833 — purchased from Brent & Clayton Wolfe (Arizona-based), the family relationship that reportedly opened Monette's Arizona market entry (Aguila Farm + Arizona Produce Cooler & Seed Facility); Daryl Monette also separately acquired 'Northerly Oats' from the Wolfes. (2) The Monette 'Kambietz yard' at 50.296, -104.36725 — purchased from the Kambietz family once they finished building their replacement yard. (3) A Monette binyard at 50.2730556, -104.4356944 — satellite grain-bin storage site (~5 km southwest of the Kambietz yard, ~17 km northeast of the Wolfe yard); previous owner not yet known.", headline:true },
     { id:"outlook-seeds", name:"Outlook Seeds Plant", province:"SK", region:"Outlook, SK", lat:51.489, lng:-107.054,
       rms:["Outlook area"],
       parcels:0, titled:2, cultivated:0, waste:0, assessment:0, owned:2, rented:0,
@@ -1046,9 +1046,9 @@ window.MONETTE_DATA = {
         source:"Maricopa County Assessor parcel viewer + AZ Auditor General Report 24-101 (audit data 2023-10-01); verified 2026-04-27"
       },
       relationships:{
-        marketEntry:"Community intel 2026-04-27: Monette's Arizona market entry was reportedly opened by the Wolfe family (Brent & Clayton Wolfe), the same family that sold the Regina-area 'Wolfe yard' to Monette and from whom Daryl Monette personally acquired Northerly Oats. Aguila + Tonopah are downstream of that relationship per the tip; pending verification."
+        marketEntry:"Community intel 2026-04-27: Monette's Arizona market entry was reportedly opened by the Wolfe family (Brent & Clayton Wolfe), the same family that sold the Regina-area 'Wolfe yard' to Monette and from whom Daryl Monette personally acquired Northerly Oats. Aguila + the Arizona cooler/seed facility are downstream of that relationship per the tip; pending verification."
       },
-      notes:"Court-file Arizona produce farm in the Aguila/Harquahala plain (Sec 24-25 T7N R9W + Sec 28-33 T7N R8W, Gila & Salt River Meridian). 23 parcels totalling 3,143 ac mapped 2026-04-27 — 930 ac fee-owned across 17 parcels and 2,213 ac across 6 AZ State Trust Land lease parcels. AZ Auditor General Report 24-101 flags the LLC as foreign-owned alongside Asarco LLC and Fondomonte Arizona LLC (Saudi alfalfa). Cross-validated to within 9 ac of Helkaa Decl. ¶58(e) sworn figure (3,134 ac). Community intel 2026-04-27 ties this farm and Tonopah Seeds Facility to the Brent & Clayton Wolfe family — same Wolfes who sold Monette the Regina-area 'Wolfe yard' (Regina South). See Regina South drawer for provenance." },
+      notes:"Court-file Arizona produce farm in the Aguila/Harquahala plain (Sec 24-25 T7N R9W + Sec 28-33 T7N R8W, Gila & Salt River Meridian). 23 parcels totalling 3,143 ac mapped 2026-04-27 — 930 ac fee-owned across 17 parcels and 2,213 ac across 6 AZ State Trust Land lease parcels. AZ Auditor General Report 24-101 flags the LLC as foreign-owned alongside Asarco LLC and Fondomonte Arizona LLC (Saudi alfalfa). Cross-validated to within 9 ac of Helkaa Decl. ¶58(e) sworn figure (3,134 ac). The Alberta Court approved a sale to Byner Cattle Company and/or nominee on 2026-08-19, but the public order does not confirm closing: vesting still requires the Monitor's Closing Certificate and U.S. Bankruptcy Court recognition. The purchase price remains sealed." },
     { id:"genoa", name:"Monette Farm & Ranch", province:"CO", region:"Genoa, Lincoln County, CO", lat:39.2767, lng:-103.4988,
       rms:["Lincoln County"],
       parcels:6, titled:4085, cultivated:3085, nativeGrassAc:1000, waste:0, assessment:0, owned:4085, rented:0,
@@ -1081,7 +1081,7 @@ window.MONETTE_DATA = {
         source:"Helkaa Declaration ¶37-38"
       },
       notes:"Court-file disclosure (Helkaa Declaration ¶38): pea protein milling equipment located in Lethbridge, AB serves as collateral for the Scotiabank Bilateral Equipment Loan ($5.61M outstanding at petition). Site address not in our possession; lat/lng is approximate to City of Lethbridge centroid until precise location is sourced. This is a court-file ASSET CLASS we previously did not track — distinct from the Outlook Seeds Plant on the SK side." },
-    { id:"tonopah", name:"Tonopah Seeds Facility", province:"AZ", region:"Tonopah, AZ", lat:33.4936, lng:-112.9364,
+    { id:"tonopah", name:"Arizona Produce Cooler & Seed Facility", province:"AZ", region:"39332 W Camelback Rd, AZ", lat:33.4936, lng:-112.9364,
       rms:["Tonopah area"],
       parcels:0, titled:23, cultivated:0, waste:0, assessment:0, owned:23, rented:0,
       soils:[], crops2025:[["Idle seed facility",23]], crops2024:[],
@@ -1090,7 +1090,7 @@ window.MONETTE_DATA = {
       relationships:{
         marketEntry:"Community intel 2026-04-27: same Wolfe-family Arizona-market thread as the Aguila Farm and the Regina-area Wolfe yard. Pending verification."
       },
-      notes:"Court-file Arizona Seeds Facility. Idle and listed; point is approximate to the Tonopah facility address until parcel evidence is attached. Community intel 2026-04-27 ties this AZ facility into the Wolfe-family-opened Arizona market thread alongside Aguila Farm. See Regina South drawer for the connecting yard provenance." },
+      notes:"The Fourth Affidavit identifies two distinct assets at 39332 W Camelback Rd — the Produce Cooler and Arizona Seed Facility — and says both continue to be marketed under the SISP after the separate Aguila Farm transaction. The combined public asking price was reduced from US$10M to US$5M. The point remains approximate until parcel evidence is attached. The legacy 'tonopah' record id is retained so existing deep links do not break." },
     { id:"mt-fly-creek", name:"Fly Creek Farm", province:"MT", region:"Big Horn County, MT", lat:45.6925, lng:-107.6233,
       rms:["Big Horn County","Hardin"],
       parcels:95, titled:32756, cultivated:32756, waste:0, assessment:0, owned:32756, rented:6454,
@@ -1416,9 +1416,9 @@ window.MONETTE_DATA.sisp = {
     { region:"Montana",        name:"Premier Land Company",            contact:"Bryan Anderson · 406-259-2544", url:"https://www.premierlandcompany.com/properties/" },
     { region:"Colorado",       name:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025",     url:"https://www.clarklandbrokers.com/property-listings" },
     { region:"Arizona",        name:"Southwest Land Associates",       contact:"Luke Schlosser · 602-980-3222", url:"http://southwestlandassociates.com/listing_summary.html" },
-    { region:"British Columbia", name:"Broker pending",                contact:"Listings slated week of July 6, 2026", url:"https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm" },
+    { region:"British Columbia", name:"Selected broker not disclosed", contact:"Listing launch delayed as of Aug 10, 2026", url:"https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm" },
   ],
-  note: "Land-asset inquiries require no NDA (buyers contact the engaged brokers directly). Hammond Realty launched public Saskatchewan package listings and asking prices on June 29, 2026. Whole-company / data-room access requires an NDA via the Monitor.",
+  note: "Land-asset inquiries require no NDA (buyers contact the engaged brokers directly). Hammond Realty launched public Saskatchewan package listings and asking prices on June 29, 2026. The Fourth Affidavit says Aguila Farm received the only offer and its sale was later approved on August 19; the separate Arizona cooler and seed facility remain marketed. British Columbia's successful broker had been selected by August 10, but was not named and the listing launch was delayed. Whole-company / data-room access requires an NDA via the Monitor.",
 };
 
 // Per-property SISP listing overlay, keyed by property id. `status`:
@@ -1428,6 +1428,8 @@ window.MONETTE_DATA.sisp = {
 //   retained — explicitly kept (Alberta land) / OpCo-retained facility
 //   excluded — explicitly excluded from the offering (Regina area)
 //   unknown  — ambiguous (facility that may sell with land, via OpCo bid, or stay)
+//   sale-approved — court approved a transaction, but public closing evidence
+//                   (including any required foreign recognition) is incomplete
 // seedQuarter() lights the "listed-for-sale" overlay on owned quarters where
 // status is listed (solid pill) or likely (dashed/provisional pill).
 window.MONETTE_DATA.sispByProperty = {
@@ -1448,9 +1450,9 @@ window.MONETTE_DATA.sispByProperty = {
   // ----- Colorado (Clark & Associates) — public listing -----
   "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025 / 307-351-9556", package:"Monette Farm & Ranch", price:"$5,106,250 USD", deededAc:4085, totalAc:4085, cultivatedAc:3085, nativeGrassAc:1000, listingUrl:"https://www.clarklandbrokers.com/property-listings/monette-farm-%26-ranch-", confidence:"high", sourceCheckedAt:"2026-07-15", note:"Current Clark offering: 4,085± total acres, including about 3,085 acres of organic farm ground and 1,000 acres of native grass. Lincoln County's six current assessor accounts under Monette Farms USA, Inc. total exactly 4,085 assessed acres and are fully crosswalked here. Helkaa ¶58(e) reports 4,079 acres; the 6-acre difference is retained as a source-method delta.", source:"Clark & Associates live listing + Lincoln County CO EagleWeb 2026 owner/account records + BLM CadNSDI + Helkaa Decl. ¶58(e)" },
 
-  // ----- Arizona (Southwest Land Associates) — public listings -----
-  "aguila":             { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Aguila Arizona Farm", price:"$22,000,000 USD", deededAc:930, stateLeaseAc:2213, totalAc:3143, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Brochure parcel map labels multiple parcels 'MONETTE FARMS'. 930 deeded ac + 2,213 AZ state-lease ac.", source:"Southwest Land Associates brochure + DTN + FTI SISP" },
-  "tonopah":            { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Tonopah Produce Cooler & Seed Processing Facility", price:"$10,000,000 USD", totalAc:23.31, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", note:"Operational companion to the Aguila farm — the one facility explicitly marketed as a standalone brokered listing.", source:"Southwest Land Associates brochure + FTI SISP" },
+  // ----- Arizona — Aguila approved transaction + separate active facility listing -----
+  "aguila":             { status:"sale-approved", tier:"court-approved", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Aguila Arizona Farm", price:null, priceStatus:"Purchase price sealed", priorAskingPrice:"$18,500,000 USD", priorAskingPriceLabel:"Reduced SISP asking price", buyer:"Byner Cattle Company and/or nominee", approvalDate:"2026-08-19", closingStatus:"Not publicly confirmed closed", deededAc:930, stateLeaseAc:2213, totalAc:3143, affidavitUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Fourth%20Affidavit%20of%20Darrel%20Monette%20(Cassels),%20filed%20August%2011,%202026.pdf", orderUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Arizona%20Sale%20Approval%20and%20Vesting%20Order%20(Cassels),%20filed%20August%2019,%202026.pdf", confidence:"high", sourceCheckedAt:"2026-08-19", note:"The Alberta Court approved the transaction on Aug 19, 2026. This is not a confirmed closing: vesting still requires the Monitor's Closing Certificate, U.S. Bankruptcy Court recognition, and satisfaction or waiver of the transaction conditions. The public order's certificate form is blank. The purchase price remains sealed.", source:"Fourth Affidavit of Darrel Monette ¶¶17-28 + Arizona Sale Approval and Vesting Order ¶¶5-6, 9-10 and Schedule B" },
+  "tonopah":            { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Luke Schlosser · 602-980-3222", package:"Arizona Produce Cooler & Seed Facility", price:"$5,000,000 USD", priorAskingPrice:"$10,000,000 USD", totalAc:23.31, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", sourceCheckedAt:"2026-08-10", note:"The Fourth Affidavit treats the Produce Cooler and Arizona Seed Facility at 39332 W Camelback Rd as separate from Aguila Farm. Both continue to be marketed under the SISP; their combined ask was reduced from US$10M to US$5M.", source:"Fourth Affidavit of Darrel Monette ¶¶17-20 + Southwest Land Associates" },
 
   // ----- Manitoba (per-property broker assignments on the FTI page) -----
   "eddystone":          { status:"listed", tier:"confirmed", broker:"Sutton-Harrison Realty", contact:"Neil Fraser · 204-573-5137", package:"MB Restricted Land — Eddystone package", price:null, ownedAc:10114, confidence:"high", note:"Broker-direct, no public MLS. ~62% of the Eddystone block is third-party-owned; the Monette-owned portion is what's offered. Quarter-level tenure is not yet parcel-matched, so no individual quarters carry a for-sale outline on the map.", source:"FTI SISP page (broker assignment) + Monitor Second Report" },
@@ -1502,12 +1504,42 @@ window.MONETTE_DATA.sispByProperty = {
   "outlook-seeds":      { status:"unknown", tier:"unknown", broker:null, package:"Seed-processing facility (OpCo pillar)", confidence:"low", note:"OpCo asset, not a brokered land package. Unclear whether it sells with the Outlook land, via a whole-business bid, or is retained.", source:"SISP Teaser (OpCo pillars)" },
 };
 
+window.MONETTE_DATA.latestCourtUpdate = {
+  asOf: "2026-08-19",
+  label: "New court-file evidence",
+  items: [
+    {
+      status: "Order granted · closing pending",
+      title: "Aguila Farm sale approved",
+      text: "The Alberta Court approved the sale to Byner Cattle Company and/or nominee. The public file does not confirm closing: vesting still requires the Monitor's Closing Certificate and U.S. court recognition. The purchase price remains sealed.",
+      sourceLabel: "Arizona Sale Approval and Vesting Order · Aug 19",
+      sourceUrl: "https://cfcanada.fticonsulting.com/monettefarms/docs/Arizona%20Sale%20Approval%20and%20Vesting%20Order%20(Cassels),%20filed%20August%2019,%202026.pdf",
+    },
+    {
+      status: "Asserted · unresolved as of Aug 10",
+      title: "SCIC says C$1.9M is owing",
+      text: "SCIC says a 2023-24 crop-insurance audit produced an approximately C$1.9M pre-filing overpayment due Aug 15 and tied payment to maintaining 2026 coverage. The Applicants, Monitor and DIP Agent were still assessing that position.",
+      sourceLabel: "Fourth Affidavit of Darrel Monette ¶¶13-14 · filed Aug 11",
+      sourceUrl: "https://cfcanada.fticonsulting.com/monettefarms/docs/Fourth%20Affidavit%20of%20Darrel%20Monette%20(Cassels),%20filed%20August%2011,%202026.pdf",
+    },
+    {
+      status: "Marketing update · Aug 10",
+      title: "Arizona pricing reset; B.C. broker selected",
+      text: "The Aguila marketing ask had been reduced from US$22M to US$18.5M before the successful bid. The separate cooler and seed facility remains marketed at a reduced US$5M combined ask. A successful B.C. broker had been selected, but was not named and launch was delayed.",
+      sourceLabel: "Fourth Affidavit of Darrel Monette ¶¶15-20 · filed Aug 11",
+      sourceUrl: "https://cfcanada.fticonsulting.com/monettefarms/docs/Fourth%20Affidavit%20of%20Darrel%20Monette%20(Cassels),%20filed%20August%2011,%202026.pdf",
+    },
+  ],
+};
+
 window.MONETTE_DATA.headlines = [
+  { id: 13, text: "Arizona order granted Aug 19: Aguila Farm sale approved to Byner Cattle Company and/or nominee. Closing is not publicly confirmed; purchase price remains sealed and vesting still requires the Monitor's certificate plus U.S. court recognition.", author: "Court file", when: "Aug 19" },
+  { id: 12, text: "Fourth Affidavit filed Aug 11: SCIC asserts about C$1.9M from a 2023-24 crop-insurance overpayment audit. The Applicants, Monitor and DIP Agent were still assessing the pre-filing claim and coverage position as of Aug 10.", author: "Court file", when: "Aug 11" },
   { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $30.78M Sale Programme (2 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M). CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
   { id: 9, text: "Hafford court-grounded: affidavit Exhibit D ¶89 shows only 2,554 ac OWNED at 'North Battleford (Hafford)' — the 46,466 figure on tender docs was the operating footprint (incl. leased Simmons ground). The $29M / 2,553 ac sale liquidated essentially all Monette-owned Hafford land. 'Walter Farms bought all 46,466 ac' rumor not court-supported.", author: "Ledger", when: "0d" },
   { id: 8, text: "Third Regina-area Monette site of the day: a binyard (satellite grain storage) at 50.273, -104.436 — previous owner unknown, ~5 km from the Kambietz yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "1d" },
   { id: 7, text: "Second Regina-area yard surfaces: Monette 'Kambietz yard' at 50.296, -104.36725 reportedly bought from the Kambietz family after they finished building a replacement yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
-  { id: 6, text: "Wolfe-family thread surfaces: Regina South 'Wolfe yard' rumored bought from Brent & Clayton Wolfe (Arizona) — same family reportedly opened Monette's AZ market (Aguila + Tonopah); Daryl Monette also acquired 'Northerly Oats' from the Wolfes (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
+  { id: 6, text: "Wolfe-family thread surfaces: Regina South 'Wolfe yard' rumored bought from Brent & Clayton Wolfe (Arizona) — same family reportedly opened Monette's AZ market (Aguila + the Arizona cooler/seed facility); Daryl Monette also acquired 'Northerly Oats' from the Wolfes (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
   { id: 5, text: "Lac Pelletier feedlot fight: Monette + MLT Aikins pushing RM 107 council to approve 12-month 2,000-head feedlot at SE-18-12-14-W3 — cabin owners + park users opposed, petitions circulating (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
   { id: 4, text: "Carefoot Acres rumored to have bought 3 Waldeck pieces / 5 quarters (NW-3, S½ Sec 15, N½ Sec 17 in RM Excelsior 166) — feedlot at Waldeck Lot is NOT in the deal; grain, fertilizer, shops, office are (community intel 2026-04-26)", author: "Ledger", when: "1d" },
   { id: 3, text: "Walter Farms rumored to be the unofficial purchaser of the entire Monette portfolio — price unknown, Monitor's Report pending", author: "Ledger", when: "0d" },

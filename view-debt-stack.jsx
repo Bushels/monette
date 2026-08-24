@@ -185,7 +185,7 @@ function DebtStackView() {
 
     // DIP Charges priority
     dip && Array.isArray(dip.charges) ? React.createElement("section", { className: "ds-section" },
-      React.createElement("div", { className: "serif ds-section-title" }, "Court-ordered super-priority charges"),
+      React.createElement("h2", { className: "serif ds-section-title" }, "Court-ordered super-priority charges"),
       React.createElement("div", { className: "ds-section-sub" },
         "Granted under the CCAA Initial Order (¶40) — these charges rank ahead of ALL pre-petition debt below, except that the DIP Lenders’ Charge and Directors’ Charge are junior to FCC’s lien on cattle (¶42(a))."),
       React.createElement(PriorityBar, { charges: dip.charges, dipMaxCAD: dip.sizeCAD })
@@ -193,7 +193,7 @@ function DebtStackView() {
 
     // The Stack
     React.createElement("section", { className: "ds-section" },
-      React.createElement("div", { className: "serif ds-section-title" }, "Pre-petition facilities by outstanding amount"),
+      React.createElement("h2", { className: "serif ds-section-title" }, "Pre-petition facilities by outstanding amount"),
       React.createElement("div", { className: "ds-bar-list" },
         facilities.filter(f => typeof f.outstandingApproxCAD === "number" && f.outstandingApproxCAD > 0).map((f) =>
           React.createElement(FacilityBar, { key: f.id, facility: f, totalForScale: scaleAnchor })
@@ -203,7 +203,7 @@ function DebtStackView() {
 
     // Per-facility cards
     React.createElement("section", { className: "ds-section" },
-      React.createElement("div", { className: "serif ds-section-title" }, "Facility-by-facility detail"),
+      React.createElement("h2", { className: "serif ds-section-title" }, "Facility-by-facility detail"),
       React.createElement("div", { className: "ds-card-grid" },
         facilities.map((f) => React.createElement(FacilityCard, { key: f.id, facility: f }))
       )
@@ -211,7 +211,7 @@ function DebtStackView() {
 
     // DIP Facility detail
     dip ? React.createElement("section", { className: "ds-section ds-section-dip" },
-      React.createElement("div", { className: "serif ds-section-title" }, "DIP Credit Facility"),
+      React.createElement("h2", { className: "serif ds-section-title" }, "DIP Credit Facility"),
       React.createElement("div", { className: "ds-dip-meta-grid" },
         React.createElement("div", null, React.createElement("strong", null, "Size: "), fmtMoney(dip.sizeCAD) + " (Initial: " + fmtMoney(dip.initialAvailabilityCAD) + ")"),
         React.createElement("div", null, React.createElement("strong", null, "Type: "), dip.type),

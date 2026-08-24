@@ -259,6 +259,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
     sispMeta.ownedAc != null ? `${fmt(sispMeta.ownedAc)} Monette-owned` : null,
   ].filter(Boolean).join(" · ") : "";
   const sispListingHref = sispMeta ? safeHref(sispMeta.listingUrl) : null;
+  const sispOrderHref = sispMeta ? safeHref(sispMeta.orderUrl) : null;
+  const sispAffidavitHref = sispMeta ? safeHref(sispMeta.affidavitUrl) : null;
   const sispListings = sispMeta && Array.isArray(sispMeta.listings)
     ? sispMeta.listings
         .map((listing) => ({ ...listing, href: safeHref(listing.listingUrl) }))
@@ -282,17 +284,43 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
       }}>
         <div className="pd-header" style={{ padding: "24px 28px 20px", borderBottom: "2px solid var(--ink)", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
-            <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>{prop.province} · {prop.region}</div>
+            <div className="pd-location" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>{prop.province} · {prop.region}</div>
             <div className="serif pd-title" style={{ fontSize: 50, lineHeight: 1, marginTop: 6 }}>{prop.name}</div>
-            <div style={{ marginTop: 10, fontFamily: '"JetBrains Mono", monospace', fontSize: 11, color: "var(--mute)" }}>
+            <div className="pd-title-meta" style={{ marginTop: 10, fontFamily: '"JetBrains Mono", monospace', fontSize: 11, color: "var(--mute)" }}>
               {fmt(prop.titled)} file ac · {prop.parcels ? `${prop.parcels} titles` : "title count pending"} · {prop.assessment ? fmtM(prop.assessment) : "assessment pending"}
             </div>
           </div>
-          <div style={{ display: "flex", gap: 8 }}>
-            {onZoomMap && <button onClick={() => onZoomMap(prop)} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--rule-2)", background: "transparent", cursor: "pointer" }}>Zoom Mapbox →</button>}
-            <button onClick={onClose} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--ink)", background: "transparent", cursor: "pointer" }}>Close ✕</button>
+          <div className="pd-header-actions" style={{ display: "flex", gap: 8 }}>
+            {onZoomMap && <button className="pd-header-action" onClick={() => onZoomMap(prop)} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--rule-2)", background: "transparent", cursor: "pointer" }}>Zoom Mapbox →</button>}
+            <button className="pd-header-action" onClick={onClose} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--ink)", background: "transparent", cursor: "pointer" }}>Close ✕</button>
           </div>
         </div>
+
+        {/* Court-approved transaction; kept separate from a completed sale. */}
+        {sispMeta && sispMeta.status === "sale-approved" && (
+          <div className="pd-sisp pd-sisp-approved" style={{ padding: "18px 28px", borderBottom: "1px solid var(--rule)", background: "rgba(78,106,48,0.10)", borderLeft: "3px solid var(--green)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+              <span className="mono pd-sisp-status" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--green)" }}>
+                ◉ Court-approved sale · closing not confirmed
+              </span>
+              {sispMeta.priceStatus && <span className="serif pd-sisp-price-status" style={{ fontSize: 22, lineHeight: 1, color: "var(--green)" }}>{sispMeta.priceStatus}</span>}
+            </div>
+            {sispMeta.package && <div className="serif pd-sisp-package" style={{ fontSize: 19, marginTop: 8, lineHeight: 1.2 }}>{sispMeta.package}</div>}
+            <div className="mono pd-sisp-facts" style={{ marginTop: 10, fontSize: 11, color: "var(--ink-2)", lineHeight: 1.65 }}>
+              {sispMeta.buyer && <div><span style={{ color: "var(--mute)" }}>Approved buyer</span> {sispMeta.buyer}</div>}
+              {sispMeta.approvalDate && <div><span style={{ color: "var(--mute)" }}>Approval order</span> {fmtSispDate(sispMeta.approvalDate)}</div>}
+              {sispMeta.closingStatus && <div><span style={{ color: "var(--mute)" }}>Closing</span> {sispMeta.closingStatus}</div>}
+              {sispMeta.priorAskingPrice && <div><span style={{ color: "var(--mute)" }}>{sispMeta.priorAskingPriceLabel || "Prior asking price"}</span> {sispMeta.priorAskingPrice}</div>}
+              {sispAcres && <div><span style={{ color: "var(--mute)" }}>Acres</span> {sispAcres}</div>}
+            </div>
+            {sispMeta.note && <div className="mono pd-sisp-note" style={{ marginTop: 10, fontSize: 10, color: "var(--mute)", lineHeight: 1.55 }}>{sispMeta.note}</div>}
+            <div className="pd-sisp-links" style={{ display: "flex", gap: 14, marginTop: 12, flexWrap: "wrap" }}>
+              {sispOrderHref && <a href={sispOrderHref} target="_blank" rel="noreferrer">Approval order →</a>}
+              {sispAffidavitHref && <a href={sispAffidavitHref} target="_blank" rel="noreferrer">Fourth Affidavit →</a>}
+            </div>
+            {sispMeta.source && <div className="mono pd-sisp-source" style={{ marginTop: 10, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
+          </div>
+        )}
 
         {/* Official SISP for-sale status */}
         {sispMeta && (sispMeta.status === "listed" || sispMeta.status === "likely") && (

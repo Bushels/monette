@@ -2468,7 +2468,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     setSel(property);
     setSelQLoc(forcedQuarter || null);
     const saleMeta = (D.sispByProperty || {})[property.id];
-    setDrawerOpen(!!forcedQuarter || !!(saleMeta && saleMeta.status === "listed"));
+    setDrawerOpen(!!forcedQuarter || !!(saleMeta && (saleMeta.status === "listed" || saleMeta.status === "sale-approved")));
     focusProperty(property.id, 900);
   }, [forcedQuarter, forcedSelect, propertyById]);
 
@@ -2555,6 +2555,33 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
         </div>
       </div>
 
+      <div className="atlas-mobile-property-finder">
+        <label className="mono" htmlFor="atlas-mobile-property-jump">Find any property or point-only asset</label>
+        <select
+          id="atlas-mobile-property-jump"
+          className="atlas-property-select mono"
+          value={sel ? sel.id : ""}
+          onChange={(event) => {
+            const property = propertyById[event.target.value];
+            if (property) selectProperty(property, true);
+          }}
+        >
+          <option value="">Choose a property…</option>
+          {D.properties.map((property) => {
+            const coverage = coverageByProperty[property.id];
+            const suffix = coverage && coverage.hasRealGeometry
+              ? ` - ${fmt(coverage.mappedParcels)} shapes`
+              : coverage && coverage.pointOnly
+                ? " - point-only"
+                : " - synthetic";
+            return <option key={property.id} value={property.id}>{property.name}{suffix}</option>;
+          })}
+        </select>
+        <div className="mono">Every record is reachable here, including assets without verified parcel geometry.</div>
+      </div>
+
+      <LatestCourtUpdatePanel compact />
+
       <div className="atlas-grid atlas-shell" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) 360px" }}>
         <div className="scroll atlas-rail atlas-side" style={{ overflowY: "auto" }}>
           <div className="atlas-side-heading">Property status board</div>
@@ -2609,6 +2636,9 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                   )}
                   {saleMeta && saleMeta.status === "listed" && saleMeta.price && (
                     <span className="atlas-chip atlas-chip-price">{saleMeta.price}</span>
+                  )}
+                  {saleMeta && saleMeta.status === "sale-approved" && (
+                    <span className="atlas-chip atlas-chip-approved">Sale approved · closing pending</span>
                   )}
                 </div>
                 {atlasMode === "seeding" && propertySeedingSummary ? (
@@ -2810,11 +2840,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
                 <div className="serif atlas-panel-title">{sel.name}</div>
                 <div
                   className="atlas-panel-lead mono"
-                  style={{ color: selectedSaleMeta && selectedSaleMeta.status === "listed" ? "#b48638" : propertyDisplayColor(sel, rollups[sel.id]) }}
+                  style={{ color: selectedSaleMeta && selectedSaleMeta.status === "sale-approved" ? "#7fa663" : selectedSaleMeta && selectedSaleMeta.status === "listed" ? "#b48638" : propertyDisplayColor(sel, rollups[sel.id]) }}
                 >
-                  {selectedSaleMeta && selectedSaleMeta.status === "listed"
-                    ? "Officially for sale"
-                    : propertyDisplayLabel(sel, rollups[sel.id])}
+                  {selectedSaleMeta && selectedSaleMeta.status === "sale-approved"
+                    ? "Sale approved · closing pending"
+                    : selectedSaleMeta && selectedSaleMeta.status === "listed"
+                      ? "Officially for sale"
+                      : propertyDisplayLabel(sel, rollups[sel.id])}
                 </div>
                 <div className="atlas-panel-rollup">
                   {sel.currentLandStatus

@@ -488,6 +488,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   background: #17120e;
   color: #f7f3ea;
 }
+.atlas-mobile-property-finder { display: none; }
 .atlas-pointonly-note {
   color: #b7a992;
   font-size: 9px;
@@ -1209,6 +1210,11 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   border-color: rgba(241,210,132,0.42);
   background: rgba(180,134,56,0.16);
 }
+.atlas-chip-approved {
+  color: #b8dda1;
+  border-color: rgba(127,166,99,0.5);
+  background: rgba(78,106,48,0.24);
+}
 .atlas-sale-popup p {
   margin: 10px 0 0;
   padding-top: 9px;
@@ -1306,21 +1312,45 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .atlas-toolbar-status {
     width: 100%;
     justify-content: flex-start;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: none;
-  }
-  .atlas-toolbar-status::-webkit-scrollbar {
-    display: none;
+    overflow: visible;
   }
   .atlas-toolbar-pill {
-    flex: 0 0 auto;
+    flex: 1 1 calc(50% - 3px);
     justify-content: center;
-    min-height: 34px;
-    padding: 6px 10px;
-    font-size: 9px;
+    min-height: 44px;
+    padding: 8px 10px;
+    font-size: 10px;
+    text-align: center;
+    white-space: normal;
+  }
+  .atlas-toolbar-pill-deadline {
+    flex-basis: 100%;
+  }
+  .atlas-mobile-property-finder {
+    display: grid;
+    gap: 8px;
+    padding: 12px 16px 14px;
+    background: #17130f;
+    border-bottom: 1px solid rgba(241,210,132,0.18);
+    color: #f7f3ea;
+  }
+  .atlas-mobile-property-finder > label {
+    color: #f1d284;
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .atlas-mobile-property-finder .atlas-property-select {
+    min-height: 46px;
+    font-size: 13px;
+  }
+  .atlas-mobile-property-finder > div {
+    color: #cfc2ad;
+    font-size: 10px;
+    line-height: 1.45;
   }
   .ticker-window .ticker-track {
     position: static;
@@ -1559,13 +1589,15 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .drawer-scrim {
     align-items: flex-end !important;
     justify-content: center !important;
+    padding-top: 118px;
   }
   .property-drawer {
     width: 100% !important;
-    height: min(88svh, 760px) !important;
+    height: 100% !important;
+    max-height: 100% !important;
     border-left: 0 !important;
     border-top: 1px solid var(--ink) !important;
-    border-radius: 18px 18px 0 0;
+    border-radius: 0;
   }
   .property-drawer .pd-header {
     position: sticky;
@@ -1575,6 +1607,27 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   }
   .property-drawer .pd-header { padding: 16px 16px 14px !important; flex-wrap: wrap; gap: 10px; }
   .property-drawer .pd-title { font-size: 32px !important; }
+  .property-drawer .pd-location { font-size: 12px !important; line-height: 1.4 !important; }
+  .property-drawer .pd-title-meta { font-size: 12px !important; line-height: 1.5 !important; }
+  .property-drawer .pd-header-actions { width: 100%; }
+  .property-drawer .pd-header-action {
+    flex: 1 1 0;
+    min-height: 44px;
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+  .property-drawer .pd-sisp { padding: 16px !important; }
+  .property-drawer .pd-sisp .mono { font-size: 12px !important; line-height: 1.55 !important; }
+  .property-drawer .pd-sisp-status { font-size: 11px !important; }
+  .property-drawer .pd-sisp-note,
+  .property-drawer .pd-sisp-source { font-size: 12px !important; }
+  .property-drawer .pd-sisp-links a,
+  .property-drawer .pd-sisp > div > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font: 500 13px/1.3 "JetBrains Mono", monospace !important;
+  }
   .property-drawer .pd-rollup { padding: 14px 16px !important; }
   .property-drawer .pd-imagery-summary { padding: 14px 16px !important; }
   .property-drawer .pd-imagery-grid { grid-template-columns: 1fr !important; gap: 6px !important; }
@@ -1619,6 +1672,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 }
 
 @media (max-width: 480px) {
+  .drawer-scrim { padding-top: 118px; }
   .site-nav { padding: 6px 12px; }
   .site-nav .brand .wordmark { font-size: 15px; }
   .site-nav .brand .tag { display: none; }
@@ -3297,16 +3351,16 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 /* Group Structure view */
 .gs-shell { padding: 32px 24px 60px; max-width: 1200px; margin: 0 auto; }
 .gs-hero { padding: 28px 0 22px; border-bottom: 1px solid rgba(241,210,132,0.18); margin-bottom: 26px; }
-.gs-hero-kicker { color: #f1d284; font: 700 11px/1 "JetBrains Mono", monospace; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
-.gs-hero-title { font-size: 36px; line-height: 1.05; color: #f7f3ea; margin: 0 0 18px; }
+.gs-hero-kicker { color: var(--gold-ink); font: 700 11px/1 "JetBrains Mono", monospace; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
+.gs-hero-title { font-size: 36px; line-height: 1.05; color: var(--ink); margin: 0 0 18px; }
 .gs-hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 14px; }
 .gs-hero-stat { background: rgba(28,24,21,0.6); border: 1px solid rgba(241,210,132,0.14); border-radius: 4px; padding: 14px 16px; }
 .gs-hero-stat-num { font-size: 28px; line-height: 1; color: #f1d284; margin-bottom: 6px; }
 .gs-hero-stat-label { color: #cfc3ad; font: 10px/1.4 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; }
-.gs-hero-source { color: #b9ad95; font: italic 12px/1.5 "Geist", sans-serif; margin-top: 6px; }
+.gs-hero-source { color: var(--mute); font: italic 12px/1.5 "Geist", sans-serif; margin-top: 6px; }
 .gs-section { margin-bottom: 36px; }
-.gs-section-title { font-size: 20px; color: #f7f3ea; margin-bottom: 8px; }
-.gs-section-sub { color: #cfc3ad; font: 13px/1.5 "Geist", sans-serif; margin-bottom: 18px; max-width: 800px; }
+.gs-section-title { font-size: 20px; color: var(--ink); margin: 0 0 8px; }
+.gs-section-sub { color: var(--ink-2); font: 13px/1.5 "Geist", sans-serif; margin-bottom: 18px; max-width: 800px; }
 .gs-control-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .gs-control-person { background: rgba(28,24,21,0.4); border: 1px solid rgba(241,210,132,0.10); border-left: 3px solid #f1d284; border-radius: 3px; padding: 14px; }
 .gs-control-name { font-size: 16px; color: #f7f3ea; margin-bottom: 4px; }
@@ -3345,23 +3399,24 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 .gs-advisor-role { color: #f1d284; font: 700 10px/1 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
 .gs-advisor-name { color: #d8ccba; font: 12px/1.45 "Geist", sans-serif; }
 .gs-court-footer { background: rgba(28,24,21,0.4); border-radius: 4px; padding: 18px; }
+.gs-court-footer .gs-section-title { color: #f7f3ea; }
 .gs-court-grid { display: grid; gap: 6px; color: #d8ccba; font: 13px/1.5 "Geist", sans-serif; }
 .gs-court-grid a { color: #f1d284; text-decoration: underline; }
-.gs-source-note p { color: #b9ad95; font: italic 12px/1.55 "Geist", sans-serif; max-width: 800px; }
+.gs-source-note p { color: var(--mute); font: italic 12px/1.55 "Geist", sans-serif; max-width: 800px; }
 
 /* Debt Stack view */
 .ds-shell { padding: 32px 24px 60px; max-width: 1200px; margin: 0 auto; }
 .ds-hero { padding: 28px 0 22px; border-bottom: 1px solid rgba(241,210,132,0.18); margin-bottom: 26px; }
-.ds-hero-kicker { color: #f1d284; font: 700 11px/1 "JetBrains Mono", monospace; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
-.ds-hero-title { font-size: 36px; line-height: 1.05; color: #f7f3ea; margin: 0 0 18px; }
+.ds-hero-kicker { color: var(--gold-ink); font: 700 11px/1 "JetBrains Mono", monospace; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
+.ds-hero-title { font-size: 36px; line-height: 1.05; color: var(--ink); margin: 0 0 18px; }
 .ds-hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 14px; }
 .ds-hero-stat { background: rgba(28,24,21,0.6); border: 1px solid rgba(241,210,132,0.14); border-radius: 4px; padding: 14px 16px; }
 .ds-hero-stat-num { font-size: 26px; line-height: 1; color: #f1d284; margin-bottom: 6px; }
 .ds-hero-stat-label { color: #cfc3ad; font: 10px/1.4 "JetBrains Mono", monospace; text-transform: uppercase; letter-spacing: 0.06em; }
-.ds-hero-source { color: #b9ad95; font: italic 12px/1.5 "Geist", sans-serif; margin-top: 6px; }
+.ds-hero-source { color: var(--mute); font: italic 12px/1.5 "Geist", sans-serif; margin-top: 6px; }
 .ds-section { margin-bottom: 36px; }
-.ds-section-title { font-size: 20px; color: #f7f3ea; margin-bottom: 8px; }
-.ds-section-sub { color: #cfc3ad; font: 13px/1.5 "Geist", sans-serif; margin-bottom: 14px; max-width: 800px; }
+.ds-section-title { font-size: 20px; color: var(--ink); margin: 0 0 8px; }
+.ds-section-sub { color: var(--ink-2); font: 13px/1.5 "Geist", sans-serif; margin-bottom: 14px; max-width: 800px; }
 .ds-priority-bar { background: rgba(28,24,21,0.5); border: 1px solid rgba(241,210,132,0.12); padding: 14px; border-radius: 4px; }
 .ds-priority-track { display: flex; gap: 4px; min-height: 70px; }
 .ds-priority-seg { padding: 8px 10px; border-radius: 3px; color: #fff; display: flex; flex-direction: column; justify-content: space-between; min-width: 80px; }
@@ -3370,10 +3425,10 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 .ds-priority-amount { font: 700 11px/1 "JetBrains Mono", monospace; }
 .ds-bar-list { display: flex; flex-direction: column; gap: 8px; }
 .ds-bar-row { display: grid; grid-template-columns: 240px 1fr 100px; gap: 10px; align-items: center; }
-.ds-bar-label { color: #d8ccba; font: 12px/1.3 "Geist", sans-serif; }
+.ds-bar-label { color: var(--ink-2); font: 12px/1.3 "Geist", sans-serif; }
 .ds-bar-track { height: 24px; background: rgba(28,24,21,0.5); border-radius: 2px; overflow: hidden; }
 .ds-bar-fill { height: 100%; transition: width 0.3s; }
-.ds-bar-amount { color: #f1d284; font: 700 12px/1 "JetBrains Mono", monospace; text-align: right; }
+.ds-bar-amount { color: var(--gold-ink); font: 700 12px/1 "JetBrains Mono", monospace; text-align: right; }
 .ds-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
 .ds-card { background: rgba(28,24,21,0.55); border: 1px solid rgba(241,210,132,0.16); border-radius: 4px; padding: 16px; }
 .ds-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(241,210,132,0.12); }
@@ -3390,14 +3445,14 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 .ds-component-meta { color: #b9ad95; font: 11px/1.4 "Geist", sans-serif; }
 .ds-card-bullets { padding-left: 18px; color: #d8ccba; font: 12px/1.5 "Geist", sans-serif; margin: 6px 0 0; }
 .ds-section-dip { background: rgba(241,210,132,0.06); border: 1px solid rgba(241,210,132,0.22); border-radius: 4px; padding: 20px; }
-.ds-dip-meta-grid { display: grid; gap: 8px; color: #d8ccba; font: 12px/1.5 "Geist", sans-serif; margin-bottom: 16px; }
+.ds-dip-meta-grid { display: grid; gap: 8px; color: var(--ink-2); font: 12px/1.5 "Geist", sans-serif; margin-bottom: 16px; }
 .ds-milestones { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(241,210,132,0.16); }
-.ds-milestones-title { font-size: 16px; color: #f7f3ea; margin-bottom: 10px; }
+.ds-milestones-title { font-size: 16px; color: var(--ink); margin-bottom: 10px; }
 .ds-milestone { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px dotted rgba(241,210,132,0.1); align-items: baseline; }
-.ds-milestone-date { color: #f1d284; font: 700 11px/1 "JetBrains Mono", monospace; }
-.ds-milestone-label { color: #d8ccba; font: 12px/1.45 "Geist", sans-serif; }
-.ds-dip-source { color: #8a7a5a; font: italic 11px/1.5 "Geist", sans-serif; margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(241,210,132,0.14); }
-.ds-source-note p { color: #b9ad95; font: italic 12px/1.55 "Geist", sans-serif; max-width: 800px; }
+.ds-milestone-date { color: var(--gold-ink); font: 700 11px/1 "JetBrains Mono", monospace; }
+.ds-milestone-label { color: var(--ink-2); font: 12px/1.45 "Geist", sans-serif; }
+.ds-dip-source { color: var(--mute); font: italic 11px/1.5 "Geist", sans-serif; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--rule-2); }
+.ds-source-note p { color: var(--mute); font: italic 12px/1.55 "Geist", sans-serif; max-width: 800px; }
 
 @media (max-width: 720px) {
   .ds-bar-row { grid-template-columns: 1fr; gap: 4px; }
@@ -3405,7 +3460,143 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .ds-bar-amount { text-align: left; }
 }
 
-   Reader support / "tip jar" — SupportCard + SiteFooter
+/* Latest court-file evidence module — an editorial changelog, not a promo card. */
+.home-court-update {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 3px solid var(--ink);
+}
+.home-court-update.is-compact {
+  margin-top: 0;
+  padding: 16px 48px 18px;
+  background: var(--paper);
+  border-top: 0;
+  border-bottom: 1px solid var(--ink);
+}
+.home-court-update.is-compact .home-court-update-head { margin-bottom: 12px; }
+.home-court-update.is-compact .home-court-update-head h2 { font-size: 28px; }
+.home-court-update.is-compact .home-court-update-card { padding-top: 12px; padding-bottom: 12px; }
+.home-court-update-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+.home-court-update-kicker {
+  color: var(--rust);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.home-court-update-head h2 {
+  margin: 4px 0 0;
+  font-size: 34px;
+  line-height: 1;
+  color: var(--ink);
+}
+.home-court-update-head time {
+  color: var(--mute);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-court-update-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.home-court-update-card {
+  min-width: 0;
+  padding: 16px 20px 18px 0;
+}
+.home-court-update-card + .home-court-update-card {
+  padding-left: 20px;
+  border-left: 1px solid var(--rule-2);
+}
+.home-court-update-status {
+  color: var(--gold-ink);
+  font-size: 9px;
+  line-height: 1.45;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.home-court-update-card h3 {
+  margin: 7px 0 8px;
+  color: var(--ink);
+  font-size: 25px;
+  line-height: 1.05;
+}
+.home-court-update-card p {
+  margin: 0 0 12px;
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.home-court-update-card a,
+.pd-sisp-links a {
+  color: var(--gold-ink);
+  font: 500 11px/1.45 "JetBrains Mono", monospace;
+  text-underline-offset: 3px;
+}
+.court-update-mobile { display: none; }
+
+@media (max-width: 900px) {
+  .home-court-update { margin-top: 24px; }
+  .home-court-update-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .home-court-update-head h2 { font-size: 28px; }
+  .home-court-update.is-compact { padding: 16px; }
+  .home-court-update.is-compact .home-court-update-head h2 { font-size: 25px; }
+  .home-court-update-grid { grid-template-columns: 1fr; }
+  .home-court-update-card { padding: 16px 0; }
+  .home-court-update-card + .home-court-update-card {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--rule-2);
+  }
+  .court-update-desktop { display: none; }
+  .court-update-mobile {
+    display: block;
+    background: var(--paper);
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .court-update-mobile summary {
+    min-height: 72px;
+    display: grid;
+    align-content: center;
+    gap: 5px;
+    padding: 12px 16px;
+    cursor: pointer;
+  }
+  .court-update-mobile summary > span {
+    color: var(--rust);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .court-update-mobile summary > strong {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.05;
+  }
+  .court-update-mobile summary em {
+    color: var(--gold-ink);
+    font: 500 10px/1 "JetBrains Mono", monospace;
+    white-space: nowrap;
+  }
+  .court-update-mobile .home-court-update-grid {
+    padding: 0 16px;
+  }
+  .atlas-mode-pill {
+    min-height: 44px;
+    padding: 9px 12px;
+    font-size: 11px;
+  }
+}
+
+/* ── Reader support / "tip jar" — SupportCard + SiteFooter
    ───────────────────────────────────────────────────────────────────────── */
 
 .support-card {
