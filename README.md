@@ -29,14 +29,12 @@ default path.
 - `scripts/quarter_geometry_calibration.json` - per-property geometry correction file used to tune the generated parcel boxes against satellite.
 - `.vercelignore` - excludes internal docs and review artifacts from static deploy uploads.
 - `components.jsx` - primitives + shared helpers.
-- `quarter-panel.jsx` - voting row + expanded vote panel + ticker with recent vote activity.
+- `quarter-panel.jsx` - read-only quarter row + expanded parcel detail panel.
 - `property-drawer.jsx` - right-side property drawer.
 - `view-editorial.jsx` / `view-list.jsx` / `view-creditors.jsx` / `view-map.jsx` - the main ledger views.
 - `view-dossiers-index.jsx` / `view-dossier.jsx` - dossier roadmap and single-dossier reader.
 - `dossiers/index.js` - internal 14-file dossier roadmap. The public page only reveals the next three upcoming dossiers.
 - `app.jsx` - top-level shell with hash routing.
-- `supabase/migrations/20260423090000_add_vote_activity_feed.sql` - anonymized public vote-activity view for the homepage feed.
-- `supabase/migrations/20260423143000_clear_prelaunch_vote_noise.sql` - scoped cleanup for the Hafford smoke-test votes that were visible before launch.
 
 ## Land Source Hierarchy
 
@@ -54,7 +52,7 @@ Post-baseline state changes live separately:
 
 - `soldProperties` - known sold assets such as Hafford partial and Wymark/Waldeck.
 - `operatorRelationships` - partner-owned or co-managed assets such as CypressView/D&R. These are relationship/provenance markers only and are excluded from Monette owned/rented/farmed acreage totals until title, lease, or court evidence proves the acreage treatment.
-- Quarter votes - current ownership/listing/season observations.
+- Read-only quarter status - reviewed ownership/listing/season observations.
 - Property notes/change logs - community or court-file updates that explain why the current map state differs from the January baseline.
 
 In `data.js`, `propertySummary` is the marker that a property is tied back to the Acre Sheet baseline. Records without `propertySummary` are overlay/court-only records until reconciled.
@@ -81,27 +79,17 @@ Wymark working rule: start from the Acre Sheet baseline of `21,951` farmed acres
 
 Retired `/#list`, `/#editorial`, and `/#dossiers` links redirect to `/#map`.
 
-## Homepage vote feed
-
-The homepage feed reads recent distinct vote activity from `public.vote_activity_feed`.
-That view exposes only `id`, property, quarter, category, value, and timestamp.
-It does not expose voter fingerprints or free-text notes from `public.votes`.
-
-The browser also emits an optimistic local activity row from `window.monetteInsertVote(...)`, so a visitor sees their vote hit the ticker and homepage panel immediately. Supabase hydration then replaces the local row with the server-backed feed when available.
-
-As of April 23, 2026, the Hafford `SW-12-48-8-W3` smoke-test cluster was removed from `public.votes` through `20260423143000_clear_prelaunch_vote_noise.sql`. If the feed is empty, that is the accurate state: it is waiting for new public votes, not showing a canned demo.
-
 ## Monette vs Agnonymous
 
-Monette is the source-of-truth surface: court-file roster, mapped parcel rows, structured ownership/listing/season votes, reviewed homepage headlines, and the anonymized live vote feed stay here.
+Monette is the read-only source-of-truth surface: court-file roster, mapped parcel rows, reviewed ownership/listing/season status, court updates, and source notes stay here. It has no live database, submission queue, or headline feed.
 
 Agnonymous is the public discussion surface: correction threads, banter, requests for clarification, and property evidence threads now open at `window.AGNONYMOUS_URL` (`https://agnonymous.buperac.com`). The shared helper `window.buildAgnonymousUrl(...)` sends query context (`source=monette`, `kind`, `category`, `title`, `body`, `property`, `return`) so the Agnonymous app can prefill or route posts without Monette owning that conversation.
 
-## Voting and point-only assets
+## Property evidence and point-only assets
 
-Quarter-level votes only appear where the property has parcel rows in `quarters.js`. Mapped properties let visitors open a quarter row and vote ownership, listing, or season status.
+Mapped properties let visitors open a read-only quarter row showing reviewed ownership, listing, and season status.
 
-Point-only assets do not have quarter rows yet, so the drawer does not show a `Sold` vote button. The current point-only set includes Alberta and British Columbia facilities or ranches plus Montana's 7-acre Hardin Infrastructure & Rail Site, whose exact parcel is not published. Those files show three evidence CTAs instead: `Report sold / returned`, `Report listing`, and `Submit parcel evidence`. These open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as public ticker items, parcel rows, or status updates.
+Point-only assets do not have quarter rows yet. The current point-only set includes Alberta and British Columbia facilities or ranches plus Montana's 7-acre Hardin Infrastructure & Rail Site, whose exact parcel is not published. Their evidence CTAs open Agnonymous discussion threads with property context attached; reviewed evidence can later be promoted back into Monette as parcel rows, source notes, or status updates.
 
 The atlas has both a floating map legend and a right-panel legend. Use it to distinguish mapped land blocks, point-only court-file assets, historical sold markers, and the selected-property gold ring.
 

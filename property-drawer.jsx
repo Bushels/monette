@@ -29,7 +29,7 @@ function CurrentLandAcreBar({ status }) {
   );
 }
 
-function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarterRouteChange, onOpenHeadlineForm }) {
+function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarterRouteChange }) {
   const [openQ, setOpenQ] = useState(initialQuarterLoc || null);
   const rowRefs = useRef({});
   const scrollContainerRef = useRef(null);
@@ -211,10 +211,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
       });
       return;
     }
-    if (!onOpenHeadlineForm) return;
-    onOpenHeadlineForm({ propertyId: prop.id, draft });
   };
-  const canOpenPublicThread = !!window.openAgnonymousDiscussion || !!onOpenHeadlineForm;
+  const canOpenPublicThread = !!window.openAgnonymousDiscussion;
   const communityAsk = prop.communityAsk || null;
   // Per-property purchaser rumor — opt-in via prop.purchaserRumor so a tip
   // about one block doesn't bleed into unrelated property drawers. Sold
@@ -749,7 +747,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               <div>
                 <span className="mono">Where does this go?</span>
                 <p>
-                  The discussion opens on Agnonymous with this property context attached. It does not instantly change the Monette rollup; reviewed evidence can be promoted into the ticker or used to create parcel rows/status updates.
+                  The discussion opens on Agnonymous with this property context attached. It does not instantly change the Monette rollup; reviewed evidence can become a source note, parcel row, or status update.
                 </p>
               </div>
               <div>

@@ -69,7 +69,6 @@ const staticAssets = [
   "quarter-owners.js",
   "quarters-data.js",
   "quarters.js",
-  "supabase-client.js",
   "styles.css",
   "favicon.svg",
 ];

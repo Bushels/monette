@@ -1321,7 +1321,7 @@ function PropertySearchMenu({ id, properties, coverageByProperty, selected, onSe
   );
 }
 
-const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm }) => {
+const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
   const [sel, setSel] = useState(null);
   const [selQLoc, setSelQLoc] = useState(null);
   // Drawer visibility is intentionally independent of `sel`. Closing the
@@ -3293,7 +3293,6 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           setSelQLoc(quarterLoc || null);
           routeToSelection(propId, quarterLoc || null);
         }}
-        onOpenHeadlineForm={onOpenHeadlineForm}
       />
     </div>
   );

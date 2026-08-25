@@ -1347,12 +1347,6 @@ window.MONETTE_DATA = {
     { id:"sold-wymark-waldeck", name:"Wymark / Waldeck", province:"SK", region:"Wymark, SK", lat:50.11, lng:-107.63, acres:485, price:1780000, pricePerAcre:3670, closed:"Phase 2", phase:"Phase 2", buyer:null, buyerStatus:"unknown", hideMapMarker:true, notes:"CCAA Phase 2 result (court affidavit ¶158): 485 ac for $1.78M ($3,670/ac), bundled as a single Phase 2 line item. Community intel 2026-04-26 named Carefoot Acres as buyer of 3 Waldeck pieces — but the 5 quarters identified in the tip total 746.70 ac, which exceeds this 485 ac affidavit figure by 261.70 ac (54%). Buyer attribution removed from this row pending reconciliation. Map marker hidden because the 5 quarters now display in their actual locations as red 'sold' parcels on the Wymark map (with hover popups carrying the Carefoot rumor + Waldeck Lot infrastructure context)." },
   ],
 
-  // Community-submitted scrolling headlines. Launch-day seed is the CCAA
-  // filing; everything else arrives via the "+ Submit headline" button.
-  headlines: [
-    { id:1, text:"Monette Farms files for CCAA protection — 311,637 acres enter stay",  author:"Ledger", when:"0d" },
-  ],
-
   // CCAA + portfolio timeline
   timeline: [
     { date:"Dec 05, 2018", label:"Senior Facilities Agreement signed",    detail:"BNS as Agent + Syndicate (BMO + EDC + FCC). $940M total commitment" },
@@ -1544,21 +1538,6 @@ window.MONETTE_DATA.latestCourtUpdate = {
     },
   ],
 };
-
-window.MONETTE_DATA.headlines = [
-  { id: 13, text: "Arizona order granted Aug 19: Aguila Farm sale approved to Byner Cattle Company and/or nominee. Closing is not publicly confirmed; purchase price remains sealed and vesting still requires the Monitor's certificate plus U.S. court recognition.", author: "Court file", when: "Aug 19" },
-  { id: 12, text: "Fourth Affidavit filed Aug 11: SCIC asserts about C$1.9M from a 2023-24 crop-insurance overpayment audit. The Applicants, Monitor and DIP Agent were still assessing the pre-filing claim and coverage position as of Aug 10.", author: "Court file", when: "Aug 11" },
-  { id: 11, text: "Court audit anchored: Helkaa Declaration ¶158 confirms $30.78M Sale Programme (2 SK sales Jan 16-Mar 1, 2026) on top of $88.68M FY2025 dispositions (Regina I $41.18M + Havre $47.5M). CCAA Initial Order pronounced Apr 21, 2026 at 00:01 MT by Justice C.M. Jones (court file 2601-07148). DIP $90M, charges $95M+$1.5M+$1.5M. Senior repayment deadline Mar 1, 2027.", author: "Ledger", when: "0d" },
-  { id: 9, text: "Hafford court-grounded: affidavit Exhibit D ¶89 shows only 2,554 ac OWNED at 'North Battleford (Hafford)' — the 46,466 figure on tender docs was the operating footprint (incl. leased Simmons ground). The $29M / 2,553 ac sale liquidated essentially all Monette-owned Hafford land. 'Walter Farms bought all 46,466 ac' rumor not court-supported.", author: "Ledger", when: "0d" },
-  { id: 8, text: "Third Regina-area Monette site of the day: a binyard (satellite grain storage) at 50.273, -104.436 — previous owner unknown, ~5 km from the Kambietz yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "1d" },
-  { id: 7, text: "Second Regina-area yard surfaces: Monette 'Kambietz yard' at 50.296, -104.36725 reportedly bought from the Kambietz family after they finished building a replacement yard (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
-  { id: 6, text: "Wolfe-family thread surfaces: Regina South 'Wolfe yard' rumored bought from Brent & Clayton Wolfe (Arizona) — same family reportedly opened Monette's AZ market (Aguila + the Arizona cooler/seed facility); Daryl Monette also acquired 'Northerly Oats' from the Wolfes (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
-  { id: 5, text: "Lac Pelletier feedlot fight: Monette + MLT Aikins pushing RM 107 council to approve 12-month 2,000-head feedlot at SE-18-12-14-W3 — cabin owners + park users opposed, petitions circulating (Anonymous Farmer tip 2026-04-27)", author: "Ledger", when: "0d" },
-  { id: 4, text: "Carefoot Acres rumored to have bought 3 Waldeck pieces / 5 quarters (NW-3, S½ Sec 15, N½ Sec 17 in RM Excelsior 166) — feedlot at Waldeck Lot is NOT in the deal; grain, fertilizer, shops, office are (community intel 2026-04-26)", author: "Ledger", when: "1d" },
-  { id: 3, text: "Walter Farms rumored to be the unofficial purchaser of the entire Monette portfolio — price unknown, Monitor's Report pending", author: "Ledger", when: "0d" },
-  { id: 2, text: "Hafford yard + Monette-owned 3,658 ac — Walter Farms rumored to be the buyer (community intel 2026-04-24)", author: "Ledger", when: "0d" },
-  { id: 1, text: "Court-file roster added - 22 property records plus sold assets now visible", author: "Ledger", when: "1d" },
-];
 
 // Keep province totals derived from the property rows so the public copy
 // cannot drift away from the underlying dataset.

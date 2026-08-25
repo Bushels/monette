@@ -93,7 +93,7 @@ function compareRegisterRows(a, b, sortKey, dir) {
   return ((Number(av) || 0) - (Number(bv) || 0)) * dir;
 }
 
-const ListView = ({ onSwitchView, onOpenHeadlineForm }) => {
+const ListView = ({ onSwitchView }) => {
   const [sel, setSel] = useState(null);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState({ key: "titled", dir: -1 });
@@ -106,7 +106,6 @@ const ListView = ({ onSwitchView, onOpenHeadlineForm }) => {
       });
       return;
     }
-    if (onOpenHeadlineForm) onOpenHeadlineForm("");
   };
   const talliesVersion = useTalliesVersion();
 
@@ -229,8 +228,6 @@ const ListView = ({ onSwitchView, onOpenHeadlineForm }) => {
         </div>
       </div>
 
-      <HeadlineTicker onOpenSubmit={openAgnonymous} />
-
       <div style={{
         padding: "16px 32px",
         background: "var(--paper-2)",
@@ -345,7 +342,6 @@ const ListView = ({ onSwitchView, onOpenHeadlineForm }) => {
           setSel(null);
           if (onSwitchView) onSwitchView("map", property.id);
         }}
-        onOpenHeadlineForm={onOpenHeadlineForm}
       />
     </div>
   );

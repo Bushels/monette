@@ -37,9 +37,6 @@ function parseHash() {
 
 function App() {
   const [{ view, prop, quarter }, setRoute] = useState(parseHash());
-  const [headlineFormOpen, setHeadlineFormOpen] = useState(false);
-  const [headlineFormPropertyId, setHeadlineFormPropertyId] = useState("");
-  const [headlineFormDraft, setHeadlineFormDraft] = useState("");
 
   useEffect(() => {
     const onHash = () => setRoute(parseHash());
@@ -52,29 +49,6 @@ function App() {
     if (nextProp) parts.push(nextProp);
     if (nextQuarter) parts.push(nextQuarter);
     window.location.hash = parts.join("/");
-  };
-
-  const openHeadlineForm = (input) => {
-    if (input && typeof input === "object") {
-      setHeadlineFormPropertyId(typeof input.propertyId === "string" ? input.propertyId : "");
-      setHeadlineFormDraft(typeof input.draft === "string" ? input.draft : "");
-    } else {
-      setHeadlineFormPropertyId(typeof input === "string" ? input : "");
-      setHeadlineFormDraft("");
-    }
-    setHeadlineFormOpen(true);
-  };
-
-  const openAgnonymous = () => {
-    if (window.openAgnonymousDiscussion) {
-      window.openAgnonymousDiscussion({
-        title: "Monette Ledger correction or clarification",
-        body: "What should be corrected, clarified, or investigated? Add the location, source link, and confidence level if you have them.",
-        kind: "clarification",
-      });
-      return;
-    }
-    window.open(window.AGNONYMOUS_URL || "https://agnonymous.buperac.com", "_blank", "noopener,noreferrer");
   };
 
   const ViewComponent =
@@ -92,6 +66,11 @@ function App() {
     ? window.supportCustomAmountUrl()
     : "https://paypal.me/buperac";
   const publicSales = getHammondSaleSummary();
+  const agnonymousSubmitUrl = buildAgnonymousUrl({
+    title: "Monette Ledger correction or clarification",
+    body: "What should be corrected, clarified, or investigated? Add the location, source link, and confidence level if you have them.",
+    kind: "clarification",
+  });
 
   return (
     <>
@@ -115,10 +94,15 @@ function App() {
             <span className="nav-cta-full">Donate</span>
             <span className="nav-cta-short">Donate</span>
           </a>
-          <button className="nav-cta nav-cta-gold" onClick={openAgnonymous}>
+          <a
+            href={agnonymousSubmitUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta nav-cta-gold"
+          >
             <span className="nav-cta-full">+ Submit Update</span>
             <span className="nav-cta-short">Submit</span>
-          </button>
+          </a>
         </div>
       </nav>
       <div className="view-wrap">
@@ -127,7 +111,6 @@ function App() {
           forcedSelect={view === "map" || view === "dossier" ? prop : null}
           forcedQuarter={view === "map" ? quarter : null}
           onSwitchView={go}
-          onOpenHeadlineForm={openHeadlineForm}
         />
       </div>
       {/* Persistent site footer with low-pressure support link.
@@ -135,12 +118,6 @@ function App() {
           fold there, which is the desired behavior — readers of the long-form
           views (editorial, dossiers) get an inline support card too. */}
       <SiteFooter />
-      <SubmitHeadlineModal
-        open={headlineFormOpen}
-        initialPropertyId={headlineFormPropertyId}
-        initialText={headlineFormDraft}
-        onClose={() => setHeadlineFormOpen(false)}
-      />
     </>
   );
 }
