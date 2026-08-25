@@ -251,6 +251,18 @@ window.MONETTE_DATA = {
       sizeCAD:90000000,
       initialAvailabilityCAD:40000000,
       furtherAvailabilityCAD:90000000,
+      utilizationAsOf:"2026-07-31",
+      drawnCAD:88200000,
+      remainingAvailabilityCAD:1800000,
+      openingBalanceCAD:66000000,
+      netDrawsDuringPeriodCAD:22200000,
+      forecastNetDrawsDuringPeriodCAD:18200000,
+      cashOnHandCAD:12300000,
+      forecastClosingBalanceCAD:84300000,
+      forecastClosingDate:"2026-11-13",
+      utilizationNote:"Actual results for May 23-July 31, 2026. The C$22.2M is the net increase in DIP borrowings during the period, not a separate facility. The Monitor says the DIP supported working capital and continued operations, including completion of spring seeding on approximately 390,000 acres; it does not provide a line-item allocation of every borrowed dollar.",
+      utilizationSource:"Third Report of the Monitor ¶¶21, 24-26 and 29; filed August 13, 2026",
+      utilizationSourceUrl:"https://cfcanada.fticonsulting.com/MonetteFarms/docs/2601-07148-Filed-2026-08-13-Report-of-the-Monitor%20(1).pdf",
       type:"Senior secured super-priority debtor-in-possession revolving",
       agent:"Bank of Nova Scotia",
       lenders:["Bank of Nova Scotia (Agent)","Farm Credit Canada","Bank of Montreal (BMO)","Export Development Canada (EDC)"],
@@ -278,7 +290,7 @@ window.MONETTE_DATA = {
       varianceTolerance:"Cumulative bi-weekly disbursements >15% AND >$1M over budget = Event of Default; receipts <15% AND >$1M under = Event of Default",
       grainBusinessWindDown:"Group will not accept crop from producers under Canada Grain Act unless paid in full in advance. CGC Letter of Credit OSB82312CGY to be returned to Bank of Nova Scotia for cancellation within 120 days. CGC licences NOT renewed.",
       cattleBusinessAuthorization:"Group may dispose of Cattle without further Court order per DIP Budget; FCC remains senior on cattle proceeds and may be paid using DIP Facility under §16(d).",
-      source:"Helkaa Declaration Exhibit A (DIP Term Sheet, Doc 6-1, 82pp) + Exhibit B (CCAA Initial Order, Doc 6-2, 18pp). Initial Order pronounced 2026-04-21 by Justice C.M. Jones, Court of King's Bench of Alberta, Calgary, Court file 2601-07148."
+      source:"Facility terms: Helkaa Declaration Exhibit A (DIP Term Sheet) + Exhibit B (CCAA Initial Order). Actual utilization: Third Report of the Monitor ¶¶21, 24-26 and 29, filed 2026-08-13. Initial Order pronounced 2026-04-21 by Justice C.M. Jones, Court of King's Bench of Alberta, Calgary, Court file 2601-07148."
     },
     note:"BMO appears in the Group Structure & Relationships diagram financing panel as a Syndicate lender — verified by DIP Term Sheet signature pages: BMO is a member of the existing Senior Secured Syndicate that is rolling into the DIP, alongside BNS (Agent), FCC, and EDC. Not a separate LoC facility."
   },

@@ -140,6 +140,52 @@ function MilestoneRow({ ms }) {
   );
 }
 
+function DipUtilization({ dip }) {
+  if (!dip || typeof dip.drawnCAD !== "number" || typeof dip.sizeCAD !== "number") return null;
+  const utilizationPct = Math.min(100, Math.max(0, (dip.drawnCAD / dip.sizeCAD) * 100));
+
+  return React.createElement("div", { className: "ds-dip-utilization" },
+    React.createElement("div", { className: "ds-dip-util-head" },
+      React.createElement("div", null,
+        React.createElement("div", { className: "serif ds-dip-util-title" }, "Actual DIP utilization"),
+        React.createElement("div", { className: "ds-dip-util-asof" }, "As of " + dip.utilizationAsOf)
+      ),
+      React.createElement("div", { className: "ds-dip-util-percent" }, utilizationPct.toFixed(0) + "% drawn")
+    ),
+    React.createElement("div", { className: "ds-dip-util-track", role: "img", "aria-label": fmtMoney(dip.drawnCAD) + " drawn of " + fmtMoney(dip.sizeCAD) + " maximum" },
+      React.createElement("div", { className: "ds-dip-util-fill", style: { width: utilizationPct + "%" } })
+    ),
+    React.createElement("div", { className: "ds-dip-util-stats" },
+      React.createElement("div", { className: "ds-dip-util-stat" },
+        React.createElement("strong", null, fmtMoney(dip.drawnCAD)),
+        React.createElement("span", null, "Closing balance")
+      ),
+      React.createElement("div", { className: "ds-dip-util-stat" },
+        React.createElement("strong", null, fmtMoney(dip.remainingAvailabilityCAD)),
+        React.createElement("span", null, "Still available")
+      ),
+      React.createElement("div", { className: "ds-dip-util-stat" },
+        React.createElement("strong", null, "+" + fmtMoney(dip.netDrawsDuringPeriodCAD)),
+        React.createElement("span", null, "Net draws · May 23-Jul 31")
+      ),
+      React.createElement("div", { className: "ds-dip-util-stat" },
+        React.createElement("strong", null, fmtMoney(dip.cashOnHandCAD)),
+        React.createElement("span", null, "Cash on hand")
+      )
+    ),
+    dip.utilizationNote ? React.createElement("p", { className: "ds-dip-util-note" }, dip.utilizationNote) : null,
+    dip.forecastClosingBalanceCAD ? React.createElement("p", { className: "ds-dip-util-forecast" },
+      "Forecast, not actual: closing DIP balance " + fmtMoney(dip.forecastClosingBalanceCAD) + " at " + dip.forecastClosingDate + "."
+    ) : null,
+    dip.utilizationSourceUrl ? React.createElement("a", {
+      className: "ds-dip-util-source",
+      href: dip.utilizationSourceUrl,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, dip.utilizationSource) : null
+  );
+}
+
 function DebtStackView() {
   if (!DEBT_STACK) {
     return React.createElement("div", { className: "view-shell" },
@@ -212,6 +258,7 @@ function DebtStackView() {
     // DIP Facility detail
     dip ? React.createElement("section", { className: "ds-section ds-section-dip" },
       React.createElement("h2", { className: "serif ds-section-title" }, "DIP Credit Facility"),
+      React.createElement(DipUtilization, { dip: dip }),
       React.createElement("div", { className: "ds-dip-meta-grid" },
         React.createElement("div", null, React.createElement("strong", null, "Size: "), fmtMoney(dip.sizeCAD) + " (Initial: " + fmtMoney(dip.initialAvailabilityCAD) + ")"),
         React.createElement("div", null, React.createElement("strong", null, "Type: "), dip.type),

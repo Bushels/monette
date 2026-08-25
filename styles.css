@@ -3445,6 +3445,20 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 .ds-component-meta { color: #b9ad95; font: 11px/1.4 "Geist", sans-serif; }
 .ds-card-bullets { padding-left: 18px; color: #d8ccba; font: 12px/1.5 "Geist", sans-serif; margin: 6px 0 0; }
 .ds-section-dip { background: rgba(241,210,132,0.06); border: 1px solid rgba(241,210,132,0.22); border-radius: 4px; padding: 20px; }
+.ds-dip-utilization { background: rgba(28,24,21,0.62); border: 1px solid rgba(241,210,132,0.2); border-radius: 4px; padding: 16px; margin: 14px 0 18px; }
+.ds-dip-util-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.ds-dip-util-title { color: #f7f3ea; font-size: 17px; line-height: 1.2; }
+.ds-dip-util-asof { color: var(--mute); font: 10px/1.4 "JetBrains Mono", monospace; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.ds-dip-util-percent { color: #f1d284; font: 700 12px/1 "JetBrains Mono", monospace; white-space: nowrap; }
+.ds-dip-util-track { height: 12px; overflow: hidden; border-radius: 999px; background: rgba(247,243,234,0.1); margin-bottom: 14px; }
+.ds-dip-util-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #bd7e32, #f1d284); }
+.ds-dip-util-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.ds-dip-util-stat { border-left: 2px solid rgba(241,210,132,0.34); padding-left: 9px; display: flex; flex-direction: column; gap: 4px; }
+.ds-dip-util-stat strong { color: #f1d284; font: 700 14px/1 "JetBrains Mono", monospace; }
+.ds-dip-util-stat span { color: #cfc3ad; font: 10px/1.35 "Geist", sans-serif; }
+.ds-dip-util-note, .ds-dip-util-forecast { color: #d8ccba; font: 12px/1.55 "Geist", sans-serif; margin: 14px 0 0; max-width: 900px; }
+.ds-dip-util-forecast { color: #b9ad95; font-style: italic; margin-top: 8px; }
+.ds-dip-util-source { display: inline-block; color: #f1d284; font: 11px/1.45 "Geist", sans-serif; margin-top: 10px; text-decoration: underline; text-underline-offset: 2px; }
 .ds-dip-meta-grid { display: grid; gap: 8px; color: var(--ink-2); font: 12px/1.5 "Geist", sans-serif; margin-bottom: 16px; }
 .ds-milestones { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(241,210,132,0.16); }
 .ds-milestones-title { font-size: 16px; color: var(--ink); margin-bottom: 10px; }
@@ -3458,6 +3472,7 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .ds-bar-row { grid-template-columns: 1fr; gap: 4px; }
   .ds-bar-label { font-size: 11px; }
   .ds-bar-amount { text-align: left; }
+  .ds-dip-util-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 8px; }
 }
 
 /* Latest court-file evidence module — an editorial changelog, not a promo card. */
