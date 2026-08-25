@@ -1,10 +1,13 @@
 # PROJECT_STATE.md
 
 ## Last verified production state
+- Supabase retirement / Agnonymous-only intake release: `07eaf26`.
+- Vercel production deployment: `dpl_C5KuvFSgP4QmGe8j6a7dMCtmPrCN` at `https://monette.buperac.com`.
+- Production verified 2026-08-25 at desktop and 390x844 mobile: Monette loads no Supabase SDK or client, exposes no Supabase submission/headline globals, emits no browser warnings, and retains the Atlas and court-update module with no horizontal overflow. `Submit Update` is a real external link to Agnonymous carrying source, return URL, category, title, and clarification context.
 - Compact desktop court-update release: `96c0b81`.
-- Vercel production deployment: `dpl_M4EDPyLiWoj4D9L68WhLPHoEDRx2` at `https://monette.buperac.com`.
+- Prior Vercel production deployment: `dpl_M4EDPyLiWoj4D9L68WhLPHoEDRx2`.
 - Production verified 2026-08-25 at 1440x1000, 1024x768, 901x768, and 390x844. The desktop court-update module is a 77px collapsed disclosure that moves the map start approximately 226px higher and increases map visible above the 1000px fold from approximately 530px to 755px. Expanding preserves all three court cards and exact FTI source links. Mobile retains its 73px collapsed treatment with no horizontal overflow.
-- The desktop accessible name includes the legally material `closing pending` caveat, visible desktop/mobile summary copy is data-driven, and the summary has an explicit keyboard focus treatment. Production component, data, and CSS assets matched the release build byte-for-byte. Browser QA found no release-related errors; the existing Supabase headline hydration fetch warning remains.
+- The desktop accessible name includes the legally material `closing pending` caveat, visible desktop/mobile summary copy is data-driven, and the summary has an explicit keyboard focus treatment. Production component, data, and CSS assets matched the release build byte-for-byte.
 - Searchable grouped property finder release: `157a59e`.
 - Prior Vercel production deployment: `dpl_8vUdS6tmgoCAGVvqmp2j7zAXgyBX`.
 - Production verified 2026-08-25 at desktop and mobile: property search supports province/state group browsing, exact jurisdiction aliases, internal names, legacy IDs, point-only assets, Arrow-key selection, portfolio reset, and deep-link drawer routing. The live component and CSS matched the release build byte-for-byte; browser QA logged no errors.
@@ -12,7 +15,7 @@
 - Mobile map reset, zoom, and compass controls are restored at 44x44px with no horizontal overflow. Desktop controls are 36x36px.
 
 ## Active task
-**SHIPPED + VERIFIED IN PRODUCTION (2026-08-25): compact desktop court-update disclosure.**
+**SHIPPED + VERIFIED IN PRODUCTION (2026-08-25): Supabase retired; Agnonymous is the only public intake.**
 The public Ledger now separates a court-approved sale from a completed closing.
 Aguila Farm is `sale-approved`: the approved buyer is Byner Cattle Company
 and/or nominee, the purchase price remains sealed, and closing is not publicly
@@ -26,6 +29,9 @@ remains a separate active listing at the reduced US$5M combined ask.
   full package breakdown and broker links.
 - The top navigation and Atlas toolbar derive their sales totals from the same
   per-property records used by the map and drawer.
+- Monette is read-only and has no live database, submission queue, or headline
+  ticker. Every public correction/evidence action routes to Agnonymous with the
+  relevant Monette context attached.
 - A source-linked court-update module now leads with the Aug. 19 Arizona order,
   the unresolved SCIC C$1.9M assertion, the Arizona price reset, and the unnamed
   selected B.C. broker. Desktop collapses the module behind a 77px summary and
