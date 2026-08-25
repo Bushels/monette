@@ -3653,7 +3653,71 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   font: 500 11px/1.45 "JetBrains Mono", monospace;
   text-underline-offset: 3px;
 }
+.court-update-desktop-compact {
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.court-update-desktop-compact > summary {
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: minmax(180px, auto) minmax(320px, 1fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 48px;
+  cursor: pointer;
+  list-style: none;
+}
+.court-update-desktop-compact > summary::-webkit-details-marker { display: none; }
+.court-update-desktop-compact > summary:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: -4px;
+}
+.court-update-desktop-kicker {
+  color: var(--rust);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.court-update-desktop-compact > summary strong {
+  min-width: 0;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.05;
+}
+.court-update-desktop-count,
+.court-update-desktop-action {
+  color: var(--gold-ink);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.court-update-desktop-action {
+  min-width: 94px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule-2);
+  color: var(--ink-2);
+  text-align: center;
+}
+.court-update-action-open { display: none; }
+.court-update-desktop-compact[open] .court-update-action-closed { display: none; }
+.court-update-desktop-compact[open] .court-update-action-open { display: inline-block; }
+.court-update-desktop-compact[open] > summary { border-bottom: 1px solid var(--ink); }
+.court-update-desktop-body { padding: 0 48px 18px; }
+.court-update-desktop-body .home-court-update-card { padding-top: 16px; padding-bottom: 16px; }
 .court-update-mobile { display: none; }
+
+@media (max-width: 1120px) and (min-width: 901px) {
+  .court-update-desktop-compact > summary {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+  .court-update-desktop-kicker { display: none; }
+  .court-update-desktop-compact > summary strong { font-size: 21px; }
+  .court-update-desktop-body { padding-left: 28px; padding-right: 28px; }
+}
 
 @media (max-width: 900px) {
   .home-court-update { margin-top: 24px; }

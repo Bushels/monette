@@ -1519,6 +1519,7 @@ window.MONETTE_DATA.sispByProperty = {
 window.MONETTE_DATA.latestCourtUpdate = {
   asOf: "2026-08-19",
   label: "New court-file evidence",
+  summaryTitle: "Aguila sale approved · closing pending",
   items: [
     {
       status: "Order granted · closing pending",

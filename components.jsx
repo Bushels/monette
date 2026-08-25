@@ -884,6 +884,10 @@ function SubmitHeadlineModal({ open, onClose, initialPropertyId, initialText = "
 function LatestCourtUpdatePanel({ compact = false }) {
   const update = D.latestCourtUpdate || null;
   if (!update || !Array.isArray(update.items) || update.items.length === 0) return null;
+  const primaryUpdate = update.items[0];
+  const additionalUpdateCount = Math.max(0, update.items.length - 1);
+  const updateDateLabel = new Date(`${update.asOf}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric" });
+  const summaryTitle = update.summaryTitle || `${primaryUpdate.title} · ${primaryUpdate.status}`;
   const renderItems = () => update.items.map((item) => (
     <article key={item.title} className="home-court-update-card">
       <div className="mono home-court-update-status">{item.status}</div>
@@ -911,11 +915,22 @@ function LatestCourtUpdatePanel({ compact = false }) {
   if (!compact) return panel;
   return (
     <>
-      {panel}
+      <details className="court-update-desktop court-update-desktop-compact">
+        <summary aria-label={`Latest court-file updates through ${updateDateLabel}: ${summaryTitle}; ${update.items.length} updates`}>
+          <span className="mono court-update-desktop-kicker">Latest court-file update · {updateDateLabel}</span>
+          <strong className="serif">{summaryTitle}</strong>
+          <span className="mono court-update-desktop-count">+{additionalUpdateCount} updates</span>
+          <span className="mono court-update-desktop-action court-update-action-closed">View details ↓</span>
+          <span className="mono court-update-desktop-action court-update-action-open">Close details ↑</span>
+        </summary>
+        <div className="court-update-desktop-body">
+          <div className="home-court-update-grid">{renderItems()}</div>
+        </div>
+      </details>
       <details className="court-update-mobile">
         <summary>
-          <span className="mono">Latest court-file update · Aug 19</span>
-          <strong className="serif">Aguila sale approved · closing pending <em>+2 updates</em></strong>
+          <span className="mono">Latest court-file update · {updateDateLabel}</span>
+          <strong className="serif">{summaryTitle} <em>+{additionalUpdateCount} updates</em></strong>
         </summary>
         <div className="home-court-update-grid">{renderItems()}</div>
       </details>
