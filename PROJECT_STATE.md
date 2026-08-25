@@ -1,13 +1,13 @@
 # PROJECT_STATE.md
 
 ## Last verified production state
-- Court/design release: `331e187`; bounded-deploy follow-up: `6df272d`.
-- Vercel production deployment: `dpl_PrUZh8A5K5hx1qP5Hbtewwobg31t` at `https://monette.buperac.com`.
-- Production verified 2026-08-24 at desktop and 390x844 mobile. The responsive checks cover the Atlas property finder, deadline pills, mode controls, Arizona drawers, Structure/Debt headings, social metadata, and computed CCAA day.
-- Browser QA found no application exceptions. The in-app test browser logged one non-fatal Supabase headline-hydration fetch warning; the controlled court-file headlines remained visible from the static dataset.
+- DIP utilization release: `243371b`; accessible map-controls follow-up: `cc386e2`.
+- Vercel production deployment: `dpl_9svdcYMe2YB4wGnMfUWW3YXZLdXG` at `https://monette.buperac.com`.
+- Production verified 2026-08-25 at desktop and 390x844 mobile. The Debt view shows C$88.2M drawn against the C$90M DIP maximum at July 31, C$1.8M remaining, and C$22.2M of period net draws; forecast figures are separately labelled. The deployed data, component, and CSS matched the release build byte-for-byte.
+- Mobile map reset, zoom, and compass controls are restored at 44x44px with no horizontal overflow. Desktop controls are 36x36px.
 
 ## Active task
-**SHIPPED + VERIFIED IN PRODUCTION (2026-08-24): Fourth Affidavit, Arizona order, and design-audit repairs.**
+**SHIPPED + VERIFIED IN PRODUCTION (2026-08-25): current DIP utilization and map-control accessibility.**
 The public Ledger now separates a court-approved sale from a completed closing.
 Aguila Farm is `sale-approved`: the approved buyer is Byner Cattle Company
 and/or nominee, the purchase price remains sealed, and closing is not publicly
@@ -27,7 +27,8 @@ remains a separate active listing at the reduced US$5M combined ask.
   does not bury the property finder or map.
 - Mobile has an always-visible 46px property selector above the map. It includes
   point-only assets; status/deadline pills and Atlas mode buttons are at least
-  44px high. The property drawer begins below the two-row navigation.
+  44px high. Reset, zoom, and compass map controls are also 44px touch targets.
+  The property drawer begins below the two-row navigation.
 - Structure and Debt section labels are semantic `h2` elements. Main headings
   measure 15.74:1 against paper and source notes 5.09:1 in browser QA.
 - Hammond inventory checked 2026-07-14: 18 farmland packages, 132,019.08 broker-
