@@ -1120,6 +1120,207 @@ function quarterGeojsonFromRealData(realData) {
     : null;
 }
 
+const PROPERTY_GROUP_LABELS = {
+  SK: "Saskatchewan",
+  MB: "Manitoba",
+  AB: "Alberta",
+  BC: "British Columbia",
+  MT: "Montana",
+  CO: "Colorado",
+  AZ: "Arizona",
+};
+
+const PROPERTY_JURISDICTION_ALIASES = {
+  SK: ["sk", "sask", "saskatchewan"],
+  MB: ["mb", "man", "manitoba"],
+  AB: ["ab", "alta", "alberta"],
+  BC: ["bc", "britishcolumbia"],
+  MT: ["mt", "montana"],
+  CO: ["co", "colorado"],
+  AZ: ["az", "arizona"],
+};
+
+function normalizePropertySearch(value) {
+  return String(value || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "");
+}
+
+function propertyCoverageLabel(property, coverage) {
+  if (coverage && coverage.hasRealGeometry) return `${fmt(coverage.mappedParcels)} mapped shapes`;
+  if (coverage && coverage.pointOnly) return "Point-only asset";
+  return "Portfolio rollup";
+}
+
+function PropertySearchMenu({ id, properties, coverageByProperty, selected, onSelect, onReset, label }) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const normalizedQuery = normalizePropertySearch(query);
+  const jurisdictionFilter = Object.entries(PROPERTY_JURISDICTION_ALIASES)
+    .find(([, aliases]) => aliases.includes(normalizedQuery));
+  const filteredProperties = properties.filter((property) => {
+    if (!normalizedQuery) return true;
+    if (jurisdictionFilter) return property.province === jurisdictionFilter[0];
+    const searchTerms = [
+      property.id,
+      property.name,
+      property.internalName,
+      property.province,
+      PROPERTY_GROUP_LABELS[property.province],
+      property.region,
+      ...(property.tags || []),
+    ];
+    return searchTerms
+      .filter(Boolean)
+      .map(normalizePropertySearch)
+      .some((term) => term.includes(normalizedQuery));
+  });
+  const groupedProperties = filteredProperties.reduce((groups, property) => {
+    const key = property.province || "Other";
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(property);
+    return groups;
+  }, {});
+  const orderedProperties = Object.values(groupedProperties).flat();
+  const listId = `${id}-results`;
+  const flatOptions = normalizedQuery ? orderedProperties : [null, ...orderedProperties];
+  const resultsRef = useRef(null);
+  useEffect(() => {
+    if (!open || activeIndex < 0 || !resultsRef.current) return;
+    const activeOption = resultsRef.current.querySelector(`#${listId}-${activeIndex}`);
+    if (activeOption) activeOption.scrollIntoView({ block: "nearest" });
+  }, [activeIndex, listId, open]);
+  const choose = (property) => {
+    if (property) onSelect(property);
+    else onReset();
+    setQuery("");
+    setOpen(false);
+    setActiveIndex(-1);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+      setActiveIndex(-1);
+      return;
+    }
+    if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      setOpen(true);
+      if (!flatOptions.length) return;
+      const direction = event.key === "ArrowDown" ? 1 : -1;
+      setActiveIndex((current) => {
+        const start = current < 0 ? (direction > 0 ? -1 : flatOptions.length) : current;
+        return Math.max(0, Math.min(flatOptions.length - 1, start + direction));
+      });
+      return;
+    }
+    if (event.key === "Enter" && open && activeIndex >= 0) {
+      event.preventDefault();
+      choose(flatOptions[activeIndex]);
+    }
+  };
+
+  return (
+    <div
+      className="atlas-property-search"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+          setOpen(false);
+          setActiveIndex(-1);
+        }
+      }}
+    >
+      <label className="mono atlas-property-search-label" htmlFor={id}>{label}</label>
+      <div className="atlas-property-search-row">
+        <input
+          id={id}
+          className="atlas-property-search-input mono"
+          type="search"
+          role="combobox"
+          autoComplete="off"
+          value={query}
+          placeholder={selected ? `Selected: ${selected.name} — search to change` : "Search property, region, province or state…"}
+          aria-autocomplete="list"
+          aria-controls={listId}
+          aria-expanded={open}
+          aria-describedby={selected ? `${id}-selection` : undefined}
+          aria-activedescendant={activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
+          onFocus={() => setOpen(true)}
+          onChange={(event) => {
+            setQuery(event.target.value);
+            setOpen(true);
+            setActiveIndex(-1);
+          }}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          type="button"
+          className="atlas-property-search-toggle mono"
+          aria-label={open ? "Close property list" : "Browse all properties"}
+          aria-expanded={open}
+          onClick={() => {
+            setOpen((value) => !value);
+            setActiveIndex(-1);
+          }}
+        >
+          {open ? "Close" : "Browse"}
+        </button>
+      </div>
+      {selected && (
+        <div id={`${id}-selection`} className="atlas-property-search-selection mono">
+          Current selection: <strong>{selected.name}</strong>
+        </div>
+      )}
+      {open && (
+        <div ref={resultsRef} id={listId} className="atlas-property-search-results" role="listbox" aria-label="Properties">
+          {!normalizedQuery && (
+            <button
+              id={`${listId}-0`}
+              type="button"
+              role="option"
+              tabIndex={-1}
+              aria-selected={!selected}
+              className={`atlas-property-search-option atlas-property-search-overview${activeIndex === 0 ? " is-active" : ""}`}
+              onClick={() => choose(null)}
+            >
+              <strong>Portfolio overview</strong>
+              <span>Reset map to all properties</span>
+            </button>
+          )}
+          {filteredProperties.length === 0 ? (
+            <div className="atlas-property-search-empty mono">No matching property.</div>
+          ) : Object.entries(groupedProperties).map(([groupKey, groupProperties]) => (
+            <div className="atlas-property-search-group" role="group" aria-label={PROPERTY_GROUP_LABELS[groupKey] || groupKey} key={groupKey}>
+              <div className="atlas-property-search-group-label mono">{PROPERTY_GROUP_LABELS[groupKey] || groupKey}</div>
+              {groupProperties.map((property) => {
+                const optionIndex = flatOptions.indexOf(property);
+                return (
+                  <button
+                    id={`${listId}-${optionIndex}`}
+                    type="button"
+                    role="option"
+                    tabIndex={-1}
+                    aria-selected={!!selected && selected.id === property.id}
+                    className={`atlas-property-search-option${activeIndex === optionIndex ? " is-active" : ""}`}
+                    key={property.id}
+                    onClick={() => choose(property)}
+                  >
+                    <strong>{property.name}</strong>
+                    <span>{property.region} · {propertyCoverageLabel(property, coverageByProperty[property.id])}</span>
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm }) => {
   const [sel, setSel] = useState(null);
   const [selQLoc, setSelQLoc] = useState(null);
@@ -2538,6 +2739,23 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
     routeToSelection(property.id, null);
     focusProperty(property.id, 900);
   };
+  const resetPortfolio = () => {
+    pendingFocusRef.current = null;
+    setSel(null);
+    setSelQLoc(null);
+    setDrawerOpen(false);
+    routeToSelection(null, null);
+    const map = mapRef.current;
+    if (map) {
+      map.flyTo({
+        center: window.MAPBOX_HOME.center,
+        zoom: window.MAPBOX_HOME.zoom,
+        bearing: 0,
+        pitch: 0,
+        duration: 900,
+      });
+    }
+  };
 
   return (
     <div style={{ minHeight: "100%", background: "var(--night)", color: "var(--paper)", fontSize: 13 }}>
@@ -2556,27 +2774,15 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
       </div>
 
       <div className="atlas-mobile-property-finder">
-        <label className="mono" htmlFor="atlas-mobile-property-jump">Find any property or point-only asset</label>
-        <select
-          id="atlas-mobile-property-jump"
-          className="atlas-property-select mono"
-          value={sel ? sel.id : ""}
-          onChange={(event) => {
-            const property = propertyById[event.target.value];
-            if (property) selectProperty(property, true);
-          }}
-        >
-          <option value="">Choose a property…</option>
-          {D.properties.map((property) => {
-            const coverage = coverageByProperty[property.id];
-            const suffix = coverage && coverage.hasRealGeometry
-              ? ` - ${fmt(coverage.mappedParcels)} shapes`
-              : coverage && coverage.pointOnly
-                ? " - point-only"
-                : " - synthetic";
-            return <option key={property.id} value={property.id}>{property.name}{suffix}</option>;
-          })}
-        </select>
+        <PropertySearchMenu
+          id="atlas-mobile-property-search"
+          properties={D.properties}
+          coverageByProperty={coverageByProperty}
+          selected={sel}
+          onSelect={(property) => selectProperty(property, true)}
+          onReset={resetPortfolio}
+          label="Find any property or point-only asset"
+        />
         <div className="mono">Every record is reachable here, including assets without verified parcel geometry.</div>
       </div>
 
@@ -2801,31 +3007,15 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView, onOpenHeadlineForm
           </div>
 
           <div className="atlas-panel-block atlas-property-jump">
-            <label className="mono atlas-panel-kicker" htmlFor="atlas-property-jump">Jump to property</label>
-            <select
-              id="atlas-property-jump"
-              className="atlas-property-select mono"
-              value={sel ? sel.id : ""}
-              onChange={(event) => {
-                const property = propertyById[event.target.value];
-                if (property) selectProperty(property, true);
-              }}
-            >
-              <option value="">Portfolio overview</option>
-              {D.properties.map((property) => {
-                const coverage = coverageByProperty[property.id];
-                const suffix = coverage && coverage.hasRealGeometry
-                  ? ` - ${fmt(coverage.mappedParcels)} shapes`
-                  : coverage && coverage.pointOnly
-                    ? " - point-only"
-                    : " - synthetic";
-                return (
-                  <option key={property.id} value={property.id}>
-                    {property.name}{suffix}
-                  </option>
-                );
-              })}
-            </select>
+            <PropertySearchMenu
+              id="atlas-property-search"
+              properties={D.properties}
+              coverageByProperty={coverageByProperty}
+              selected={sel}
+              onSelect={(property) => selectProperty(property, true)}
+              onReset={resetPortfolio}
+              label="Jump to property"
+            />
             {pointOnlyProperties.length > 0 && (
               <div className="atlas-pointonly-note mono">
                 {pointOnlyProperties.length} point-only records are kept in this selector instead of pinned across the map.
