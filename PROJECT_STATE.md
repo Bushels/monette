@@ -1,17 +1,19 @@
 # PROJECT_STATE.md
 
 ## Last verified production state
-- Map content commit: `b6d20c8` — complete Colorado holding, following Montana portfolio commit `59245cc`.
-- Vercel production deployment: `dpl_BEDZ2CQ2pdZ6VYQfercPzzRiZV2S` at `https://monette.buperac.com`.
-- Production verified 2026-07-15 against the public Colorado and Montana drawers; browser console warnings/errors: none.
+- Court/design release: `331e187`; bounded-deploy follow-up: `6df272d`.
+- Vercel production deployment: `dpl_PrUZh8A5K5hx1qP5Hbtewwobg31t` at `https://monette.buperac.com`.
+- Production verified 2026-08-24 at desktop and 390x844 mobile. The responsive checks cover the Atlas property finder, deadline pills, mode controls, Arizona drawers, Structure/Debt headings, social metadata, and computed CCAA day.
+- Browser QA found no application exceptions. The in-app test browser logged one non-fatal Supabase headline-hydration fetch warning; the controlled court-file headlines remained visible from the static dataset.
 
 ## Active task
-**SHIPPED + VERIFIED IN PRODUCTION (2026-07-15): Montana and Colorado portfolio mapping.**
-The active map data separates Premier's five public packages from the Montana
-umbrella and now maps Clark's current Monette Farm & Ranch offering to all six
-current Lincoln County Colorado assessor accounts. Montana retains source-backed
-DNRC/DOR geometry; Colorado uses assessor legal descriptions plus BLM PLSS
-geometry. Unproven leased or partnership boundaries are not fabricated.
+**SHIPPED + VERIFIED IN PRODUCTION (2026-08-24): Fourth Affidavit, Arizona order, and design-audit repairs.**
+The public Ledger now separates a court-approved sale from a completed closing.
+Aguila Farm is `sale-approved`: the approved buyer is Byner Cattle Company
+and/or nominee, the purchase price remains sealed, and closing is not publicly
+confirmed because the Monitor's Closing Certificate and U.S. recognition remain
+outstanding in the public evidence. The Arizona Produce Cooler & Seed Facility
+remains a separate active listing at the reduced US$5M combined ask.
 
 ## Current public Atlas state
 - Atlas is the homepage. The retired Register route redirects to `#map`.
@@ -19,6 +21,15 @@ geometry. Unproven leased or partnership boundaries are not fabricated.
   full package breakdown and broker links.
 - The top navigation and Atlas toolbar derive their sales totals from the same
   per-property records used by the map and drawer.
+- A source-linked court-update module now leads with the Aug. 19 Arizona order,
+  the unresolved SCIC C$1.9M assertion, the Arizona price reset, and the unnamed
+  selected B.C. broker. Mobile collapses this module behind a 73px summary so it
+  does not bury the property finder or map.
+- Mobile has an always-visible 46px property selector above the map. It includes
+  point-only assets; status/deadline pills and Atlas mode buttons are at least
+  44px high. The property drawer begins below the two-row navigation.
+- Structure and Debt section labels are semantic `h2` elements. Main headings
+  measure 15.74:1 against paper and source notes 5.09:1 in browser QA.
 - Hammond inventory checked 2026-07-14: 18 farmland packages, 132,019.08 broker-
   listed acres, and $773,851,040 CAD total asking price.
 - The separate $10,000,000 Swift Current processing-facility listing is not
@@ -38,6 +49,8 @@ geometry. Unproven leased or partnership boundaries are not fabricated.
 ## SISP evidence rules
 - Solid gold outlines require a confirmed listing and source-backed parcel tenure.
 - Provisional outlines identify likely in-scope land without a public asking price.
+- `sale-approved` is a separate state: remove the active-listing outline, retain
+  current ownership until closing evidence exists, and never infer a sealed price.
 - Dominant-owner inference, hash fallbacks, and synthetic parcels do not receive a
   confirmed for-sale outline.
 - Broker acreage and atlas file acreage remain separate wherever they differ.
@@ -80,7 +93,9 @@ visualization scripts were not included in this production merge.
   MultiPolygon payload, source dates, and discrepancy disclosure.
 
 ## Next ship gate
-No Montana/Colorado deployment work remains. Both validators, the production
-build, Vercel deployment, public-domain drawer checks, parcel-count checks, and
-browser console checks pass. Preserve the evidence-lane rules above for the next
-listing or title refresh.
+No work remains in this release. Monitor the official file for: (1) a filed
+Monitor's Closing Certificate and U.S. recognition before changing Aguila to
+closed/sold; (2) any ruling or agreement resolving SCIC's asserted C$1.9M claim
+and 2026 coverage position; and (3) the named B.C. broker and live listings.
+The next update must preserve the distinction between an order, satisfied
+closing conditions, and a completed title transfer.
