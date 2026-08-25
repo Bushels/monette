@@ -1144,6 +1144,8 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 }
 .mapboxgl-ctrl-group button {
   background-color: transparent !important;
+  width: 36px !important;
+  height: 36px !important;
 }
 .mapboxgl-ctrl-group button+button { border-top: 1px solid rgba(241,210,132,0.12) !important; }
 .mapboxgl-ctrl-group button span { filter: invert(1); }
@@ -1435,8 +1437,14 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .atlas-map-note-right {
     display: none !important;
   }
+  /* Keep navigation available on touch devices. The old rule removed reset,
+     zoom, and compass entirely, leaving gesture-only recovery after a pan. */
   .mapboxgl-ctrl-bottom-right .mapboxgl-ctrl-group {
-    display: none !important;
+    display: block !important;
+  }
+  .mapboxgl-ctrl-group button {
+    width: 44px !important;
+    height: 44px !important;
   }
   .atlas-map-note,
   .atlas-map-error {
