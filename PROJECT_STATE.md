@@ -54,9 +54,12 @@ Data (all re-read from the live source 2026-09-29; see `sourceCheckedAt` per rec
 ## Deployment state
 - Last production deploy: 2026-09-29 ~09:45 MDT, `dpl_9ubbMjv4z7aKnFLQYZjB3T91CvDP` (`https://monette.buperac.com`); asset
   versions served: styles 35, data 44, components 41, property-drawer 41, view-map 55, app 39. Previous deploy 2026-08-25, `07eaf26`.
-- Committed locally on main (own files only), NOT pushed to GitHub. Deploy from C: with `npm run build` then
+- Committed on main as `cf9a89f` (own files only) and PUSHED to GitHub (Bushels/monette, origin/main = cf9a89f, 2026-09-29;
+  the push also carried the earlier unpushed Emerald Meridian print-script commit `1b3f557`, OK'd by Kyle). Deploy from C: with `npm run build` then
   `vercel --prod --yes` (the MAPBOX_TOKEN drift did not recur this time).
-- The court strip still says "U.S. approval pending": update it from the filed order after the 1:00 pm MDT hearing.
+- Court strip updated 2026-09-29 ~14:11 MDT (`dpl_fdAFhVRRrTza3YM8rk4FgR84nny3`, data.js v45): the U.S. docket (26-10547) shows
+  entry 62 "Order" filed Sept 29 (CourtListener; PACER-only text, FTI had NOT posted it). The page says only that; it does NOT say what
+  the order decides. Replace with the real text as soon as FTI posts it (watcher `court_watch.sh` in the session scratchpad).
 - Gates before deploy: `npm run validate:sisp`, `validate:montana`, `validate:colorado`, `npm run build`.
 
 ## Current public Atlas state
@@ -108,10 +111,12 @@ Data (all re-read from the live source 2026-09-29; see `sourceCheckedAt` per rec
 
 ## Next
 1. (DONE) going-live list approved, deployed, verified.
-2. After the Sept 29 U.S. hearing (1:00 pm MDT; court watch armed on the docket + FTI pages): re-read the docket (CourtListener 73222630 / FTI Chapter 15 page).
+2. Read the D.I. 62 order text when FTI posts it (Chapter 15 page) -> update `latestCourtUpdate` + `sispByProperty.aguila`
+   (`usHearing`, `closingStatus`, `closingConditions`, notes) strictly from the text, bump `data.js?v=`, validate, build, deploy.
    An order approving the sale still does NOT mean closed; only a Monitor's Closing Certificate does.
 3. Watch for: the Monitor's Closing Certificate (Aguila), any Alberta order after Aug 19, a Fourth
    Monitor's Report / DIP update (latest filed: C$88.2M of C$90M at July 31), SCIC resolution.
 4. After Oct 15: Eddystone owner table, Raymore owner table, geometry for Swift Current / The Pas.
-5. Working-tree strays from other sessions (Emerald Meridian print scripts, SK-titles audit log,
-   two planning docs, dust scripts) are NOT part of this work.
+5. Working-tree strays from other sessions (SK-titles audit log, two planning docs, dust scripts)
+   are NOT part of this work. The Emerald Meridian poster moved out of this repo on 2026-09-29
+   to C:\Users\kyle\Agriculture\Maps\emerald-meridian (its own local git repo).
