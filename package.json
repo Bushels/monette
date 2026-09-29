@@ -7,7 +7,8 @@
     "validate:montana": "node scripts/validate_montana_portfolio.mjs",
     "refresh:us-az-co": "python scripts/update_us_holdings_az_co.py && python scripts/build_quarters_data_js.py",
     "refresh:colorado": "python scripts/update_us_holdings_az_co.py --only colorado && python scripts/build_quarters_data_js.py",
-    "validate:colorado": "node scripts/validate_colorado_listing.mjs"
+    "validate:colorado": "node scripts/validate_colorado_listing.mjs",
+    "validate:sisp": "node scripts/validate_sisp_listings.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.25.11"

@@ -51,7 +51,7 @@ assert(sale.price === "$5,106,250 USD", "Clark asking price drifted");
 assert(sale.deededAc === 4085 && sale.totalAc === 4085, "Clark offering acreage drifted");
 assert(sale.cultivatedAc === 3085 && sale.nativeGrassAc === 1000, "Clark land-use split drifted");
 assert(sale.listingUrl === "https://www.clarklandbrokers.com/property-listings/monette-farm-%26-ranch-", "Clark listing URL drifted");
-assert(sale.sourceCheckedAt === "2026-07-15", "Clark source check date drifted");
+assert(sale.sourceCheckedAt === "2026-09-29", "Clark source check date drifted");
 
 assert(features.length === 6, `Expected six Colorado account features, found ${features.length}`);
 const accounts = features.map((feature) => feature.properties.account_no).sort();

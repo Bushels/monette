@@ -386,6 +386,17 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   border-color: rgba(214,160,105,0.34);
   background: rgba(154,88,42,0.18);
 }
+/* Jurisdiction breakdown of the CAD asking total + check date. Full-width row
+   under the pills: right-aligned on desktop, left-aligned once the toolbar
+   stacks on mobile. */
+.atlas-toolbar-breakdown {
+  flex: 1 1 100%;
+  text-align: right;
+  font-size: 10px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  color: #b7a992;
+}
 .atlas-grid { display: grid; }
 .atlas-side { position: relative; }
 .atlas-rail,
@@ -1046,6 +1057,17 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   background: rgba(245,241,234,0.12);
   border-color: #c2b49a;
 }
+/* Reported (Ledger-provisional) status: lighter fill, dashed outline. */
+.atlas-swatch-reported {
+  background: rgba(212,85,61,0.28);
+  border: 1.5px dashed rgba(212,85,61,0.85);
+}
+/* Wide-zoom footprint glow. */
+.atlas-swatch-glow {
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,176,74,0.95) 0%, rgba(230,176,74,0.35) 55%, rgba(230,176,74,0) 100%);
+}
 .atlas-swatch-sold-dot {
   width: 12px;
   height: 12px;
@@ -1390,6 +1412,10 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   }
   .atlas-toolbar-pill-deadline {
     flex-basis: 100%;
+  }
+  .atlas-toolbar-breakdown {
+    text-align: left;
+    padding: 0 2px;
   }
   .atlas-mobile-property-finder {
     display: grid;
@@ -3870,6 +3896,24 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
 }
 .atlas-grid.atlas-shell > .atlas-rail {
   max-height: 100%;
+}
+
+/* Desktop frame contract. The grid row must be the shell height, never the
+   side panel's content height. Without it a long side panel stretched the map
+   canvas to ~2x the frame: the opening view showed empty Arctic and the
+   zoom / Seeding-Land Status controls sat below the last scrollable pixel.
+   The side panel now scrolls inside the frame. Mobile (<=900px) keeps its own
+   stacked height rules in the responsive block above. */
+@media (min-width: 900.02px) {
+  .atlas-grid.atlas-shell { grid-template-rows: minmax(0, 1fr); }
+  .atlas-grid.atlas-shell > .atlas-map { min-height: 0; }
+  .atlas-grid.atlas-shell > .atlas-feed {
+    min-height: 0;
+    overflow-y: auto;
+  }
+  .atlas-grid.atlas-shell > .atlas-feed::-webkit-scrollbar { width: 8px; }
+  .atlas-grid.atlas-shell > .atlas-feed::-webkit-scrollbar-track { background: transparent; }
+  .atlas-grid.atlas-shell > .atlas-feed::-webkit-scrollbar-thumb { background: var(--rule-2); border-radius: 4px; }
 }
 
 /* CTA labels: full text on desktop, short text on tablet/mobile. The Donate

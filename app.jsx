@@ -65,7 +65,7 @@ function App() {
   const supportUrl = (typeof window.supportCustomAmountUrl === "function")
     ? window.supportCustomAmountUrl()
     : "https://paypal.me/buperac";
-  const publicSales = getHammondSaleSummary();
+  const publicSales = getCadSaleSummary().total;
   const agnonymousSubmitUrl = buildAgnonymousUrl({
     title: "Monette Ledger correction or clarification",
     body: "What should be corrected, clarified, or investigated? Add the location, source link, and confidence level if you have them.",
@@ -77,7 +77,7 @@ function App() {
       <nav className="site-nav">
         <div className="brand">
           <span className="wordmark">The Monette Ledger</span>
-          <span className="tag">{publicSales.listingCount} LISTINGS · {fmtAskingCompact(publicSales.totalAskingCAD)} ASK</span>
+          <span className="tag">{publicSales.listingCount} LISTINGS · {fmtAskingCompactCAD(publicSales.totalAskingCAD)} ASK</span>
         </div>
         <div className="tabs">
           {VIEWS.map((v) => (

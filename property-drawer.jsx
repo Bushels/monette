@@ -259,6 +259,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
   const sispListingHref = sispMeta ? safeHref(sispMeta.listingUrl) : null;
   const sispOrderHref = sispMeta ? safeHref(sispMeta.orderUrl) : null;
   const sispAffidavitHref = sispMeta ? safeHref(sispMeta.affidavitUrl) : null;
+  const sispUsMotionHref = sispMeta ? safeHref(sispMeta.usMotionUrl) : null;
   const sispListings = sispMeta && Array.isArray(sispMeta.listings)
     ? sispMeta.listings
         .map((listing) => ({ ...listing, href: safeHref(listing.listingUrl) }))
@@ -301,19 +302,27 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               <span className="mono pd-sisp-status" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--green)" }}>
                 ◉ Court-approved sale · closing not confirmed
               </span>
-              {sispMeta.priceStatus && <span className="serif pd-sisp-price-status" style={{ fontSize: 22, lineHeight: 1, color: "var(--green)" }}>{sispMeta.priceStatus}</span>}
+              {sispMeta.reportedPrice
+                ? <span className="serif pd-sisp-price-status" style={{ fontSize: 22, lineHeight: 1, color: "var(--green)" }}>{sispMeta.reportedPrice} <span className="mono" style={{ fontSize: 10, letterSpacing: "0.08em", color: "var(--mute)" }}>per Monitor's U.S. filing</span></span>
+                : sispMeta.priceStatus && <span className="serif pd-sisp-price-status" style={{ fontSize: 22, lineHeight: 1, color: "var(--green)" }}>{sispMeta.priceStatus}</span>}
             </div>
             {sispMeta.package && <div className="serif pd-sisp-package" style={{ fontSize: 19, marginTop: 8, lineHeight: 1.2 }}>{sispMeta.package}</div>}
             <div className="mono pd-sisp-facts" style={{ marginTop: 10, fontSize: 11, color: "var(--ink-2)", lineHeight: 1.65 }}>
               {sispMeta.buyer && <div><span style={{ color: "var(--mute)" }}>Approved buyer</span> {sispMeta.buyer}</div>}
               {sispMeta.approvalDate && <div><span style={{ color: "var(--mute)" }}>Approval order</span> {fmtSispDate(sispMeta.approvalDate)}</div>}
+              {sispMeta.reportedPrice && sispMeta.priceStatus && <div><span style={{ color: "var(--mute)" }}>Price</span> {sispMeta.priceStatus}</div>}
+              {sispMeta.usHearing && <div><span style={{ color: "var(--mute)" }}>U.S. approval hearing</span> {sispMeta.usHearing}</div>}
               {sispMeta.closingStatus && <div><span style={{ color: "var(--mute)" }}>Closing</span> {sispMeta.closingStatus}</div>}
+              {Array.isArray(sispMeta.closingConditions) && sispMeta.closingConditions.length > 0 && (
+                <div><span style={{ color: "var(--mute)" }}>Still needed</span> {sispMeta.closingConditions.join(" · ")}</div>
+              )}
               {sispMeta.priorAskingPrice && <div><span style={{ color: "var(--mute)" }}>{sispMeta.priorAskingPriceLabel || "Prior asking price"}</span> {sispMeta.priorAskingPrice}</div>}
               {sispAcres && <div><span style={{ color: "var(--mute)" }}>Acres</span> {sispAcres}</div>}
             </div>
             {sispMeta.note && <div className="mono pd-sisp-note" style={{ marginTop: 10, fontSize: 10, color: "var(--mute)", lineHeight: 1.55 }}>{sispMeta.note}</div>}
             <div className="pd-sisp-links" style={{ display: "flex", gap: 14, marginTop: 12, flexWrap: "wrap" }}>
               {sispOrderHref && <a href={sispOrderHref} target="_blank" rel="noreferrer">Approval order →</a>}
+              {sispUsMotionHref && <a href={sispUsMotionHref} target="_blank" rel="noreferrer">U.S. sale motion →</a>}
               {sispAffidavitHref && <a href={sispAffidavitHref} target="_blank" rel="noreferrer">Fourth Affidavit →</a>}
             </div>
             {sispMeta.source && <div className="mono pd-sisp-source" style={{ marginTop: 10, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
@@ -335,7 +344,8 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             <div className="mono" style={{ marginTop: 8, fontSize: 11, color: "var(--ink-2)", lineHeight: 1.6 }}>
               {sispMeta.broker && <div><span style={{ color: "var(--mute)" }}>Broker</span> {sispMeta.broker}{sispMeta.contact ? ` · ${sispMeta.contact}` : ""}</div>}
               {sispAcres && <div><span style={{ color: "var(--mute)" }}>Acres</span> {sispAcres}</div>}
-              {sispGlobal && <div><span style={{ color: "var(--mute)" }}>Binding bids due</span> {fmtSispDate(sispGlobal.bindingBidDeadline)} · <span style={{ color: "var(--mute)" }}>closes</span> {fmtSispDate(sispGlobal.closing)}</div>}
+              {sispGlobal && <div><span style={{ color: "var(--mute)" }}>Binding bids due</span> {fmtSispDate(sispGlobal.bindingBidDeadline)} · <span style={{ color: "var(--mute)" }}>SISP ends</span> {fmtSispDate(sispGlobal.terminationDate)}</div>}
+              {sispMeta.sourceCheckedAt && <div><span style={{ color: "var(--mute)" }}>Checked</span> {fmtSispDate(sispMeta.sourceCheckedAt)}</div>}
             </div>
             {sispMeta.note && <div className="mono" style={{ marginTop: 8, fontSize: 10, color: "var(--mute)", lineHeight: 1.5 }}>{sispMeta.note}</div>}
             {sispListings.length > 0 && (
@@ -422,13 +432,16 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               // dominates (currently Hafford), swap the "Owned" tile for a
               // "Sold/R-back" tile so the new status is visually obvious.
               const useSoldRentBack = (rollup.soldRentedBack || 0) > (rollup.owned || 0);
+              // Hafford splits into court-approved sold quarters (named in the
+              // May 1 vesting order) and reported-only ones (community intel).
+              const hasCourtSplit = Array.isArray(prop.courtConfirmedSoldQuarters) && prop.courtConfirmedSoldQuarters.length > 0;
               const ownedLikeTile = useSoldRentBack
-                ? ["Sold/R-back", rollup.soldRentedBack, OWN["sold-rented-back"].color]
+                ? [hasCourtSplit ? "Reported sold" : "Sold/R-back", rollup.soldRentedBack, OWN["sold-rented-back"].color]
                 : ["Owned",       rollup.owned,         OWN["owned-monette"].color];
               return [
                 ownedLikeTile,
                 ["Rented",   rollup.rented,  OWN["rented-monette"].color],
-                ["Sold",     rollup.sold,    OWN.sold.color],
+                [hasCourtSplit ? "Court-approved" : "Sold", rollup.sold, OWN.sold.color],
                 ["For sale", rollup.forSale, LIST["listed-for-sale"].color],
               ];
             })().map(([l, v, c]) => (
@@ -443,6 +456,9 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               </div>
             ))}
           </div>}
+          {!prop.aggregator && prop.courtConfirmedSoldNote && (
+            <div className="mono pd-court-split-note" style={{ marginTop: 9, fontSize: 10, lineHeight: 1.5, color: "var(--ink-2)" }}>{prop.courtConfirmedSoldNote}</div>
+          )}
           {prop.aggregator && (
             <div style={{ display: "grid", gap: 6, marginTop: 10 }}>
               {aggregatorChildren.map((child) => {
@@ -680,7 +696,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               <p>{purchaserRumor.publicBody || purchaserRumor.body}</p>
               <p style={{ marginTop: 8, fontStyle: "italic" }}>{purchaserRumor.publicAsk || purchaserRumor.ask}</p>
               <div className="pd-community-ask-contact">
-                Reported buyer: <strong>{purchaserRumor.buyer || "unknown"}</strong>. Help confirm the price, the corporate-entity name, and which blocks have actually changed hands. The Monitor's Report should clarify; community intel welcome before then.
+                {purchaserRumor.buyerLabel || "Reported buyer"}: <strong>{purchaserRumor.buyer || "unknown"}</strong>{/\.$/.test(String(purchaserRumor.buyer || "unknown")) ? "" : "."} {purchaserRumor.publicFootnote || "Help confirm the price, the corporate-entity name, and which blocks have actually changed hands. The Monitor's Report should clarify; community intel welcome before then."}
               </div>
             </div>
             <div className="pd-community-ask-actions">

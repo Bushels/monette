@@ -18,8 +18,21 @@ window.MAPBOX_STYLE_LIGHT     = window.MAPBOX_STYLE_STATUS;
 window.MAPBOX_STYLE_DARK      = window.MAPBOX_STYLE_STATUS;
 
 // Initial view framing covers the full court-file footprint: BC/AB/SK/MB plus
-// Montana, Colorado, and Arizona point-only assets.
-window.MAPBOX_HOME = { center: [-111.0, 45.9], zoom: 3.1 };
+// Montana, Colorado, and Arizona assets. `bounds` ([[west, south], [east, north]])
+// is fitted to the actual map frame at load and on "Reset map", so the footprint
+// fills the frame at any size or aspect ratio. `center`/`zoom` are only the
+// pre-fit fallback.
+window.MAPBOX_HOME = {
+  center: [-109.5, 44.0],
+  zoom: 3.4,
+  bounds: [[-123.5, 32.4], [-96.0, 56.0]],
+};
+
+// Prairie snow-extent overlay (scripts/snow_map.py). Off by default: the
+// /snow/ assets are not part of the production deploy, so probing for the
+// manifest only produced a 404 on every page load. Set true once /snow/
+// manifest.json + imagery ship with the site.
+window.MONETTE_SNOW_ENABLED = false;
 
 // Public discussion layer. Monette keeps reviewed source evidence; free-form
 // corrections, clarifications, and discussion are routed to Agnonymous.

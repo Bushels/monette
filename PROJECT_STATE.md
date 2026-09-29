@@ -1,116 +1,117 @@
 # PROJECT_STATE.md
 
-## Last verified production state
-- Supabase retirement / Agnonymous-only intake release: `07eaf26`.
-- Vercel production deployment: `dpl_C5KuvFSgP4QmGe8j6a7dMCtmPrCN` at `https://monette.buperac.com`.
-- Production verified 2026-08-25 at desktop and 390x844 mobile: Monette loads no Supabase SDK or client, exposes no Supabase submission/headline globals, emits no browser warnings, and retains the Atlas and court-update module with no horizontal overflow. `Submit Update` is a real external link to Agnonymous carrying source, return URL, category, title, and clarification context.
-- Compact desktop court-update release: `96c0b81`.
-- Prior Vercel production deployment: `dpl_M4EDPyLiWoj4D9L68WhLPHoEDRx2`.
-- Production verified 2026-08-25 at 1440x1000, 1024x768, 901x768, and 390x844. The desktop court-update module is a 77px collapsed disclosure that moves the map start approximately 226px higher and increases map visible above the 1000px fold from approximately 530px to 755px. Expanding preserves all three court cards and exact FTI source links. Mobile retains its 73px collapsed treatment with no horizontal overflow.
-- The desktop accessible name includes the legally material `closing pending` caveat, visible desktop/mobile summary copy is data-driven, and the summary has an explicit keyboard focus treatment. Production component, data, and CSS assets matched the release build byte-for-byte.
-- Searchable grouped property finder release: `157a59e`.
-- Prior Vercel production deployment: `dpl_8vUdS6tmgoCAGVvqmp2j7zAXgyBX`.
-- Production verified 2026-08-25 at desktop and mobile: property search supports province/state group browsing, exact jurisdiction aliases, internal names, legacy IDs, point-only assets, Arrow-key selection, portfolio reset, and deep-link drawer routing. The live component and CSS matched the release build byte-for-byte; browser QA logged no errors.
-- Production verified 2026-08-25 at desktop and 390x844 mobile. The Debt view shows C$88.2M drawn against the C$90M DIP maximum at July 31, C$1.8M remaining, and C$22.2M of period net draws; forecast figures are separately labelled. The deployed data, component, and CSS matched the release build byte-for-byte.
-- Mobile map reset, zoom, and compass controls are restored at 44x44px with no horizontal overflow. Desktop controls are 36x36px.
-
 ## Active task
-**SHIPPED + VERIFIED IN PRODUCTION (2026-08-25): Supabase retired; Agnonymous is the only public intake.**
-The public Ledger now separates a court-approved sale from a completed closing.
-Aguila Farm is `sale-approved`: the approved buyer is Byner Cattle Company
-and/or nominee, the purchase price remains sealed, and closing is not publicly
-confirmed because the Monitor's Closing Certificate and U.S. recognition remain
-outstanding in the public evidence. The Arizona Produce Cooler & Seed Facility
-remains a separate active listing at the reduced US$5M combined ask.
+**DEPLOYED 2026-09-29 ~09:45 MDT (Kyle OK'd: "deploy it now"), `dpl_9ubbMjv4z7aKnFLQYZjB3T91CvDP`, aliased to monette.buperac.com:**
+map fixes plus a full source pass over the public sale data. Production verified at 1440 and 390 wide (0 render / 0 idle
+at rest, no console errors, no 4xx, no /snow/manifest request, corrected Hafford + Aguila drawers live).
+
+Map:
+- Desktop frame bug fixed: the side panel used to stretch the map canvas to ~2x its frame,
+  so the first view showed empty Arctic and the zoom / Seeding-Land Status controls sat
+  below the last scrollable pixel. Grid row is now the shell height; the panel scrolls inside.
+- Wide-zoom footprint glow (`monette-footprint-glow`): a quarter section is under one pixel at
+  continental zoom, so SK/MB looked empty. Gold = officially for sale, red = sold, green = owned,
+  blue = rented; darker gold = package listed but quarters/location not matched. No farmland dots.
+- Opening view is `MAPBOX_HOME.bounds` fitted to the measured frame (BC to AZ, all seven
+  jurisdictions); re-fits on resize until a visitor moves the map.
+- Header/toolbar: `35 listings · C$1.01B ask` (SK 18 / C$773.9M, MB 6 / C$103.1M, BC 11 / C$132.7M,
+  all CAD; U.S. packages stay in USD in each drawer), `Bids due Oct 15, 2026 · N days`, and a
+  breakdown line with the check date. Court strip date is now data-driven (was hard-coded Aug 19).
+- `/snow/manifest.json` 404 on every load removed (`MONETTE_SNOW_ENABLED` flag, default off).
+- Idle re-render loop fixed: production redrew the map at ~60 fps forever (18 idle events / ~360 frames
+  per 6 s with nobody touching it) because every `idle` re-ran ~18 map-level style setters, each of which
+  schedules a repaint. Now 0 idle events and 0 frames at rest. Rule recorded in README (render discipline).
+
+Data (all re-read from the live source 2026-09-29; see `sourceCheckedAt` per record):
+- Manitoba is public MLS, not broker-direct: Eddystone C$19,125,000 (9,794 ac, 5 MLS listings),
+  The Pas C$84,000,000 (22,625 ac, MLS 202615841).
+- BC is live: LandQuest Realty Corp., 11 listings (nos. 26224-26234), C$132,739,000, 45,002 ac,
+  listed 2026-07-31 (Monitor Third Report ¶¶39-40). Pages print no currency (read as CAD).
+- Aguila: sale-approved (Alberta, Aug 19), NOT closed. The executed PSA (D.I. 56-1 §3.1) states
+  US$17,000,000 with US$850,000 earnest money (5%); the Monitor's Sept 4 U.S. motion (D.I. 54 ¶¶23-24)
+  says "$17 million". Alberta seal covers only the Confidential Affidavit. U.S. approval hearing set
+  2026-09-29 3:00 p.m. ET (docket also lists a Certificate of No Objection, D.I. 59, Sept 24); outcome
+  NOT reflected in the data.
+- Hafford: buyer is court-confirmed (G and K Walter Farms and Harvesting Ltd. and/or nominee);
+  closed May 13; Monitor received $28.9M. The vesting order (para 7(a)(i), Schedule B) covers 19 titles =
+  18 quarter-section titles covering 16 quarters + Lot 20 (a town lot with a mobile home; the main yard
+  is on SW 26-44-11-W3), so ONLY those 16 quarters paint as sold; the other 142 stay provisional (dashed, lighter).
+  The 3,657 ac / $7,930-per-ac working assumption is withdrawn (sellers were Monette Farms Ltd. and
+  Monette Farms Land II LP; affidavit line item is 2,553 ac / $29M).
+- Wymark 12,834.5 -> 13,015.1 ac ($6,224/ac). All other Hammond listings unchanged (19/19 live).
+- SISP dates: bids Oct 15; court-approval outside date Oct 31 (bids before Sept 1) / Nov 30 (later
+  bids); Nov 30 is the SISP Termination Date, NOT a closing date (`sisp.closing` retired).
+- Broker roster/contacts re-read from the FTI SISP page (adds LandQuest, Corey Schultz, Charlie Havranek).
+- Fable (second-model) adversarial review 2026-09-29, facts + code passes; every finding checked against the
+  filings before acting. Fixed: Lot 20 is a Hafford TOWN LOT with a mobile home (not the yard; yard is on
+  SW 26-44-11-W3); order cites are para 7(a)(i) / Schedule B (not Schedule A); 19 TITLES = 18 quarter titles
+  covering 16 quarters + Lot 20; Aguila currency now cites the executed PSA (D.I. 56-1 §3.1) instead of an
+  inference; hearing wording no longer goes stale; a broker cell number and an unsupported press sentence
+  removed; side-panel scroll trap (`overscroll-behavior`) and reduced-motion Home fixed; validator now PINS
+  the header numbers (10 of 28 mutations used to pass). Hafford is no longer marked as an SISP listing
+  (nothing public supports it; status `unknown`); `#map/hafford` still opens its drawer via `courtConfirmedSoldQuarters`.
+
+## Deployment state
+- Last production deploy: 2026-09-29 ~09:45 MDT, `dpl_9ubbMjv4z7aKnFLQYZjB3T91CvDP` (`https://monette.buperac.com`); asset
+  versions served: styles 35, data 44, components 41, property-drawer 41, view-map 55, app 39. Previous deploy 2026-08-25, `07eaf26`.
+- Committed locally on main (own files only), NOT pushed to GitHub. Deploy from C: with `npm run build` then
+  `vercel --prod --yes` (the MAPBOX_TOKEN drift did not recur this time).
+- The court strip still says "U.S. approval pending": update it from the filed order after the 1:00 pm MDT hearing.
+- Gates before deploy: `npm run validate:sisp`, `validate:montana`, `validate:colorado`, `npm run build`.
 
 ## Current public Atlas state
-- Atlas is the homepage. The retired Register route redirects to `#map`.
-- Hovering a publicly priced property shows its asking price; clicking opens the
-  full package breakdown and broker links.
-- The top navigation and Atlas toolbar derive their sales totals from the same
-  per-property records used by the map and drawer.
-- Monette is read-only and has no live database, submission queue, or headline
-  ticker. Every public correction/evidence action routes to Agnonymous with the
-  relevant Monette context attached.
-- A source-linked court-update module now leads with the Aug. 19 Arizona order,
-  the unresolved SCIC C$1.9M assertion, the Arizona price reset, and the unnamed
-  selected B.C. broker. Desktop collapses the module behind a 77px summary and
-  mobile behind a 73px summary so the filings remain available without burying
-  the property finder or map.
-- Mobile has an always-visible 46px property selector above the map. It includes
-  grouped search across point-only assets and parcel-mapped properties;
-  jurisdiction aliases and legacy IDs resolve without substring false positives.
-  Status/deadline pills and Atlas mode buttons are at least
-  44px high. Reset, zoom, and compass map controls are also 44px touch targets.
-  The property drawer begins below the two-row navigation.
-- Structure and Debt section labels are semantic `h2` elements. Main headings
-  measure 15.74:1 against paper and source notes 5.09:1 in browser QA.
-- Hammond inventory checked 2026-07-14: 18 farmland packages, 132,019.08 broker-
-  listed acres, and $773,851,040 CAD total asking price.
-- The separate $10,000,000 Swift Current processing-facility listing is not
-  attached to the atlas's 49,775-acre Swift Current land rollup.
-- Public binding-bid deadline: 2026-10-15; target closing: 2026-11-30.
+- Atlas is the homepage (`#map`); Register route redirects there. Monette is read-only; every
+  correction/evidence action routes to Agnonymous with context attached.
+- Hovering a priced property shows its ask; clicking opens the package breakdown and broker links.
+- Court-update module (source-linked, collapsed behind a summary bar) leads with Aguila.
+- Mobile keeps a 46px property selector above the map, 44px map controls, 44px status pills.
+- Public binding-bid deadline: 2026-10-15.
 
 ## SK Titles shipped state
-- 559/559 CSV parcels reconciled (unmatched: 0).
-- 1,410 records across 14 SK property buckets carry `mflTitleSnapshot` metadata.
-- Swift Current has 28 records; Regina South has 120 records.
-- 159 polygons are computed through DLS quarter math, LSD math, and Plan N3619
-  placeholders.
-- The runtime audit asserts `property_id:loc` uniqueness across all 1,410 rows.
-- Farmland-wide marker cleanup remains in place; facility and sold-asset markers
-  remain visible.
+- 559/559 CSV parcels reconciled (unmatched: 0); 1,410 records across 14 SK buckets carry
+  `mflTitleSnapshot`; Swift Current 28 records, Regina South 120; 159 polygons via DLS/LSD math.
+- Runtime audit asserts `property_id:loc` uniqueness across all 1,410 rows.
 
 ## SISP evidence rules
 - Solid gold outlines require a confirmed listing and source-backed parcel tenure.
 - Provisional outlines identify likely in-scope land without a public asking price.
-- `sale-approved` is a separate state: remove the active-listing outline, retain
-  current ownership until closing evidence exists, and never infer a sealed price.
-- Dominant-owner inference, hash fallbacks, and synthetic parcels do not receive a
-  confirmed for-sale outline.
-- Broker acreage and atlas file acreage remain separate wherever they differ.
+- `sale-approved` is a separate state: no active-listing outline, ownership stays until closing
+  evidence exists, and never infer a sealed price (the only price shown is the one the Monitor's
+  public filing states, labelled as such).
+- Dominant-owner inference, hash fallbacks and synthetic parcels never get a per-quarter outline.
+  The wide-zoom glow may show a listed package in darker gold at PACKAGE level only.
+- Broker acreage and atlas file acreage stay separate wherever they differ.
 
 ## Known data gaps
-1. Eddystone's quarter-owner keys do not match parcel locations and the source
-   table is incomplete; its parcels cannot carry evidence-backed SISP outlines.
-2. Raymore has no quarter-owner table, so its public package prices are shown at
-   property level without quarter-specific sale outlines.
-3. Several point-only or synthetic properties still need defensible parcel geometry.
-
-## Working-tree exclusions
-The existing untracked SK-title log directory, two planning documents, and two dust
-visualization scripts were not included in this production merge.
+1. Eddystone's quarter-owner keys do not match parcel locations and the table is incomplete; its
+   parcels cannot carry evidence-backed outlines (its package is priced and glows darker gold).
+2. Raymore has no quarter-owner table (same consequence). Deferred until after Oct 15.
+3. Swift Current and The Pas have no real quarter geometry (The Pas = Red River river lots).
+4. BC ranches are point-only; Goat's Peak has no LandQuest listing (stays `likely`).
+5. Montana parcel re-check blocked 2026-09-29: the DNRC cadastral server returned 504 / timeouts.
+   Baseline stays 220 parcels / 51,528.893 assessed ac (2026-04-26 pull).
+6. Unverified: whether SCIC's C$1.9M claim was paid; whether Clark's separate 7,051-ac Genoa farm
+   is Monette's (assessor data supports 4,085 ac only); Aguila leased acres (2,204 in the U.S. motion
+   vs 2,213 in Southwest's brochure; both disclosed).
 
 ## Montana portfolio mapped state
-- Premier live check on 2026-07-15: `$96,000,000`, `53,751` deeded, `38,441`
-  leased, `92,193` total, and `63,049` seeded acres.
-- Premier's own visible arithmetic is inconsistent: deeded + leased = `92,192`;
-  the five displayed child totals sum to `92,191`. Preserve the published cells
-  and expose the `1–2 ac` source delta.
-- DNRC owner-query geometry: 220 parcels / 51,528.893 assessed acres, grouped as
-  Fly Creek 95 / 32,557.384 ac; Camp 4 66 / 10,201.820 ac; Camp 1 56 /
-  7,982.248 ac; Pivot 3 / 787.441 ac.
-- No leased-land geometry is inferred from marketing totals.
-- `npm run validate:montana` is the deployment gate for IDs, acreage arithmetic,
-  parent/child separation, polygon assignment, and the point-only rail rule.
+- Premier re-read 2026-09-29: `$96,000,000`, `53,751` deeded, `38,441` leased, `92,193` total,
+  `63,049` seeded; children Fly Creek $38.0M, Camp 4 $27.5M, Camp 1 $17.0M, Pivot $11.5M (own page
+  now), Hardin rail site 7 ac (no price). Premier's own arithmetic is 1-2 ac off; the delta is disclosed.
+- DNRC owner-query geometry: 220 parcels / 51,528.893 assessed ac (Fly Creek 95, Camp 4 66, Camp 1 56,
+  Pivot 3). No leased-land geometry is inferred. `npm run validate:montana` is the gate.
 
 ## Colorado portfolio mapped state
-- Clark live check on 2026-07-15: `$5,106,250 USD`, `4,085±` total acres,
-  `3,085` organic farm-ground acres, and `1,000` native-grass acres.
-- Lincoln County EagleWeb returns six current accounts under `MONETTE FARMS USA,
-  INC., A MONTANA CORPORATION`, totaling exactly `4,085` assessed acres.
-- BLM CadNSDI geometry covers all six account legal descriptions. Two account
-  features are multi-part. `S2SW4 Sec 18` and `NW4 Sec 4` are bbox-derived
-  aliquots labelled as portfolio-scale, non-survey boundaries.
-- Helkaa ¶58(e) reports `4,079` acres. Preserve the `6 ac` source-method delta;
-  do not force the court and current assessor/broker figures to match.
-- `npm run validate:colorado` checks the offering, account set, acreage, runtime
-  MultiPolygon payload, source dates, and discrepancy disclosure.
+- Clark re-read 2026-09-29: `$5,106,250 USD`, `4,085±` ac (3,085 organic + 1,000 native grass).
+- Lincoln County EagleWeb: six accounts, exactly 4,085 assessed ac (pulled 2026-07-15); BLM CadNSDI
+  geometry; Helkaa ¶58(e) reports 4,079 ac and the 6 ac delta is disclosed. `npm run validate:colorado`.
 
-## Next ship gate
-No work remains in this release. Monitor the official file for: (1) a filed
-Monitor's Closing Certificate and U.S. recognition before changing Aguila to
-closed/sold; (2) any ruling or agreement resolving SCIC's asserted C$1.9M claim
-and 2026 coverage position; and (3) the named B.C. broker and live listings.
-The next update must preserve the distinction between an order, satisfied
-closing conditions, and a completed title transfer.
+## Next
+1. (DONE) going-live list approved, deployed, verified.
+2. After the Sept 29 U.S. hearing (1:00 pm MDT; court watch armed on the docket + FTI pages): re-read the docket (CourtListener 73222630 / FTI Chapter 15 page).
+   An order approving the sale still does NOT mean closed; only a Monitor's Closing Certificate does.
+3. Watch for: the Monitor's Closing Certificate (Aguila), any Alberta order after Aug 19, a Fourth
+   Monitor's Report / DIP update (latest filed: C$88.2M of C$90M at July 31), SCIC resolution.
+4. After Oct 15: Eddystone owner table, Raymore owner table, geometry for Swift Current / The Pas.
+5. Working-tree strays from other sessions (Emerald Meridian print scripts, SK-titles audit log,
+   two planning docs, dust scripts) are NOT part of this work.

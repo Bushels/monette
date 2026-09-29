@@ -16,8 +16,8 @@ default path.
 - `index.html` - entry point; loads production React UMD, Mapbox GL v3, and the compiled scripts.
 - `build/` - generated browser-safe JS files used by local static serving. Rebuilt by `npm run build`.
 - `public/` - generated Vercel deploy artifact. Rebuilt by `npm run build`.
-- `config.js` - runtime config (Mapbox public token, map styles, home view, Agnonymous discussion URL).
-- `data.js` - 30 property records, portfolio court-file totals, point-only geometry flags, operator relationships, sold-asset markers, and public SISP asking-price metadata.
+- `config.js` - runtime config (Mapbox public token, map styles, home view `bounds` fitted to the live map frame, snow-overlay flag, Agnonymous discussion URL).
+- `data.js` - 30 property records, portfolio court-file totals, point-only geometry flags, operator relationships, sold-asset markers, and public SISP asking-price metadata (SK on Hammond, MB on MLS, BC on LandQuest, US brokers; each record carries `sourceCheckedAt`).
 - `creditors-data.js` - generated searchable creditor rows from the FTI creditor listing posted April 24, 2026, with country, province/state, industry, and PDF-total reconciliation fields.
 - `imagery-data.js` - generated parcel-imagery payload kept for drawer/plumbing work; not exposed as a public atlas mode right now.
 - `quarters-data.js` - generated real parcel geometry loaded from `quarters.geojson`.
@@ -120,7 +120,7 @@ The five assets in Premier Land Company's current Monette Portfolio offering are
 4. The Pivot Farm — `1,473` deeded acres.
 5. Hardin Infrastructure & Rail Site — `7` deeded acres.
 
-The public offering is a `$96,000,000` umbrella portfolio with published figures of `53,751` deeded, `38,441` leased, `92,193` total, and `63,049` seeded acres. Premier's visible rows contain a `1–2 ac` arithmetic discrepancy: deeded plus leased is `92,192`, while the five child total cells sum to `92,191`. The Atlas preserves the source values and shows the delta rather than inventing a reconciliation. The umbrella stays separate from its five children so acres and asking price are not double-counted. DNRC polygons are assigned only to Fly Creek, Camp 4, Camp 1, and Pivot; the rail site remains an approximate point, leased boundaries are not fabricated, and the unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering. Run `npm run validate:montana` before deployment.
+The public offering is a `$96,000,000` umbrella portfolio with published figures of `53,751` deeded, `38,441` leased, `92,193` total, and `63,049` seeded acres. Premier's visible rows contain a `1–2 ac` arithmetic discrepancy: deeded plus leased is `92,192`, while the five child total cells sum to `92,191`. Premier's child pages also print header acreage tags (39,724 / 38,202 / 17,781) that differ from the totals in their own text and portfolio table (39,210 / 34,282-34,283 / 17,219); the Atlas carries the portfolio-table totals. The Atlas preserves the source values and shows the delta rather than inventing a reconciliation. The umbrella stays separate from its five children so acres and asking price are not double-counted. DNRC polygons are assigned only to Fly Creek, Camp 4, Camp 1, and Pivot; the rail site remains an approximate point, leased boundaries are not fabricated, and the unreconciled 737-acre Ragland Camp 1 court row is excluded from the offering. Run `npm run validate:montana` before deployment.
 
 ## Colorado portfolio mapping
 
@@ -139,11 +139,20 @@ the browser if URL restrictions are enforced in the Mapbox dashboard.
 - `npm run refresh:montana` - replaces only the Montana parcel slice from the public cadastral owner query, then rebuilds `quarters-data.js`
 - `npm run refresh:colorado` - replaces only the six Lincoln County Colorado account features from BLM PLSS geometry, then rebuilds `quarters-data.js`
 - `npm run validate:colorado` - checks the Clark offering, six-account assessor crosswalk, 4,085-acre total, and court-source delta
+- `npm run validate:sisp` - deployment gate for the public sale data: CAD asking totals by jurisdiction, sub-listings add up to their package, SISP dates, Aguila approved-not-closed, Hafford court split; warns when a `sourceCheckedAt` is over 30 days old
 - `python scripts/build_creditors_data.py` - rebuilds `creditors-data.js` from the FTI creditor-listing PDF
 - `python scripts/build_imagery_data_js.py` - rebuilds `imagery-data.js`
 - `python scripts/build_quarters_data_js.py` - rebuilds `quarters-data.js`
 - `python scripts/review_quarter_alignment.py --property vanguard` - renders a repeatable satellite overlay to `_refs/quarter-alignment/` for geometry review
 - `npm run build` - recompiles the JSX files into `build/` and assembles the deployable static site in `public/`
+
+## Atlas overview, frame and evidence rules
+
+- **Frame contract (desktop):** the atlas grid row is the shell height; the side panel scrolls inside it (`styles.css`, `@media (min-width: 901px)`). Never let the side panel size the map: it once stretched the canvas to ~2x the frame, so the first view showed empty Arctic and the zoom / mode controls fell below the last scrollable pixel.
+- **Opening view:** `MAPBOX_HOME.bounds` is fitted to the measured frame (`fitHomeView`, ResizeObserver) and re-fitted on resize until a visitor moves the map or a property takes focus. Do not fit bounds in the Map constructor: the container has no size yet.
+- **Footprint glow:** a quarter section is under one pixel wide at continental zoom, so `monette-footprint-glow` draws one soft blurred circle per mapped quarter (gold = officially for sale, red = sold, green = owned, blue = rented) and fades out by zoom ~9. Listed packages with no evidence-matched quarters (Eddystone, Raymore) and no geometry (BC ranches, The Pas) glow in the darker package-level gold; that never lights an outline or pill on an individual quarter. No farmland dots or labels.
+- **Render discipline:** `installAtlasLayers` runs on load / style.load / new data; `idle` is only a retry until the first install lands. Map-level `setFilter` / `setPaintProperty` / `setLayoutProperty` always schedule a repaint, even for unchanged values, so running them on every `idle` made the map re-render at ~60 fps with nobody touching it (18 idle events and ~360 frames per 6 s in production on 2026-09-29; now 0 and 0). Sources are only re-uploaded when the prepared data object changes, and layer re-ordering (`moveLayer`) only runs on data change. Check with `map.on('render')` / `map.on('idle')` counters at rest.
+- **Reported vs confirmed:** Ledger-provisional ownership seeds (`ownership_provisional`) draw lighter with a dashed outline. Hafford: only the 16 quarters named in para 7(a)(i) / Schedule B of the May 1, 2026 vesting order (`courtConfirmedSoldQuarters`; 19 titles = 18 quarter titles covering 16 quarters + Lot 20, a town lot) are confirmed sold; the other 142 stay provisional community intel.
 
 ## Geometry alignment
 

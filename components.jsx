@@ -27,34 +27,83 @@ function parseAskingPriceCAD(value) {
   return match ? Number(match[1].replace(/,/g, "")) : 0;
 }
 
-// Current public Hammond inventory only. This intentionally excludes the
-// separately listed Swift Current processing facility and non-SK brokers.
-// All top-level sale figures derive from the same per-property records used by
-// the drawer, so navigation copy cannot drift away from the map data.
-function getHammondSaleSummary() {
-  const listings = Object.values(D.sispByProperty || {}).filter((meta) =>
-    meta && meta.status === "listed" && meta.broker === "Hammond Realty" &&
-    meta.sourceCheckedAt && meta.price
-  );
-  return listings.reduce((summary, meta) => {
-    summary.listingCount += Array.isArray(meta.listings) ? meta.listings.length : 1;
-    summary.totalAskingCAD += parseAskingPriceCAD(meta.price);
-    summary.listingAcres += Number(meta.listingAc || 0);
-    if (!summary.checkedAt || meta.sourceCheckedAt > summary.checkedAt) {
-      summary.checkedAt = meta.sourceCheckedAt;
+// Public asking-price summary in CAD, by jurisdiction: Saskatchewan (Hammond),
+// Manitoba (MLS) and British Columbia (LandQuest). Derived from the same
+// per-property sispByProperty records the drawer and map use, so top-level sale
+// figures cannot drift away from them. U.S. packages are priced in USD and are
+// intentionally left out (each drawer shows its own price), as are unpriced
+// records and the separately listed Swift Current processing facility.
+function getCadSaleSummary() {
+  const provinceOf = {};
+  (D.properties || []).forEach((p) => { provinceOf[p.id] = p.province; });
+  const byRegion = {};
+  const total = { listingCount: 0, totalAskingCAD: 0, listingAcres: 0, checkedAt: null };
+  Object.entries(D.sispByProperty || {}).forEach(([id, meta]) => {
+    if (!meta || meta.status !== "listed" || !meta.sourceCheckedAt || !meta.price) return;
+    if (!/\bCAD\b/.test(String(meta.price))) return;
+    const region = provinceOf[id] || "other";
+    const slot = byRegion[region] || (byRegion[region] = { listingCount: 0, totalAskingCAD: 0, listingAcres: 0 });
+    const count = Array.isArray(meta.listings) ? meta.listings.length : 1;
+    const ask = parseAskingPriceCAD(meta.price);
+    const acres = Number(meta.listingAc || 0);
+    [slot, total].forEach((t) => {
+      t.listingCount += count;
+      t.totalAskingCAD += ask;
+      t.listingAcres += acres;
+    });
+    if (!total.checkedAt || meta.sourceCheckedAt > total.checkedAt) {
+      total.checkedAt = meta.sourceCheckedAt;
     }
-    return summary;
-  }, {
-    listingCount: 0,
-    totalAskingCAD: 0,
-    listingAcres: 0,
-    checkedAt: null,
   });
+  return { total, byRegion };
 }
 
 function fmtAskingCompact(value) {
   const millions = Number(value || 0) / 1000000;
   return `$${millions.toLocaleString("en-CA", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}
+
+// "C$773.9M" / "C$1.01B" — CAD asking totals.
+function fmtAskingCompactCAD(value) {
+  const n = Number(value || 0);
+  if (n >= 999.95e6) {
+    return `C$${(n / 1e9).toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}B`;
+  }
+  return `C$${(n / 1e6).toLocaleString("en-CA", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
+}
+
+const ISO_MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// "2026-10-15" -> "Oct 15, 2026" (or "Oct 15" without the year). Empty string
+// for anything that is not a plain ISO date.
+function fmtIsoDate(iso, withYear = true) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+  const month = m ? ISO_MONTHS[Number(m[2]) - 1] : null;
+  if (!month) return "";
+  return withYear ? `${month} ${Number(m[3])}, ${m[1]}` : `${month} ${Number(m[3])}`;
+}
+
+// Whole calendar days from today (visitor's local date) to an ISO date; negative
+// once it has passed, null if the date is malformed.
+function daysUntilIso(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+  if (!m) return null;
+  const today = new Date();
+  const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  const targetUtc = Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return Math.round((targetUtc - todayUtc) / 86400000);
+}
+
+// Binding-bid deadline pill copy: "Bids due Oct 15, 2026 · 16 days".
+function bidDeadlineLabel(iso) {
+  const dateLabel = fmtIsoDate(iso);
+  if (!dateLabel) return null;
+  const days = daysUntilIso(iso);
+  if (days == null) return `Bids due ${dateLabel}`;
+  if (days < 0) return `Bids were due ${dateLabel}`;
+  if (days === 0) return `Bids due today · ${dateLabel}`;
+  if (days === 1) return `Bids due ${dateLabel} · tomorrow`;
+  return `Bids due ${dateLabel} · ${days} days`;
 }
 
 function fmtSatelliteNumber(value, digits = 3, suffix = "") {
@@ -297,19 +346,28 @@ function seedQuarter(propId, q, i) {
     ownership = fallback[rng % fallback.length];
   }
 
-  // Hafford: per community intel 2026-04-25, Walter Farms purchased ALL the
-  // Hafford land — display ALL Hafford quarters under "sold-rented-back",
-  // provisional until court documentation lands.
+  const propMeta = (window.MONETTE_DATA && window.MONETTE_DATA.properties || [])
+    .find(p => p && p.id === propId);
+
+  // Hafford: the May 1, 2026 Sale Approval and Vesting Order (para 7(a)(i) and
+  // Schedule B: 19 titles = 16 quarter-sections + Lot 20) is the ONLY court-documented
+  // disposition. Quarters it names (`courtConfirmedSoldQuarters`) are SOLD and
+  // confirmed. Every other Hafford quarter keeps the community-intel
+  // "sold-rented-back" seed (Walter Farms bought ALL the Hafford land,
+  // 2026-04-25) but stays PROVISIONAL — dashed and lighter on the map, "?" pill
+  // in the drawer — because it is reported, not in the order. Only the
+  // unverifiable layer is scoped as rumored; intel is never painted like a
+  // court-approved sale (Kyle, 2026-09-29).
   if (propId === "hafford") {
-    ownership = "sold-rented-back";
-    provisional = true;
+    const confirmed = !!(propMeta && Array.isArray(propMeta.courtConfirmedSoldQuarters) &&
+      propMeta.courtConfirmedSoldQuarters.includes(q.loc));
+    ownership = confirmed ? "sold" : "sold-rented-back";
+    provisional = !confirmed;
   }
 
   // Per-property `rumoredSoldQuarters` — opt-in mechanism for quarter-level
   // rumored dispositions. Flagged "sold" (not "sold-rented-back") with
   // provisional pill. Wymark/Waldeck example 2026-04-26.
-  const propMeta = (window.MONETTE_DATA && window.MONETTE_DATA.properties || [])
-    .find(p => p && p.id === propId);
   if (propMeta && Array.isArray(propMeta.rumoredSoldQuarters) &&
       propMeta.rumoredSoldQuarters.includes(q.loc)) {
     ownership = "sold";
@@ -580,7 +638,7 @@ function LatestCourtUpdatePanel({ compact = false }) {
           <div className="mono home-court-update-kicker">{update.label}</div>
           <h2 id={compact ? "atlas-court-update-title" : "home-court-update-title"} className="serif">What changed in the latest filings</h2>
         </div>
-        <time className="mono" dateTime={update.asOf}>Through Aug 19, 2026</time>
+        <time className="mono" dateTime={update.asOf}>Through {fmtIsoDate(update.asOf)}</time>
       </header>
       <div className="home-court-update-grid">
         {renderItems()}
@@ -719,8 +777,12 @@ Object.assign(window, {
   PORTFOLIO,
   fmt,
   fmtM,
-  getHammondSaleSummary,
+  getCadSaleSummary,
   fmtAskingCompact,
+  fmtAskingCompactCAD,
+  fmtIsoDate,
+  daysUntilIso,
+  bidDeadlineLabel,
   now,
   onActionKey,
   currentMonetteUrl,

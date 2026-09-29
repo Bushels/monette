@@ -102,6 +102,107 @@ const PARCEL_SEEDING_OUTLINE_LAYER = "monette-parcel-seeding-outline-lowqc";
 // Always-on gold outline marking SISP "listed-for-sale" quarters. Sits above
 // the fill in both atlas modes (seeding + land-status) as a for-sale overlay.
 const PARCEL_FORSALE_OUTLINE_LAYER = "monette-parcel-forsale-outline";
+// Dashed outline for quarters whose ownership status is a Ledger-provisional
+// seed (reported, not court-documented). Confirmed statuses keep the solid line.
+const PARCEL_PROVISIONAL_OUTLINE_LAYER = "monette-parcel-provisional-outline";
+
+// Soft "footprint glow" for the portfolio overview. A quarter section is under
+// one pixel wide at continental zoom, so parcel polygons alone leave the whole
+// SK/MB/MT footprint looking empty on first load. One blurred circle per mapped
+// quarter (no dots, no labels) makes the land legible from zoom 3; it fades out
+// by zoom ~9 where the real quarter outlines take over.
+const FOOTPRINT_SOURCE = "monette-footprint";
+const FOOTPRINT_GLOW_LAYER = "monette-footprint-glow";
+const FOOTPRINT_SALE_COLOR = "#e6b04a";
+const FOOTPRINT_SALE_PROVISIONAL_COLOR = "#b48638";
+const FOOTPRINT_LAND_COLOR_EXPR = [
+  "case",
+  ["==", ["get", "sale"], 1], FOOTPRINT_SALE_COLOR,
+  ["==", ["get", "sale"], 2], FOOTPRINT_SALE_PROVISIONAL_COLOR,
+  ["get", "land_color"],
+];
+
+// Glow opacity by zoom. A lone approximate-location blob has nothing stacked under it
+// (parcel glows overlap and build up), so it gets a higher base opacity. Reported
+// (provisional) quarters glow at about half strength in land-status mode only: the
+// seeding read is not about ownership, so seeding mode passes false.
+function footprintOpacityExpr(withProvisional) {
+  const stop = (approx, prov, normal) => withProvisional
+    ? ["case", ["==", ["get", "approx"], 1], approx, ["==", ["get", "prov"], 1], prov, normal]
+    : ["case", ["==", ["get", "approx"], 1], approx, normal];
+  return [
+    "interpolate", ["linear"], ["zoom"],
+    3, stop(0.9, 0.34, 0.66),
+    6.5, stop(0.75, 0.28, 0.52),
+    8.4, stop(0.25, 0.06, 0.12),
+    9.2, 0,
+  ];
+}
+
+// Portfolio overview camera. `MAPBOX_HOME.bounds` is fitted to the live map
+// frame so the whole footprint fills it at any size or aspect ratio; the
+// centre/zoom pair is only the fallback when bounds are missing.
+// Extra right padding keeps the footprint clear of the bottom-right controls
+// (home / zoom / compass: 44px touch targets on phones, 36px on desktop).
+function homeFitOptions() {
+  const narrow = typeof window !== "undefined" && window.innerWidth <= 900;
+  return {
+    padding: { top: 18, bottom: 18, left: 18, right: narrow ? 66 : 54 },
+    maxZoom: 5.2,
+  };
+}
+
+// Constructor camera. Deliberately centre/zoom only: fitting bounds at
+// construction runs before the container has a measured size and yields a
+// world-scale zoom. The real fit happens in fitHomeView() once the frame is
+// measured (ResizeObserver, below).
+function homeCameraOptions() {
+  const home = window.MAPBOX_HOME || {};
+  return { center: home.center, zoom: home.zoom };
+}
+
+function fitHomeView(map, duration) {
+  if (!map) return;
+  const home = window.MAPBOX_HOME || {};
+  if (Array.isArray(home.bounds) && home.bounds.length === 2) {
+    map.fitBounds(home.bounds, {
+      ...homeFitOptions(),
+      bearing: 0,
+      pitch: 0,
+      duration: duration || 0,
+    });
+    return;
+  }
+  map.flyTo({
+    center: home.center,
+    zoom: home.zoom,
+    bearing: 0,
+    pitch: 0,
+    duration: duration || 0,
+  });
+}
+
+// Centre of a parcel's outer ring (quarter sections are small and convex, so
+// the vertex mean is plenty for a blurred glow).
+function parcelGlowCenter(geometry) {
+  if (!geometry) return null;
+  const ring = geometry.type === "Polygon"
+    ? geometry.coordinates && geometry.coordinates[0]
+    : geometry.type === "MultiPolygon"
+      ? geometry.coordinates && geometry.coordinates[0] && geometry.coordinates[0][0]
+      : null;
+  if (!Array.isArray(ring) || ring.length < 2) return null;
+  const n = ring.length > 2 && ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1]
+    ? ring.length - 1
+    : ring.length;
+  let x = 0;
+  let y = 0;
+  for (let i = 0; i < n; i += 1) {
+    x += ring[i][0];
+    y += ring[i][1];
+  }
+  return [x / n, y / n];
+}
 
 // ─── Snow overlay (synoptic prairie snow extent) ──────────────────────────
 // Backed by /snow/manifest.json + /snow/{date}/prairie-snow.png produced by
@@ -608,6 +709,8 @@ function buildQuarterStateIndex() {
       const st = loadQState(propId, q, i);
       index[imageryKey(propId, q.loc)] = {
         ownership: st.ownership,
+        // Ledger-provisional ownership seed (reported, not court-documented).
+        provisional: !!st.provisional,
         listing: st.listing,
         listingProvisional: !!st.listingProvisional,
         seeded: false,
@@ -786,6 +889,8 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
         title_acres: props.titled_ac,
         ownership_status: st.ownership,
         ownership_label: (OWN[st.ownership] || OWN.unknown).label,
+        // 1 = Ledger-provisional seed (reported, not court-documented).
+        ownership_provisional: st.provisional ? 1 : 0,
         listing_status: st.listing,
         listing_provisional: st.listingProvisional ? 1 : 0,
         status_color: st.statusColor,
@@ -844,6 +949,9 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
   const propertyFeatures = [];
   const pointFeatures = [];
   const labelFeatures = [];
+  // Approximate-location glow points for publicly listed packages with no
+  // parcel geometry (BC ranches, The Pas). Soft and large: exact land is unknown.
+  const approxFootprintFeatures = [];
   const coverageByProperty = {};
 
   D.properties.forEach((property) => {
@@ -919,6 +1027,25 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
             acres_label: `${fmt(property.titled || 0)} ac`,
             titled: property.titled || 0,
             geometry_status: pointOnly ? "point-only" : "synthetic",
+          },
+        });
+      }
+      const saleMeta = (D.sispByProperty || {})[property.id];
+      if (
+        saleMeta && saleMeta.status === "listed" &&
+        Number.isFinite(property.lng) && Number.isFinite(property.lat)
+      ) {
+        approxFootprintFeatures.push({
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [property.lng, property.lat] },
+          properties: {
+            property_id: property.id,
+            ownership_status: "approximate",
+            prov: 0,
+            sale: 2,
+            approx: 1,
+            land_color: FOOTPRINT_SALE_PROVISIONAL_COLOR,
+            seed_color: FOOTPRINT_SALE_PROVISIONAL_COLOR,
           },
         });
       }
@@ -1073,10 +1200,54 @@ function buildPreparedMapData(geojson, quarterStateIndex, imageryStore, rollups,
       },
     }));
 
+  // One glow point per mapped quarter for the wide-zoom footprint layer.
+  //
+  // The per-quarter for-sale outline needs source-backed tenure (evidence
+  // gate). A package that is publicly listed but has NO evidence-matched
+  // quarters (Eddystone, Raymore) would read as "owned, not for sale" in the
+  // glow, so all of its mapped quarters glow in the darker package-level gold instead.
+  // That is a property-level statement about where the listed package sits; it
+  // never lights an outline or a pill on any individual quarter.
+  const litQuartersByProperty = {};
+  parcels.forEach((parcel) => {
+    const p = parcel.properties || {};
+    if (p.listing_status === "listed-for-sale") {
+      litQuartersByProperty[p.property_id] = (litQuartersByProperty[p.property_id] || 0) + 1;
+    }
+  });
+  const packageListedWithoutQuarters = (propertyId) => {
+    const meta = (D.sispByProperty || {})[propertyId];
+    return !!(meta && meta.status === "listed" && !meta.residual && !litQuartersByProperty[propertyId]);
+  };
+  const footprintFeatures = [];
+  parcels.forEach((parcel) => {
+    const p = parcel.properties || {};
+    const center = parcelGlowCenter(parcel.geometry);
+    if (!center) return;
+    const quarterSale = p.listing_status === "listed-for-sale" ? (p.listing_provisional ? 2 : 1) : 0;
+    // Every mapped quarter of such a package tints the same: tenure there is inferred
+    // (no owner table / mismatched keys), so no quarter-by-quarter pattern may show.
+    const sale = quarterSale || (packageListedWithoutQuarters(p.property_id) ? 2 : 0);
+    footprintFeatures.push({
+      type: "Feature",
+      geometry: { type: "Point", coordinates: center },
+      properties: {
+        property_id: p.property_id,
+        ownership_status: p.ownership_status,
+        prov: p.ownership_provisional ? 1 : 0,
+        sale,
+        land_color: p.map_fill_color,
+        seed_color: p.seeding_fill_color,
+      },
+    });
+  });
+  approxFootprintFeatures.forEach((feature) => footprintFeatures.push(feature));
+
   return {
     propertyGeojson: { type: "FeatureCollection", features: propertyFeatures },
     propertyPointGeojson: { type: "FeatureCollection", features: pointFeatures },
     propertyLabelGeojson: { type: "FeatureCollection", features: labelFeatures },
+    footprintGeojson: { type: "FeatureCollection", features: footprintFeatures },
     parcelGeojson: { type: "FeatureCollection", features: parcels },
     soldGeojson: { type: "FeatureCollection", features: soldFeatures },
     operatorRelationshipGeojson: { type: "FeatureCollection", features: operatorRelationshipFeatures },
@@ -1357,6 +1528,9 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
   const seedingPopupRef = useRef(null);
   const propertySalePopupRef = useRef(null);
   const pendingFocusRef = useRef(null);
+  // True until a visitor moves the map or a property takes focus; while true the
+  // portfolio overview is re-fitted whenever the frame changes size.
+  const homeFitPendingRef = useRef(true);
 
   const rollups = useMemo(() => {
     const out = {};
@@ -1395,9 +1569,12 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     try { localStorage.setItem(ATLAS_MODE_KEY, atlasMode); } catch (e) {}
   }, [atlasMode]);
 
-  // Load /snow/manifest.json once on mount. Silent on 404 (the snow viewer
-  // is opt-in; missing manifest just means the toggle never appears).
+  // Load /snow/manifest.json once on mount — only when the snow viewer is
+  // switched on in config (window.MONETTE_SNOW_ENABLED). The snow assets are
+  // not part of the production deploy, so probing for them on every page load
+  // just produced a 404. Missing manifest still means the toggle never appears.
   useEffect(() => {
+    if (!window.MONETTE_SNOW_ENABLED) return undefined;
     let alive = true;
     fetch(SNOW_MANIFEST_URL, { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
@@ -1444,6 +1621,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     const property = propertyById[propId];
     if (!property) return;
 
+    homeFitPendingRef.current = false;
     const nextFocus = { propId, duration: duration || 1200 };
     const coverage = mapDataRef.current && mapDataRef.current.coverageByProperty
       ? mapDataRef.current.coverageByProperty[propId]
@@ -1610,12 +1788,17 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
       );
     }
 
+    // Reported-not-documented ownership (Ledger-provisional seeds) reads at
+    // half strength: lighter fill, dashed outline. Confirmed statuses stay solid.
+    const provisionalMatch = ["==", ["get", "ownership_provisional"], 1];
+    const dimProvisional = (expr, factor) => ["case", provisionalMatch, ["*", factor, expr], expr];
+
     if (map.getLayer(SELECTED_PARCEL_FILL_LAYER)) {
       map.setFilter(SELECTED_PARCEL_FILL_LAYER, ALL_PARCELS_FILTER);
       map.setPaintProperty(
         SELECTED_PARCEL_FILL_LAYER,
         "fill-opacity",
-        isSeedingMode ? 0.01 : parcelFillOpacity
+        isSeedingMode ? 0.01 : dimProvisional(parcelFillOpacity, 0.5)
       );
     }
 
@@ -1629,7 +1812,43 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
       map.setPaintProperty(
         SELECTED_PARCEL_OUTLINE_LAYER,
         "line-opacity",
-        isSeedingMode ? (selId ? ["case", selectedParcelMatch, 0.46, 0.22] : 0.24) : parcelLineOpacity
+        isSeedingMode
+          ? (selId ? ["case", selectedParcelMatch, 0.46, 0.22] : 0.24)
+          : ["case", provisionalMatch, 0, parcelLineOpacity]
+      );
+    }
+
+    if (map.getLayer(PARCEL_PROVISIONAL_OUTLINE_LAYER)) {
+      map.setLayoutProperty(
+        PARCEL_PROVISIONAL_OUTLINE_LAYER,
+        "visibility",
+        isSeedingMode ? "none" : "visible"
+      );
+      map.setPaintProperty(
+        PARCEL_PROVISIONAL_OUTLINE_LAYER,
+        "line-opacity",
+        ["*", 1.25, parcelLineOpacity]
+      );
+    }
+
+    // Footprint glow follows the atlas mode (land status vs seeding colours)
+    // and the ownership-focus chips, exactly like the parcel fills it stands in
+    // for at wide zoom.
+    if (map.getLayer(FOOTPRINT_GLOW_LAYER)) {
+      map.setPaintProperty(
+        FOOTPRINT_GLOW_LAYER,
+        "circle-color",
+        isSeedingMode ? ["get", "seed_color"] : FOOTPRINT_LAND_COLOR_EXPR
+      );
+      map.setPaintProperty(FOOTPRINT_GLOW_LAYER, "circle-opacity", footprintOpacityExpr(!isSeedingMode));
+      const glowFilters = [];
+      // Approximate-location points carry no seeding read, so they only show in
+      // the land-status mode (and disappear when an ownership chip is active).
+      if (isSeedingMode) glowFilters.push(["!=", ["get", "approx"], 1]);
+      if (focusActive) glowFilters.push(focusMatch);
+      map.setFilter(
+        FOOTPRINT_GLOW_LAYER,
+        glowFilters.length === 0 ? null : glowFilters.length === 1 ? glowFilters[0] : ["all", ...glowFilters]
       );
     }
 
@@ -1681,12 +1900,30 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
   };
 
   const safeSyncMapPresentation = (map) => {
-    if (!map || !map.isStyleLoaded || !map.isStyleLoaded()) return;
+    if (!map || !map.isStyleLoaded) return;
+    if (!map.isStyleLoaded()) {
+      // isStyleLoaded() is also false while vector tiles load after a pan / zoom / fly.
+      // Queue ONE sync for the next idle instead of dropping it, so a chip click or a
+      // mode toggle made mid-load still lands (syncMapPresentation reads the latest refs).
+      if (!map.__monetteSyncQueued) {
+        map.__monetteSyncQueued = true;
+        map.once("idle", () => {
+          map.__monetteSyncQueued = false;
+          syncMapPresentation(map);
+        });
+      }
+      return;
+    }
     syncMapPresentation(map);
   };
 
   const installAtlasLayers = (map, prepared) => {
     if (!map || !prepared) return;
+    // installAtlasLayers runs on load / style.load / new data, and as an idle retry until the first install lands.
+    // Re-uploading every GeoJSON source each time made the map re-render forever: idle -> setData -> tile
+    // reload -> render -> idle (~60 fps with nobody touching it). Sources are only refreshed when the
+    // prepared data object actually changed; missing sources and layers are still (re)added.
+    const dataChanged = map.__monettePreparedData !== prepared;
 
     if (!map.getSource(PROPERTY_SOURCE)) {
       map.addSource(PROPERTY_SOURCE, {
@@ -1694,7 +1931,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         data: prepared.propertyGeojson,
         promoteId: "id",
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(PROPERTY_SOURCE).setData(prepared.propertyGeojson);
     }
 
@@ -1704,7 +1941,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         data: prepared.propertyPointGeojson,
         promoteId: "id",
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(PROPERTY_POINT_SOURCE).setData(prepared.propertyPointGeojson);
     }
 
@@ -1714,7 +1951,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         data: prepared.soldGeojson,
         promoteId: "id",
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(SOLD_ASSET_SOURCE).setData(prepared.soldGeojson);
     }
 
@@ -1724,7 +1961,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         data: prepared.operatorRelationshipGeojson,
         promoteId: "id",
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(OPERATOR_RELATIONSHIP_SOURCE).setData(prepared.operatorRelationshipGeojson);
     }
 
@@ -1733,7 +1970,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         type: "geojson",
         data: prepared.parcelGeojson,
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(PARCEL_SOURCE).setData(prepared.parcelGeojson);
     }
 
@@ -1742,8 +1979,19 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         type: "geojson",
         data: prepared.propertyLabelGeojson,
       });
-    } else {
+    } else if (dataChanged) {
       map.getSource(PROPERTY_LABEL_SOURCE).setData(prepared.propertyLabelGeojson);
+    }
+
+    if (prepared.footprintGeojson) {
+      if (!map.getSource(FOOTPRINT_SOURCE)) {
+        map.addSource(FOOTPRINT_SOURCE, {
+          type: "geojson",
+          data: prepared.footprintGeojson,
+        });
+      } else if (dataChanged) {
+        map.getSource(FOOTPRINT_SOURCE).setData(prepared.footprintGeojson);
+      }
     }
 
     if (!map.getLayer(PROPERTY_FILL_LAYER)) {
@@ -1754,6 +2002,31 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         paint: {
           "fill-color": ["get", "dominant_color"],
           "fill-opacity": 0.055,
+        },
+      });
+    }
+
+    // Wide-zoom footprint glow — see FOOTPRINT_* constants. Reported
+    // (provisional) quarters glow at roughly half strength so confirmed land
+    // reads first. Colours mirror the land-status fills; gold = SISP for sale.
+    if (map.getSource(FOOTPRINT_SOURCE) && !map.getLayer(FOOTPRINT_GLOW_LAYER)) {
+      map.addLayer({
+        id: FOOTPRINT_GLOW_LAYER,
+        type: "circle",
+        source: FOOTPRINT_SOURCE,
+        paint: {
+          "circle-color": FOOTPRINT_LAND_COLOR_EXPR,
+          // Approximate-location points (listed packages with no parcel
+          // geometry) get a much larger, softer blob: exact land is unknown.
+          "circle-radius": [
+            "interpolate", ["exponential", 2], ["zoom"],
+            2, ["case", ["==", ["get", "approx"], 1], 4, 1.6],
+            4, ["case", ["==", ["get", "approx"], 1], 16, 6],
+            6, ["case", ["==", ["get", "approx"], 1], 52, 22],
+            8, ["case", ["==", ["get", "approx"], 1], 140, 70],
+          ],
+          "circle-blur": 1,
+          "circle-opacity": footprintOpacityExpr(true),
         },
       });
     }
@@ -1898,6 +2171,31 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
             11, 2.3,
           ],
           "line-opacity": 0.74,
+        },
+      });
+    }
+
+    // Reported-not-documented ownership (Ledger-provisional seeds) is drawn
+    // with a dashed outline so it never reads like a court-confirmed status.
+    // The solid outline above is zeroed for these parcels in
+    // syncMapPresentation(); line-dasharray cannot be data-driven, so this is
+    // its own layer filtered on ownership_provisional.
+    if (!map.getLayer(PARCEL_PROVISIONAL_OUTLINE_LAYER)) {
+      map.addLayer({
+        id: PARCEL_PROVISIONAL_OUTLINE_LAYER,
+        type: "line",
+        source: PARCEL_SOURCE,
+        filter: ["==", ["get", "ownership_provisional"], 1],
+        paint: {
+          "line-color": ["get", "map_fill_color"],
+          "line-width": [
+            "interpolate", ["linear"], ["zoom"],
+            7, 1.0,
+            9, 1.5,
+            11, 2.0,
+          ],
+          "line-dasharray": [2, 1.6],
+          "line-opacity": 0.6,
         },
       });
     }
@@ -2159,6 +2457,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
 
     // The status fill is the primary signal. Gold selection casing sits
     // underneath the fill so it marks selection without tinting every parcel.
+    // moveLayer() always dirties the style and forces a repaint, so this ordering runs only
+    // when data changed (first install, new data, after a style reload). Running it on every
+    // 'idle' was the other half of the render-forever loop.
+    if (dataChanged) {
     moveMapLayerBefore(map, PROPERTY_GLOW_LAYER, SELECTED_PARCEL_FILL_LAYER);
     moveMapLayerBefore(map, PROPERTY_OUTLINE_LAYER, SELECTED_PARCEL_FILL_LAYER);
     moveMapLayerBefore(map, PROPERTY_SELECTED_LAYER, SELECTED_PARCEL_FILL_LAYER);
@@ -2172,6 +2474,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     moveMapLayerToTop(map, SOLD_ASSET_LABEL_LAYER);
     moveMapLayerToTop(map, OPERATOR_RELATIONSHIP_LAYER);
     moveMapLayerToTop(map, OPERATOR_RELATIONSHIP_LABEL_LAYER);
+    }
 
     if (!map.__monetteAtlasHandlersInstalled) {
       map.__monetteAtlasHandlersInstalled = true;
@@ -2465,6 +2768,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
       }
     }
 
+    map.__monettePreparedData = prepared;
     syncMapPresentation(map);
   };
 
@@ -2481,8 +2785,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
       map = new window.mapboxgl.Map({
         container: mapContainerRef.current,
         style: currentStyle,
-        center: window.MAPBOX_HOME.center,
-        zoom: window.MAPBOX_HOME.zoom,
+        ...homeCameraOptions(),
         attributionControl: true,
         projection: "mercator",
         // Free navigation — explicitly opt every gesture in. No maxBounds, no
@@ -2523,13 +2826,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     homeIcon.textContent = "⌂";
     homeBtn.appendChild(homeIcon);
     homeBtn.addEventListener("click", () => {
-      map.flyTo({
-        center: window.MAPBOX_HOME.center,
-        zoom: window.MAPBOX_HOME.zoom,
-        bearing: 0,
-        pitch: 0,
-        duration: 1100,
-      });
+      homeFitPendingRef.current = true;
+      fitHomeView(map, 1100);
     });
     map.addControl({
       onAdd: () => {
@@ -2543,6 +2841,36 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     mapRef.current = map;
     map.__monetteStyleUri = currentStyle;
     window.MONETTE_MAP = map;
+
+    // Keep the WebGL canvas matched to its frame when layout changes without a
+    // window resize (side panel growth, fonts, drawer). Mapbox only listens to
+    // window resize on its own.
+    // The same observer fits the portfolio overview to the measured frame, and
+    // keeps re-fitting it on resize until the visitor moves the map or a
+    // property takes focus.
+    let frameObserver = null;
+    if (typeof ResizeObserver === "function") {
+      frameObserver = new ResizeObserver(() => {
+        try {
+          map.resize();
+          const box = mapContainerRef.current && mapContainerRef.current.getBoundingClientRect();
+          if (homeFitPendingRef.current && box && box.width > 200 && box.height > 200) {
+            fitHomeView(map, 0);
+          }
+        } catch (e) { /* map already removed */ }
+      });
+      frameObserver.observe(mapContainerRef.current);
+    }
+    // A visitor moving the map (drag, wheel, touch, keys) ends the auto-fit. Mapbox
+    // also fires movestart for its own window-resize handling, with the resize event
+    // as originalEvent; that must not count as the visitor taking over.
+    map.on("movestart", (event) => {
+      const source = event && event.originalEvent;
+      const kind = source && source.type;
+      if (source && kind !== "resize" && kind !== "orientationchange" && kind !== "fullscreenchange") {
+        homeFitPendingRef.current = false;
+      }
+    });
 
     const reattach = () => {
       if (!mapDataRef.current) return;
@@ -2558,8 +2886,18 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     };
 
     map.on("load", reattach);
-    map.on("style.load", reattach);
-    map.on("idle", reattach);
+    map.on("style.load", () => {
+      map.__monettePreparedData = null; // style reload dropped our sources/layers: re-order and refresh
+      reattach();
+    });
+    // 'idle' is only the retry path for a first install that has not completed yet (data or
+    // style not ready when 'load' fired). Re-running the install + presentation sync on EVERY
+    // idle made the map re-render forever (~60 fps with nobody touching it): map-level
+    // setFilter / setPaintProperty / setLayoutProperty always schedule a repaint, even for
+    // unchanged values, and each repaint ends in another 'idle'.
+    map.on("idle", () => {
+      if (mapDataRef.current && map.__monettePreparedData !== mapDataRef.current) reattach();
+    });
 
     return () => {
       if (soldPopupRef.current) {
@@ -2585,6 +2923,10 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
       if (propertySalePopupRef.current) {
         propertySalePopupRef.current.remove();
         propertySalePopupRef.current = null;
+      }
+      if (frameObserver) {
+        frameObserver.disconnect();
+        frameObserver = null;
       }
       map.remove();
       mapRef.current = null;
@@ -2669,7 +3011,11 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     setSel(property);
     setSelQLoc(forcedQuarter || null);
     const saleMeta = (D.sispByProperty || {})[property.id];
-    setDrawerOpen(!!forcedQuarter || !!(saleMeta && (saleMeta.status === "listed" || saleMeta.status === "sale-approved")));
+    // A shared #map/<property> link opens the drawer for anything with a public sale status
+    // or a court-documented disposition (Hafford's May 1 vesting order), so the court detail is
+    // what the reader lands on, not just a selected pin.
+    const courtDocumented = !!(property.courtConfirmedSoldQuarters && property.courtConfirmedSoldQuarters.length);
+    setDrawerOpen(!!forcedQuarter || courtDocumented || !!(saleMeta && (saleMeta.status === "listed" || saleMeta.status === "sale-approved")));
     focusProperty(property.id, 900);
   }, [forcedQuarter, forcedSelect, propertyById]);
 
@@ -2716,10 +3062,16 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     ? mapData.operatorRelationshipCount
     : operatorRelationships.length;
   const portfolioRollup = useMemo(() => aggregateRollups(rollups), [rollups]);
-  const publicSales = getHammondSaleSummary();
+  const saleSummary = getCadSaleSummary();
+  const publicSales = saleSummary.total;
+  const askingBreakdown = ["SK", "MB", "BC"]
+    .filter((region) => saleSummary.byRegion[region])
+    .map((region) => `${region} ${fmtAskingCompactCAD(saleSummary.byRegion[region].totalAskingCAD)}`)
+    .join(" · ");
+  const askingCheckedLabel = publicSales.checkedAt ? fmtIsoDate(publicSales.checkedAt, false) : null;
   const selectedSaleMeta = sel ? (D.sispByProperty || {})[sel.id] || null : null;
   const bindingBidLabel = D.sisp && D.sisp.bindingBidDeadline
-    ? new Date(`${D.sisp.bindingBidDeadline}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric", year: "numeric" })
+    ? bidDeadlineLabel(D.sisp.bindingBidDeadline)
     : null;
   const activeRollup = hoverOrSel ? rollups[hoverOrSel.id] : portfolioRollup;
   const activeLeadLabel = hoverOrSel ? propertyDisplayLabel(hoverOrSel, activeRollup) : dominantOwnershipLabel(activeRollup);
@@ -2745,16 +3097,8 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
     setSelQLoc(null);
     setDrawerOpen(false);
     routeToSelection(null, null);
-    const map = mapRef.current;
-    if (map) {
-      map.flyTo({
-        center: window.MAPBOX_HOME.center,
-        zoom: window.MAPBOX_HOME.zoom,
-        bearing: 0,
-        pitch: 0,
-        duration: 900,
-      });
-    }
+    homeFitPendingRef.current = true;
+    fitHomeView(mapRef.current, 900);
   };
 
   return (
@@ -2768,8 +3112,13 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         </div>
         <div className="atlas-toolbar-status" aria-label="Portfolio status summary">
           <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">{publicSales.listingCount} public listings</span>
-          <span className="atlas-toolbar-pill atlas-toolbar-pill-asking mono">{fmtAskingCompact(publicSales.totalAskingCAD)} asking</span>
-          {bindingBidLabel && <span className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono">Bids due {bindingBidLabel}</span>}
+          <span className="atlas-toolbar-pill atlas-toolbar-pill-asking mono" title={`Asking prices in CAD: ${askingBreakdown}. U.S. packages are priced in USD; see each property.`}>{fmtAskingCompactCAD(publicSales.totalAskingCAD)} asking</span>
+          {bindingBidLabel && <span className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono">{bindingBidLabel}</span>}
+          {askingBreakdown && (
+            <span className="atlas-toolbar-breakdown mono">
+              Asks in CAD{askingCheckedLabel ? `, checked ${askingCheckedLabel}` : ""}: {askingBreakdown}. U.S. packages are priced in USD; see each property.
+            </span>
+          )}
         </div>
       </div>
 
@@ -2977,7 +3326,11 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
                   </div>
                   <div className="atlas-legend-row">
                     <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
-                    <span>Red blocks are sold or sale-leaseback.</span>
+                    <span>Solid red blocks are court-approved sales.</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch atlas-swatch-reported" />
+                    <span>Lighter, dashed red blocks are reported sold or rented back (community intel), not named in a court order.</span>
                   </div>
                   <div className="atlas-legend-row">
                     <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
@@ -2992,6 +3345,12 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
               <div className="atlas-legend-row">
                 <span className="atlas-swatch" style={{ background: "transparent", border: "1.5px dashed #b48638" }} />
                 <span>Gold outline = officially for sale via the FTI SISP (faint = in scope, listing pending).</span>
+              </div>
+              <div className="atlas-legend-row">
+                <span className="atlas-swatch atlas-swatch-glow" />
+                <span>{atlasMode === "seeding"
+                  ? "Soft glow at wide zoom marks where mapped quarters are (green = likely seeded, grey = unseeded or no confident call); it fades as you zoom in."
+                  : "Soft glow at wide zoom marks where mapped quarters are (gold = officially for sale; darker gold = package publicly listed, exact quarters or location not yet matched); it fades as you zoom in."}</span>
               </div>
             </div>
           </details>
@@ -3232,7 +3591,11 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
                   </div>
                   <div className="atlas-legend-row">
                     <span className="atlas-swatch" style={{ background: OWN.sold.color }} />
-                    <span>Sold</span>
+                    <span>Sold (court-approved)</span>
+                  </div>
+                  <div className="atlas-legend-row">
+                    <span className="atlas-swatch atlas-swatch-reported" />
+                    <span>Reported sold / rented back: lighter, dashed. Community intel, not named in a court order</span>
                   </div>
                   <div className="atlas-legend-row">
                     <span className="atlas-swatch" style={{ background: OWN["returned-to-ll"].color }} />
@@ -3255,6 +3618,12 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
               <div className="atlas-legend-row">
                 <span className="atlas-swatch atlas-swatch-outline" style={{ borderColor: "#f1d284" }} />
                 <span>Gold halo = selected property</span>
+              </div>
+              <div className="atlas-legend-row">
+                <span className="atlas-swatch atlas-swatch-glow" />
+                <span>{atlasMode === "seeding"
+                  ? "Soft glow at wide zoom = where mapped quarters are (green = likely seeded, grey = unseeded or no confident call); it fades as you zoom in"
+                  : "Soft glow at wide zoom = where mapped quarters are (gold = officially for sale; darker gold = package publicly listed, exact quarters or location not yet matched); it fades as you zoom in"}</span>
               </div>
             </div>
           </div>
