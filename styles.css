@@ -4364,3 +4364,72 @@ a.cf-chip:hover { border-color: var(--ink); color: var(--ink); }
 @media (max-width: 700px) {
   .property-drawer .pd-court-docs { padding: 16px !important; }
 }
+
+/* ----- Section 1b: Who is on the list? (2026-09-30) ----- */
+.creditors-lookup { background: var(--paper); }
+.creditors-lookup-search { max-width: 640px; }
+.creditors-lookup-search input {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-2);
+  color: var(--ink);
+  font: 500 16px/1.2 "Geist", sans-serif;
+}
+.creditors-lookup-search input:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+.creditors-lookup-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; max-width: 920px; }
+.creditors-lookup-chip {
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule-2);
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.creditors-lookup-chip:hover { border-color: var(--ink); }
+.creditors-lookup-chip.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.creditors-lookup-chip:focus-visible, .creditors-lookup-more:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.creditors-lookup-clear { border-style: dashed; color: var(--mute); }
+.creditors-lookup-count { margin: 16px 0 8px; color: var(--ink-2); font-size: 15px; }
+.creditors-lookup-count strong { color: var(--ink); font-size: 18px; }
+.creditors-lookup-order { color: var(--mute); font-size: 11px; }
+.creditors-lookup-empty { color: var(--mute); }
+.creditors-lookup-results { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); max-width: 920px; }
+.creditors-lookup-results li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.creditors-lookup-name { display: grid; gap: 2px; min-width: 0; }
+.creditors-lookup-name strong { font-size: 15px; line-height: 1.3; }
+.creditors-lookup-name em { color: var(--mute); font-size: 12px; font-style: normal; }
+.creditors-lookup-amount { display: grid; gap: 4px; justify-items: end; text-align: right; }
+.creditors-lookup-amount .mono { font-size: 13px; color: var(--ink); white-space: nowrap; }
+.creditors-lookup-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold-ink);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.creditors-lookup-stamp { margin: 14px 0 0; max-width: 760px; color: var(--mute); font-size: 11px; line-height: 1.55; }
+
+@media (max-width: 720px) {
+  .creditors-lookup { padding: 24px 16px 22px; }
+  .creditors-lookup-chip { min-height: 44px; }
+  .creditors-lookup-results li { grid-template-columns: 1fr; gap: 4px; }
+  .creditors-lookup-amount { justify-items: start; text-align: left; grid-auto-flow: column; justify-content: start; gap: 8px; align-items: center; }
+}

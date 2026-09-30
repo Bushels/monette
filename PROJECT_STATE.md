@@ -6,7 +6,7 @@
   Raptor -> Monette yard-chain line, 11 internal Hafford change-log entries, internal file paths (docs/Land, docs/logs) in
   all source labels. Kept, labelled reported/unverified: Walter Farms wider purchase, 2026 leaseback, ~$12M yard share.
   The pulled claims stay in `G:\My Drive\Agriculture\Monette\intel_unverified.md` (2026-09-30 note). Live-verified 390/1440.
-  Deployed twice by mistake (identical content). Committed 509a467. Asset versions: data 46, components 42,
+  Deployed twice by mistake (identical content). Committed 509a467; pushed to origin/main 2026-09-30 with ca54f59, 6090a1d, ec813be (Kyle OK). Asset versions: data 46, components 42,
   property-drawer 42, quarter-owners 3.
 - **DEPLOYED 2026-09-30 ~14:25 MDT (Kyle: "deploy the Court File"), `dpl_6kbRVXGMR5epQxJCH2tHGDDxyRQU`: Court File (ideas 2-5).**
   New `#court` tab + `court-file-data.js` (100 filings, 24 key with cited summaries, 17 milestones; D.I. 62/64/65 listed as
@@ -15,6 +15,11 @@
   milestones, timeline). Gate `npm run validate:court` runs first in `npm run build` (18/18 mutations caught).
   Asset versions: data 48, court-file-data 3, components 43, property-drawer 43, view-court 2, view-map 56, app 40, styles 36.
   Live-verified 390/1440. Adding a filing = one record in court-file-data.js (see scratchpad build_court_file_data.py pattern).
+- **DEPLOYED 2026-09-30 ~17:20 MDT (Kyle: "deploy it, commit and push"), `dpl_8FZP5Ye1vy1qN8G6jydBZ59p2zCv`: "Who is on the list?"**
+  creditor search right under the Creditors header (one box, quick filters incl. provinces and "Owed $1M or more", live
+  CAD/USD totals kept separate, top 8 matches, "See all in the full ledger"). First deploy `dpl_MC4RDwtJVVbPMDD9x3V5vNXaSBBE`
+  had a "Cargill" search hint that returns nothing (not on the list); fixed to Nutrien / Co-op / Outlook / S0L. Asset
+  versions: view-creditors 3, styles 37.
 - **Court watch**: U.S. docket D.I. 63 (Cert. of Service, Sept 29), D.I. 64 (Cert. of Counsel, Sept 30), D.I. 65 ("Sell
   Property", Sept 30 2:56 pm ET) all PACER-only, text unread; FTI site unchanged since Sept 21. Kyle: no PACER purchase, wait.
 - Kyle 2026-09-30: leave Wymark's "Carefoot Acres" buyer name as is. Public GitHub history still holds the pulled Hafford

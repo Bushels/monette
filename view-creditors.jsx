@@ -25,6 +25,18 @@ const CITY_TOTALS = Array.isArray(CREDITOR_DATA.summary?.cityTotals)
   : [];
 const CURRENCY_LABELS = { CDN: "CAD", USD: "USD" };
 const DEFAULT_CREDITOR_LIMIT = 25;
+const LOOKUP_PREVIEW_LIMIT = 8;
+const LOOKUP_MIN_BALANCE = 1000000;
+// Quick filters for "Who is on the list?" (provinces/states with the most entries on the listing).
+const LOOKUP_PLACE_CHIPS = [
+  { key: "SK", label: "Saskatchewan" },
+  { key: "AB", label: "Alberta" },
+  { key: "BC", label: "B.C." },
+  { key: "MB", label: "Manitoba" },
+  { key: "ON", label: "Ontario" },
+  { key: "MT", label: "Montana" },
+  { key: "AZ", label: "Arizona" },
+];
 
 // Industry color palette -- earthy, prairie-toned. Each creditor's industry
 // drives the segment fill in The Stack and the treemap, so the colors need
@@ -656,6 +668,7 @@ function CreditorsView() {
   const [industry, setIndustry] = useState("all");
   const [currency, setCurrency] = useState("all");
   const [showAll, setShowAll] = useState(false);
+  const [minBalance, setMinBalance] = useState(0);
   const [sort, setSort] = useState({ key: "balance", dir: -1 });
   const [treemapCurrency, setTreemapCurrency] = useState("CDN");
   const [treemapScope, setTreemapScope] = useState("unsecured");
@@ -693,16 +706,17 @@ function CreditorsView() {
       if (provinceState !== "all" && (row.provinceState || row.province) !== provinceState) return false;
       if (industry !== "all" && row.industry !== industry) return false;
       if (currency !== "all" && row.currency !== currency) return false;
+      if (minBalance && !(Number(row.balance) >= minBalance)) return false;
       if (!needle) return true;
       return creditorSearchText(row).includes(needle);
     });
-  }, [query, claimType, debtor, country, provinceState, industry, currency]);
+  }, [query, claimType, debtor, country, provinceState, industry, currency, minBalance]);
 
   const sortedRows = useMemo(() => (
     [...filteredRows].sort((a, b) => compareCreditorRows(a, b, sort.key, sort.dir))
   ), [filteredRows, sort]);
 
-  const hasActiveSearch = Boolean(query.trim()) || claimType !== "all" || debtor !== "all" || country !== "all" || provinceState !== "all" || industry !== "all" || currency !== "all";
+  const hasActiveSearch = Boolean(query.trim()) || claimType !== "all" || debtor !== "all" || country !== "all" || provinceState !== "all" || industry !== "all" || currency !== "all" || minBalance > 0;
   const visibleRows = showAll ? sortedRows : sortedRows.slice(0, DEFAULT_CREDITOR_LIMIT);
   const isLimited = !showAll && sortedRows.length > visibleRows.length;
   const unsecuredCad = CREDITOR_DATA.summary?.totalsByClaim?.Unsecured?.CDN || 0;
@@ -754,6 +768,26 @@ function CreditorsView() {
   }, [hometownInput, cityOptions]);
 
   const sortValue = `${sort.key}:${sort.dir}`;
+  // Live totals for "Who is on the list?": CAD and USD are summed separately, never converted.
+  const matchTotals = useMemo(() => {
+    let cad = 0;
+    let usd = 0;
+    for (const row of filteredRows) {
+      if (row.currency === "USD") usd += Number(row.balance) || 0;
+      else cad += Number(row.balance) || 0;
+    }
+    return { cad, usd };
+  }, [filteredRows]);
+  const lookupPreview = sortedRows.slice(0, LOOKUP_PREVIEW_LIMIT);
+  const toggleLookupPlace = (key) => {
+    setCountry("all");
+    setProvinceState((prev) => (prev === key ? "all" : key));
+    setShowAll(false);
+  };
+  const toggleLookupClaim = (key) => {
+    setClaimType((prev) => (prev === key ? "all" : key));
+    setShowAll(false);
+  };
 
   const toggleSort = (key) => {
     setSort((prev) => (
@@ -771,6 +805,7 @@ function CreditorsView() {
     setProvinceState("all");
     setIndustry("all");
     setCurrency("all");
+    setMinBalance(0);
     setShowAll(false);
     setSort({ key: "balance", dir: -1 });
     setFocusCity(null);
@@ -790,6 +825,7 @@ function CreditorsView() {
     setCountry("all");
     setProvinceState("all");
     setIndustry("all");
+    setMinBalance(0);
     setShowAll(false);
     setSort({ key: "balance", dir: -1 });
     scrollToTable();
@@ -803,6 +839,7 @@ function CreditorsView() {
     setCountry("all");
     setProvinceState("all");
     setIndustry("all");
+    setMinBalance(0);
     setShowAll(false);
     setSort({ key: "balance", dir: -1 });
     scrollToTable();
@@ -816,6 +853,7 @@ function CreditorsView() {
     setCountry(target.country || "all");
     setProvinceState(target.provinceState || "all");
     setIndustry("all");
+    setMinBalance(0);
     setShowAll(false);
     setSort({ key: "balance", dir: -1 });
     setFocusCity(target);
@@ -832,6 +870,7 @@ function CreditorsView() {
     setDebtor("all");
     setCountry("all");
     setProvinceState("all");
+    setMinBalance(0);
     setShowAll(false);
     setSort({ key: "balance", dir: -1 });
     scrollToTable();
@@ -903,6 +942,87 @@ function CreditorsView() {
             Open the FTI PDF →
           </a>
         </aside>
+      </section>
+
+
+      {/* ---------------- Section 1b: Who is on the list? ---------------- */}
+      <section className="creditors-section creditors-lookup" aria-labelledby="creditors-lookup-title">
+        <header className="creditors-section-head">
+          <div className="mono creditors-eyebrow">Search the creditor listing</div>
+          <h2 id="creditors-lookup-title" className="serif">Who is on the list?</h2>
+          <p>
+            Search by business or person, town, postal code or industry, or tap a filter. Every entry comes from the
+            Monitor's creditor listing.
+          </p>
+        </header>
+        <div className="creditors-lookup-search">
+          <label htmlFor="creditors-lookup-input" className="visually-hidden">Search the creditor listing</label>
+          <input
+            id="creditors-lookup-input"
+            type="search"
+            value={query}
+            onChange={(e) => { setQuery(e.target.value); setShowAll(false); }}
+            placeholder="Try: Nutrien, Co-op, Outlook, S0L..."
+            autoComplete="off"
+          />
+        </div>
+        <div className="creditors-lookup-chips" role="group" aria-label="Quick filters">
+          {[["Secured", "Secured"], ["Unsecured", "Unsecured (trade)"]].map(([key, label]) => (
+            <button key={key} type="button" className={`mono creditors-lookup-chip${claimType === key ? " on" : ""}`} aria-pressed={claimType === key} onClick={() => toggleLookupClaim(key)}>
+              {label}
+            </button>
+          ))}
+          {LOOKUP_PLACE_CHIPS.map((chip) => (
+            <button key={chip.key} type="button" className={`mono creditors-lookup-chip${provinceState === chip.key ? " on" : ""}`} aria-pressed={provinceState === chip.key} onClick={() => toggleLookupPlace(chip.key)}>
+              {chip.label}
+            </button>
+          ))}
+          <button type="button" className={`mono creditors-lookup-chip${minBalance ? " on" : ""}`} aria-pressed={Boolean(minBalance)} onClick={() => { setMinBalance((v) => (v ? 0 : LOOKUP_MIN_BALANCE)); setShowAll(false); }}>
+            Owed $1M or more
+          </button>
+          {hasActiveSearch && (
+            <button type="button" className="mono creditors-lookup-chip creditors-lookup-clear" onClick={resetFilters}>Clear</button>
+          )}
+        </div>
+        <div className="creditors-lookup-count" aria-live="polite">
+          <strong>{fmt(filteredRows.length)}</strong> {filteredRows.length === 1 ? "entry" : "entries"} on the list
+          {filteredRows.length > 0 && (
+            <>
+              {" · "}{matchTotals.cad > 0 ? `${formatCompactCreditorMoney(matchTotals.cad, "CDN")} CAD` : ""}
+              {matchTotals.cad > 0 && matchTotals.usd > 0 ? " + " : ""}
+              {matchTotals.usd > 0 ? formatCompactCreditorMoney(matchTotals.usd, "USD") : ""} listed
+            </>
+          )}
+          {!hasActiveSearch && <span className="mono creditors-lookup-order"> · largest listed balances first</span>}
+        </div>
+        {filteredRows.length === 0 ? (
+          <p className="creditors-lookup-empty">No entry matches. Check the spelling, or try the town or the business's legal name.</p>
+        ) : (
+          <ol className="creditors-lookup-results">
+            {lookupPreview.map((row) => (
+              <li key={row.id}>
+                <span className="creditors-lookup-name">
+                  <strong>{row.creditor}</strong>
+                  <em>{[row.city, row.provinceState || row.province].filter(Boolean).join(", ") || "Location not listed"} · owed by {row.debtorLabel || row.debtor}</em>
+                </span>
+                <span className="creditors-lookup-amount">
+                  <span className="mono">{formatCreditorMoney(row.balance, row.currency)}</span>
+                  <span className={`creditors-claim creditors-claim-${String(row.claimType).toLowerCase()}`}>{row.claimType}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
+        {filteredRows.length > LOOKUP_PREVIEW_LIMIT && (
+          <button type="button" className="mono creditors-lookup-more" onClick={() => { setShowAll(true); scrollToTable(); }}>
+            See all {fmt(filteredRows.length)} in the full ledger ↓
+          </button>
+        )}
+        <p className="mono creditors-lookup-stamp">
+          From the Monitor's creditor listing, posted {sourceDate} (company books as of {preparedDate}). These are listed
+          balances, not proven claims; no claims process had been set up when it was posted. Towns are mailing addresses,
+          not farm locations.
+        </p>
       </section>
 
       {/* ---------------- Section 2: The Stack ---------------- */}
@@ -1295,8 +1415,8 @@ function CreditorsView() {
           <article>
             <strong>Industries</strong>
             <p>
-              Industry is keyword-inferred from creditor names ("Cargill" → Crop inputs, "Kal-Tire"
-              → Equipment & parts, etc.). It's a navigation aid, not a court classification.
+              Industry is keyword-inferred from creditor names ("Nutrien" → Crop inputs, seed &amp;
+              fertilizer; "Pioneer Co-op" → Crop inputs, etc.). It's a navigation aid, not a court classification.
             </p>
           </article>
           <article>
