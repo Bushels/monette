@@ -4231,3 +4231,136 @@ button:focus-visible, input:focus-visible, a:focus-visible, select:focus-visible
   .site-footer-brand { flex: 1 1 100%; font-size: 10.5px; }
   .site-footer-links { flex: 1 1 100%; font-size: 12.5px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   COURT FILE (2026-09-30): #court page, court-strip points, drawer doc list.
+   ───────────────────────────────────────────────────────────────────── */
+a.atlas-toolbar-pill-deadline { text-decoration: none; cursor: pointer; }
+a.atlas-toolbar-pill-deadline:hover, a.atlas-toolbar-pill-deadline:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+
+.home-court-update-points { margin: 0 0 10px; padding-left: 18px; color: var(--ink-2); font-size: 13px; line-height: 1.5; }
+.home-court-update-points li + li { margin-top: 6px; }
+.home-court-update-cite { margin-left: 6px; color: var(--mute); font-size: 10px; white-space: nowrap; }
+.home-court-update-notsaid { margin: 0 0 10px; padding: 7px 9px; border-left: 2px solid var(--rust); background: rgba(154,58,42,0.06); color: var(--ink-2); font-size: 10.5px; line-height: 1.5; }
+.home-court-update-links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.home-court-update-links a { display: inline-flex; align-items: center; min-height: 32px; }
+.home-court-update-all { display: inline-flex; align-items: center; min-height: 44px; margin-top: 4px; color: var(--gold-ink); font-size: 11px; text-underline-offset: 3px; }
+.court-update-mobile-cue { display: inline-block; margin-top: 6px; color: var(--gold-ink); font-size: 10px; letter-spacing: 0.06em; }
+.court-update-mobile .court-update-action-open { display: none; }
+.court-update-mobile[open] .court-update-action-closed { display: none; }
+.court-update-mobile[open] .court-update-action-open { display: inline-block; }
+.court-update-mobile > .home-court-update-all { padding: 0 16px 8px; }
+
+.court-new-tag { display: inline-block; margin-left: 8px; padding: 1px 6px; border: 1px solid var(--gold); color: var(--gold-ink); background: rgba(180,134,56,0.12); font: 500 9px/1.5 "JetBrains Mono", monospace; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+
+/* Drawer: court documents about this property */
+.court-doc-list { display: grid; gap: 0; border-top: 1px solid var(--rule); }
+.court-doc-row { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.court-doc-date { color: var(--mute); font-size: 10px; }
+.court-doc-main { display: grid; gap: 3px; min-width: 0; }
+.court-doc-meta { color: var(--mute); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
+.court-doc-title { color: var(--ink); font-size: 13px; line-height: 1.35; }
+.court-doc-summary { color: var(--ink-2); font-size: 12px; line-height: 1.45; }
+.court-doc-link { display: inline-flex; align-items: center; min-height: 32px; color: var(--gold-ink); font-size: 11px; white-space: nowrap; text-underline-offset: 3px; }
+.court-doc-all { display: inline-flex; align-items: center; min-height: 40px; color: var(--gold-ink); font-size: 11px; text-underline-offset: 3px; }
+
+/* Court File page */
+.cf-page { max-width: 1040px; margin: 0 auto; padding: 36px 48px 64px; color: var(--ink); background: var(--paper); }
+.cf-head { border-bottom: 3px solid var(--ink); padding-bottom: 18px; }
+.cf-kicker { color: var(--rust); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+.cf-head h1 { margin: 6px 0 10px; font-size: 48px; line-height: 1; font-weight: 400; }
+.cf-lede { max-width: 720px; margin: 0 0 12px; color: var(--ink-2); font-size: 15px; line-height: 1.55; }
+.cf-checked { color: var(--ink-2); font-size: 11px; line-height: 1.6; }
+.cf-source-links { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 8px; }
+.cf-source-links a { display: inline-flex; align-items: center; min-height: 40px; color: var(--gold-ink); font-size: 11px; text-underline-offset: 3px; }
+
+.cf-steps { margin-top: 28px; }
+.cf-steps h2 { margin: 0 0 4px; font-size: 28px; font-weight: 400; }
+.cf-steps-note { margin: 0 0 14px; color: var(--mute); font-size: 12px; line-height: 1.5; max-width: 720px; }
+.cf-step-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.cf-step { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; padding: 10px 0 10px 14px; border-bottom: 1px solid var(--rule); border-left: 3px solid transparent; }
+.cf-step-date { color: var(--mute); font-size: 11px; padding-top: 2px; }
+.cf-step-body { display: grid; gap: 3px; min-width: 0; }
+.cf-step-label { font-size: 14px; line-height: 1.4; }
+.cf-step-meta { color: var(--mute); font-size: 10px; line-height: 1.5; }
+.cf-step-meta a { color: var(--gold-ink); text-underline-offset: 3px; }
+.cf-step.is-done { border-left-color: var(--green); }
+.cf-step.is-done .cf-step-label::before { content: "\2713  "; color: var(--green); }
+.cf-step.is-passed { border-left-color: var(--rule-2); }
+.cf-step.is-upcoming { border-left-color: var(--rule-2); }
+.cf-step.is-next { border-left-color: var(--gold); background: rgba(180,134,56,0.10); }
+.cf-step.is-next .cf-step-meta strong { color: var(--gold-ink); }
+
+.cf-list { margin-top: 32px; }
+.cf-scope { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 12px; padding: 10px 12px; background: var(--paper-2); border-left: 3px solid var(--gold); font-size: 14px; }
+.cf-scope a, .cf-scope button { display: inline-flex; align-items: center; min-height: 40px; color: var(--gold-ink); font-size: 11px; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.cf-filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.cf-filter { min-height: 40px; padding: 8px 12px; border: 1px solid var(--rule-2); background: transparent; color: var(--ink-2); font-size: 11px; letter-spacing: 0.04em; cursor: pointer; }
+.cf-filter:hover { border-color: var(--ink); }
+.cf-filter.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.cf-filter:focus-visible, .cf-routine input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.cf-routine { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; margin-left: 6px; color: var(--mute); font-size: 11px; cursor: pointer; }
+.cf-routine input { width: 18px; height: 18px; accent-color: var(--ink); }
+.cf-count { margin: 10px 0 4px; color: var(--mute); font-size: 10px; letter-spacing: 0.06em; }
+.cf-empty { color: var(--mute); }
+.cf-month { margin-top: 18px; }
+.cf-month-label { margin: 0; padding: 6px 0; border-bottom: 1px solid var(--ink); color: var(--ink); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+.cf-row { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.cf-row-date { color: var(--mute); font-size: 11px; padding-top: 3px; }
+.cf-row-body { min-width: 0; }
+.cf-row-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; color: var(--mute); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; }
+.cf-badge { padding: 1px 6px; border: 1px solid var(--rule-2); color: var(--ink-2); }
+.cf-badge-alberta { border-color: var(--rust); color: var(--rust); }
+.cf-badge-monitor { border-color: var(--green); color: var(--green); }
+.cf-badge-us { border-color: #3a4a6e; color: #3a4a6e; }
+.cf-badge-muted { border-style: dashed; color: var(--mute); }
+.cf-row-title { margin: 6px 0 4px; font-size: 20px; line-height: 1.2; font-weight: 400; }
+.cf-row:not(.is-key) .cf-row-title { font-size: 16px; }
+.cf-row-summary { margin: 0 0 6px; color: var(--ink-2); font-size: 14px; line-height: 1.5; max-width: 760px; }
+.cf-points { margin: 4px 0 6px; }
+.cf-points > summary { display: inline-flex; align-items: center; min-height: 36px; color: var(--gold-ink); font-size: 11px; cursor: pointer; }
+.cf-points ul { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 13px; line-height: 1.5; max-width: 760px; }
+.cf-points li + li { margin-top: 5px; }
+.cf-cite { color: var(--mute); font-size: 10px; white-space: nowrap; }
+.cf-notsaid { margin: 4px 0 6px; padding: 6px 9px; border-left: 2px solid var(--rust); background: rgba(154,58,42,0.06); color: var(--ink-2); font-size: 10.5px; line-height: 1.5; max-width: 760px; }
+.cf-row-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 14px; margin-top: 4px; }
+.cf-affects { display: flex; flex-wrap: wrap; gap: 6px; }
+.cf-chip { display: inline-flex; align-items: center; min-height: 32px; padding: 0 9px; border: 1px solid var(--rule-2); color: var(--ink-2); font-size: 10.5px; text-decoration: none; }
+a.cf-chip:hover { border-color: var(--ink); color: var(--ink); }
+.cf-chip-all { border-style: dashed; color: var(--mute); }
+.cf-doc-link { display: inline-flex; align-items: center; min-height: 36px; color: var(--gold-ink); font-size: 11px; text-underline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .cf-page { padding: 22px 16px 48px; }
+  .cf-head h1 { font-size: 34px; }
+  .cf-lede { font-size: 14px; }
+  .cf-step { grid-template-columns: 1fr; gap: 2px; padding-left: 10px; }
+  .cf-row { grid-template-columns: 1fr; gap: 4px; }
+  .cf-row-title { font-size: 18px; }
+  .cf-routine { margin-left: 0; }
+  .court-doc-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .court-doc-date { grid-column: 1 / -1; }
+}
+.cf-steps-earlier > summary { display: inline-flex; align-items: center; min-height: 40px; color: var(--gold-ink); font-size: 11px; cursor: pointer; }
+.cf-steps-earlier[open] { margin-bottom: 8px; }
+.home-court-update-fold > summary { display: grid; gap: 4px; min-height: 44px; padding: 2px 0; cursor: pointer; list-style: none; }
+.home-court-update-fold > summary::-webkit-details-marker { display: none; }
+.home-court-update-fold-title { color: var(--ink); font-size: 21px; line-height: 1.1; }
+.home-court-update-fold-title::after { content: " +"; color: var(--gold-ink); font-family: "JetBrains Mono", monospace; font-size: 13px; }
+.home-court-update-fold[open] .home-court-update-fold-title::after { content: " −"; }
+.home-court-update-fold[open] > summary { margin-bottom: 8px; }
+.home-court-update-card .home-court-update-notsaid { font-size: 10.5px; line-height: 1.5; }
+.court-update-mobile .home-court-update-fold > summary { min-height: 44px; padding: 4px 0; }
+.court-update-mobile .home-court-update-fold > summary > .home-court-update-status { color: var(--gold-ink); }
+.court-update-mobile .home-court-update-fold > summary > .home-court-update-fold-title { color: var(--ink); font-family: "Instrument Serif", Georgia, serif; font-size: 21px; letter-spacing: 0; text-transform: none; }
+.court-update-mobile summary > .court-update-mobile-cue { color: var(--gold-ink); font-size: 10px; }
+@media (max-width: 900px) {
+  .court-doc-link, .home-court-update-links a, .cf-doc-link, .cf-points > summary, .cf-chip, .court-doc-all, .home-court-update-all { min-height: 44px; }
+  .court-doc-link { min-width: 44px; justify-content: flex-end; font-size: 13px; }
+}
+@media (max-width: 720px) {
+  .cf-cite, .home-court-update-cite { white-space: normal; overflow-wrap: anywhere; }
+}
+@media (max-width: 700px) {
+  .property-drawer .pd-court-docs { padding: 16px !important; }
+}

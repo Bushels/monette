@@ -6,18 +6,19 @@
   Raptor -> Monette yard-chain line, 11 internal Hafford change-log entries, internal file paths (docs/Land, docs/logs) in
   all source labels. Kept, labelled reported/unverified: Walter Farms wider purchase, 2026 leaseback, ~$12M yard share.
   The pulled claims stay in `G:\My Drive\Agriculture\Monette\intel_unverified.md` (2026-09-30 note). Live-verified 390/1440.
-  Deployed twice by mistake (identical content). NOT committed yet (awaiting Kyle). Asset versions: data 46, components 42,
+  Deployed twice by mistake (identical content). Committed 509a467. Asset versions: data 46, components 42,
   property-drawer 42, quarter-owners 3.
-- **BUILT, REVIEWED, NOT DEPLOYED: Court File (ideas 2-5)** in worktree `C:\Users\kyle\Agriculture\Monette-courtfile`
-  (branch feat/court-file, uncommitted). New `#court` tab + `court-file-data.js` (100 filings, 24 key with cited summaries,
-  17 milestones), shorter court strip with cited points, per-property court-document list, Hafford "sold under court order"
-  lead block, stale-fact fixes (stay to Nov 13, Chapter 15 petitions Apr 21, 18 Applicants, Kobre & Kim, DIP milestones).
-  Gate `npm run validate:court` (runs first in `npm run build`; 18/18 mutations caught). Awaiting Kyle's deploy OK.
-  To ship: copy the worktree's changed files onto main (worktree = main + this), run all gates, build, deploy.
+- **DEPLOYED 2026-09-30 ~14:25 MDT (Kyle: "deploy the Court File"), `dpl_6kbRVXGMR5epQxJCH2tHGDDxyRQU`: Court File (ideas 2-5).**
+  New `#court` tab + `court-file-data.js` (100 filings, 24 key with cited summaries, 17 milestones; D.I. 62/64/65 listed as
+  filed, text not yet posted), shorter court strip with cited points, per-property court-document list, Hafford "sold under
+  court order" lead block, stale-fact fixes (stay to Nov 13, Chapter 15 petitions Apr 21, 18 Applicants, Kobre & Kim, DIP
+  milestones, timeline). Gate `npm run validate:court` runs first in `npm run build` (18/18 mutations caught).
+  Asset versions: data 48, court-file-data 3, components 43, property-drawer 43, view-court 2, view-map 56, app 40, styles 36.
+  Live-verified 390/1440. Adding a filing = one record in court-file-data.js (see scratchpad build_court_file_data.py pattern).
 - **Court watch**: U.S. docket D.I. 63 (Cert. of Service, Sept 29), D.I. 64 (Cert. of Counsel, Sept 30), D.I. 65 ("Sell
   Property", Sept 30 2:56 pm ET) all PACER-only, text unread; FTI site unchanged since Sept 21. Kyle: no PACER purchase, wait.
-- Open for Kyle: Wymark "Carefoot Acres" buyer name is community intel still public; public GitHub history still holds the
-  pulled Hafford text (rewriting history is his call).
+- Kyle 2026-09-30: leave Wymark's "Carefoot Acres" buyer name as is. Public GitHub history still holds the pulled Hafford
+  text (rewriting history is his call; not asked).
 
 ## Previous task (2026-09-29)
 **DEPLOYED 2026-09-29 ~09:45 MDT (Kyle OK'd: "deploy it now"), `dpl_9ubbMjv4z7aKnFLQYZjB3T91CvDP`, aliased to monette.buperac.com:**

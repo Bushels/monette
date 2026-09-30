@@ -7,7 +7,7 @@
 // paras 15-22 + the Monette Group Structure & Relationships diagram).
 //
 // Layout:
-//   1. Hero with the case caption (17 Applicants + 3 Non-Debtor Stay LPs)
+//   1. Hero with the case caption (18 Applicants + 3 Non-Debtor Stay LPs)
 //   2. Control & Ownership row (Family Trust + Darrel Monette + Deon Vissar)
 //   3. The 5 TopCos as side-by-side cards, each with its subsidiaries listed
 //   4. Land-Holding LPs (the "Non-Debtor Stay Parties") as a separate row
@@ -171,7 +171,7 @@ function GroupStructureView() {
     React.createElement("section", { className: "gs-section" },
       React.createElement("h2", { className: "serif gs-section-title" }, "The five TopCos"),
       React.createElement("div", { className: "gs-section-sub" },
-        "Each parent corporation listed below is a Debtor in the CCAA Proceeding. Together with their subsidiaries they form the 17 Applicants."),
+        "Each parent corporation listed below is a Debtor in the CCAA Proceeding. Together with their subsidiaries they form the 18 Applicants."),
       React.createElement("div", { className: "gs-topco-grid" },
         topCos.map((t) => React.createElement(TopCoCard, { key: t.id, topco: t }))
       )
@@ -263,9 +263,10 @@ function GroupStructureView() {
       React.createElement("h2", { className: "serif gs-section-title" }, "Court file"),
       React.createElement("div", { className: "gs-court-grid" },
         React.createElement("div", null, React.createElement("strong", null, "CCAA: "), COURT_FACTS.canadianProceedings.court + " · file " + COURT_FACTS.canadianProceedings.caseFileNumber),
-        React.createElement("div", null, React.createElement("strong", null, "Judge: "), COURT_FACTS.canadianProceedings.judge),
-        React.createElement("div", null, React.createElement("strong", null, "Filed: "), COURT_FACTS.canadianProceedings.filingDate),
-        COURT_FACTS.usProceedings ? React.createElement("div", null, React.createElement("strong", null, "Chapter 15: "), COURT_FACTS.usProceedings.court + " · case " + COURT_FACTS.usProceedings.caseNumber + " · filed " + COURT_FACTS.usProceedings.petitionFilingDate) : null,
+        React.createElement("div", null, React.createElement("strong", null, "Judges: "), COURT_FACTS.canadianProceedings.judge),
+        React.createElement("div", null, React.createElement("strong", null, "Initial Order: "), COURT_FACTS.canadianProceedings.filingDate),
+        COURT_FACTS.canadianProceedings.stayExpires ? React.createElement("div", null, React.createElement("strong", null, "Stay runs to: "), COURT_FACTS.canadianProceedings.stayExpires + (COURT_FACTS.canadianProceedings.stayExpiresSource ? " · " + COURT_FACTS.canadianProceedings.stayExpiresSource : "")) : null,
+        COURT_FACTS.usProceedings ? React.createElement("div", null, React.createElement("strong", null, "Chapter 15: "), COURT_FACTS.usProceedings.court + " · case " + COURT_FACTS.usProceedings.caseNumber + " · petitions filed " + COURT_FACTS.usProceedings.petitionFilingDate) : null,
         COURT_FACTS.canadianProceedings.caseWebsite ? React.createElement("div", null,
           React.createElement("strong", null, "Case website: "),
           React.createElement("a", { href: COURT_FACTS.canadianProceedings.caseWebsite, target: "_blank", rel: "noopener noreferrer" }, COURT_FACTS.canadianProceedings.caseWebsite)

@@ -614,6 +614,85 @@ function SiteFooter() {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Court File helpers. One record per filing lives in court-file-data.js
+// (window.MONETTE_DATA.courtFile.filings); the Court File page, the court
+// strip links and each property drawer all read from that one list, so a new
+// document is one new record.
+// ─────────────────────────────────────────────────────────────────────────────
+const COURT_LABELS = { alberta: "Alberta court", monitor: "Monitor", us: "U.S. court" };
+const FILING_KIND_LABELS = {
+  order: "Order", report: "Monitor's report", certificate: "Certificate", application: "Application",
+  affidavit: "Affidavit", motion: "Motion", notice: "Notice", sisp: "Sale process", service: "Service",
+  admin: "Docket admin", other: "Filing",
+};
+const ROUTINE_FILING_KINDS = new Set(["service", "admin"]);
+const NEW_FILING_DAYS = 7;
+
+function safeHttpHref(u) {
+  return /^https?:\/\//i.test(String(u || "")) ? u : null;
+}
+
+function courtFileFilings() {
+  const cf = D.courtFile;
+  const rows = cf && Array.isArray(cf.filings) ? cf.filings.slice() : [];
+  // Newest first; same-day entries keep docket order (higher D.I. first).
+  return rows.sort((a, b) => (String(b.date).localeCompare(String(a.date))) || ((b.sortKey || 0) - (a.sortKey || 0)));
+}
+
+// Filings about one property's land (never the process-wide "all" rows).
+function courtFilingsFor(propertyId) {
+  if (!propertyId) return [];
+  return courtFileFilings().filter((f) => Array.isArray(f.affects) && f.affects.includes(propertyId));
+}
+
+// "New" = added to the Ledger in the last 7 days. It is the date WE added the
+// record, not the court filing date, and it is labelled that way.
+function isNewFiling(filing) {
+  const days = daysUntilIso(filing && filing.addedAt);
+  return days != null && days <= 0 && days > -NEW_FILING_DAYS;
+}
+
+function propertyNameFor(id) {
+  const prop = (D.properties || []).find((p) => p.id === id);
+  return prop ? prop.name : id;
+}
+
+// Compact document list used inside property drawers.
+function CourtDocList({ propertyId, limit = 8 }) {
+  const filings = courtFilingsFor(propertyId);
+  if (filings.length === 0) return null;
+  const shown = filings.slice(0, limit);
+  return (
+    <div className="court-doc-list">
+      {shown.map((f) => {
+        const href = safeHttpHref(f.url);
+        return (
+          <div key={f.id} className="court-doc-row">
+            <span className="mono court-doc-date">{fmtIsoDate(f.date)}</span>
+            <span className="court-doc-main">
+              <span className="mono court-doc-meta">
+                {COURT_LABELS[f.court] || f.court} · {FILING_KIND_LABELS[f.kind] || "Filing"}{f.docRef ? ` · ${f.docRef}` : ""}
+                {isNewFiling(f) && <span className="court-new-tag">New · added {fmtIsoDate(f.addedAt, false)}</span>}
+              </span>
+              <span className="court-doc-title">{f.title}</span>
+              {f.summary && f.textAvailable !== false && <span className="court-doc-summary">{f.summary}</span>}
+            </span>
+            {href && (
+              <a className="mono court-doc-link" href={href} target="_blank" rel="noopener noreferrer">
+                {f.textAvailable === false ? "Docket entry →" : "Open →"}
+              </a>
+            )}
+          </div>
+        );
+      })}
+      <a className="mono court-doc-all" href={`#court/${propertyId}`}>
+        {filings.length > shown.length ? `All ${filings.length} filings about this property →` : "See these in the Court File →"}
+      </a>
+    </div>
+  );
+}
+
 function LatestCourtUpdatePanel({ compact = false }) {
   const update = D.latestCourtUpdate || null;
   if (!update || !Array.isArray(update.items) || update.items.length === 0) return null;
@@ -621,16 +700,59 @@ function LatestCourtUpdatePanel({ compact = false }) {
   const additionalUpdateCount = Math.max(0, update.items.length - 1);
   const updateDateLabel = new Date(`${update.asOf}T12:00:00`).toLocaleDateString("en-CA", { month: "short", day: "numeric" });
   const summaryTitle = update.summaryTitle || `${primaryUpdate.title} · ${primaryUpdate.status}`;
+  const hasCourtFile = courtFileFilings().length > 0;
+  const renderItemBody = (item) => (
+    <>
+      {Array.isArray(item.points) && item.points.length > 0 ? (
+        <ul className="home-court-update-points">
+          {item.points.map((point) => (
+            <li key={point.text}>
+              {point.text}
+              {point.cite && <span className="mono home-court-update-cite">{point.cite}</span>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>{item.text}</p>
+      )}
+      {item.notSaid && <p className="mono home-court-update-notsaid">{item.notSaid}</p>}
+      <div className="home-court-update-links">
+        {item.propertyId && <a href={`#map/${item.propertyId}`}>Open {propertyNameFor(item.propertyId)} →</a>}
+        {safeHttpHref(item.sourceUrl) && (
+          <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+            {item.sourceLabel} →
+          </a>
+        )}
+      </div>
+    </>
+  );
   const renderItems = () => update.items.map((item) => (
     <article key={item.title} className="home-court-update-card">
       <div className="mono home-court-update-status">{item.status}</div>
       <h3 className="serif">{item.title}</h3>
-      <p>{item.text}</p>
-      <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-        {item.sourceLabel} →
-      </a>
+      {renderItemBody(item)}
     </article>
   ));
+  // Phones: the lead update opens in full; the others fold behind their titles
+  // so the opened strip stays about one screen tall.
+  const renderItemsMobile = () => update.items.map((item, i) => (i === 0 ? (
+    <article key={item.title} className="home-court-update-card">
+      <div className="mono home-court-update-status">{item.status}</div>
+      <h3 className="serif">{item.title}</h3>
+      {renderItemBody(item)}
+    </article>
+  ) : (
+    <details key={item.title} className="home-court-update-card home-court-update-fold">
+      <summary>
+        <span className="mono home-court-update-status">{item.status}</span>
+        <span className="serif home-court-update-fold-title">{item.title}</span>
+      </summary>
+      {renderItemBody(item)}
+    </details>
+  )));
+  const allFilingsLink = hasCourtFile
+    ? <a className="mono home-court-update-all" href="#court">All court filings, newest first →</a>
+    : null;
   const panel = (
     <section className={`home-court-update${compact ? " is-compact court-update-desktop" : ""}`} aria-labelledby={compact ? "atlas-court-update-title" : "home-court-update-title"}>
       <header className="home-court-update-head">
@@ -643,6 +765,7 @@ function LatestCourtUpdatePanel({ compact = false }) {
       <div className="home-court-update-grid">
         {renderItems()}
       </div>
+      {allFilingsLink}
     </section>
   );
   if (!compact) return panel;
@@ -658,14 +781,18 @@ function LatestCourtUpdatePanel({ compact = false }) {
         </summary>
         <div className="court-update-desktop-body">
           <div className="home-court-update-grid">{renderItems()}</div>
+          {allFilingsLink}
         </div>
       </details>
       <details className="court-update-mobile">
         <summary>
           <span className="mono">Latest court-file update · {updateDateLabel}</span>
           <strong className="serif">{summaryTitle} <em>+{additionalUpdateCount} updates</em></strong>
+          <span className="mono court-update-mobile-cue court-update-action-closed">Tap to read ↓</span>
+          <span className="mono court-update-mobile-cue court-update-action-open">Close ↑</span>
         </summary>
-        <div className="home-court-update-grid">{renderItems()}</div>
+        <div className="home-court-update-grid">{renderItemsMobile()}</div>
+        {allFilingsLink}
       </details>
     </>
   );
@@ -804,4 +931,13 @@ Object.assign(window, {
   SiteFooter,
   LatestCourtUpdatePanel,
   HomeHero,
+  COURT_LABELS,
+  FILING_KIND_LABELS,
+  ROUTINE_FILING_KINDS,
+  safeHttpHref,
+  courtFileFilings,
+  courtFilingsFor,
+  isNewFiling,
+  propertyNameFor,
+  CourtDocList,
 });

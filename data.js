@@ -87,18 +87,17 @@ window.MONETTE_DATA = {
   },
 
   // Corporate tree per Helkaa Declaration ¶15-22 + Group Structure & Relationships diagram
-  // (G:\My Drive\Agriculture\Monette\Monette Corporate Structure.png).
+  // (Monette Group Structure & Relationships diagram, filed with the Chapter 15 papers).
   // Five "TopCos" with Darrel Monette as sole shareholder of all except Monette Farms Ltd.,
   // which is split between Darrel (100% preferred) and Monette Farms Family Trust (100% common).
   // Three Land-Holding LPs hold beneficial title to substantially all Canadian Real Property —
   // they are Non-Debtor Stay Parties (not in CCAA but stay extends over them).
   corporateTree: {
     source: "Helkaa Decl. ¶15-22 + 'Monette Group Structure & Relationships' diagram",
-    asOf: "2026-04-22 (Chapter 15 petition date)",
+    asOf: "2026-04-22 (Helkaa Declaration, D.I. 6)",
     control: [
       { name:"Monette Farms Family Trust", role:"100% common shares of Monette Farms Ltd." },
       { name:"Darrel Monette", role:"Resident of Airdrie, AB. Sole shareholder of Monette Land, DMO Holdings, Goat's Peak Winery, Monette Farms BC. 100% preferred shares of Monette Farms Ltd. CEO/director of virtually all Canadian Debtors. Sole director/officer of all USA Entities." },
-      { name:"Dean Visser", role:"Named in Group Structure diagram alongside Darrel Monette and Family Trust at the top of the corporate tree. Role pending verification." },
     ],
     topCos: [
       { id:"monette-farms-ltd", name:"Monette Farms Ltd.", jurisdiction:"SK Corp", fein:"0221",
@@ -163,7 +162,7 @@ window.MONETTE_DATA = {
       restructuringCounsel:"Cassels Brock & Blackwell LLP",
       syndicateAdvisor:"PricewaterhouseCoopers Consulting Canada Inc.",
     },
-    note:"All TopCos and their subsidiaries are 'Debtors' in the CCAA proceeding. The three Land-Holding LPs are 'Non-Debtor Stay Parties' — they hold beneficial title to substantially all Canadian real property (the SFA's primary collateral) but are not themselves applicants in the CCAA. The provisional relief order extends the automatic stay over them.",
+    note:"All TopCos and their subsidiaries are 'Debtors' in the CCAA proceeding. The three Land-Holding LPs are 'Non-Debtor Stay Parties' — they hold beneficial title to substantially all Canadian real property (the SFA's primary collateral) but are not themselves applicants in the CCAA. The CCAA Initial Order (para 3) gives them the same benefits and protections as the Applicants, including the stay.",
   },
 
   // Capital structure per Helkaa Declaration ¶24-50.
@@ -171,7 +170,7 @@ window.MONETTE_DATA = {
   // Senior Facilities Agreement = $830M of that.
   debtStack: {
     source: "Helkaa Declaration ¶24-50 + 'Monette Group Structure & Relationships' diagram financing panel",
-    petitionDate: "2026-04-22 (Chapter 15) / 2026-04-17 or 2026-04-21 (CCAA — pending verification)",
+    petitionDate: "CCAA Initial Order 2026-04-21 (application filed 2026-04-20) · Chapter 15 petitions filed 2026-04-21",
     totalLiabilitiesApproxCAD: 1080000000,
     facilities: [
       { id:"sfa", label:"Senior Facilities Agreement (SFA)",
@@ -271,11 +270,11 @@ window.MONETTE_DATA = {
       maturityOutsideDate:"earliest of CCAA dismissal/conversion, US recognition expiry, DIP Outside Date, plan effective date, acceleration. Effective Date deadline: 2026-04-24.",
       milestones:[
         {date:"2026-04-21", label:"CCAA Initial Order — DIP Lenders' Charge $95M granted from day one (¶40), $40M initial advance authorized (¶34)"},
-        {date:"2026-04-24", label:"US Provisional Recognition Order required (Schedule E §7 default trigger if missed)"},
-        {date:"2026-04-28", label:"ARIO application required to be filed (Schedule E §5 default trigger)"},
-        {date:"2026-05-01", label:"Initial CCAA stay expires (extension expected via ARIO/Comeback)"},
-        {date:"2026-05-06", label:"ARIO required to be granted, increasing DIP Charge from $42M baseline to $95M (Schedule E §6)"},
-        {date:"~2026-06-20", label:"SISP Order required within 45 calendar days of ARIO grant"},
+        {date:"2026-04-24", label:"U.S. provisional relief granted (D.I. 33); the DIP term sheet required it by this date (Schedule E §7)"},
+        {date:"2026-04-28", label:"ARIO application filed, as the DIP term sheet required (Schedule E §5)"},
+        {date:"2026-05-01", label:"ARIO granted (Justice M.H. Bourque): stay extended to June 19 (ARIO para 16)"},
+        {date:"2026-05-06", label:"DIP term sheet deadline for the ARIO (Schedule E §6); met on May 1"},
+        {date:"2026-06-12", label:"SISP Order granted (Justice R.W. Armstrong; filed June 15). The DIP term sheet required it within 45 days of the ARIO (Schedule J item 1)"},
         {date:"2026-10-31", label:"Binding PSAs for owned land sales required, aggregate gross cash proceeds at least CDN$[REDACTED] (DIP Schedule J #2)"},
         {date:"2026-12-01", label:"Net land-sale proceeds applied to permanently reduce Existing Senior Secured Obligations"},
         {date:"2027-01-15", label:"SISP Transaction Approval Order applications due (recapitalize/refinance + senior repayment)"},
@@ -355,7 +354,7 @@ window.MONETTE_DATA = {
   courtFacts: {
     canadianProceedings: {
       court:"Court of King's Bench of Alberta, Calgary judicial centre",
-      judge:"Hon. Justice C.M. Jones",
+      judge:"Hon. Justice C.M. Jones (Initial Order, Apr 21); later orders by Justices M.H. Bourque (May 1), R.W. Armstrong (June 12) and C.J. Feasby (Aug 19)",
       caseFileNumber:"2601-07148",
       filingDate:"2026-04-21",
       filingDateNote:"Per CCAA Initial Order cover page, pronounced and filed 2026-04-21. Effective 00:01 MT 2026-04-21. (Helkaa body's 'April 17, 2026' refers to DIP Term Sheet execution date and Darrel Monette affidavit swearing date — NOT the CCAA commencement date.)",
@@ -363,8 +362,10 @@ window.MONETTE_DATA = {
       monitorContact:"Deryck Helkaa, Senior Managing Director, Calgary office (520 5th Ave SW, Suite 1610, Calgary, AB T2P 3R7)",
       caseWebsite:"http://cfcanada.fticonsulting.com/MonetteFarms",
       stayExpiresInitial:"2026-05-01",
-      comebackHearingARIO:"~2026-05-06 deadline (Amended and Restated Initial Order)",
-      applicantCount:17,
+      stayExpires:"2026-11-13",
+      stayExpiresSource:"Order re Stay Extension para 3 (Justice R.W. Armstrong, June 12, 2026; filed June 15)",
+      comebackHearingARIO:"Granted 2026-05-01 (Justice M.H. Bourque); stay extended to 2026-06-19 (ARIO para 16)",
+      applicantCount:18,
       nonApplicantStayParties:["Monette Farms Land I LP","Monette Farms Land II LP","Monette Farms BC LP"],
       counsel:"Cassels Brock & Blackwell LLP — Jeffrey Oliver, Danielle Maréchal, Matteo Clarkson-Maciel (Calgary)",
       syndicateCounsel:"McMillan LLP",
@@ -374,11 +375,12 @@ window.MONETTE_DATA = {
       court:"U.S. Bankruptcy Court for the District of Delaware",
       caseNumber:"26-10547-LSS",
       chapter:15,
-      petitionFilingDate:"2026-04-22",
+      petitionFilingDate:"2026-04-21",
       foreignRepresentative:"FTI Consulting Canada Inc. (acting through Deryck Helkaa)",
-      counselUS:"Womble Bond Dickinson (US) LLP",
-      counselUSCanadianLead:"McMillan LLP",
-      provisionalReliefDeadline:"2026-04-24"
+      counselUS:"Kobre & Kim LLP (counsel to the Foreign Representative; D.I. 54 signature block)",
+      lendersUSCounsel:"Womble Bond Dickinson (US) LLP (U.S. counsel to the DIP Agent and DIP Lenders)",
+      provisionalReliefGranted:"2026-04-24 (D.I. 33)",
+      recognitionOrder:"2026-05-13 (D.I. 47, Judge Laurie Selber Silverstein): Canadian case recognized as the foreign main proceeding"
     }
   },
 
@@ -427,7 +429,7 @@ window.MONETTE_DATA = {
         mflTitledRecords:113,
         flaggedRecords:0,
         buckets:{keep:110,flag:0,add:3,reassignIn:0,reassignOut:0},
-        significance:"Largest title-row collapse in the dataset: 138 CSV title rows for RM Enfield 194 + RM Morse 165 collapse to 110 unique map features (28 duplicate-titled with extension variants). RM Morse 165's 64 parcels fold into calderbank per Codex round-1 endorsement (the townships are contiguous with RM Enfield 194 — same operating block). Plus 3 net-new ADDs with DLS quarter/LSD polygons computed in Phase 4 (1 quarter remains as a planned-parcel skip — BLK-A-PLAN-101641991 — pending cadastral data).",
+        significance:"Largest title-row collapse in the dataset: 138 CSV title rows for RM Enfield 194 + RM Morse 165 collapse to 110 unique map features (28 duplicate-titled with extension variants). RM Morse 165's 64 parcels fold into calderbank (the townships are contiguous with RM Enfield 194 — same operating block). Plus 3 net-new ADDs with DLS quarter/LSD polygons computed in Phase 4 (1 quarter remains as a planned-parcel skip — BLK-A-PLAN-101641991 — pending cadastral data).",
       },
       soils:[["K",7036],["J",5857],["L",1973],["H",995],["M",959],["G",308]],
       crops2025:[["Pasture",11432],["Barley",3478],["Canola",2218]],
@@ -487,6 +489,13 @@ window.MONETTE_DATA = {
       // Quarter keys use the map's loc format (see seedQuarter in components.jsx).
       courtConfirmedSoldQuarters:["SW-26-44-11-W3","SE-16-44-12-W3","NW-17-44-12-W3","SW-17-44-12-W3","SW-20-44-12-W3","NE-29-44-12-W3","SE-29-44-12-W3","SE-32-44-12-W3","SW-32-44-12-W3","NE-3-45-13-W3","SE-3-45-13-W3","NW-28-44-14-W3","NE-29-44-14-W3","NW-29-44-14-W3","SW-29-44-14-W3","SE-32-44-14-W3"],
       courtConfirmedSoldNote:"Court-approved: 16 quarter-sections (18 titles; NW 17 and SW 17-44-12-W3 are each two titles) plus Lot 20, a Hafford town lot with a mobile home, per paragraph 7(a)(i) and Schedule B of the May 1, 2026 Sale Approval and Vesting Order. Buyer: G and K Walter Farms and Harvesting Ltd. and/or its nominee. Closed May 13, 2026; the Monitor received $28.9M (Second Report para 25). The other 142 mapped quarters are not named in the order; they show dashed as reported sold / rented back (community intel).",
+      titledLabel:"ac in the tender-package title roll-up (not all Monette-owned)", parcelsLabel:"mapped quarters",
+      // Lead block in the drawer: the one Monette sale that has closed on a Monitor's certificate.
+      courtSale:{
+        label:"Sold under court order · Monitor's certificate May 13, 2026",
+        headline:"19 titles (16 quarter-sections plus Lot 20) sold to G and K Walter Farms and Harvesting Ltd. and/or its nominee",
+        source:"Hafford Sale Approval and Vesting Order (May 1, 2026; para 7(a)(i), Schedule B); Hafford Monitor's Certificate (delivered May 13, 2026)",
+      },
       affidavitOwnedAcres:2554,
       affidavitOwnedAcresSource:"Darrel Monette Affidavit Exhibit D ¶89-90 — sworn 2026-04-17. Owned acres only (Monette Farms Ltd.); excludes leased ground.",
       affidavitOwnedAcresNote:"Court-grounded ownership figure: 2,554 ac. The 46,466 ac figure on the public site is from Monette's Land Tender Information Package and represents the Hafford OPERATING FOOTPRINT (owned + leased + custom-farmed land). The CCAA Phase 2 sale of 2,553 ac for $29M ($11,358/ac) liquidated essentially the entire Monette-owned position at Hafford. The Walter Farms 'bought ALL 46,466 ac' rumor is NOT supported by court documents — court only confirms the 2,553-ac owned-portion sale. Whether Walter Farms also acquired the leased acreage requires landlord-by-landlord verification. Public site framing is layered: tender footprint vs. owned footprint vs. court-confirmed transaction.",
@@ -534,7 +543,7 @@ window.MONETTE_DATA = {
       communityAsk:{
         label:"Hafford rented-quarter location request",
         acres:"22,013 ac unmapped",
-        body:"Monette's official Land Tender Information Package (offer deadline 2026-03-02) discloses 46,466 farmed acres at Hafford: 24,453 ac owned (the 158 quarters we map) plus 22,013 ac rented. We do not have quarter-level locations for the 22,013 rented acres. We are looking for: (a) quarter/legal descriptions for those acres, (b) the landlord/lessor name(s) on those quarters, (c) any 2026 field-activity observations.",
+        body:"Monette's official Land Tender Information Package (offer deadline 2026-03-02) discloses 46,466 farmed acres at Hafford: 24,453 ac across the 158 quarters we map (Monette Farms Ltd. held 2,554 ac of them; most of the rest is titled to Raptor Enterprises Inc.) plus 22,013 ac rented. We do not have quarter-level locations for the 22,013 rented acres. We are looking for: (a) quarter/legal descriptions for those acres, (b) the landlord/lessor name(s) on those quarters, (c) any 2026 field-activity observations.",
         prefill:"Hafford rented-quarter location update — quarter/legal descriptions for any of the 22,013 rented ac, landlord/lessor name(s), lease term, 2026 field activity, source, and confidence level: "
       },
       purchaserRumor:{
@@ -820,7 +829,7 @@ window.MONETTE_DATA = {
           excludedFromDeal:[
             "Feedlot / winter feeding"
           ],
-          excludedFromDealNote:"Per community intel 2026-04-26 (follow-up): the feedlot at the Waldeck Lot is NOT part of the Carefoot Acres purchase. Post-deal feedlot ownership / operator unknown — may be retained by Monette, sold separately, or carved out for another operator. Note: NW-17-16-12-W3 carries TWO title certificates per Wymark.xlsx (92SC14054 #78 = 107.26 ac main parcel + 92SC14054 #52 = 13.69 ac sub-parcel with 'included' assessment). The 13.69 ac sub-parcel is a strong candidate for the feedlot carve-out footprint, since sub-parcels with separable titles are commonly how working livestock yards are kept out of cropland sales.",
+          excludedFromDealNote:"Per community intel 2026-04-26 (follow-up): the feedlot at the Waldeck Lot is NOT part of the Carefoot Acres purchase. Post-deal feedlot ownership / operator unknown — may be retained by Monette, sold separately, or carved out for another operator. Note: NW-17-16-12-W3 carries TWO title certificates per the Wymark title roll-up (92SC14054 #78 = 107.26 ac main parcel + 92SC14054 #52 = 13.69 ac sub-parcel with 'included' assessment). The 13.69 ac sub-parcel is a strong candidate for the feedlot carve-out footprint, since sub-parcels with separable titles are commonly how working livestock yards are kept out of cropland sales.",
           note:"Waldeck Lot improvements included in the Carefoot deal: grain storage (41,000 bu), fertilizer storage (270 t), 2 heated shops, office space. NOT included: the feedlot/winter feeding facility."
         },
         affidavitMismatch:{
@@ -848,7 +857,7 @@ window.MONETTE_DATA = {
       },
       changeLog:[
         {at:"2026-04-27T04:33:00-06:00", type:"intel", title:"Lac Pelletier feedlot proposal — Monette + MLT Aikins vs. RM council", detail:"Anonymous Farmer community submission 2026-04-27 04:33 reports Monette has hired MLT Aikins to push a 12-month year-round 2,000-head cattle feedlot through RM of Lac Pelletier No. 107 council. Proposed location: SE-18-12-14-W3 (anchor) on existing Monette Farms Ltd. Section 18 holdings (~30 min south of Swift Current). Adjacent to Lac Pelletier lake + regional park; cabin owners + recreational users opposed. Petitions circulated, community demanding council refuse the application. Background: tip says Darrell Monette purchased the land in 2022, but ISC title certificates (98SC10138 / 98SC10138A / 98SC10139) predate that — corporate-vs-personal ownership chain needs verification. POSSIBLE CONNECTION TO CAREFOOT DEAL: if Monette is consolidating cattle ops here, that may explain why the Waldeck Lot feedlot was carved out of the Carefoot purchase. All 4 quarters of Section 18 now display a feedlot-proposal popup on the Wymark map."},
-        {at:"2026-04-26T18:00:00-06:00", type:"intel", title:"Feedlot at Waldeck Lot is NOT part of Carefoot deal", detail:"Community intel 2026-04-26 (further follow-up): the feedlot / winter feeding facility on the Waldeck Lot (NW-17-16-12-W3) is NOT included in the Carefoot Acres purchase. Other infrastructure on that quarter (41,000 bu grain, 270 t fertilizer, 2 heated shops, office) IS in the deal. Post-deal feedlot ownership/operator unknown. Note: NW-17 carries two title certificates (107.26 ac main + 13.69 ac sub-parcel marked 'included' in assessment per Wymark.xlsx) — the 13.69 ac sub-parcel is a strong candidate for the carved-out feedlot footprint. Map popup for NW-17 now shows feedlot under 'NOT included in Carefoot deal' with a strikethrough."},
+        {at:"2026-04-26T18:00:00-06:00", type:"intel", title:"Feedlot at Waldeck Lot is NOT part of Carefoot deal", detail:"Community intel 2026-04-26 (further follow-up): the feedlot / winter feeding facility on the Waldeck Lot (NW-17-16-12-W3) is NOT included in the Carefoot Acres purchase. Other infrastructure on that quarter (41,000 bu grain, 270 t fertilizer, 2 heated shops, office) IS in the deal. Post-deal feedlot ownership/operator unknown. Note: NW-17 carries two title certificates (107.26 ac main + 13.69 ac sub-parcel marked 'included' in assessment per the Wymark title roll-up) — the 13.69 ac sub-parcel is a strong candidate for the carved-out feedlot footprint. Map popup for NW-17 now shows feedlot under 'NOT included in Carefoot deal' with a strikethrough."},
         {at:"2026-04-26T17:00:00-06:00", type:"intel", title:"Carefoot Waldeck quarters identified — 5 quarters / 746.70 ac (does NOT match affidavit's 485 ac)", detail:"Community intel 2026-04-26 (follow-up): the 3 Waldeck pieces rumored sold to Carefoot Acres are now identified as NW-3-16-12-W3 (1 quarter, 162.46 ac); S½ Sec 15 — SE-15 + SW-15 (2 quarters, 322.35 ac); N½ Sec 17 — NE-17 + NW-17 (2 quarters, 261.89 ac). All in RM of Excelsior No. 166. Total: 5 quarters / 746.70 ac. The 5 quarters now display as 'sold' (provisional) on the Wymark map via the new property-level `rumoredSoldQuarters` mechanism. ACREAGE DISCREPANCY: 746.70 ac > affidavit's 485 ac (gap 261.70 ac, 54%). Either the Carefoot deal exceeds the Phase 2 line item, the Carefoot deal is separate from the affidavit's $1.78M figure, or only a subset of the 5 quarters is actually involved. Buyer attribution dropped from sold-wymark-waldeck row pending reconciliation."},
         {at:"2026-04-26T15:30:00-06:00", type:"data-fix", title:"Wymark split clarified from Acre Sheet baseline", detail:"Acre Sheet baseline remains 21,951 farmed ac. Later Wymark sale/title package shows 14,943.03 ac titled to Monette entities. Phase 2 sale subtracts 485 ac from the Monette-owned bucket, leaving 14,458.03 ac current working owned; the remaining ~7,008 ac is treated as rented/unmapped until legal locations are identified."},
         {at:"2026-04-26T00:00:00-06:00", type:"intel", title:"Carefoot Acres rumored to be the Waldeck buyer (3 pieces)", detail:"Community intel 2026-04-26: 3 pieces near Waldeck reportedly sold to local farm Carefoot Acres. Court affidavit ¶158 documents the Phase 2 result as 485 ac for $1.78M ($3,670/ac) at Wymark (Waldeck) — bundled as a single line item. The buyer name (Carefoot Acres) is community intel only; the per-piece breakdown is not in the affidavit."},
@@ -1031,7 +1040,7 @@ window.MONETTE_DATA = {
       residualEquipmentValueCAD:3000000,
       residualEquipmentValueSource:"Helkaa Declaration ¶21",
       notes:"Court-file Goat's Peak Winery real property. The winery is defunct but still carries real property, barrels, equipment, and vineyard assets. Helkaa Declaration ¶21 sworn that ~$3M of property, wine barrels, and other equipment remains in Goat's Peak Winery's possession at the Cache Creek site." },
-    { id:"aguila", name:"Aguila Farm", province:"AZ", region:"Aguila, AZ", lat:33.9428, lng:-113.1741,
+    { id:"aguila", name:"Aguila Farm", province:"AZ", region:"Aguila, AZ", lat:33.9428, lng:-113.1741, titledLabel:"ac per court filings (≈930 owned + 2,204 leased)",
       hideMapMarker:true,
       rms:["Aguila area"],
       parcels:23, titled:3134, cultivated:0, waste:0, assessment:0, owned:930, rented:2213,
@@ -1349,13 +1358,13 @@ window.MONETTE_DATA = {
     { date:"Apr 16, 2026", label:"FCC enforcement notice",                detail:"FCC issued demand + notice to enforce security under FDMA" },
     { date:"Apr 17, 2026", label:"Darrel Monette affidavit sworn + DIP Term Sheet executed", detail:"Affidavit sworn, DIP Term Sheet dated. NOT the CCAA commencement date." },
     { date:"Apr 20, 2026", label:"Affidavit + Originating Application filed", detail:"Cassels Brock & Blackwell LLP, 2:24 PM filing stamp" },
-    { date:"Apr 21, 2026", label:"CCAA Initial Order — Day 0",            detail:"Pronounced 00:01 MT by Hon. Justice C.M. Jones, Court of King's Bench of Alberta, Calgary. Court file 2601-07148. 17 Applicants + 3 Non-Applicant Stay Parties (Land I LP / Land II LP / BC LP). $1.5M Administration Charge / $95M DIP Lenders' Charge / $1.5M Directors' Charge." },
-    { date:"Apr 22, 2026", label:"Chapter 15 petition filed (Delaware)",  detail:"Case 26-10547-LSS, U.S. Bankruptcy Court, District of Delaware" },
-    { date:"Apr 24, 2026", label:"US Provisional Recognition deadline",   detail:"DIP Term Sheet §10 default trigger if not granted by this date" },
-    { date:"Apr 28, 2026", label:"ARIO application deadline",             detail:"DIP Term Sheet Schedule E §5 default trigger if missed" },
-    { date:"May 01, 2026", label:"Initial CCAA stay expires",             detail:"Comeback / ARIO hearing required by this date" },
-    { date:"May 06, 2026", label:"ARIO must be granted",                  detail:"DIP Charge uplift to $95M (already granted, but ARIO is the formal comeback order)" },
-    { date:"~Jun 20, 2026", label:"SISP Order required (45d post-ARIO)",  detail:"Court approval of Sale and Investment Solicitation Process" },
+    { date:"Apr 21, 2026", label:"CCAA Initial Order — Day 0",            detail:"Pronounced 00:01 MT by Hon. Justice C.M. Jones, Court of King's Bench of Alberta, Calgary. Court file 2601-07148. 18 Applicants + 3 Non-Applicant Stay Parties (Land I LP / Land II LP / BC LP). $1.5M Administration Charge / $95M DIP Lenders' Charge / $1.5M Directors' Charge." },
+    { date:"Apr 21, 2026", label:"Chapter 15 petitions filed (Delaware), D.I. 1",  detail:"Case 26-10547-LSS, U.S. Bankruptcy Court, District of Delaware" },
+    { date:"Apr 24, 2026", label:"U.S. court grants provisional relief (D.I. 33)",   detail:"The DIP term sheet required this by Apr 24 (Schedule E §7)" },
+    { date:"Apr 28, 2026", label:"ARIO and Hafford sale application filed",             detail:"Returnable May 1; the DIP term sheet required it by Apr 28 (Schedule E §5)" },
+    { date:"May 01, 2026", label:"ARIO granted (Justice M.H. Bourque); stay extended to June 19",             detail:"Same day: Hafford Sale Approval and Vesting Order; BNS lift-stay order (filed May 5)" },
+    { date:"May 06, 2026", label:"DIP term-sheet deadline for the ARIO (met May 1)",                  detail:"The DIP lenders required the ARIO by May 6 (Schedule E §6); it was granted May 1" },
+    { date:"Jun 12, 2026", label:"SISP Order and Stay Extension to Nov 13 granted (Justice R.W. Armstrong)",  detail:"Both orders filed June 15. Stay Extension para 3: stay runs up to and including Nov 13, 2026" },
     { date:"Jun 20, 2026", label:"SK Crop Insurance Corporation deadline", detail:"Critical drop-dead for 2026 crop year insurance enrollment" },
     { date:"Oct 31, 2026", label:"Binding PSA milestone",                 detail:"DIP Schedule J #2 — Purchase and Sale Agreements for owned land sales required" },
     { date:"Dec 01, 2026", label:"Net proceeds applied to Senior Secured", detail:"DIP Schedule J #3" },
@@ -1452,7 +1461,7 @@ window.MONETTE_DATA.sispByProperty = {
   "genoa":              { status:"listed", tier:"confirmed", broker:"Clark & Associates Land Brokers", contact:"Cory Clark · 307-334-2025 / 307-351-9556", package:"Monette Farm & Ranch", price:"$5,106,250 USD", deededAc:4085, totalAc:4085, cultivatedAc:3085, nativeGrassAc:1000, listingUrl:"https://www.clarklandbrokers.com/property-listings/monette-farm-%26-ranch-", confidence:"high", sourceCheckedAt:"2026-09-29", note:"Current Clark offering: 4,085± total acres, including about 3,085 acres of organic farm ground and 1,000 acres of native grass. Lincoln County's six current assessor accounts under Monette Farms USA, Inc. total exactly 4,085 assessed acres and are fully crosswalked here. Helkaa ¶58(e) reports 4,079 acres; the 6-acre difference is retained as a source-method delta.", source:"Clark & Associates live listing + Lincoln County CO EagleWeb 2026 owner/account records + BLM CadNSDI + Helkaa Decl. ¶58(e)" },
 
   // ----- Arizona — Aguila approved transaction + separate active facility listing -----
-  "aguila":             { status:"sale-approved", tier:"court-approved", broker:"Southwest Land Associates", contact:"Charlie Havranek · 623-877-5180", package:"Aguila Arizona Farm", price:null, reportedPrice:"US$17,000,000", priceStatus:"Stated in the executed purchase agreement and the Monitor's public U.S. sale motion; the Alberta Confidential Affidavit stays sealed", priorAskingPrice:"$18,500,000 USD", priorAskingPriceLabel:"Reduced SISP asking price", buyer:"Byner Cattle Company and/or nominee", approvalDate:"2026-08-19", usHearing:"Set for Sep 29, 2026 · 3:00 p.m. ET · U.S. Bankruptcy Court (Delaware). The docket shows an order filed Sep 29 (D.I. 62); we have not yet been able to read its text, so the outcome is unconfirmed.", closingStatus:"Not closed as of 2026-09-29. Closes five business days after the closing conditions are met, no later than the SISP Termination Date (currently Nov 30, 2026; extendable under the SISP procedures).", closingConditions:["U.S. Bankruptcy Court approval (hearing set Sep 29, 3:00 p.m. ET; an order was filed Sep 29, D.I. 62, text not yet read)","Arizona State Land Department assignment of the state leases (applications follow approval; the department has voiced no opposition)","Buyer does not disapprove within 10 days of reviewing the environmental reports and title commitment","Transfer of certain Arizona deeds of covenant","Monitor's Closing Certificate"], deededAc:930, stateLeaseAc:2213, totalAc:3143, affidavitUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Fourth%20Affidavit%20of%20Darrel%20Monette%20(Cassels),%20filed%20August%2011,%202026.pdf", orderUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Arizona%20Sale%20Approval%20and%20Vesting%20Order%20(Cassels),%20filed%20August%2019,%202026.pdf", usMotionUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/2026%2009%2004%20%5BDE%2054%5D%20Sale%20Motion-c.pdf", confidence:"high", sourceCheckedAt:"2026-09-29", note:"The Alberta Court approved the transaction on Aug 19, 2026. The executed Arizona purchase agreement (SISP Agreement of Purchase and Sale of US Assets dated Aug 12, 2026), filed publicly as Exhibit 1 to the Monitor's Sept 4 declaration (D.I. 56-1), states the purchase price in section 3.1 as US$17,000,000 plus taxes, with US$850,000 of earnest money (5%). The Monitor's U.S. sale motion (D.I. 54 ¶¶23-24) describes the same price as \"$17 million\", as is, where is, with a 5% deposit paid. The sale does not include the Produce Cooler or Arizona Seed Facility (D.I. 54 ¶19). Acreage: the U.S. motion counts about 930 owned + 2,204 leased = 3,134 acres; Southwest's brochure counts 2,213 leased = 3,143, while its summary page prints 3,134. This is not a completed sale: title does not move until the conditions above are met and the Monitor files its Closing Certificate. The Alberta seal covers only the Confidential Affidavit. On Sep 29 the U.S. docket showed an entry titled \"Order\" (D.I. 62); we had not yet read its text, so this record does not say whether approval was granted.", source:"Arizona Sale Approval and Vesting Order (Aug 19) + executed Arizona purchase agreement D.I. 56-1 §3.1 (Aug 12) + Monitor's U.S. sale motion D.I. 54 ¶¶19, 23-24 (Sept 4) + Fourth Affidavit of Darrel Monette ¶¶17-28 + Monitor Third Report ¶¶43-44" },
+  "aguila":             { status:"sale-approved", tier:"court-approved", broker:"Southwest Land Associates", contact:"Charlie Havranek · 623-877-5180", package:"Aguila Arizona Farm", price:null, reportedPrice:"US$17,000,000", priceStatus:"Stated in the executed purchase agreement and the Monitor's public U.S. sale motion; the Alberta Confidential Affidavit stays sealed", priorAskingPrice:"$18,500,000 USD", priorAskingPriceLabel:"Reduced SISP asking price", buyer:"Byner Cattle Company and/or nominee", approvalDate:"2026-08-19", usHearing:"Was set for Sep 29, 2026 · 3:00 p.m. ET · U.S. Bankruptcy Court (Delaware). The docket shows an order filed Sep 29 at 3:15 p.m. ET (D.I. 62) a Certification of Counsel filed Sep 30 (D.I. 64), and an entry titled \"Sell Property\" filed Sep 30 at 2:56 p.m. ET (D.I. 65). None of the texts has been posted yet (PACER only), so the outcome is unconfirmed.", closingStatus:"Not closed as of 2026-09-30. Closes five business days after the closing conditions are met, no later than the SISP Termination Date (currently Nov 30, 2026; extendable under the SISP procedures).", closingConditions:["U.S. Bankruptcy Court approval (hearing set Sep 29, 3:00 p.m. ET; an order was filed Sep 29, D.I. 62, and an entry titled \"Sell Property\" on Sep 30, D.I. 65; texts not yet read)","Arizona State Land Department assignment of the state leases (applications follow approval; the department has voiced no opposition)","Buyer does not disapprove within 10 days of reviewing the environmental reports and title commitment","Transfer of certain Arizona deeds of covenant","Monitor's Closing Certificate"], deededAc:930, stateLeaseAc:2213, totalAc:3143, affidavitUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Fourth%20Affidavit%20of%20Darrel%20Monette%20(Cassels),%20filed%20August%2011,%202026.pdf", orderUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/Arizona%20Sale%20Approval%20and%20Vesting%20Order%20(Cassels),%20filed%20August%2019,%202026.pdf", usMotionUrl:"https://cfcanada.fticonsulting.com/monettefarms/docs/2026%2009%2004%20%5BDE%2054%5D%20Sale%20Motion-c.pdf", confidence:"high", sourceCheckedAt:"2026-09-29", note:"The Alberta Court approved the transaction on Aug 19, 2026. The executed Arizona purchase agreement (SISP Agreement of Purchase and Sale of US Assets dated Aug 12, 2026), filed publicly as Exhibit 1 to the Monitor's Sept 4 declaration (D.I. 56-1), states the purchase price in section 3.1 as US$17,000,000 plus taxes, with US$850,000 of earnest money (5%). The Monitor's U.S. sale motion (D.I. 54 ¶¶23-24) describes the same price as \"$17 million\", as is, where is, with a 5% deposit paid. The sale does not include the Produce Cooler or Arizona Seed Facility (D.I. 54 ¶19). Acreage: the U.S. motion counts about 930 owned + 2,204 leased = 3,134 acres; Southwest's brochure counts 2,213 leased = 3,143, while its summary page prints 3,134. This is not a completed sale: title does not move until the conditions above are met and the Monitor files its Closing Certificate. The Alberta seal covers only the Confidential Affidavit. On Sep 29 the U.S. docket showed an entry titled \"Order\" (D.I. 62); we had not yet read its text, so this record does not say whether approval was granted. On Sep 30 it added a Certification of Counsel (D.I. 64) and an entry titled \"Sell Property\" (D.I. 65); their texts are not yet posted either.", source:"Arizona Sale Approval and Vesting Order (Aug 19) + executed Arizona purchase agreement D.I. 56-1 §3.1 (Aug 12) + Monitor's U.S. sale motion D.I. 54 ¶¶19, 23-24 (Sept 4) + Fourth Affidavit of Darrel Monette ¶¶17-28 + Monitor Third Report ¶¶43-44" },
   "tonopah":            { status:"listed", tier:"confirmed", broker:"Southwest Land Associates", contact:"Charlie Havranek · 623-877-5180", package:"Arizona Produce Cooler & Seed Facility", price:"$5,000,000 USD", priorAskingPrice:"$10,000,000 USD", totalAc:23.31, listingUrl:"http://southwestlandassociates.com/listing_summary.html", confidence:"high", sourceCheckedAt:"2026-09-29", note:"The Fourth Affidavit treats the Produce Cooler and Arizona Seed Facility at 39332 W Camelback Rd as separate from Aguila Farm, and the Monitor's Sept 4 U.S. sale motion (D.I. 54 ¶19) confirms the Byner sale does not include them. They continue to be marketed under the SISP; the combined ask was reduced from US$10M to US$5M.", source:"Fourth Affidavit of Darrel Monette ¶¶17-20 + Monitor's U.S. sale motion D.I. 54 ¶19 + Southwest Land Associates, checked 2026-09-29" },
 
   // ----- Manitoba (per-property broker assignments on the FTI page) -----
@@ -1472,7 +1481,7 @@ window.MONETTE_DATA.sispByProperty = {
   // Swift Current seed-processing facility. The facility price is not attached
   // to the atlas's 49,775-acre Swift Current land rollup.
   "swift-current":      { status:"likely", tier:"likely", broker:"Hammond Realty (lead)", contact:"Tim Hammond · 306-948-5052 / Dallas Pike · 306-500-1407", package:"SK Restricted Land — Swift Current (Monette home base)", price:null, confidence:"medium", note:"Hammond currently lists the 8.58-acre Swift Current Seed Processing Facility for $10,000,000, but not a 49,775-acre land package matching this atlas rollup. No facility price is applied to the land record. The nearest listed land is Hammond's Wymark package, which spans RM 137 (Swift Current); whether it overlaps this rollup is unverified.", source:"Hammond Realty Monette Farms listings, checked 2026-09-29 + FTI SISP page" },
-  "hafford":            { status:"unknown", tier:"unknown", broker:null, confidence:"low", sourceCheckedAt:"2026-09-29", note:"No Monette Hafford land appears in any public SISP listing (FTI's SISP page and Hammond Realty's live packages name none). The owned position sold on May 13 under the court order summarised below.", source:"FTI SISP page and Hammond Realty listings, checked 2026-09-29; Hafford Sale Approval & Vesting Order (para 7(a)(i), Schedule B)" },
+  "hafford":            { status:"unknown", tier:"unknown", broker:null, confidence:"low", sourceCheckedAt:"2026-09-29", note:"No Monette Hafford land appears in any public SISP listing (FTI's SISP page and Hammond Realty's live packages name none). The owned position sold on May 13 under the court order summarised above.", source:"FTI SISP page and Hammond Realty listings, checked 2026-09-29; Hafford Sale Approval & Vesting Order (para 7(a)(i), Schedule B)" },
   "kamsack":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Kamsack 11,339 acres Grain Farmland", price:"$76,000,000 CAD", listingAc:11339, pricePerAcCAD:6703, listingUrl:"https://www.hammondrealty.ca/listings/kamsack-11364-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-09-29", note:"Current Hammond title acres differ from the atlas file acres; the asking price and listing acreage are shown as broker-published, not substituted into the holdings record.", source:"Hammond Realty Monette Farms listing, checked 2026-09-29" },
   "outlook":            { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Outlook 1,851 acres Grain Farmland", price:"$56,000,000 CAD", listingAc:1852.35, pricePerAcCAD:30232, listingUrl:"https://www.hammondrealty.ca/listings/outlook-1851-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-09-29", note:"The broker's title displays 1,851 acres while its detail card reports 1,852.35 title acres; this atlas preserves the more precise card value.", source:"Hammond Realty Monette Farms listing, checked 2026-09-29" },
   "prince-albert":      { status:"listed", tier:"confirmed", broker:"Hammond Realty", contact:"306-948-5052", package:"Prince Albert 3,010 acres Grain Farmland", price:"$17,600,000 CAD", listingAc:3010.33, pricePerAcCAD:5847, listingUrl:"https://www.hammondrealty.ca/listings/prince-albert-3010-acres-grain-farmland-monette-farms", confidence:"high", sourceCheckedAt:"2026-09-29", source:"Hammond Realty Monette Farms listing, checked 2026-09-29" },
@@ -1529,29 +1538,45 @@ window.MONETTE_DATA.sispByProperty = {
 };
 
 window.MONETTE_DATA.latestCourtUpdate = {
-  asOf: "2026-09-29",
+  asOf: "2026-09-30",
   label: "Court-file update",
-  summaryTitle: "Aguila: U.S. court order filed Sept 29 · text not yet posted · not closed",
+  summaryTitle: "Aguila approved in Alberta, not closed · new U.S. docket entries Sept 29-30, texts not yet posted",
   items: [
     {
-      status: "Approved in Alberta · U.S. order filed Sept 29, text not yet posted · not closed",
-      title: "Aguila sale: the U.S. docket shows an order filed Sept 29",
-      text: "The Alberta Court approved the sale to Byner Cattle Company and/or nominee on Aug 19. The Monitor's Sept 4 U.S. filing puts the price at US$17,000,000 (section 3.1 of the executed purchase agreement, D.I. 56-1) and asked the U.S. Bankruptcy Court to approve the sale at a hearing set for Sept 29 at 3:00 p.m. ET. The U.S. docket (26-10547) now shows an entry titled \"Order\" filed Sept 29 (D.I. 62), after a Certificate of No Objection (D.I. 59, Sept 24) and the hearing agenda (D.I. 61, Sept 25). We had not been able to read the text of any of those filings when we checked at about 2:05 pm MDT (the Monitor's Chapter 15 page had not posted them), so we have not confirmed what the order decides. Closing also needs Arizona State Land Department lease assignments, the buyer's diligence window and the Monitor's Closing Certificate; it closes five business days after the conditions are met and no later than the SISP Termination Date (currently Nov 30). The Arizona cooler and seed facility is not part of the sale.",
-      sourceLabel: "U.S. docket 26-10547, entry 62 (Order) · Sept 29",
+      status: "Approved in Alberta · U.S. approval not yet confirmed · not closed",
+      title: "Aguila sale: U.S. approval not yet confirmed",
+      points: [
+        { text: "The Alberta Court approved the sale to Byner Cattle Company and/or nominee on Aug 19.", cite: "Arizona SAVO p.1, para 3" },
+        { text: "Price in the signed purchase agreement: US$17,000,000, with US$850,000 earnest money.", cite: "D.I. 56-1 §3.1" },
+        { text: "The U.S. docket shows an entry titled \"Order\" filed Sept 29, the day the sale hearing was set for, then a Certification of Counsel and an entry titled \"Sell Property\" (2:56 p.m. ET) on Sept 30. None of the texts has been posted yet (PACER only), so we have not confirmed whether the U.S. court has approved the sale.", cite: "D.I. 62, D.I. 64, D.I. 65" },
+        { text: "Closing still needs the Arizona State Land Department lease assignments, the buyer's review window and the Monitor's Closing Certificate, no later than the SISP Termination Date (currently Nov 30).", cite: "D.I. 54 para 24, p.9; term table p.12" },
+      ],
+      notSaid: "Approval is not closing: title does not move until the Monitor files its Closing Certificate. The Arizona cooler and seed facility are not part of this sale.",
+      propertyId: "aguila",
+      sourceLabel: "U.S. docket 26-10547, entry 62 (Order)",
       sourceUrl: "https://www.courtlistener.com/docket/73222630/62/fti-consulting-canada-inc-and-monette-farms-ltd/",
     },
     {
       status: "Live · checked Sept 29",
       title: "BC is now listed; Manitoba is public",
-      text: "LandQuest Realty Corp. listed 11 Monette BC ranches on July 31: about 45,000 acres, C$749,000 to C$32,995,000 each, C$132.7M in all. Manitoba's Eddystone (C$19.1M) and The Pas (C$84.0M) packages are public MLS listings. Saskatchewan prices on Hammond are unchanged since July 14 except Wymark's acreage (now 13,015.1).",
+      points: [
+        { text: "LandQuest Realty Corp. listed 11 Monette BC ranches on July 31: about 45,000 acres, C$749,000 to C$32,995,000 each, C$132.7M in all.", cite: "LandQuest listings; Third Report ¶¶39-40" },
+        { text: "Manitoba's Eddystone (C$19.1M) and The Pas (C$84.0M) packages are public MLS listings.", cite: "MLS listings" },
+        { text: "Saskatchewan asking prices on Hammond are unchanged since July 14; Wymark's listed acreage is now 13,015.1.", cite: "Hammond listings" },
+      ],
       sourceLabel: "FTI SISP page and broker listings · Sept 29",
       sourceUrl: "https://cfcanada.fticonsulting.com/MonetteFarms/SISP.htm",
     },
     {
-      status: "No new Alberta order since Aug 19",
-      title: "Bids due Oct 15; DIP C$88.2M of C$90M",
-      text: "The FTI file shows no new Alberta order, Monitor report or DIP change since Aug 19. Latest filed: C$88.2M drawn of the C$90M DIP at July 31 (Third Report). Court-approval outside dates: Oct 31 for bids submitted before Sept 1, Nov 30 (the SISP Termination Date) for later bids. Only two sales have court approval: Hafford (closed May 13) and Aguila (pending). SCIC's asserted C$1.9M claim: no public resolution found.",
-      sourceLabel: "FTI Court Orders and Reports pages · Sept 29",
+      status: "No new Alberta order since Aug 19 · checked Sept 30",
+      title: "Bids due Oct 15; the stay runs to Nov 13",
+      points: [
+        { text: "The Monitor's site shows no new Alberta order, Monitor's report or DIP change since Aug 19.", cite: "FTI site, checked Sept 30" },
+        { text: "Binding bids are due Oct 15. The company must ask the court to approve winning bids by Oct 31 (bids in on or before Sept 1) or by Nov 30 (later bids); these are outer limits, not hearing dates. Nov 30 is also the SISP Termination Date.", cite: "SISP Procedures ¶¶16, 27(j), 28" },
+        { text: "The court's stay of proceedings (the pause on creditor action) runs to Nov 13, 2026.", cite: "Order re Stay Extension para 3" },
+        { text: "Latest filed DIP draw: C$88.2M of C$90M at July 31. Only two sales have court approval: Hafford (closed May 13) and Aguila (not closed).", cite: "Third Report ¶26; Hafford Monitor's Certificate p.3; FTI Court Orders page, checked Sept 30 (two sale approval orders)" },
+      ],
+      sourceLabel: "FTI Court Orders page · checked Sept 30",
       sourceUrl: "https://cfcanada.fticonsulting.com/MonetteFarms/courtOrders.htm",
     },
   ],

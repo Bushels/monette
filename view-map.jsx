@@ -3113,7 +3113,7 @@ const MapView = ({ forcedSelect, forcedQuarter, onSwitchView }) => {
         <div className="atlas-toolbar-status" aria-label="Portfolio status summary">
           <span className="atlas-toolbar-pill atlas-toolbar-pill-sale mono">{publicSales.listingCount} public listings</span>
           <span className="atlas-toolbar-pill atlas-toolbar-pill-asking mono" title={`Asking prices in CAD: ${askingBreakdown}. U.S. packages are priced in USD; see each property.`}>{fmtAskingCompactCAD(publicSales.totalAskingCAD)} asking</span>
-          {bindingBidLabel && <span className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono">{bindingBidLabel}</span>}
+          {bindingBidLabel && <a href="#court" className="atlas-toolbar-pill atlas-toolbar-pill-deadline mono" title="Where the sale stands: every step and date, with sources">{bindingBidLabel} →</a>}
           {askingBreakdown && (
             <span className="atlas-toolbar-breakdown mono">
               Asks in CAD{askingCheckedLabel ? `, checked ${askingCheckedLabel}` : ""}: {askingBreakdown}. U.S. packages are priced in USD; see each property.

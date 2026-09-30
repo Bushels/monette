@@ -6,6 +6,8 @@
 //   #map                   → Field atlas (default homepage; satellite seeding mode in Apr-Jun)
 //   #map/{property}        → Atlas focused on one property; hero suppressed
 //   #map/{property}/{loc}  → Atlas focused on a specific quarter; hero suppressed
+//   #court                 → Court File: every filing, newest first
+//   #court/{property}      → Court File filtered to one property's filings
 //   #dossier/{slug}        → A single dossier article (e.g. #dossier/insurance-tower)
 //
 // Note: the editorial Ledger, dossiers index, and Register view were removed
@@ -13,6 +15,7 @@
 
 const VIEWS = [
   { key: "map",       label: "Atlas",     Component: () => null },
+  { key: "court",     label: "Court File", Component: () => null },
   { key: "creditors", label: "Creditors", Component: () => null },
   { key: "structure", label: "Structure", Component: () => null },
   { key: "stack",     label: "Debt",      Component: () => null },
@@ -27,7 +30,7 @@ function parseHash() {
     return { view: "map", prop: null, quarter: null };
   }
   const [view, prop, quarter] = h.split("/");
-  const known = ["dossier", "creditors", "structure", "stack", "map"];
+  const known = ["dossier", "court", "creditors", "structure", "stack", "map"];
   return {
     view: known.includes(view) ? view : "map",
     prop: prop || null,
@@ -44,6 +47,12 @@ function App() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
+  // Views other than the atlas open at the top (links into the Court File come from
+  // the bottom of the court strip and from deep inside property drawers).
+  useEffect(() => {
+    if (view !== "map") window.scrollTo(0, 0);
+  }, [view, prop]);
+
   const go = (nextView, nextProp, nextQuarter) => {
     const parts = [nextView || "map"];
     if (nextProp) parts.push(nextProp);
@@ -52,6 +61,7 @@ function App() {
   };
 
   const ViewComponent =
+    view === "court"    ? window.CourtFileView :
     view === "creditors" ? window.CreditorsView :
     view === "structure" ? window.GroupStructureView :
     view === "stack"    ? window.DebtStackView :
@@ -108,7 +118,7 @@ function App() {
       <div className="view-wrap">
         <ViewComponent
           key={view + "/" + (prop || "")}
-          forcedSelect={view === "map" || view === "dossier" ? prop : null}
+          forcedSelect={view === "map" || view === "dossier" || view === "court" ? prop : null}
           forcedQuarter={view === "map" ? quarter : null}
           onSwitchView={go}
         />

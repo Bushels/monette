@@ -276,6 +276,15 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
   );
   const isCourtFileBacked = Array.isArray(prop.tags) && prop.tags.includes("court-file");
   const sispPageHref = sispGlobal ? safeHref(sispGlobal.sispPage) : null;
+  // One list of court documents per property (court-file-data.js). When it has
+  // entries it replaces the three fixed link slots in the sale block.
+  const propertyCourtDocs = typeof courtFilingsFor === "function" ? courtFilingsFor(prop.id) : [];
+  const COURT_DOC_LIMIT = 12;
+  const normDocUrl = (u) => { try { return decodeURIComponent(String(u || "")).toLowerCase(); } catch (e) { return String(u || "").toLowerCase(); } };
+  const shownDocUrls = new Set(propertyCourtDocs.slice(0, COURT_DOC_LIMIT).map((f) => normDocUrl(f.url)));
+  // A fixed sale-block link stays unless the same document is already in the court-document list below.
+  const showFixedLink = (href) => href && !shownDocUrls.has(normDocUrl(href));
+  const courtSale = prop.courtSale || null;
   return (
     <div onClick={onClose} className="drawer-scrim" style={{ position: "fixed", inset: 0, background: "rgba(19,17,14,0.55)", zIndex: 50, display: "flex", justifyContent: "flex-end" }}>
       <div ref={scrollContainerRef} onClick={(e) => e.stopPropagation()} className="scroll property-drawer" style={{
@@ -286,7 +295,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             <div className="pd-location" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>{prop.province} · {prop.region}</div>
             <div className="serif pd-title" style={{ fontSize: 50, lineHeight: 1, marginTop: 6 }}>{prop.name}</div>
             <div className="pd-title-meta" style={{ marginTop: 10, fontFamily: '"JetBrains Mono", monospace', fontSize: 11, color: "var(--mute)" }}>
-              {fmt(prop.titled)} file ac · {prop.parcels ? `${prop.parcels} titles` : "title count pending"} · {prop.assessment ? fmtM(prop.assessment) : "assessment pending"}
+              {fmt(prop.titled)} {prop.titledLabel || "file ac"} · {prop.parcels ? `${prop.parcels} ${prop.parcelsLabel || "titles"}` : "title count pending"} · {prop.assessment ? `${fmtM(prop.assessment)} assessed` : "assessment pending"}
             </div>
           </div>
           <div className="pd-header-actions" style={{ display: "flex", gap: 8 }}>
@@ -294,6 +303,18 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
             <button className="pd-header-action" onClick={onClose} style={{ padding: "8px 12px", fontSize: 11, fontFamily: "inherit", border: "1px solid var(--ink)", background: "transparent", cursor: "pointer" }}>Close ✕</button>
           </div>
         </div>
+
+        {/* Sale closed under a court order (Monitor's certificate filed). */}
+        {courtSale && (
+          <div className="pd-sisp pd-court-sale" style={{ padding: "18px 28px", borderBottom: "1px solid var(--rule)", background: "rgba(154,58,42,0.07)", borderLeft: "3px solid var(--rust)" }}>
+            <span className="mono pd-sisp-status" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--rust)" }}>
+              ● {courtSale.label}
+            </span>
+            {courtSale.headline && <div className="serif" style={{ fontSize: 19, marginTop: 8, lineHeight: 1.2 }}>{courtSale.headline}</div>}
+            {prop.courtConfirmedSoldNote && <div className="mono pd-sisp-note" style={{ marginTop: 10, fontSize: 11, color: "var(--ink-2)", lineHeight: 1.6 }}>{prop.courtConfirmedSoldNote}</div>}
+            {courtSale.source && <div className="mono pd-sisp-source" style={{ marginTop: 10, fontSize: 9, color: "var(--mute)" }}>Source: {courtSale.source}</div>}
+          </div>
+        )}
 
         {/* Court-approved transaction; kept separate from a completed sale. */}
         {sispMeta && sispMeta.status === "sale-approved" && (
@@ -320,11 +341,11 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
               {sispAcres && <div><span style={{ color: "var(--mute)" }}>Acres</span> {sispAcres}</div>}
             </div>
             {sispMeta.note && <div className="mono pd-sisp-note" style={{ marginTop: 10, fontSize: 10, color: "var(--mute)", lineHeight: 1.55 }}>{sispMeta.note}</div>}
-            <div className="pd-sisp-links" style={{ display: "flex", gap: 14, marginTop: 12, flexWrap: "wrap" }}>
-              {sispOrderHref && <a href={sispOrderHref} target="_blank" rel="noreferrer">Approval order →</a>}
-              {sispUsMotionHref && <a href={sispUsMotionHref} target="_blank" rel="noreferrer">U.S. sale motion →</a>}
-              {sispAffidavitHref && <a href={sispAffidavitHref} target="_blank" rel="noreferrer">Fourth Affidavit →</a>}
-            </div>
+            {(showFixedLink(sispOrderHref) || showFixedLink(sispUsMotionHref) || showFixedLink(sispAffidavitHref)) && <div className="pd-sisp-links" style={{ display: "flex", gap: 14, marginTop: 12, flexWrap: "wrap" }}>
+              {showFixedLink(sispOrderHref) && <a href={sispOrderHref} target="_blank" rel="noreferrer">Approval order →</a>}
+              {showFixedLink(sispUsMotionHref) && <a href={sispUsMotionHref} target="_blank" rel="noreferrer">U.S. sale motion →</a>}
+              {showFixedLink(sispAffidavitHref) && <a href={sispAffidavitHref} target="_blank" rel="noreferrer">Fourth Affidavit →</a>}
+            </div>}
             {sispMeta.source && <div className="mono pd-sisp-source" style={{ marginTop: 10, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
           </div>
         )}
@@ -368,10 +389,20 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
         {sispMeta && (sispMeta.status === "retained" || sispMeta.status === "excluded" || sispMeta.status === "unknown") && (
           <div className="pd-sisp" style={{ padding: "12px 28px", borderBottom: "1px solid var(--rule)", background: "rgba(138,122,90,0.08)" }}>
             <span className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)" }}>
-              {sispMeta.status === "retained" ? "Retained — not in the SISP sale" : sispMeta.status === "excluded" ? "Excluded from the SISP offering" : "SISP sale status unclear"}
+              {sispMeta.status === "retained" ? "Retained — not in the SISP sale" : sispMeta.status === "excluded" ? "Excluded from the SISP offering" : courtSale ? "Not in the current sale-process listings" : "SISP sale status unclear"}
             </span>
             {sispMeta.note && <div className="mono" style={{ marginTop: 6, fontSize: 10, color: "var(--ink-2)", lineHeight: 1.5 }}>{sispMeta.note}</div>}
             {sispMeta.source && <div className="mono" style={{ marginTop: 6, fontSize: 9, color: "var(--mute)" }}>Source: {sispMeta.source}</div>}
+          </div>
+        )}
+
+        {/* Court documents about this property (from the Court File list). */}
+        {propertyCourtDocs.length > 0 && (
+          <div className="pd-court-docs" style={{ padding: "16px 28px", borderBottom: "1px solid var(--rule)" }}>
+            <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--mute)", marginBottom: 8 }}>
+              Court documents about {prop.name} · {propertyCourtDocs.length}
+            </div>
+            <CourtDocList propertyId={prop.id} limit={COURT_DOC_LIMIT} />
           </div>
         )}
 

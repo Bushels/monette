@@ -57,6 +57,7 @@ const entries = [
   "view-debt-stack.jsx",
   "view-map.jsx",
   "view-dossier.jsx",
+  "view-court.jsx",
   "app.jsx",
 ];
 
@@ -64,6 +65,7 @@ const staticAssets = [
   "index.html",
   "config.js",
   "data.js",
+  "court-file-data.js",
   "creditors-data.js",
   "imagery-data.js",
   "quarter-owners.js",
