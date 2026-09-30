@@ -1,6 +1,25 @@
 # PROJECT_STATE.md
 
-## Active task
+## Active task (2026-09-30)
+- **DEPLOYED 2026-09-30 ~13:45 MDT (Kyle: "Yes, deploy it"), `dpl_4RyEL9YgpFNMr4JvabRB2Ho8dJg2`: Hafford internal-notes pull.**
+  Removed from public files: every Simmons family reference, the "kyle first-hand" source on the ~$12M yard split, the
+  Raptor -> Monette yard-chain line, 11 internal Hafford change-log entries, internal file paths (docs/Land, docs/logs) in
+  all source labels. Kept, labelled reported/unverified: Walter Farms wider purchase, 2026 leaseback, ~$12M yard share.
+  The pulled claims stay in `G:\My Drive\Agriculture\Monette\intel_unverified.md` (2026-09-30 note). Live-verified 390/1440.
+  Deployed twice by mistake (identical content). NOT committed yet (awaiting Kyle). Asset versions: data 46, components 42,
+  property-drawer 42, quarter-owners 3.
+- **BUILT, REVIEWED, NOT DEPLOYED: Court File (ideas 2-5)** in worktree `C:\Users\kyle\Agriculture\Monette-courtfile`
+  (branch feat/court-file, uncommitted). New `#court` tab + `court-file-data.js` (100 filings, 24 key with cited summaries,
+  17 milestones), shorter court strip with cited points, per-property court-document list, Hafford "sold under court order"
+  lead block, stale-fact fixes (stay to Nov 13, Chapter 15 petitions Apr 21, 18 Applicants, Kobre & Kim, DIP milestones).
+  Gate `npm run validate:court` (runs first in `npm run build`; 18/18 mutations caught). Awaiting Kyle's deploy OK.
+  To ship: copy the worktree's changed files onto main (worktree = main + this), run all gates, build, deploy.
+- **Court watch**: U.S. docket D.I. 63 (Cert. of Service, Sept 29), D.I. 64 (Cert. of Counsel, Sept 30), D.I. 65 ("Sell
+  Property", Sept 30 2:56 pm ET) all PACER-only, text unread; FTI site unchanged since Sept 21. Kyle: no PACER purchase, wait.
+- Open for Kyle: Wymark "Carefoot Acres" buyer name is community intel still public; public GitHub history still holds the
+  pulled Hafford text (rewriting history is his call).
+
+## Previous task (2026-09-29)
 **DEPLOYED 2026-09-29 ~09:45 MDT (Kyle OK'd: "deploy it now"), `dpl_9ubbMjv4z7aKnFLQYZjB3T91CvDP`, aliased to monette.buperac.com:**
 map fixes plus a full source pass over the public sale data. Production verified at 1440 and 390 wide (0 render / 0 idle
 at rest, no console errors, no 4xx, no /snow/manifest request, corrected Hafford + Aguila drawers live).

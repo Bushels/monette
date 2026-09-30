@@ -229,7 +229,7 @@ function PropertyDrawer({ prop, initialQuarterLoc, onClose, onZoomMap, onQuarter
   const sourceTruth = prop.sourceOfTruth || null;
   const propertySummarySource = sourceTruth
     ? `${sourceTruth.ownerQuery}; pulled ${sourceTruth.pulledAt || "date unknown"}`
-    : (propertySummary && propertySummary.source) || "docs/Land/Acre Sheet.jpg";
+    : (propertySummary && propertySummary.source) || "Monette Property Summary (January 2026)";
   const unmappedAc = propertySummary && propertySummary.unmappedAc ? propertySummary.unmappedAc : 0;
   const operatorRelationships = (D.operatorRelationships || [])
     .filter((relationship) => relationship.linkedPropertyId === prop.id);

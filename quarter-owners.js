@@ -1,8 +1,8 @@
-// AUTO-GENERATED from docs/Land/*.xlsx Owner column.
+// AUTO-GENERATED from the per-property title workbooks (Owner column).
 // Per-property, per-quarter owner lookup. Each entry maps a Land Location
 // (e.g. 'NW-23-43-10-W3') to the title-holding entity name verbatim from
 // the source XLSX. Used by components.jsx seedQuarter() so per-quarter
-// ownership pills reflect ISC titles, not a hash-based 80/20 synthesis.
+// ownership pills reflect ISC titles.
 // Last audit: 2026-04-25 - 11 properties, 1013 quarters.
 window.MONETTE_QUARTER_OWNERS = {
   "admiral": {

@@ -198,8 +198,8 @@ function openAgnonymousDiscussion(payload = {}) {
 }
 
 function AgnonymousRibbon({
-  title = "Clarification request: Hafford / Simmons rented land",
-  body = "Help identify the legal land locations for Hafford land reported as rented from Simmons. Add legal descriptions, title clues, field observations, or public source links.",
+  title = "Clarification request: Hafford rented land",
+  body = "Help identify the legal land locations for the Hafford land reported as rented (about 22,013 acres). Add legal descriptions, title clues, field observations, or public source links.",
   eyebrow = "Clarification request",
   cta = "+ Submit Update",
   propertyId = "hafford",

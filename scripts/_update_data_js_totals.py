@@ -56,14 +56,9 @@ def reconciliation_stats(records: list[dict]) -> dict:
 # Properties not in this map get a generic snapshot block.
 NARRATIVE = {
     "hafford": (
-        "RENTED-BACK THESIS VALIDATED. Only 2 of the 158 mapped Hafford "
-        "quarters are titled to MONETTE FARMS LTD. as of 2026-01-18 — the "
-        "other 156 are flagged because the title is not in MFL's name on "
-        "the ISC register. This precisely matches the multi-source community "
-        "intel that Walter Farms (rumored Hafford bulk buyer) and the "
-        "Simmons/Raptor sale lineage purchased the footprint, with Monette "
-        "operating as a rented-back tenant. See memory hafford_landowners.md "
-        "for the full multi-source intel chain."
+        "Only 2 of the 158 mapped Hafford quarters appear in the MONETTE "
+        "FARMS LTD. ISC title export of 2026-01-18; the other 156 are not "
+        "titled to that company in that export."
     ),
     "swift-current": (
         "First geometry landing for the court-file Swift Current property. "
@@ -148,9 +143,6 @@ def render_snapshot_block(pid: str, stats: dict, total: int, indent: str = "    
         # escape backslashes + escape double-quotes for inclusion in "..." JS string.
         safe = significance.replace("\\", "\\\\").replace('"', '\\"')
         lines.append(f'{indent}  significance:"{safe}",')
-    lines.append(
-        f'{indent}  methodologyLog:"docs/logs/sk-titles-2026-01-18.md",'
-    )
     lines.append(f"{indent}}},")
     return "\n".join(lines)
 
